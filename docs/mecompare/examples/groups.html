@@ -183,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Curvilinear effects and mediation</span></a>
+ <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Nested logit models</span></a>
+ <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>When a model is fit separately to two groups – here, GSS respondents in 1986 and in 2016 – the question is whether an effect differs between the groups. <code>mecompare</code> with the <code>groups</code> option compares marginal effects across models that were estimated on non-overlapping samples. The example asks whether the association between political conservatism and support for government help with medical costs changed over 30 years.</p>
+<p>When a model is fit separately to two groups – here, GSS respondents in 1986 and different respondents in 2016 – the question is whether an effect differs between the groups. <code>mecompare</code> with the <code>groups</code> option compares marginal effects across models that were estimated on non-overlapping samples. This example asks whether the association between political conservatism and support for government help with medical costs changed over 30 years.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
@@ -351,7 +351,7 @@ conserv                          |
                          mod2016 |     2     -0.258      0.025      0.000
                       Difference |     3      0.166      0.039      0.000</code></pre>
 </div>
-<p><code>groups</code> tells <code>mecompare</code> that each model’s estimation sample is a different group, so the marginal effect for each model is averaged over that model’s own sample. The <strong>Difference</strong> row tests whether the conservatism gap in 2016 differs from the gap in 1986.</p>
+<p><code>groups</code> tells <code>mecompare</code> that each model’s estimation sample is a different group, so the marginal effect for each model is averaged over that model’s own sample. The <strong>Difference</strong> row tests whether the conservatism gap in 2016 differs from the gap in 1986. It does, suggesting that polarization on this issue has increased over this 30 year period.</p>
 <!-- NOTE: the 2019 article and the old web page wrote this as group(year); the
      current syntax is the bare  groups  option, which reads the grouping from
      each model's e(sample). -->

@@ -183,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Curvilinear effects and mediation</span></a>
+ <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Nested logit models</span></a>
+ <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The primary purpose of <code>mecompare</code> is to compare effects across models, but with one model in <code>models()</code> it reports the marginal effects of the listed variables and <a href="../../metest/index.html"><code>metest</code></a> compares them. Here: does a college degree or being married have the larger association with being very happy?</p>
+<p><code>mecompare</code> can be used to calculate marginal effects within a single model, and compare those effects using <a href="../../metest/index.html"><code>metest</code></a>. Here: does a college degree or being married have the larger association with being very happy?</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
@@ -345,7 +345,7 @@ married                          |
           Married - Not Marr     |                                       
                         happymod |     2      0.200      0.010      0.000</code></pre>
 </div>
-<p><code>metest</code> takes an expression in the row numbers from the <code>#</code> column. The difference between the two marginal effects, with its standard error:</p>
+<p><code>metest</code> takes an expression referring to the row numbers from the <code>#</code> column in the <code>mecompare</code> output. The difference between the two marginal effects, with its standard error:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 

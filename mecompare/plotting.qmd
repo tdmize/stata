@@ -96,7 +96,7 @@ file fig/plotting-both-models.png saved as PNG format
 
 ```
 
-![Marginal effects from both models, arranged by variable.](../fig/plotting-both-models.png){width=80%}
+![Marginal effects from both models, arranged by variable.](fig/plotting-both-models.png){width=80%}
 
 ## Plotting the cross-model differences
 
@@ -108,7 +108,7 @@ file fig/plotting-differences.png saved as PNG format
 
 ```
 
-![The cross-model differences with their confidence intervals.](../fig/plotting-differences.png){width=80%}
+![The cross-model differences with their confidence intervals.](fig/plotting-differences.png){width=80%}
 
 ## A three-column table
 
@@ -193,7 +193,7 @@ file fig/plotting-one-model.png saved as PNG format
 
 ```
 
-![Marginal effects from a single model.](../fig/plotting-one-model.png){width=80%}
+![Marginal effects from a single model.](fig/plotting-one-model.png){width=80%}
 
 ## Effects across levels of a moderator
 
@@ -246,7 +246,7 @@ file fig/plotting-moderator.png saved as PNG format
 
 ```
 
-![The marginal effect of age at five values of hours worked, from each model.](../fig/plotting-moderator.png){width=80%}
+![The marginal effect of age at five values of hours worked, from each model.](fig/plotting-moderator.png){width=80%}
 
 The [interactions pages](interactions/index.html) use this pattern to
 reproduce the marginal-effect figures of Mize (2019).
@@ -292,4 +292,4 @@ file fig/plotting-eb.png saved as PNG format
 
 ```
 
-![The active mecompare results plotted directly.](../fig/plotting-eb.png){width=80%}
+![The active mecompare results plotted directly.](fig/plotting-eb.png){width=80%}

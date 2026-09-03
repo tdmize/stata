@@ -183,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Curvilinear effects and mediation</span></a>
+ <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Nested logit models</span></a>
+ <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Marginal effects are on the scale of the outcome – here, probabilities of each party-identification category – so they can be compared across models that make different assumptions about the outcome. This example fits an ordered logit and a multinomial logit to the same five-category party identification variable with the same predictors, and asks whether the two models imply different effects of age.</p>
+<p>Marginal effects are on the scale of the outcome – here, probabilities of each party-identification category – so they can be compared across different types of models if both predict the same quantity. This example fits an ordered logit and a multinomial logit to the same five-category party identification variable with the same predictors, and asks whether the two models imply different effects of age. If they do, it is evidence the ordering imposed by the ordinal model is incorrect.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>

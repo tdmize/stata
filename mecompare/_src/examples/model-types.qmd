@@ -5,11 +5,12 @@ subtitle: "Example 6.5 of Mize, Doan, and Long (2019): ordinal versus nominal"
 <<dd_version: 2>>
 
 Marginal effects are on the scale of the outcome -- here, probabilities of each
-party-identification category -- so they can be compared across models that make
-different assumptions about the outcome. This example fits an ordered logit and a
+party-identification category -- so they can be compared across different types 
+of models if both predict the same quantity. This example fits an ordered logit and a
 multinomial logit to the same five-category party identification variable with
 the same predictors, and asks whether the two models imply different effects of
-age.
+age. If they do, it is evidence the ordering imposed by the ordinal model is 
+incorrect.
 
 ```{.stata-run}
 <<dd_do>>

@@ -1,16 +1,11 @@
 ---
-title: "Nested logit models"
+title: "Nested logit models and mediation/attenuation"
 subtitle: "Example 6.2 of Mize, Doan, and Long (2019)"
 ---
 <<dd_version: 2>>
 
-The most common cross-model question is whether an effect changes when
-controls are added. Here the effect of a college degree on the probability of
-being very happy is compared between a bivariate logit and a logit with a full
-set of controls. Because the outcome is binary, the marginal effect is a
-discrete change in the predicted probability, and comparing it across models is
-not subject to the rescaling problem that makes comparing logit coefficients
-across models misleading.
+One of the most common cross-model questions is whether an effect changes when
+controls are added, such as in tests of mediation/attenuation. Here the effect of a college degree on the probability of being very happy is compared between a bivariate logit and a logit with a full set of controls. Because the outcome is binary, the marginal effect is a discrete change in the predicted probability, and comparing it across models is not subject to the rescaling problem that makes comparing logit coefficients across models misleading.
 
 ```{.stata-run}
 <<dd_do>>
@@ -34,6 +29,6 @@ mecompare i.college, models(mod1 mod2)
 <</dd_do>>
 ```
 
-The **Difference** row tests whether the college effect is smaller once the
+The **Difference** row tests whether the effect of college is smaller once the
 controls are included. More than two nested models can be compared by running
 `mecompare` for each pair of interest.

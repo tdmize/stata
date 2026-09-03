@@ -4,10 +4,10 @@ subtitle: "Example 7: comparing the effects of different variables"
 ---
 <<dd_version: 2>>
 
-The primary purpose of `mecompare` is to compare effects across models, but with
-one model in `models()` it reports the marginal effects of the listed variables
-and [`metest`](../../metest/index.html) compares them. Here: does a college
-degree or being married have the larger association with being very happy?
+`mecompare` can be used to calculate marginal effects within a single model, 
+and compare those effects using [`metest`](../../metest/index.html). 
+Here: does a college degree or being married have the larger association 
+with being very happy?
 
 ```{.stata-run}
 <<dd_do>>
@@ -28,8 +28,9 @@ mecompare i.college i.married, models(happymod)
 <</dd_do>>
 ```
 
-`metest` takes an expression in the row numbers from the `#` column. The
-difference between the two marginal effects, with its standard error:
+`metest` takes an expression referring to the row numbers from the `#` column 
+in the `mecompare` output. The difference between the two marginal effects, 
+with its standard error:
 
 ```{.stata-run}
 <<dd_do>>

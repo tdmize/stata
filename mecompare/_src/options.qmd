@@ -31,16 +31,17 @@ mecompare [varlist] [if] [in] [weight] [, models(name1 [name2]) options]
 
 With no *varlist*, marginal effects are computed for every variable in the
 model(s). Factor-variable notation (`i.`, `c.`) is required on the stored
-models; on `mecompare` itself it is optional, since each variable is treated
-as the models specified it.
+models.
 
 ## `models()` -- one model, two models, or none
 
-`models()` names the stored estimates. Two names give the cross-model
-comparison; one name gives that model's marginal effects. It can be omitted:
-`mecompare` then uses the estimates in memory, which are either the model just
-fit (labeled `m1`) or, after [`suest2`](../suest2/index.html), the two models
-of that system.
+`models()` names the stored estimates. One name will calculate that model's 
+marginal effects. Two names will calculate each model's marginal effects and 
+automatically calculate the cross-model difference. 
+
+If names are omitted, `mecompare` then uses the estimates in memory, which 
+are either the single model just fit (labeled `m1` in the `mecompare` output) 
+or, after [`suest2`](../suest2/index.html), the two models of that system.
 
 ```{.stata-run}
 <<dd_do>>
@@ -54,7 +55,7 @@ mecompare i.married age, models(m2)
 <</dd_do>>
 ```
 
-With no varlist, every predictor:
+With no varlist, marginal effects are calculated for every predictor:
 
 ```{.stata-run}
 <<dd_do>>
@@ -79,8 +80,10 @@ mecompare i.married age, models(m1 m2) statistics(est se ll ul)
 For a continuous variable the default is a one-unit change, centered on the
 observed value (half a unit below to half a unit above). `amount()` takes a
 number, `sd`, `2sd`, `trimrange` (5th to 95th percentile), or `rate` (the
-instantaneous rate of change, `dydx` in `margins`). One value applies to all
-continuous variables; several values apply in order.
+instantaneous rate of change, `dydx` in `margins`). If a single value is listed 
+in `amount()`, it is applied to all continuous variables. When multiple values 
+are listed in `amount()`, they are applied in the order of the continuous 
+variables in the *varlist*.
 
 ```{.stata-run}
 <<dd_do>>
@@ -100,9 +103,11 @@ mecompare age, models(m1 m2) amount(rate)
 <</dd_do>>
 ```
 
-`uncentered` makes the change run upward from the observed value (from *x*
-to *x* + amount) rather than being centered on it. The two conventions give
-different numbers whenever the effect is nonlinear.
+`uncentered` makes the change start at the observed value and end at that 
+value plus the `amount()` (from *x* to *x* + amount) rather than being 
+centered on it. The two conventions give different numbers whenever the 
+effect is nonlinear. Especially for larger changes like `sd`, we recommend 
+using the default of centered changes.
 
 ```{.stata-run}
 <<dd_do>>
@@ -130,7 +135,8 @@ mecompare age, models(m1) start(age=(30 40 50)) amount(10)
 
 ## `covariates()` and `atmeans` -- values of the other variables
 
-Covariates are the model's other variables. By default they stay at their
+Covariates are the model's other independent variables, not included in the 
+*varlist*. By default they stay at their
 observed values and the effect is averaged over the sample. `covariates()`
 fixes them: `covariates(atmeans)` (or just `atmeans`) at their means,
 `covariates(married=1)` at a value, and a list for one covariate --
@@ -157,7 +163,8 @@ nominal moderator, computed as a counterfactual (everyone set to that level,
 then averaged); `over(varlist)` computes it within each observed subgroup
 instead. Both can take more than one variable. For a continuous moderator,
 `covariates(z=(numlist))` plays the same role as `by()`. The
-[interactions pages](interactions/index.html) use these throughout.
+[interactions pages](interactions/index.html) show how to use these to simplify 
+tests of interaction.
 
 ```{.stata-run}
 <<dd_do>>
@@ -188,7 +195,8 @@ mecompare i.race, models(m1 m2) pwcompare
 [`meinequality`](../meinequality/index.html) above a nominal variable's
 contrasts (`weighted`, the default, `unweighted`, or `all`). `totalme` adds
 the Total Marginal Effect of [`totalme`](../totalme/index.html) above every
-focal variable, which matters for multi-category outcomes.
+focal variable, most often used to summarize effects with multi-category 
+outcome models like an ordinal or nominal model.
 
 ```{.stata-run}
 <<dd_do>>
@@ -206,11 +214,13 @@ mecompare age married race, totalme
 
 ## `groups`, `groupnames()`, `groupme`, `groupsd` -- models fit to separate samples
 
-`groups` says the two models were fit to non-overlapping samples, so each
+The `groups` option tells `mecompare` that the two models were fit to 
+non-overlapping samples, so each
 model's marginal effects are averaged over its own sample and the
-**Difference** row compares the groups. `groupnames()` labels the rows;
+**Difference** row compares the effects across the groups. `groupnames()` labels the rows;
 `groupme` adds the average difference in the outcome between the groups;
-`groupsd` uses each group's own SD for `amount(sd)`.
+`groupsd` uses each group's own SD for `amount(sd)`; we generally do not 
+recommend `groupsd`.
 
 ```{.stata-run}
 <<dd_do>>
@@ -247,7 +257,9 @@ mecompare age collgrad, models(cnt) predict(pr(0))
 
 ## `marginsopt()` -- anything else margins should be told
 
-`marginsopt(string)` is passed to `margins` verbatim. Its main use is
+`marginsopt(string)` is passed to `margins` verbatim. We recommend using it 
+only in combination with the `commands` and `details` options to double check 
+that `margins` produced what you want. Its main use is
 `expression()` with one model, for example effects in percentage points:
 
 ```{.stata-run}

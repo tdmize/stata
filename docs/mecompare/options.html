@@ -183,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Curvilinear effects and mediation</span></a>
+ <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Nested logit models</span></a>
+ <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -351,11 +351,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="syntax" class="level2">
 <h2 class="anchored" data-anchor-id="syntax">Syntax</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare [<span class="kw">varlist</span>] [<span class="kw">if</span>] [<span class="kw">in</span>] [<span class="kw">weight</span>] [, models(name1 [name2]) options]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>With no <em>varlist</em>, marginal effects are computed for every variable in the model(s). Factor-variable notation (<code>i.</code>, <code>c.</code>) is required on the stored models; on <code>mecompare</code> itself it is optional, since each variable is treated as the models specified it.</p>
+<p>With no <em>varlist</em>, marginal effects are computed for every variable in the model(s). Factor-variable notation (<code>i.</code>, <code>c.</code>) is required on the stored models.</p>
 </section>
 <section id="models-one-model-two-models-or-none" class="level2">
 <h2 class="anchored" data-anchor-id="models-one-model-two-models-or-none"><code>models()</code> – one model, two models, or none</h2>
-<p><code>models()</code> names the stored estimates. Two names give the cross-model comparison; one name gives that model’s marginal effects. It can be omitted: <code>mecompare</code> then uses the estimates in memory, which are either the model just fit (labeled <code>m1</code>) or, after <a href="../suest2/index.html"><code>suest2</code></a>, the two models of that system.</p>
+<p><code>models()</code> names the stored estimates. One name will calculate that model’s marginal effects. Two names will calculate each model’s marginal effects and automatically calculate the cross-model difference.</p>
+<p>If names are omitted, <code>mecompare</code> then uses the estimates in memory, which are either the single model just fit (labeled <code>m1</code> in the <code>mecompare</code> output) or, after <a href="../suest2/index.html"><code>suest2</code></a>, the two models of that system.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -396,7 +397,7 @@ married                          |
 age + 1                          |                                       
                               m2 |     2      0.003      0.003      0.410</code></pre>
 </div>
-<p>With no varlist, every predictor:</p>
+<p>With no varlist, marginal effects are calculated for every predictor:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mecompare, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -485,7 +486,7 @@ age + 1                          |
 </section>
 <section id="amount-centered-uncentered-the-size-of-a-continuous-change" class="level2">
 <h2 class="anchored" data-anchor-id="amount-centered-uncentered-the-size-of-a-continuous-change"><code>amount()</code>, <code>centered</code>, <code>uncentered</code> – the size of a continuous change</h2>
-<p>For a continuous variable the default is a one-unit change, centered on the observed value (half a unit below to half a unit above). <code>amount()</code> takes a number, <code>sd</code>, <code>2sd</code>, <code>trimrange</code> (5th to 95th percentile), or <code>rate</code> (the instantaneous rate of change, <code>dydx</code> in <code>margins</code>). One value applies to all continuous variables; several values apply in order.</p>
+<p>For a continuous variable the default is a one-unit change, centered on the observed value (half a unit below to half a unit above). <code>amount()</code> takes a number, <code>sd</code>, <code>2sd</code>, <code>trimrange</code> (5th to 95th percentile), or <code>rate</code> (the instantaneous rate of change, <code>dydx</code> in <code>margins</code>). If a single value is listed in <code>amount()</code>, it is applied to all continuous variables. When multiple values are listed in <code>amount()</code>, they are applied in the order of the continuous variables in the <em>varlist</em>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mecompare age hours, models(m1 m2) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -553,7 +554,7 @@ age(rate)                        |
                               m2 |     2      0.003      0.003      0.410
                       Difference |     3     -0.000      0.000      0.847</code></pre>
 </div>
-<p><code>uncentered</code> makes the change run upward from the observed value (from <em>x</em> to <em>x</em> + amount) rather than being centered on it. The two conventions give different numbers whenever the effect is nonlinear.</p>
+<p><code>uncentered</code> makes the change start at the observed value and end at that value plus the <code>amount()</code> (from <em>x</em> to <em>x</em> + amount) rather than being centered on it. The two conventions give different numbers whenever the effect is nonlinear. Especially for larger changes like <code>sd</code>, we recommend using the default of centered changes.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) amount(<span class="fu">sd</span>) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -612,7 +613,7 @@ age + 10                         |
 </section>
 <section id="covariates-and-atmeans-values-of-the-other-variables" class="level2">
 <h2 class="anchored" data-anchor-id="covariates-and-atmeans-values-of-the-other-variables"><code>covariates()</code> and <code>atmeans</code> – values of the other variables</h2>
-<p>Covariates are the model’s other variables. By default they stay at their observed values and the effect is averaged over the sample. <code>covariates()</code> fixes them: <code>covariates(atmeans)</code> (or just <code>atmeans</code>) at their means, <code>covariates(married=1)</code> at a value, and a list for one covariate – <code>covariates(hours=(20 40 60))</code> – gives one row set per value, each a counterfactual with the whole sample set to that value.</p>
+<p>Covariates are the model’s other independent variables, not included in the <em>varlist</em>. By default they stay at their observed values and the effect is averaged over the sample. <code>covariates()</code> fixes them: <code>covariates(atmeans)</code> (or just <code>atmeans</code>) at their means, <code>covariates(married=1)</code> at a value, and a list for one covariate – <code>covariates(hours=(20 40 60))</code> – gives one row set per value, each a counterfactual with the whole sample set to that value.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m1 m2) atmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -656,7 +657,7 @@ married                          |
 </section>
 <section id="by-and-over-effects-within-levels-of-another-variable" class="level2">
 <h2 class="anchored" data-anchor-id="by-and-over-effects-within-levels-of-another-variable"><code>by()</code> and <code>over()</code> – effects within levels of another variable</h2>
-<p><code>by(varlist)</code> reports the marginal effect at each level of a binary or nominal moderator, computed as a counterfactual (everyone set to that level, then averaged); <code>over(varlist)</code> computes it within each observed subgroup instead. Both can take more than one variable. For a continuous moderator, <code>covariates(z=(numlist))</code> plays the same role as <code>by()</code>. The <a href="interactions/index.html">interactions pages</a> use these throughout.</p>
+<p><code>by(varlist)</code> reports the marginal effect at each level of a binary or nominal moderator, computed as a counterfactual (everyone set to that level, then averaged); <code>over(varlist)</code> computes it within each observed subgroup instead. Both can take more than one variable. For a continuous moderator, <code>covariates(z=(numlist))</code> plays the same role as <code>by()</code>. The <a href="interactions/index.html">interactions pages</a> show how to use these to simplify tests of interaction.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="kw">by</span>(collgrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -736,7 +737,7 @@ race                             |
 </section>
 <section id="meinequality-and-totalme-summary-measures" class="level2">
 <h2 class="anchored" data-anchor-id="meinequality-and-totalme-summary-measures"><code>meinequality</code> and <code>totalme</code> – summary measures</h2>
-<p><code>meinequality</code> adds the marginal-effect inequality summary of <a href="../meinequality/index.html"><code>meinequality</code></a> above a nominal variable’s contrasts (<code>weighted</code>, the default, <code>unweighted</code>, or <code>all</code>). <code>totalme</code> adds the Total Marginal Effect of <a href="../totalme/index.html"><code>totalme</code></a> above every focal variable, which matters for multi-category outcomes.</p>
+<p><code>meinequality</code> adds the marginal-effect inequality summary of <a href="../meinequality/index.html"><code>meinequality</code></a> above a nominal variable’s contrasts (<code>weighted</code>, the default, <code>unweighted</code>, or <code>all</code>). <code>totalme</code> adds the Total Marginal Effect of <a href="../totalme/index.html"><code>totalme</code></a> above every focal variable, most often used to summarize effects with multi-category outcome models like an ordinal or nominal model.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mecompare i.race, models(m1 m2) meinequality(<span class="ot">all</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -810,7 +811,7 @@ race                             |
 </section>
 <section id="groups-groupnames-groupme-groupsd-models-fit-to-separate-samples" class="level2">
 <h2 class="anchored" data-anchor-id="groups-groupnames-groupme-groupsd-models-fit-to-separate-samples"><code>groups</code>, <code>groupnames()</code>, <code>groupme</code>, <code>groupsd</code> – models fit to separate samples</h2>
-<p><code>groups</code> says the two models were fit to non-overlapping samples, so each model’s marginal effects are averaged over its own sample and the <strong>Difference</strong> row compares the groups. <code>groupnames()</code> labels the rows; <code>groupme</code> adds the average difference in the outcome between the groups; <code>groupsd</code> uses each group’s own SD for <code>amount(sd)</code>.</p>
+<p>The <code>groups</code> option tells <code>mecompare</code> that the two models were fit to non-overlapping samples, so each model’s marginal effects are averaged over its own sample and the <strong>Difference</strong> row compares the effects across the groups. <code>groupnames()</code> labels the rows; <code>groupme</code> adds the average difference in the outcome between the groups; <code>groupsd</code> uses each group’s own SD for <code>amount(sd)</code>; we generally do not recommend <code>groupsd</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> age hours i.collgrad <span class="kw">if</span> south == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> msouth</span>
@@ -891,7 +892,7 @@ collgrad                         |
 </section>
 <section id="marginsopt-anything-else-margins-should-be-told" class="level2">
 <h2 class="anchored" data-anchor-id="marginsopt-anything-else-margins-should-be-told"><code>marginsopt()</code> – anything else margins should be told</h2>
-<p><code>marginsopt(string)</code> is passed to <code>margins</code> verbatim. Its main use is <code>expression()</code> with one model, for example effects in percentage points:</p>
+<p><code>marginsopt(string)</code> is passed to <code>margins</code> verbatim. We recommend using it only in combination with the <code>commands</code> and <code>details</code> options to double check that <code>margins</code> produced what you want. Its main use is <code>expression()</code> with one model, for example effects in percentage points:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m2) marginsopt(expression(100*<span class="kw">predict</span>(pr)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: 100*predict(pr)

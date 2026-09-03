@@ -8,8 +8,8 @@ The same predictors can have different effects on different outcomes. Here two
 negative binomial models predict days of poor mental health and days of poor
 physical health from the same set of variables, and `mecompare` tests whether
 each predictor matters more for one outcome than the other. With no variable
-listed before the comma, marginal effects are computed for every predictor in
-the models.
+listed before the comma, `mecompare` computes marginal effects for every 
+predictor in the models.
 
 ```{.stata-run}
 <<dd_do>>
@@ -33,3 +33,12 @@ deviation:
 mecompare, models(mental physical) amount(sd)
 <</dd_do>>
 ```
+
+Women report more poor physical health days, and more poor mental health days, 
+than do men. The effect of gender is similar in size and not statistically 
+significantly different across the two outcomes.
+
+Married individuals report fewer poor mental health days than do the unmarried. 
+Marriage has no significant effect on poor physical health days. The cross-model 
+difference is significant, indicating a larger effect of marriage on mental than 
+on physical health.

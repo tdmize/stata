@@ -183,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Curvilinear effects and mediation</span></a>
+ <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Nested logit models</span></a>
+ <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The same predictors can have different effects on different outcomes. Here two negative binomial models predict days of poor mental health and days of poor physical health from the same set of variables, and <code>mecompare</code> tests whether each predictor matters more for one outcome than the other. With no variable listed before the comma, marginal effects are computed for every predictor in the models.</p>
+<p>The same predictors can have different effects on different outcomes. Here two negative binomial models predict days of poor mental health and days of poor physical health from the same set of variables, and <code>mecompare</code> tests whether each predictor matters more for one outcome than the other. With no variable listed before the comma, <code>mecompare</code> computes marginal effects for every predictor in the models.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
@@ -402,6 +402,8 @@ year                             |
                         physical |    32     -0.229      0.245      0.351
                       Difference |    33     -0.353      0.324      0.275</code></pre>
 </div>
+<p>Women report more poor physical health days, and more poor mental health days, than do men. The effect of gender is similar in size and not statistically significantly different across the two outcomes.</p>
+<p>Married individuals report fewer poor mental health days than do the unmarried. Marriage has no significant effect on poor physical health days. The cross-model difference is significant, indicating a larger effect of marriage on mental than</p>
 
 
 

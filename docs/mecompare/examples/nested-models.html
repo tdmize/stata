@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Nested logit models – Stata software — Trenton D. Mize</title>
+<title>Nested logit models and mediation/attenuation – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/nested-models.html">Nested logit models</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/nested-models.html">Nested logit models and mediation/attenuation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -183,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Curvilinear effects and mediation</span></a>
+ <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Nested logit models</span></a>
+ <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -293,9 +293,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/nested-models.html">Nested logit models</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/nested-models.html">Nested logit models and mediation/attenuation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Nested logit models</h1>
+<h1 class="title">Nested logit models and mediation/attenuation</h1>
 <p class="subtitle lead">Example 6.2 of Mize, Doan, and Long (2019)</p>
 </div>
 
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The most common cross-model question is whether an effect changes when controls are added. Here the effect of a college degree on the probability of being very happy is compared between a bivariate logit and a logit with a full set of controls. Because the outcome is binary, the marginal effect is a discrete change in the predicted probability, and comparing it across models is not subject to the rescaling problem that makes comparing logit coefficients across models misleading.</p>
+<p>One of the most common cross-model questions is whether an effect changes when controls are added, such as in tests of mediation/attenuation. Here the effect of a college degree on the probability of being very happy is compared between a bivariate logit and a logit with a full set of controls. Because the outcome is binary, the marginal effect is a discrete change in the predicted probability, and comparing it across models is not subject to the rescaling problem that makes comparing logit coefficients across models misleading.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
@@ -352,7 +352,7 @@ college                          |
                             mod2 |     2      0.060      0.011      0.000
                       Difference |     3      0.012      0.004      0.003</code></pre>
 </div>
-<p>The <strong>Difference</strong> row tests whether the college effect is smaller once the controls are included. More than two nested models can be compared by running <code>mecompare</code> for each pair of interest.</p>
+<p>The <strong>Difference</strong> row tests whether the effect of college is smaller once the controls are included. More than two nested models can be compared by running <code>mecompare</code> for each pair of interest.</p>
 
 
 
@@ -764,8 +764,8 @@ college                          |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/examples/mediation.html" class="pagination-link" aria-label="Curvilinear effects and mediation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Curvilinear effects and mediation</span>
+      <a href="../../mecompare/examples/mediation.html" class="pagination-link" aria-label="Curvilinear effects and mediation/attenuation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Curvilinear effects and mediation/attenuation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
