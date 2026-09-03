@@ -1,0 +1,23 @@
+---
+title: "Stata software"
+subtitle: "Commands for marginal effects and cross-model comparisons"
+toc: false
+sidebar: false
+---
+
+Documentation for the Stata commands written by
+[Trenton D. Mize](https://www.trentonmize.com). Each command has its own set
+of pages; installation instructions are on each overview page.
+
+::: {.command-table}
+| Command | What it does |
+|:------|:-------------------------------------------------------------|
+| [**mecompare**](mecompare/index.html) | Marginal effects, and tests of whether an effect differs across models: nested models, alternative predictors, different outcomes, different model types, separate groups. |
+| [**suest2**](suest2/index.html) | Combines separately estimated models so that quantities from different models can be tested against each other. |
+| [**metest**](metest/index.html) | Tests contrasts between rows of the tables produced by `mecompare`, `meinequality`, and `totalme`. |
+| [**meinequality**](meinequality/index.html) | Summarizes how unequal the marginal effects of a categorical predictor are across its categories. |
+| [**totalme**](totalme/index.html) | Summarizes a predictor's effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect. |
+:::
+
+Other software -- the `cleanplots` graph scheme, `irt_me`, and R packages -- is
+listed at [trentonmize.com/software](https://www.trentonmize.com/software).

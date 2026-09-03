@@ -1,0 +1,57 @@
+---
+title: "suest2"
+subtitle: "Seemingly unrelated estimation of separately fit models"
+---
+<<dd_version: 2>>
+
+`suest2` combines models that were estimated separately into one set of
+results, so that coefficients, predictions, and marginal effects from
+different models can be tested against each other with `test`, `lincom`,
+`nlcom`, or `margins`. It is the engine underneath
+[`mecompare`](../mecompare/index.html), [`meinequality`](../meinequality/index.html),
+and [`totalme`](../totalme/index.html), and it can be used on its own.
+
+<!-- CHECK: one or two sentences on what suest2 adds over Stata's suest (the
+     models it accepts, svy/mi prefixes, weights), taken from the help file. -->
+
+## Installation
+
+```stata
+net install suest2, from("https://tdmize.github.io/data/suest2") replace
+```
+
+<!-- CHECK: install location. -->
+
+## Basic use
+
+Fit and store the models, then combine them and refer to each model's
+coefficients by equation name:
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+drop if missing(union)
+
+quietly logit union i.collgrad c.age i.south, vce(robust)
+estimates store m1
+
+quietly logit union i.collgrad c.age i.south c.wage c.ttl_exp, vce(robust)
+estimates store m2
+
+suest2 m1 m2
+<</dd_do>>
+```
+
+The combined results are now the active estimates, so `lincom`, `test`,
+`nlcom`, and `margins` work on them, with each model's coefficients referred to
+by the equation names shown in the output.
+
+<!-- CHECK: add a lincom line comparing the collgrad coefficients across the two
+     equations once the equation names suest2 posts are confirmed, e.g.
+     lincom [eq1]1.collgrad - [eq2]1.collgrad -->
+
+
+## Documentation
+
+`help suest2` in Stata documents the syntax and options. Examples of the full
+workflow are on the [`mecompare`](../mecompare/index.html) pages.

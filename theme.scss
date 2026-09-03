@@ -1,0 +1,109 @@
+/*-- scss:defaults --*/
+
+// Bootstrap variables. Anything set here overrides the "cosmo" theme.
+
+// Keep the left sidebar docked down to 860px of width instead of Bootstrap's
+// default 992px, so it survives being embedded in a Google Sites page.
+// Below this width the sidebar collapses into a toggle button.
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 860px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+$font-size-root: 16px;
+$headings-font-weight: 600;
+$link-color: #0b5394;
+
+// Code
+$code-block-bg: #f6f8fa;
+$code-block-border-left: false;
+$code-block-font-size: 0.875em;
+$code-color: #24292f;
+
+// Sidebar
+$sidebar-bg: #f8f9fa;
+$sidebar-fg: #212529;
+
+
+/*-- scss:rules --*/
+
+// ---- Stata command/output blocks (produced by stata-run.lua) ---------------
+
+// The whole run: a command block followed by its output, repeated.
+.stata-run {
+  margin: 1rem 0 1.5rem;
+}
+
+// Command block: Quarto's normal highlighted code block, tightened up so the
+// output sits right under it.
+.stata-run div.sourceCode {
+  margin: 0;
+}
+.stata-run div.sourceCode + pre.stata-output {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+// Output block: white background, thin left rule, Stata-like monospace text.
+pre.stata-output {
+  margin: 0 0 0.75rem;
+  padding: 0.6rem 0.9rem;
+  background: #ffffff;
+  border: 1px solid #e3e6ea;
+  border-left: 3px solid #b8c0c8;
+  border-radius: 0 0 0.25rem 0.25rem;
+  font-size: 0.83em;
+  line-height: 1.35;
+  color: #333;
+  overflow-x: auto;
+  white-space: pre;
+}
+pre.stata-output code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+// ---- General polish -------------------------------------------------------
+
+h1.title {
+  margin-bottom: 0.25rem;
+}
+p.subtitle.lead {
+  color: #5a6570;
+  font-size: 1.1rem;
+}
+
+// Inline code
+p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
+  background: #f1f3f5;
+  color: #1f2328;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+// Sidebar: a little more air, slightly smaller text
+.sidebar-navigation .sidebar-item {
+  font-size: 0.95rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+}
+.sidebar-title {
+  font-weight: 700;
+  font-family: $font-family-monospace;
+  font-size: 1.15rem;
+}
+
+// Tables (option summaries etc.)
+table.table {
+  font-size: 0.93rem;
+}
+.command-table td:first-child {
+  white-space: nowrap;
+}

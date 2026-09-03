@@ -1,0 +1,51 @@
+---
+title: "totalme"
+subtitle: "The Total Marginal Effect for multiple-outcome models"
+---
+<<dd_version: 2>>
+
+In a model with several outcome categories -- a multinomial or ordered logit, or
+the probabilities of individual counts -- a predictor has one marginal effect per
+category. `totalme` summarizes them in a single Total Marginal Effect: the total
+amount of probability the predictor moves across the outcome categories, with a
+standard error. The summary can be reported for one model, compared across
+predictors, and compared across models or groups.
+
+<!-- CHECK: definition sentence and the citation (Mize & Han 2025, Sociological
+     Science). -->
+
+## Installation
+
+```stata
+net install totalme, from("https://tdmize.github.io/data/totalme") replace
+```
+
+<!-- CHECK: install location. -->
+
+## Basic use
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+drop if missing(occupation)
+recode occupation (1/2 = 1 "Professional/managerial") (3/5 = 2 "Sales/clerical/craft") ///
+                  (6/13 = 3 "Other"), gen(occ3)
+
+quietly mlogit occ3 i.collgrad c.age i.south, vce(robust)
+
+totalme collgrad
+<</dd_do>>
+```
+
+The Total Marginal Effect of a college degree is the total change in the
+predicted distribution across the three occupation groups. `totalme` can also be
+requested as an option of [`mecompare`](../mecompare/index.html), which places
+the summary beneath the per-outcome marginal effects.
+
+## Citation
+
+<!-- CHECK: add the reference for the Total Marginal Effect. -->
+
+## Documentation
+
+`help totalme` in Stata documents the syntax and options.

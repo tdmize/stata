@@ -1,0 +1,18 @@
+# Quarto working files
+/.quarto/
+/_site/
+**/_freeze/
+
+# build.do scratch
+/build_render.log
+
+# Stata leftovers
+*.smcl
+*.log
+*.gph
+*.dta
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db

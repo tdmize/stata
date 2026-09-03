@@ -1,0 +1,49 @@
+---
+title: "meinequality"
+subtitle: "Marginal effect inequality: summarizing the effects of a categorical predictor"
+---
+<<dd_version: 2>>
+
+A nominal predictor with several categories produces a set of marginal effects
+-- one contrast for every pair of categories. `meinequality` summarizes that set
+in a single measure of how unequal the categories are, with a standard error, so
+that the overall importance of a categorical variable can be reported, compared
+across predictors, and compared across models or groups.
+
+<!-- CHECK: definition sentence and the citation for the measure (Mize & Han).
+     Add the weighted/unweighted distinction if it belongs in the overview. -->
+
+## Installation
+
+```stata
+net install meinequality, from("https://tdmize.github.io/data/meinequality") replace
+```
+
+<!-- CHECK: install location. -->
+
+## Basic use
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+drop if missing(union)
+
+quietly logit union i.race i.collgrad c.age i.south, vce(robust)
+
+meinequality race
+<</dd_do>>
+```
+
+With no `models()` option the summary is computed for the model in memory;
+with two stored models in `models()` it is computed for each and the
+difference is tested, as in [`mecompare`](../mecompare/index.html).
+
+## Citation
+
+<!-- CHECK: add the reference for the marginal effect inequality measure. -->
+
+## Documentation
+
+`help meinequality` in Stata documents the syntax and options. The same
+summary is available as an option of [`mecompare`](../mecompare/index.html),
+which places it beneath the marginal effects it summarizes.

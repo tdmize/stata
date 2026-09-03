@@ -1,0 +1,54 @@
+---
+title: "metest"
+subtitle: "Tests and contrasts of marginal effects"
+---
+<<dd_version: 2>>
+
+`metest` tests linear and nonlinear combinations of the rows of the table
+produced by [`mecompare`](../mecompare/index.html),
+[`meinequality`](../meinequality/index.html), or
+[`totalme`](../totalme/index.html) -- or of any results posted by
+`margins, post`. Rows are referred to by the number in the `#` column of the
+table, so a difference between two effects is `metest 2 - 1`, a ratio is
+`metest 2 / 1`, and a test that several effects are equal is
+`metest 1 = 2 = 3`.
+
+## Installation
+
+```stata
+net install metest, from("https://tdmize.github.io/data/metest") replace
+```
+
+<!-- CHECK: install location. -->
+
+## Basic use
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+drop if missing(union)
+
+quietly logit union i.collgrad i.south i.smsa c.age c.wage, vce(robust)
+estimates store m
+
+mecompare i.collgrad i.south i.smsa, models(m)
+<</dd_do>>
+```
+
+Is the college gap in union membership the same size as the regional gap? And
+is the college gap larger than the city/non-city gap?
+
+```{.stata-run}
+<<dd_do>>
+metest 1 - 2
+metest 1 - 3
+<</dd_do>>
+```
+
+## Documentation
+
+`help metest` in Stata documents the syntax, the forms an expression can take,
+and the options for accumulating several tests into one table.
+
+<!-- CHECK: a short list of the expression forms and the accumulate/rowname-type
+     options, taken from the help file. -->

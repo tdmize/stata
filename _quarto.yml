@@ -1,0 +1,132 @@
+# Site configuration for https://tdmize.github.io/stata/
+#
+# One Quarto project, one sidebar per package. A page shows the sidebar that
+# lists it, so each package reads as its own small site (and can be embedded
+# on its own Google Sites page). To add a page: create it under
+# <pkg>/_src/, run build.do, and add it to that package's sidebar below.
+
+project:
+  type: website
+  output-dir: docs          # GitHub Pages serves this folder (Settings > Pages > /docs)
+
+website:
+  title: "Stata software — Trenton D. Mize"
+  site-url: "https://tdmize.github.io/stata/"
+  page-navigation: true     # previous/next links at the bottom of each page
+  back-to-top-navigation: true
+  search:
+    location: sidebar
+    type: overlay
+  page-footer:
+    left: "Trenton D. Mize · [trentonmize.com](https://www.trentonmize.com)"
+    right: "Built with [Quarto](https://quarto.org)"
+
+  sidebar:
+
+    # ---------------------------------------------------------------- mecompare
+    - id: mecompare
+      title: "mecompare"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/mecompare
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: mecompare/index.qmd
+        - mecompare/getting-started.qmd
+        - section: "Examples"
+          contents:
+            - mecompare/examples/mediation.qmd
+            - mecompare/examples/nested-models.qmd
+            - mecompare/examples/alternative-predictors.qmd
+            - mecompare/examples/different-outcomes.qmd
+            - mecompare/examples/model-types.qmd
+            - mecompare/examples/groups.qmd
+            - mecompare/examples/within-model.qmd
+
+    # ------------------------------------------------------------------- suest2
+    - id: suest2
+      title: "suest2"
+      style: docked
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: suest2/index.qmd
+
+    # ------------------------------------------------------------------- metest
+    - id: metest
+      title: "metest"
+      style: docked
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: metest/index.qmd
+
+    # ------------------------------------------------------------- meinequality
+    - id: meinequality
+      title: "meinequality"
+      style: docked
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: meinequality/index.qmd
+
+    # ------------------------------------------------------------------ totalme
+    - id: totalme
+      title: "totalme"
+      style: docked
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: totalme/index.qmd
+
+format:
+  html:
+    theme: [cosmo, theme.scss]
+    # Page outline goes under the navigation on the left, so the page is two
+    # columns, not three: the text column keeps its width when the site is
+    # embedded in a ~1000px frame. Change to "right" for the marginaleffects look.
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+    toc-location: left
+    grid:
+      sidebar-width: 250px
+      body-width: 900px
+      margin-width: 40px
+      gutter-width: 1.5rem
+    code-copy: true           # copy button on command blocks (prompts are stripped)
+    code-overflow: scroll
+    highlight-style: github
+    link-external-newwindow: true
+    filters:
+      - stata-run.lua         # splits dyntext output into command + output blocks

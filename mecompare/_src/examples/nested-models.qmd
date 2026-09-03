@@ -1,0 +1,39 @@
+---
+title: "Nested logit models"
+subtitle: "Example 6.2 of Mize, Doan, and Long (2019)"
+---
+<<dd_version: 2>>
+
+The most common cross-model question is whether an effect changes when
+controls are added. Here the effect of a college degree on the probability of
+being very happy is compared between a bivariate logit and a logit with a full
+set of controls. Because the outcome is binary, the marginal effect is a
+discrete change in the predicted probability, and comparing it across models is
+not subject to the rescaling problem that makes comparing logit coefficients
+across models misleading.
+
+```{.stata-run}
+<<dd_do>>
+use "https://tdmize.github.io/data/data/gss_cme", clear
+drop if year < 2000
+drop if employed != 1
+drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+
+quietly logit vhappy i.college, vce(robust)
+estimates store mod1
+
+quietly logit vhappy i.college i.married i.parent i.woman i.conserv ///
+              i.reltrad i.year c.age##c.age, vce(robust)
+estimates store mod2
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.college, models(mod1 mod2)
+<</dd_do>>
+```
+
+The **Difference** row tests whether the college effect is smaller once the
+controls are included. More than two nested models can be compared by running
+`mecompare` for each pair of interest.
