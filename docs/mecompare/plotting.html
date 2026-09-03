@@ -235,22 +235,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/interactions/index.qmd" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/linear-model.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/interactions/linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Nonlinear effects in a linear model</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/nominal-by-nominal.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/interactions/nominal-by-nominal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two nominal variables</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/nominal-by-continuous.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/interactions/nominal-by-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A nominal and a continuous variable</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/continuous-by-continuous.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/interactions/continuous-by-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two continuous variables</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -259,29 +271,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Examples from the help file</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Help files</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../mecompare/help.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">help mecompare</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../mecompare/help-melincom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">help melincom (retired)</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -294,7 +289,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-three-column-table" id="toc-a-three-column-table" class="nav-link" data-scroll-target="#a-three-column-table">A three-column table</a></li>
   <li><a href="#one-model" id="toc-one-model" class="nav-link" data-scroll-target="#one-model">One model</a></li>
   <li><a href="#effects-across-levels-of-a-moderator" id="toc-effects-across-levels-of-a-moderator" class="nav-link" data-scroll-target="#effects-across-levels-of-a-moderator">Effects across levels of a moderator</a></li>
-  <li><a href="#without-store-plotting-eb-directly" id="toc-without-store-plotting-eb-directly" class="nav-link" data-scroll-target="#without-store-plotting-eb-directly">Without store(): plotting e(b) directly</a></li>
   </ul>
 </nav>
 </nav>
@@ -546,45 +540,6 @@ age + 1                          |
 </figure>
 </div>
 <p>The <a href="interactions/index.html">interactions pages</a> use this pattern to reproduce the marginal-effect figures of Mize (2019).</p>
-</section>
-<section id="without-store-plotting-eb-directly" class="level2">
-<h2 class="anchored" data-anchor-id="without-store-plotting-eb-directly">Without store(): plotting e(b) directly</h2>
-<p>Because <code>mecompare</code> is an e-class command, <code>coefplot</code> with no arguments plots the active results – the whole table, differences included:</p>
-<div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married i.collgrad, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (m1) is:
-     logit union i.married age i.race hours i.collgrad ttl_exp
-Model 2 (m2) is:
-     logit union i.married age i.race hours i.collgrad ttl_exp grade wage
-
-
-Predicting: Pr(union)
-
-Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
-
-                                 |  ME #   Estimate  Robust SE      P&gt;|z|
----------------------------------+---------------------------------------
-married                          |                                       
-            Married - Single     |                                       
-                              m1 |     1     -0.025      0.022      0.238
-                              m2 |     2     -0.019      0.021      0.367
-                      Difference |     3     -0.006      0.003      0.036
----------------------------------+---------------------------------------
-collgrad                         |                                       
-         College  - Not coll     |                                       
-                              m1 |     4      0.099      0.025      0.000
-                              m2 |     5      0.043      0.039      0.264
-                      Difference |     6      0.056      0.032      0.083</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>coefplot, <span class="bn">xline</span>(0)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/plotting-eb.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>file fig/plotting-eb.png saved as PNG format</code></pre>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="fig/plotting-eb.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>The active mecompare results plotted directly.</figcaption>
-</figure>
-</div>
 
 
 </section>

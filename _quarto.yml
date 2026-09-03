@@ -59,12 +59,8 @@ website:
             - mecompare/interactions/nominal-by-continuous.qmd
             - mecompare/interactions/continuous-by-continuous.qmd
         - mecompare/help-examples.qmd
-        - section: "Help files"
-          contents:
-            - text: "help mecompare"
-              href: mecompare/help.qmd
-            - text: "help melincom (retired)"
-              href: mecompare/help-melincom.qmd
+        - text: "help mecompare"
+          href: mecompare/help.qmd
 
     # ------------------------------------------------------------------- suest2
     - id: suest2

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curvilinear effects and mediation/attenuation – Stata software — Trenton D. Mize</title>
+<title>Nonlinear effects in a linear model – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,8 +71,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/examples/nested-models.html" rel="next">
-<link href="../../mecompare/plotting.html" rel="prev">
+<link href="../../mecompare/interactions/nominal-by-nominal.html" rel="next">
+<link href="../../mecompare/interactions/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Curvilinear effects and mediation/attenuation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/linear-model.html">Nonlinear effects in a linear model</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/linear-model.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/interactions/linear-model.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Nonlinear effects in a linear model</span></a>
   </div>
 </li>
@@ -279,7 +279,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-model" id="toc-the-model" class="nav-link active" data-scroll-target="#the-model">The model</a></li>
+  <li><a href="#start-with-the-predictions-figure-1" id="toc-start-with-the-predictions-figure-1" class="nav-link" data-scroll-target="#start-with-the-predictions-figure-1">Start with the predictions (Figure 1)</a></li>
+  <li><a href="#the-effect-of-age-for-men-and-women-table-2" id="toc-the-effect-of-age-for-men-and-women-table-2" class="nav-link" data-scroll-target="#the-effect-of-age-for-men-and-women-table-2">The effect of age for men and women (Table 2)</a></li>
+  <li><a href="#the-other-side-the-effect-of-gender-across-age-figure-2" id="toc-the-other-side-the-effect-of-gender-across-age-figure-2" class="nav-link" data-scroll-target="#the-other-side-the-effect-of-gender-across-age-figure-2">The other side: the effect of gender across age (Figure 2)</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -288,10 +297,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Curvilinear effects and mediation/attenuation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/linear-model.html">Nonlinear effects in a linear model</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Curvilinear effects and mediation/attenuation</h1>
-<p class="subtitle lead">Example 6.1 of Mize, Doan, and Long (2019)</p>
+<h1 class="title">Nonlinear effects in a linear model</h1>
+<p class="subtitle lead">Age, age², and gender: Table 2 and Figures 1–2 of Mize (2019)</p>
 </div>
 
 
@@ -308,50 +317,163 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Marginal effects can summarize the effect of a curvilinear relationship in a single number which can facilitate tests of that relationship. For example, to see if a nonlinear relationship is attenuated across models. Here, we compare an effect across a model with and without a proposed mediator. Here income is entered with a squared term in a linear regression of depressive symptoms; the second model adds job satisfaction as a mediator.</p>
+<p>Even in linear regression, an effect is nonlinear when the model has a squared term or a product term, and then “does the effect of age differ for men and women?” has no single answer: it depends on where in the range of age you ask. The article’s first example regresses hourly wages on age, age², gender, and their products, using employed respondents from the pooled GSS.</p>
+<section id="the-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-model">The model</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/ah4_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(ah4_cme.dta | Add Health Wave 4 | 2018-07-10)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(depsympB, income, inc10, age, woman, race, college, jobsat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/nli_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(wages, age, woman, parent, <span class="fu">year</span>, race, college, parttime, employed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(31,346 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> employed == 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(0 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> depsympB c.income##c.income c.age i.woman i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> basemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> depsympB c.income##c.income c.age i.woman i.race i.jobsat, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> medmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> wages c.age##c.age##i.woman i.parent c.<span class="fu">year</span> i.race i.college i.parttime, <span class="kw">vce</span>(robus</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>t)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> regwages</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The marginal effect of a one-standard-deviation increase in income in each model, and the difference between them:</p>
+</section>
+<section id="start-with-the-predictions-figure-1" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-the-predictions-figure-1">Start with the predictions (Figure 1)</h2>
+<p>The recommendation in the article is to plot the predictions first and let the plot guide the tests. That is <code>margins</code> and <code>marginsplot</code>; <code>mecompare</code> takes over from here.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare income, models(basemod medmod) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (basemod) is:
-     regress depsympB c.income##c.income c.age i.woman i.race
-Model 2 (medmod) is:
-     regress depsympB c.income##c.income c.age i.woman i.race i.jobsat
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins woman, <span class="fu">at</span>(age=(18(2)72))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>marginsplot, recastci(rline) ciopts(lpattern(<span class="kw">dash</span>)) plotopts(<span class="bn">msymbol</span>(<span class="kw">none</span>)) <span class="co">///</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">"Age in years"</span>) <span class="bn">ytitle</span>(<span class="st">"Hourly wages"</span>) <span class="bn">title</span>(<span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Variables that uniquely identify margins: age woman</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-wages-predictions.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-wages-predictions.png not found)
+file fig/nli-wages-predictions.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-wages-predictions.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Predicted hourly wages by age, for men and women.</figcaption>
+</figure>
+</div>
+<p>Wages rise with age and then fall, and the curves for men and women are not parallel. Whether the effect of age differs by gender therefore has to be asked at particular ages, or on average across the sample. Table 2 of the article does both.</p>
+</section>
+<section id="the-effect-of-age-for-men-and-women-table-2" class="level2">
+<h2 class="anchored" data-anchor-id="the-effect-of-age-for-men-and-women-table-2">The effect of age for men and women (Table 2)</h2>
+<p>The first row of Table 2 is the effect of aging from 25 to 30. <code>start(age=25)</code> puts everyone at 25, <code>amount(5) uncentered</code> moves them to 30, and <code>by(woman)</code> does it for men and for women. The two rows are numbered, and the second difference – whether the effect of aging is the same for men and women – is <code>metest 1 - 2</code>.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(regwages) <span class="bn">start</span>(age=25) amount(5) uncentered <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
 
-
-Predicting: Linear prediction
-
-Marginal effects and cross-model differences (N_basemod=4307) (N_medmod=4307)
+Marginal effects (N_regwages=30931)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-income + SD                      |                                       
-                         basemod |     1     -0.982      0.098      0.000
-                          medmod |     2     -0.797      0.096      0.000
-                      Difference |     3     -0.184      0.027      0.000</code></pre>
-</div>
-<p>The <strong>Difference</strong> row is the test of whether the income effect is attenuated after adding job satisfaction to the model. And, the cross-model covariances have been accounted for via <code>suest2</code> so we have accurate standard errors for the cross-model test. The proportion of the effect that is mediated is a contrast between rows, so <a href="../../metest/index.html"><code>metest</code></a> can report it with a standard error:</p>
-<div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+age + 5 (uncentered)             |                                       
+                             Man |     1      2.628      0.089      0.000
+                           Woman |     2      1.688      0.077      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-income                           |                                
-    (basemod - medmod) / basemod |     0.188      0.030      0.000 </code></pre>
+       age_woman_0 - age_woman_1 |     0.940      0.109      0.000 </code></pre>
 </div>
+<p>The same test from 65 to 70:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(regwages) <span class="bn">start</span>(age=65) amount(5) uncentered <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_regwages=30931)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 5 (uncentered)             |                                       
+                             Man |     1     -1.118      0.160      0.000
+                           Woman |     2     -1.165      0.135      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+       age_woman_0 - age_woman_1 |     0.046      0.206      0.823 </code></pre>
+</div>
+<p>Getting older raises wages more for men than for women in the twenties, while in the sixties the effect is negative and the same for both. An interaction that exists at one part of the range of age need not exist at another.</p>
+<p>Absent a specific age of interest, the last row of Table 2 asks the question on average: a five-year increase from each person’s own age, averaged over the sample. Dropping <code>start()</code> does that.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(regwages) amount(5) uncentered <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_regwages=30931)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 5 (uncentered)             |                                       
+                             Man |     1      1.158      0.039      0.000
+                           Woman |     2      0.569      0.033      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+       age_woman_0 - age_woman_1 |     0.589      0.050      0.000 </code></pre>
+</div>
+</section>
+<section id="the-other-side-the-effect-of-gender-across-age-figure-2" class="level2">
+<h2 class="anchored" data-anchor-id="the-other-side-the-effect-of-gender-across-age-figure-2">The other side: the effect of gender across age (Figure 2)</h2>
+<p>An interaction has two sides. The gender gap in wages at a given age is the marginal effect of <code>woman</code> with age held at that value, and <code>covariates(age=(25 55))</code> reports it at 25 and at 55 in one table so that the two can be compared.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(regwages) covariates(age=(25 55))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_regwages=30931)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+woman                            |                                       
+                 Woman - Man     |                                       
+                          age=25 |     1     -2.841      0.167      0.000
+                          age=55 |     2     -6.805      0.209      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+     woman_age_55 - woman_age_25 |    -3.964      0.278      0.000 </code></pre>
+</div>
+<p>Women earn less than men at both ages, and the gap is significantly larger at 55. The full picture is the effect of gender across the whole range of age: give <code>covariates()</code> the range, save the results with <code>store()</code>, and plot them with <code>coefplot</code>.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(regwages) covariates(age=(20(5)70)) <span class="kw">store</span>(gap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_regwages=30931)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+woman                            |                                       
+                 Woman - Man     |                                       
+                          age=20 |     1     -1.789      0.275      0.000
+                          age=25 |     2     -2.841      0.167      0.000
+                          age=30 |     3     -3.781      0.134      0.000
+                          age=35 |     4     -4.609      0.151      0.000
+                          age=40 |     5     -5.326      0.171      0.000
+                          age=45 |     6     -5.931      0.177      0.000
+                          age=50 |     7     -6.424      0.180      0.000
+                          age=55 |     8     -6.805      0.209      0.000
+                          age=60 |     9     -7.075      0.291      0.000
+                          age=65 |    10     -7.232      0.430      0.000
+                          age=70 |    11     -7.278      0.616      0.000
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>coefplot gap_regwages, vertical <span class="kw">yline</span>(0) <span class="co">///</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    coeflabels(woman_age_20 = <span class="st">"20"</span> woman_age_25 = <span class="st">"25"</span> woman_age_30 = <span class="st">"30"</span> <span class="co">///</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>               woman_age_35 = <span class="st">"35"</span> woman_age_40 = <span class="st">"40"</span> woman_age_45 = <span class="st">"45"</span> <span class="co">///</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>               woman_age_50 = <span class="st">"50"</span> woman_age_55 = <span class="st">"55"</span> woman_age_60 = <span class="st">"60"</span> <span class="co">///</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>               woman_age_65 = <span class="st">"65"</span> woman_age_70 = <span class="st">"70"</span>) <span class="co">///</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">"Age"</span>) <span class="bn">ytitle</span>(<span class="st">"Effect of gender: women - men"</span>) <span class="co">///</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects below zero indicate women earn less than men at that age"</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-wages-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-wages-gender-gap.png not found)
+file fig/nli-wages-gender-gap.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-wages-gender-gap.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>The marginal effect of gender across the range of age, with 95% confidence intervals.</figcaption>
+</figure>
+</div>
+<p>The gap is significant at every age (no interval crosses zero) and grows with age. Because these are direct tests of the group difference, the confidence intervals here say what overlapping intervals on the predictions plot cannot.</p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -761,13 +883,13 @@ income                           |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/plotting.html" class="pagination-link" aria-label="Plotting and tabulating results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plotting and tabulating results</span>
+      <a href="../../mecompare/interactions/index.html" class="pagination-link" aria-label="Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/examples/nested-models.html" class="pagination-link" aria-label="Nested logit models and mediation/attenuation">
-        <span class="nav-page-text">Nested logit models and mediation/attenuation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/interactions/nominal-by-nominal.html" class="pagination-link" aria-label="Two nominal variables">
+        <span class="nav-page-text">Two nominal variables</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

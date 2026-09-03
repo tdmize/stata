@@ -98,18 +98,3 @@ graph export "fig/plotting-moderator.png", replace width(1400)
 
 The [interactions pages](interactions/index.html) use this pattern to
 reproduce the marginal-effect figures of Mize (2019).
-
-## Without store(): plotting e(b) directly
-
-Because `mecompare` is an e-class command, `coefplot` with no arguments plots
-the active results -- the whole table, differences included:
-
-```{.stata-run}
-<<dd_do>>
-mecompare i.married i.collgrad, models(m1 m2)
-coefplot, xline(0)
-graph export "fig/plotting-eb.png", replace width(1400)
-<</dd_do>>
-```
-
-![The active mecompare results plotted directly.](fig/plotting-eb.png){width=80%}

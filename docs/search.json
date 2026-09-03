@@ -767,107 +767,307 @@
     ]
   },
   {
-    "objectID": "mecompare/plotting.html#without-store-plotting-eb-directly",
-    "href": "mecompare/plotting.html#without-store-plotting-eb-directly",
-    "title": "Plotting and tabulating results",
-    "section": "Without store(): plotting e(b) directly",
-    "text": "Without store(): plotting e(b) directly\nBecause mecompare is an e-class command, coefplot with no arguments plots the active results – the whole table, differences included:\n\nmecompare i.married i.collgrad, models(m1 m2)\nModel 1 (m1) is:\n     logit union i.married age i.race hours i.collgrad ttl_exp\nModel 2 (m2) is:\n     logit union i.married age i.race hours i.collgrad ttl_exp grade wage\n\n\nPredicting: Pr(union)\n\nMarginal effects and cross-model differences (N_m1=1875) (N_m2=1875)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nmarried                          |                                       \n            Married - Single     |                                       \n                              m1 |     1     -0.025      0.022      0.238\n                              m2 |     2     -0.019      0.021      0.367\n                      Difference |     3     -0.006      0.003      0.036\n---------------------------------+---------------------------------------\ncollgrad                         |                                       \n         College  - Not coll     |                                       \n                              m1 |     4      0.099      0.025      0.000\n                              m2 |     5      0.043      0.039      0.264\n                      Difference |     6      0.056      0.032      0.083\ncoefplot, xline(0)\ngraph export \"fig/plotting-eb.png\", replace width(1400)\nfile fig/plotting-eb.png saved as PNG format\n\n\n\n\nThe active mecompare results plotted directly.",
-    "crumbs": [
-      "Plotting and tabulating results"
-    ]
-  },
-  {
-    "objectID": "mecompare/index.html",
-    "href": "mecompare/index.html",
-    "title": "mecompare",
+    "objectID": "mecompare/interactions/nominal-by-nominal.html",
+    "href": "mecompare/interactions/nominal-by-nominal.html",
+    "title": "Two nominal variables",
     "section": "",
-    "text": "mecompare calculates marginal effects and compares them across models. It implements the framework of Mize, Doan, and Long (2019): the models are combined using seemingly-unrelated estimation with suest2 so that the difference in marginal effects across models accounts for cross-model covariances of effects, even though the models were estimated separately.\nThe comparisons mecompare handles include effects across nested models (e.g., mediation and confounding), across alternative predictors, across different outcomes, across different model types (for example ordinal versus nominal), and across models fit to separate groups or samples.\nmecompare also automates comparisons of effects within a single model. This can be used to compare effect sizes across predictors, for tests of interaction, and for other within-model comparisons.",
+    "text": "Interactions between two nominal variables are the simplest case: there are only a few combinations of the focal variables at which to look. The article’s example asks whether becoming a parent changes the probability of drinking alcohol differently for men and women, using Wave IV of Add Health, and then whether the gender gap in drinking differs by level of education.",
     "crumbs": [
-      "Overview"
+      "Interactions",
+      "Two nominal variables"
     ]
   },
   {
-    "objectID": "mecompare/index.html#installation",
-    "href": "mecompare/index.html#installation",
-    "title": "mecompare",
-    "section": "Installation",
-    "text": "Installation\nnet install mecompare, from(\"https://tdmize.github.io/data\") replace\nmecompare requires suest2, which installs the same way (net install suest2, from(\"https://tdmize.github.io/data\") replace), and it ships with metest, which automates non-standard tests of contrasts between rows of the mecompare table.",
+    "objectID": "mecompare/interactions/nominal-by-nominal.html#binary-binary-gender-and-parenthood",
+    "href": "mecompare/interactions/nominal-by-nominal.html#binary-binary-gender-and-parenthood",
+    "title": "Two nominal variables",
+    "section": "Binary × binary: gender and parenthood",
+    "text": "Binary × binary: gender and parenthood\n\nuse \"https://tdmize.github.io/data/data/nli_ah4\", clear\n(Add Health Wave IV | NLI - Nonlinear Interaction Effects | 2018-12-17)\n\n. \nquietly logit alcB i.woman##i.parrole c.age i.race c.income i.educ, vce(robust)\nestimates store alcmod\n\n\nThe predictions (Figure 12)\nThe four predicted probabilities, from margins, plotted as bars with coefplot. Each set of predictions is stored so that coefplot can arrange them by parental status within gender.\n\nquietly margins, at(woman=(0 1) parrole=0) post\nestimates store prno\nestimates restore alcmod\n(results alcmod are active now)\nquietly margins, at(woman=(0 1) parrole=1) post\nestimates store prpar\n. \ncoefplot prno prpar, vertical recast(bar) barwidth(0.3) ///\n    ciopts(recast(rcap)) citop ///\n    legend(order(1 \"No children\" 3 \"Parent\")) ///\n    xlabel(1 \"Men\" 2 \"Women\") ytitle(\"Pr(Alcohol use)\") ylabel(0(.2)1)\ngraph export \"fig/nli-alcohol-predictions.png\", replace width(1400)\n(file fig/nli-alcohol-predictions.png not found)\nfile fig/nli-alcohol-predictions.png saved as PNG format\n\n\n\n\nProbability of alcohol use by gender and parental status.\n\n\n\n\nFirst and second differences (Table 3)\nThe effect of parenthood for men and for women is mecompare with by(woman); the second difference – is the effect of parenthood the same for both? – is the difference between the two rows.\n\nmecompare i.parrole, models(alcmod) by(woman)\nPredicting: Pr(alcB)\n\nMarginal effects (N_alcmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nparrole                          |                                       \n           Parent - No Child     |                                       \n                             Man |     1     -0.103      0.023      0.000\n                           Woman |     2     -0.163      0.021      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n parrole_woma~0 - parrole_woma~1 |     0.059      0.031      0.055 \n\nParents are less likely to drink than non-parents of the same gender, and the drop is larger for women than for men: the second difference is significant. The other side of the interaction is the gender gap for non-parents and for parents, which is the same model with the roles reversed:\n\nmecompare i.woman, models(alcmod) by(parrole)\nPredicting: Pr(alcB)\n\nMarginal effects (N_alcmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nwoman                            |                                       \n                 Woman - Man     |                                       \n                     No Children |     1     -0.059      0.020      0.003\n                          Parent |     2     -0.118      0.025      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n woman_parrol~0 - woman_parrol~1 |     0.059      0.031      0.055",
     "crumbs": [
-      "Overview"
+      "Interactions",
+      "Two nominal variables"
     ]
   },
   {
-    "objectID": "mecompare/index.html#where-to-start",
-    "href": "mecompare/index.html#where-to-start",
-    "title": "mecompare",
-    "section": "Where to start",
-    "text": "Where to start\n\nGetting started walks through one comparison and explains the table.\nOptions goes through every option with an example of each; Plotting and tabulating results covers store() with coefplot and esttab.\nThe Examples in the sidebar reproduce the examples from Mize, Doan, and Long (2019) plus a within-model comparison; the Interactions pages reproduce the analyses of Mize (2019) on nonlinear interaction effects.\nExamples from the help file runs the help file’s examples in full, and the help file itself is on the site, rendered from the installed version (help mecompare in Stata).",
+    "objectID": "mecompare/interactions/nominal-by-nominal.html#nominal-with-several-categories-gender-and-education",
+    "href": "mecompare/interactions/nominal-by-nominal.html#nominal-with-several-categories-gender-and-education",
+    "title": "Two nominal variables",
+    "section": "Nominal with several categories: gender and education",
+    "text": "Nominal with several categories: gender and education\nWith a five-category education variable the logic is the same; there are simply more comparisons.\n\nquietly logit alcB i.educ##i.woman c.age i.race c.income, vce(robust)\nestimates store alcedmod\n\n\nThe predictions (Figure 13)\nA dot plot of the ten predicted probabilities, education on the axis and one marker per gender:\n\nquietly margins woman#educ\nmarginsplot, recast(scatter) recastci(rspike) xdimension(educ) horizontal ///\n    ytitle(\"\") xtitle(\"Pr(Alcohol use)\") xlabel(.2(.2).8) title(\"\")\nVariables that uniquely identify margins: woman educ\ngraph export \"fig/nli-alcohol-education.png\", replace width(1400)\n(file fig/nli-alcohol-education.png not found)\nfile fig/nli-alcohol-education.png saved as PNG format\n\n\n\n\nProbability of alcohol use by gender and educational attainment.\n\n\n\n\nThe gender gap at each level of education (Table 4)\nby(educ) gives the marginal effect of gender at each level of education, one row per level. A joint test that the five gaps are equal is the overall test of interaction; the pairwise second differences say which levels differ.\n\nmecompare i.woman, models(alcedmod) by(educ)\nPredicting: Pr(alcB)\n\nMarginal effects (N_alcedmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nwoman                            |                                       \n                 Woman - Man     |                                       \n                   No High Sch~e |     1     -0.288      0.061      0.000\n                   High School~e |     2     -0.104      0.035      0.003\n                    Some College |     3     -0.136      0.023      0.000\n                   College Deg~e |     4     -0.062      0.029      0.032\n                   Graduate De~e |     5     -0.126      0.047      0.007\nmetest 1 = 2 = 3 = 4 = 5\nTests of equality\n\n                                 |      chi2         df     pvalue \n---------------------------------+--------------------------------\n                       1=2=3=4=5 |    12.497      4.000      0.014 \n\nThe gap is significant at every level of education – men are more likely to drink – and the gaps are not all the same size. Table 4 of the article reports which pairs differ; the contrasts with the lowest education level, accumulated into one table with add:\n\nmetest 1 - 2, rowname(\"No HS - HS\")\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                      No HS - HS |    -0.185      0.070      0.008 \nmetest 1 - 3, add rowname(\"No HS - Some college\")\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                      No HS - HS |    -0.185      0.070      0.008 \n            No HS - Some college |    -0.153      0.065      0.019 \nmetest 1 - 4, add rowname(\"No HS - College\")\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                      No HS - HS |    -0.185      0.070      0.008 \n            No HS - Some college |    -0.153      0.065      0.019 \n                 No HS - College |    -0.226      0.067      0.001 \nmetest 1 - 5, add rowname(\"No HS - Graduate\")\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                      No HS - HS |    -0.185      0.070      0.008 \n            No HS - Some college |    -0.153      0.065      0.019 \n                 No HS - College |    -0.226      0.067      0.001 \n                No HS - Graduate |    -0.162      0.077      0.035 \n\nThe gender gap among those without a high school degree is larger than at every other level. Any other pair is tested the same way, e.g. metest 2 - 4.\n\n\nThe other side: education within gender\nThe article omits this side for space but recommends examining it. With i.educ as the focal variable, each row is a contrast with the base category; pwcompare would give all ten pairwise contrasts instead.\n\nmecompare i.educ, models(alcedmod) by(woman)\nPredicting: Pr(alcB)\n\nMarginal effects (N_alcedmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\neduc                             |                                       \n     High Schoo - No High Sc     |                                       \n                             Man |     1      0.025      0.047      0.590\n                           Woman |     2      0.210      0.052      0.000\n     Some Colle - No High Sc     |                                       \n                             Man |     3      0.080      0.045      0.075\n                           Woman |     4      0.232      0.047      0.000\n     College De - No High Sc     |                                       \n                             Man |     5      0.099      0.047      0.036\n                           Woman |     6      0.326      0.049      0.000\n     Graduate D - No High Sc     |                                       \n                             Man |     7      0.132      0.056      0.019\n                           Woman |     8      0.294      0.054      0.000",
     "crumbs": [
-      "Overview"
+      "Interactions",
+      "Two nominal variables"
     ]
   },
   {
-    "objectID": "mecompare/index.html#citation",
-    "href": "mecompare/index.html#citation",
-    "title": "mecompare",
-    "section": "Citation",
-    "text": "Citation\nmecompare implements the methods proposed by Mize, Doan, and Long (2019). If you use mecompare, please cite:\n\nMize, Trenton D., Long Doan, and J. Scott Long. 2019. “A General Framework for Comparing Predictions and Marginal Effects Across Models.” Sociological Methodology 49(1): 152–189. https://doi.org/10.1177/0081175019852763",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "mecompare/index.html#related-commands",
-    "href": "mecompare/index.html#related-commands",
-    "title": "mecompare",
-    "section": "Related commands",
-    "text": "Related commands\n\n\n\n\nCommand\nWhat it does\n\n\n\n\nsuest2\nCombines separately estimated models so that quantities from different models can be tested against each other. The engine underneath cross-model comparisons for mecompare.\n\n\nmetest\nTests contrasts between rows of the tables produced by mecompare, meinequality, and totalme (or any posted margins results).\n\n\nmeinequality\nSummarizes how unequal the marginal effects of a categorical predictor are across its categories.\n\n\ntotalme\nSummarizes a predictor’s effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect.",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "mecompare/help-melincom.html",
-    "href": "mecompare/help-melincom.html",
-    "title": "melincom (retired)",
+    "objectID": "mecompare/interactions/linear-model.html",
+    "href": "mecompare/interactions/linear-model.html",
+    "title": "Nonlinear effects in a linear model",
     "section": "",
-    "text": "This page is generated from melincom.sthlp by build.do, so it matches the installed version. In Stata, type help melincom.",
+    "text": "Even in linear regression, an effect is nonlinear when the model has a squared term or a product term, and then “does the effect of age differ for men and women?” has no single answer: it depends on where in the range of age you ask. The article’s first example regresses hourly wages on age, age², gender, and their products, using employed respondents from the pooled GSS.",
     "crumbs": [
-      "Help files",
-      "help melincom (retired)"
+      "Interactions",
+      "Nonlinear effects in a linear model"
     ]
   },
   {
-    "objectID": "mecompare/help-melincom.html#title",
-    "href": "mecompare/help-melincom.html#title",
-    "title": "melincom (retired)",
+    "objectID": "mecompare/interactions/linear-model.html#the-model",
+    "href": "mecompare/interactions/linear-model.html#the-model",
+    "title": "Nonlinear effects in a linear model",
+    "section": "The model",
+    "text": "The model\n\nuse \"https://tdmize.github.io/data/data/nli_gss\", clear\n(GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)\ndrop if missing(wages, age, woman, parent, year, race, college, parttime, employed)\n(31,346 observations deleted)\nkeep if employed == 1\n(0 observations deleted)\n\n. \nquietly regress wages c.age##c.age##i.woman i.parent c.year i.race i.college i.parttime, vce(robus\nt)\nestimates store regwages",
+    "crumbs": [
+      "Interactions",
+      "Nonlinear effects in a linear model"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/linear-model.html#start-with-the-predictions-figure-1",
+    "href": "mecompare/interactions/linear-model.html#start-with-the-predictions-figure-1",
+    "title": "Nonlinear effects in a linear model",
+    "section": "Start with the predictions (Figure 1)",
+    "text": "Start with the predictions (Figure 1)\nThe recommendation in the article is to plot the predictions first and let the plot guide the tests. That is margins and marginsplot; mecompare takes over from here.\n\nquietly margins woman, at(age=(18(2)72))\nmarginsplot, recastci(rline) ciopts(lpattern(dash)) plotopts(msymbol(none)) ///\n    xtitle(\"Age in years\") ytitle(\"Hourly wages\") title(\"\")\nVariables that uniquely identify margins: age woman\ngraph export \"fig/nli-wages-predictions.png\", replace width(1400)\n(file fig/nli-wages-predictions.png not found)\nfile fig/nli-wages-predictions.png saved as PNG format\n\n\n\n\nPredicted hourly wages by age, for men and women.\n\n\nWages rise with age and then fall, and the curves for men and women are not parallel. Whether the effect of age differs by gender therefore has to be asked at particular ages, or on average across the sample. Table 2 of the article does both.",
+    "crumbs": [
+      "Interactions",
+      "Nonlinear effects in a linear model"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/linear-model.html#the-effect-of-age-for-men-and-women-table-2",
+    "href": "mecompare/interactions/linear-model.html#the-effect-of-age-for-men-and-women-table-2",
+    "title": "Nonlinear effects in a linear model",
+    "section": "The effect of age for men and women (Table 2)",
+    "text": "The effect of age for men and women (Table 2)\nThe first row of Table 2 is the effect of aging from 25 to 30. start(age=25) puts everyone at 25, amount(5) uncentered moves them to 30, and by(woman) does it for men and for women. The two rows are numbered, and the second difference – whether the effect of aging is the same for men and women – is metest 1 - 2.\n\nmecompare age, models(regwages) start(age=25) amount(5) uncentered by(woman)\nPredicting: Linear prediction\n\nMarginal effects (N_regwages=30931)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nage + 5 (uncentered)             |                                       \n                             Man |     1      2.628      0.089      0.000\n                           Woman |     2      1.688      0.077      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n       age_woman_0 - age_woman_1 |     0.940      0.109      0.000 \n\nThe same test from 65 to 70:\n\nmecompare age, models(regwages) start(age=65) amount(5) uncentered by(woman)\nPredicting: Linear prediction\n\nMarginal effects (N_regwages=30931)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nage + 5 (uncentered)             |                                       \n                             Man |     1     -1.118      0.160      0.000\n                           Woman |     2     -1.165      0.135      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n       age_woman_0 - age_woman_1 |     0.046      0.206      0.823 \n\nGetting older raises wages more for men than for women in the twenties, while in the sixties the effect is negative and the same for both. An interaction that exists at one part of the range of age need not exist at another.\nAbsent a specific age of interest, the last row of Table 2 asks the question on average: a five-year increase from each person’s own age, averaged over the sample. Dropping start() does that.\n\nmecompare age, models(regwages) amount(5) uncentered by(woman)\nPredicting: Linear prediction\n\nMarginal effects (N_regwages=30931)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nage + 5 (uncentered)             |                                       \n                             Man |     1      1.158      0.039      0.000\n                           Woman |     2      0.569      0.033      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n       age_woman_0 - age_woman_1 |     0.589      0.050      0.000",
+    "crumbs": [
+      "Interactions",
+      "Nonlinear effects in a linear model"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/linear-model.html#the-other-side-the-effect-of-gender-across-age-figure-2",
+    "href": "mecompare/interactions/linear-model.html#the-other-side-the-effect-of-gender-across-age-figure-2",
+    "title": "Nonlinear effects in a linear model",
+    "section": "The other side: the effect of gender across age (Figure 2)",
+    "text": "The other side: the effect of gender across age (Figure 2)\nAn interaction has two sides. The gender gap in wages at a given age is the marginal effect of woman with age held at that value, and covariates(age=(25 55)) reports it at 25 and at 55 in one table so that the two can be compared.\n\nmecompare i.woman, models(regwages) covariates(age=(25 55))\nPredicting: Linear prediction\n\nMarginal effects (N_regwages=30931)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nwoman                            |                                       \n                 Woman - Man     |                                       \n                          age=25 |     1     -2.841      0.167      0.000\n                          age=55 |     2     -6.805      0.209      0.000\nmetest 2 - 1\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n     woman_age_55 - woman_age_25 |    -3.964      0.278      0.000 \n\nWomen earn less than men at both ages, and the gap is significantly larger at 55. The full picture is the effect of gender across the whole range of age: give covariates() the range, save the results with store(), and plot them with coefplot.\n\nmecompare i.woman, models(regwages) covariates(age=(20(5)70)) store(gap)\nPredicting: Linear prediction\n\nMarginal effects (N_regwages=30931)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nwoman                            |                                       \n                 Woman - Man     |                                       \n                          age=20 |     1     -1.789      0.275      0.000\n                          age=25 |     2     -2.841      0.167      0.000\n                          age=30 |     3     -3.781      0.134      0.000\n                          age=35 |     4     -4.609      0.151      0.000\n                          age=40 |     5     -5.326      0.171      0.000\n                          age=45 |     6     -5.931      0.177      0.000\n                          age=50 |     7     -6.424      0.180      0.000\n                          age=55 |     8     -6.805      0.209      0.000\n                          age=60 |     9     -7.075      0.291      0.000\n                          age=65 |    10     -7.232      0.430      0.000\n                          age=70 |    11     -7.278      0.616      0.000\n\n. \ncoefplot gap_regwages, vertical yline(0) ///\n    coeflabels(woman_age_20 = \"20\" woman_age_25 = \"25\" woman_age_30 = \"30\" ///\n               woman_age_35 = \"35\" woman_age_40 = \"40\" woman_age_45 = \"45\" ///\n               woman_age_50 = \"50\" woman_age_55 = \"55\" woman_age_60 = \"60\" ///\n               woman_age_65 = \"65\" woman_age_70 = \"70\") ///\n    xtitle(\"Age\") ytitle(\"Effect of gender: women - men\") ///\n    note(\"Effects below zero indicate women earn less than men at that age\")\ngraph export \"fig/nli-wages-gender-gap.png\", replace width(1400)\n(file fig/nli-wages-gender-gap.png not found)\nfile fig/nli-wages-gender-gap.png saved as PNG format\n\n\n\n\nThe marginal effect of gender across the range of age, with 95% confidence intervals.\n\n\nThe gap is significant at every age (no interval crosses zero) and grows with age. Because these are direct tests of the group difference, the confidence intervals here say what overlapping intervals on the predictions plot cannot.",
+    "crumbs": [
+      "Interactions",
+      "Nonlinear effects in a linear model"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/continuous-by-continuous.html",
+    "href": "mecompare/interactions/continuous-by-continuous.html",
+    "title": "Two continuous variables",
+    "section": "",
+    "text": "Interactions between two continuous variables are the hardest to present. The article’s example is whether the growth in acceptance of same-sex relationships in the GSS between 1976 and 2016 has been broad-based or concentrated among people with particular political views. Political views are a standardized scale (0 = moderate, negative = liberal, positive = conservative); year is coded as years since 1976.",
+    "crumbs": [
+      "Interactions",
+      "Two continuous variables"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/continuous-by-continuous.html#the-model",
+    "href": "mecompare/interactions/continuous-by-continuous.html#the-model",
+    "title": "Two continuous variables",
+    "section": "The model",
+    "text": "The model\n\nuse \"https://tdmize.github.io/data/data/nli_gss\", clear\n(GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)\ndrop if missing(sameokB, year1976, conviewSS, age, white, male, income, married, college)\n(42,940 observations deleted)\n\n. \nquietly logit sameokB c.year1976##c.year1976##c.conviewSS c.age i.white i.male ///\n              c.income i.married i.college, vce(robust)\nestimates store samemod",
+    "crumbs": [
+      "Interactions",
+      "Two continuous variables"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/continuous-by-continuous.html#average-effects-of-each-variable",
+    "href": "mecompare/interactions/continuous-by-continuous.html#average-effects-of-each-variable",
+    "title": "Two continuous variables",
+    "section": "Average effects of each variable",
+    "text": "Average effects of each variable\nBefore looking at the interaction, the average effect of a standard-deviation increase in each variable (the mchange line of the replication file):\n\nmecompare year1976 conviewSS, models(samemod) amount(sd) uncentered\nPredicting: Pr(sameokB)\n\nMarginal effects (N_samemod=19337)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nyear1976 + SD (uncentered)       |                                       \n                         samemod |     1      0.150      0.003      0.000\n---------------------------------+---------------------------------------\nconviewSS + SD (uncentered)      |                                       \n                         samemod |     2     -0.078      0.003      0.000\n\nConservatives are less likely to view same-sex relationships as acceptable, and acceptance has risen over time.",
+    "crumbs": [
+      "Interactions",
+      "Two continuous variables"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/continuous-by-continuous.html#ideal-types-figure-15",
+    "href": "mecompare/interactions/continuous-by-continuous.html#ideal-types-figure-15",
+    "title": "Two continuous variables",
+    "section": "Ideal types (Figure 15)",
+    "text": "Ideal types (Figure 15)\nThe first way to present the interaction is to pick “ideal types” on one variable – here one standard deviation below and above the mean of political views, labeled liberal and conservative – and plot the predictions across the other.\n\nquietly margins, at(conviewSS=(-1 1) year1976=(0(2)40))\nmarginsplot, x(year1976) recastci(rline) ciopts(lpattern(dash)) ylabel(0(0.2)1) ///\n    xlabel(0 \"1976\" 8 \"1984\" 16 \"1992\" 24 \"2000\" 32 \"2008\" 40 \"2016\") ///\n    xtitle(\"GSS survey year\") ytitle(\"Pr(Same-sex relationships OK)\") ///\n    legend(order(3 \"Liberal\" 4 \"Conservative\")) title(\"\")\nVariables that uniquely identify margins: conviewSS year1976\ngraph export \"fig/nli-sameok-predictions.png\", replace width(1400)\n(file fig/nli-sameok-predictions.png not found)\nfile fig/nli-sameok-predictions.png saved as PNG format\n\n\n\n\nProbability of viewing same-sex relationships as acceptable, over time, for liberals and conservatives.\n\n\nThe effect of time at the two ideal types, and whether it differs, is the marginal effect of year with conviewSS held at each value:\n\nmecompare year1976, models(samemod) covariates(conviewSS=(-1 1)) amount(rate)\nPredicting: Pr(sameokB)\n\nMarginal effects (N_samemod=19337)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nyear1976(rate)                   |                                       \n                    conviewSS=-1 |     1      0.013      0.001      0.000\n                     conviewSS=1 |     2      0.007      0.000      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n year1976_con~1 - year1976_con~1 |     0.006      0.001      0.000",
+    "crumbs": [
+      "Interactions",
+      "Two continuous variables"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/continuous-by-continuous.html#the-effect-of-political-views-across-years-figure-16",
+    "href": "mecompare/interactions/continuous-by-continuous.html#the-effect-of-political-views-across-years-figure-16",
+    "title": "Two continuous variables",
+    "section": "The effect of political views across years (Figure 16)",
+    "text": "The effect of political views across years (Figure 16)\nThe second way to present the interaction is to plot the marginal effect of one variable across the range of the other. First the test the article reports: the effect of political views in 1976 versus 2016, the instantaneous effect (amount(rate)) with year held at 0 and at 40.\n\nmecompare conviewSS, models(samemod) covariates(year1976=(0 40)) amount(rate)\nPredicting: Pr(sameokB)\n\nMarginal effects (N_samemod=19337)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nconviewSS(rate)                  |                                       \n                      year1976=0 |     1     -0.044      0.016      0.005\n                     year1976=40 |     2     -0.159      0.013      0.000\nmetest 2 - 1\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n conviewSS_y~40 - conviewSS_ye~0 |    -0.115      0.016      0.000 \n\nPolitical views matter more in 2016 than in 1976: the effect is negative in both years and significantly larger in magnitude in the later one. Across all years:\n\nmecompare conviewSS, models(samemod) covariates(year1976=(0(4)40)) amount(rate) store(pv)\nPredicting: Pr(sameokB)\n\nMarginal effects (N_samemod=19337)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nconviewSS(rate)                  |                                       \n                      year1976=0 |     1     -0.044      0.016      0.005\n                      year1976=4 |     2     -0.059      0.010      0.000\n                      year1976=8 |     3     -0.074      0.007      0.000\n                     year1976=12 |     4     -0.090      0.005      0.000\n                     year1976=16 |     5     -0.106      0.005      0.000\n                     year1976=20 |     6     -0.123      0.006      0.000\n                     year1976=24 |     7     -0.141      0.006      0.000\n                     year1976=28 |     8     -0.157      0.006      0.000\n                     year1976=32 |     9     -0.168      0.007      0.000\n                     year1976=36 |    10     -0.170      0.009      0.000\n                     year1976=40 |    11     -0.159      0.013      0.000\n\n. \ncoefplot pv_samemod, vertical yline(0) ///\n    coeflabels(conviewSS_year1976_0 = \"1976\" conviewSS_year1976_4 = \"1980\" ///\n               conviewSS_year1976_8 = \"1984\" conviewSS_year1976_12 = \"1988\" ///\n               conviewSS_year1976_16 = \"1992\" conviewSS_year1976_20 = \"1996\" ///\n               conviewSS_year1976_24 = \"2000\" conviewSS_year1976_28 = \"2004\" ///\n               conviewSS_year1976_32 = \"2008\" conviewSS_year1976_36 = \"2012\" ///\n               conviewSS_year1976_40 = \"2016\") ///\n    xtitle(\"GSS survey year\") ytitle(\"AME of conservative political views\") ///\n    note(\"Negative effects indicate conservatives are less supportive of same-sex relationships\")\ngraph export \"fig/nli-sameok-views-by-year.png\", replace width(1400)\n(file fig/nli-sameok-views-by-year.png not found)\nfile fig/nli-sameok-views-by-year.png saved as PNG format\n\n\n\n\nThe marginal effect of conservative political views on acceptance, by survey year.",
+    "crumbs": [
+      "Interactions",
+      "Two continuous variables"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/continuous-by-continuous.html#the-effect-of-time-across-political-views-figure-17",
+    "href": "mecompare/interactions/continuous-by-continuous.html#the-effect-of-time-across-political-views-figure-17",
+    "title": "Two continuous variables",
+    "section": "The effect of time across political views (Figure 17)",
+    "text": "The effect of time across political views (Figure 17)\nThe other side: how much acceptance has changed over time for people with different views. The article reports a two-year change (the survey interval) for liberals and conservatives:\n\nmecompare year1976, models(samemod) covariates(conviewSS=(-1 1)) amount(2) uncentered\nPredicting: Pr(sameokB)\n\nMarginal effects (N_samemod=19337)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nyear1976 + 2 (uncentered)        |                                       \n                    conviewSS=-1 |     1      0.026      0.001      0.000\n                     conviewSS=1 |     2      0.015      0.001      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n year1976_con~1 - year1976_con~1 |     0.011      0.002      0.000 \n\nEveryone has become more accepting, liberals significantly more so than conservatives per two-year interval. Across the range of political views, from two standard deviations below the mean to two above:\n\nmecompare year1976, models(samemod) covariates(conviewSS=(-2(1)2)) amount(2) uncentered store(tm)\nPredicting: Pr(sameokB)\n\nMarginal effects (N_samemod=19337)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nyear1976 + 2 (uncentered)        |                                       \n                    conviewSS=-2 |     1      0.029      0.002      0.000\n                    conviewSS=-1 |     2      0.026      0.001      0.000\n                     conviewSS=0 |     3      0.021      0.001      0.000\n                     conviewSS=1 |     4      0.015      0.001      0.000\n                     conviewSS=2 |     5      0.009      0.001      0.000\n\n. \ncoefplot tm_samemod, vertical yline(0) ///\n    coeflabels(year1976_conviewSS__2 = \"Very liberal\" year1976_conviewSS__1 = \"Liberal\" ///\n               year1976_conviewSS_0 = \"Moderate\" year1976_conviewSS_1 = \"Conservative\" ///\n               year1976_conviewSS_2 = \"Very conservative\") ///\n    xtitle(\"\") ytitle(\"Effect of two years on Pr(Same-sex relationships OK)\") ///\n    note(\"Positive effects: the group has become more supportive over time\")\ngraph export \"fig/nli-sameok-time-by-views.png\", replace width(1400)\n(file fig/nli-sameok-time-by-views.png not found)\nfile fig/nli-sameok-time-by-views.png saved as PNG format\n\n\n\n\nThe marginal effect of two years of time on acceptance, across political views.\n\n\nThe article’s final presentation, a contour plot of the predictions over both variables (Figure 18), is a margins and twoway contour exercise rather than a marginal-effects one; the code is in the replication files at trentonmize.com/research.",
+    "crumbs": [
+      "Interactions",
+      "Two continuous variables"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html",
+    "href": "mecompare/help.html",
+    "title": "mecompare help file",
+    "section": "",
+    "text": "This page is generated from mecompare.sthlp by build.do, so it matches the installed version. In Stata, type help mecompare.",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#title",
+    "href": "mecompare/help.html#title",
+    "title": "mecompare help file",
     "section": "Title",
-    "text": "Title\nmelincom – retired; replaced by metest",
+    "text": "Title\nmecompare – mecompare (Marginal Effects Compar[e]ison) calculates marginal effects from one or two models for easy comparisons of effects within and across models. When two models are specified, mecompare uses seemingly unrelated estimation to combine the model estimates, and provides tests of the equality of marginal effects across models.",
     "crumbs": [
-      "Help files",
-      "help melincom (retired)"
+      "help mecompare"
     ]
   },
   {
-    "objectID": "mecompare/help-melincom.html#description",
-    "href": "mecompare/help-melincom.html#description",
-    "title": "melincom (retired)",
-    "section": "Description",
-    "text": "Description\nmelincom has been retired. Its replacement is metest, which takes the same ME # references, so most calls translate directly:\nmelincom 1 - 2 becomes metest 1 - 2\nmelincom 1 - 2, add becomes metest 1 - 2, add\nmelincom clear becomes metest, clear\nmetest additionally accepts coefficient names, multiplication and division, nonlinear functions, and equality tests, and it can be used after any estimation command rather than only after mecompare.",
+    "objectID": "mecompare/help.html#general-syntax",
+    "href": "mecompare/help.html#general-syntax",
+    "title": "mecompare help file",
+    "section": "General syntax",
+    "text": "General syntax\nmecompare varlist ifin weight [, models( ) options]",
     "crumbs": [
-      "Help files",
-      "help melincom (retired)"
+      "help mecompare"
     ]
   },
   {
-    "objectID": "mecompare/help-melincom.html#also-see",
-    "href": "mecompare/help-melincom.html#also-see",
-    "title": "melincom (retired)",
-    "section": "Also see",
-    "text": "Also see\nmetest, mecompare",
+    "objectID": "mecompare/help.html#overview",
+    "href": "mecompare/help.html#overview",
+    "title": "mecompare help file",
+    "section": "Overview",
+    "text": "Overview\nmecompare calculates marginal effects from one or two models. When two models are specified, mecompare combines the model estimates using seemingly unrelated estimation via the suest2 command and then calculates marginal effects for each model, as well as the cross-model comparisons of the marginal effects.\nFactor syntax should have been used on the stored model estimates to ensure mecompare calculates the correct statistics (i.e., binary and nominal variables must be entered into the variable list with the i. prefix; continuous predictor variables with the c. prefix). Factor syntax is allowed but not required for the mecompare command itself: each variable is treated as the stored models specified it. See fvvarlist for details on factor syntax. If you do not specify a variable list, marginal effects are calculated for all variables across the model(s).\nBy default, marginal effects for a nominal independent variable are shown in reference to a base category. To specify a reference category other than the default first category you can use the ib#. syntax on the stored models passed to mecompare. See fvvarlist for details on specifying base levels with factor syntax. Alternatively, the pwcompare option will calculate all pairwise contrasts; the meinequality option will calculate a single summary marginal effect inequality statistic.\nFor additional tests of the marginal effects beyond those given by default, use metest, which combines and tests the estimates by the ME # shown in the mecompare table. See Testing and combining the marginal effects.",
     "crumbs": [
-      "Help files",
-      "help melincom (retired)"
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#table-of-contents",
+    "href": "mecompare/help.html#table-of-contents",
+    "title": "mecompare help file",
+    "section": "Table of contents",
+    "text": "Table of contents\n\nOverview\nWhich models and estimators are supported\nSpecifying the models\nWhich statistics to include in table\nAmount of change to compute for continuous variables\nSetting starting values of variables in varlist\nSetting values of covariates\nMarginal effects within levels of a variable (by, over)\nSummary measures for nominal and ordinal variables\nOptions for comparing models fit over distinct groups\nOptional options for formatting, reporting, missing data, etc.\nSpecifying the prediction\nModel combinations that can be compared\nsvy and mi est support\nWeights\nTesting and combining the marginal effects\nSaved estimates and matrices\nPlotting and tabulating results (coefplot, esttab)\nFixed effects via hybrid specifications\nExamples",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#supported-estimators",
+    "href": "mecompare/help.html#supported-estimators",
+    "title": "mecompare help file",
+    "section": "Supported estimators",
+    "text": "Supported estimators\nmecompare accepts one or two models from the following families.\n\nOrdinary single-level models\nregress; logit and logistic; probit; poisson; nbreg; ologit; oprobit; and mlogit.\nglm; cloglog; tobit; intreg; maximum-likelihood heckman; and parametric streg, all parametric distributions.\ngologit2, all forms.\nivregress 2sls.\nfracreg with estimators: logit, probit.\nbetareg, all four links; truncreg; hetprobit; zip and zinb, both inflation links; and biprobit.\nivprobit and ivtobit.\n\n\nPanel models\nxtreg with estimators: mle, fe, be, re, pa.\nxtreg, cre is not supported; see Correlated random effects (Mundlak) specifications below for the supported way to fit these models.\nxtlogit with estimators: re, fe, pa. xtprobit with estimators: re, pa. xtcloglog with estimators: re, pa; the re estimator combines when fit with intpoints(24) (or &gt;24).\nxtologit and xtoprobit.\nxtmlogit with estimators: re, fe.\nxtpoisson with estimators: re (normal or gamma random effects), fe, pa. xtnbreg with estimators: re, pa.\nxtnbreg, fe is not supported.\nWhen using the fixed effects fe estimator, marginal effects estimates can have issues. See the fixed effects and correlated random effects section below for alternatives.\n\n\nMultilevel models\nmixed, mle; melogit; meprobit; mecloglog; mepoisson; menbreg; meologit; meoprobit; and mestreg, all parametric distributions.\nSupported meglm family-link pairs are Gaussian-identity and Gamma-log.\nSee Models that can be compared below for the cross-family combinations that are supported.",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#options",
+    "href": "mecompare/help.html#options",
+    "title": "mecompare help file",
+    "section": "Options",
+    "text": "Options\n\n\nSpecifying the models\nmodels(list) names the stored model estimates to use. mecompare is limited to one or two models; with two models, each model must have been estimated and saved using estimates store before running mecompare.\nmodels( ) may be omitted, in which case the estimates are taken from e():\no If suest2 was just run, the two models of that system are used, and the results are identical to naming them in models( ).\no Otherwise the single model in e() is used, and it is labelled m1 in the table. It does not need to have been stored.\n\n\n\nStatistics to include in the table\nstatistics(list) selects statistics to display. The default is to include the estimate, se, and pvalue. The following statistics can be included in list.\n\n\n\nName\nDescription\n\n\n\n\nestimate\nEstimate of the marginal effect\n\n\nse\nStandard error of estimate\n\n\npvalue\np-value for test that estimate = 0\n\n\nll\nLower level bound of confidence interval\n\n\nul\nUpper level bound of confidence interval\n\n\nz\nValue of z-statistic\n\n\nall\nDisplay all statistics\n\n\n\n\n\n\nAmount of change and related options for continuous independent variables\namount(list) specifies the amount of change to be computed for the continuous independent variables. If only one value is specified in amount( ), this amount of change is applied to all of the continuous independent variables. To specify different amounts for each continuous independent variable, amounts in list are applied in the order of the continuous independent variables. E.g. In a varlist of c.age i.woman c.income i.race c.polviews there are three continuous variables, of which changes of (1) age + sd, (2) income + 5, and (3) polviews + one can be specified with amount(sd 5 one)\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\none\nA one unit change; the default. 1 is a synonym\n\n\nsd\nA standard deviation change\n\n\n#\nA change of #, which can be any amount. E.g. A 10 unit increase can be specified with amount(10)\n\n\ntwosd\nA two standard deviation change (Gelman 2008), useful for comparing continuous effects to categorical effects. 2sd is a synonym\n\n\ntrimrange\nA change across the trimmed range of the variable, from its 5th to its 95th percentile. Suggested by Mize and Han (2025) as a more robust alternative to 2sd for comparing effects across variables.\n\n\nrate\nAn instantaneous rate of change, i.e. the derivative, approximated with a small centered change; slope and dydx are synonyms\n\n\n\ncentered Changes for continuous independent variables are centered by default: computed from half the amount below to half the amount above, e.g., [mean - SD/2] to [mean + SD/2]. The default if no option is specified.\nuncentered Requests uncentered changes: an increase of the amount from the value of the independent variable, e.g., [mean] to [mean + SD], rather than the default centered change.\n\n\n\nSetting starting values of variables in varlist\nstart(list) By default, the observed values of the focal independent variables specified in the varlist are used as the starting points for calculating the marginal effects (i.e. the margins default of asobserved is used; see margins). The means of the focal independent variables can instead be used for all observations by specifying start(atmeans). Other starting values can be specified within the start( ) option, e.g. start(age=20). Multiple focal independent variables can be listed in start( ), e.g. start(age=20 income=100).\nOne continuous focal variable may be given a numlist of starting values, e.g. start(age=(20 30 60)): the marginal effect is reported once per value, in rows labelled at 20, at 30, at 60, numbered so that metest can compare them.\n\n\n\nSetting values of covariates\ncovariates(list) Covariates are other independent variables in the model other than the focal independent variables the marginal effects are calculated for. By default, covariates are held at their observed values (i.e. the margins default of asobserved is used; see margins). The covariates can instead be held at their sample means by specifying covariates(atmeans), or simply atmeans. Other covariate values can be specified within the covariates( ) option, e.g. covariates(woman=1) would calculate all marginal effects holding the value of woman at 1. Multiple covariates can be listed in covariates( ), e.g. covariates(woman=1 polviews=5).\nOne covariate may be given a numlist of values, e.g. covariates(age=(25 44 72)): every marginal effect is reported once per value, in rows labelled age=25, age=44, age=72, numbered so that metest can test whether the effect differs across them. Each value is a counterfactual in the sense of by(): the whole sample is set to that value and the effect is averaged over the sample.\n\n\n\nMarginal effects within levels of a variable (by, over)\nby(varlist) reports the marginal effect of each focal variable as a counterfactual at each level of varname – the effect computed with the whole sample set to varname = level, one level at a time, and averaged over the sample (via the at() option of margins). One set of rows is reported per level of varname. With two or more variables, e.g. by(woman college), one set of rows is reported per combination of their levels.\nover(varlist) reports the marginal effect of each focal variable within each subpopulation defined by varname – the effect computed using only the observations for which varname equals a given level (via the over() option of margins). One set of rows is reported per level of varname. With two or more variables, e.g. over(woman college), one set of rows is reported per combination of levels.\nThe difference between the two is a subpopulation-versus-counterfactual distinction. over() describes the effect as it is in each observed group; by() describes the effect that would obtain if the entire sample were placed at each level. The two can differ due to nonlinearities, distributional differences, and/or interactive effects. See Mize and Han (2026). For most applications, by() is recommended. For a continuous moderator, covariates(varname=(numlist)) does what by() does at the listed values; see covariates().\nFor the by() or over() options, each variable must be a binary or nominal variable entered with a factor prefix in the model(s) (i. or ib#.). Both may name multiple variables. The two may not be specified together, and neither may be combined with groups.",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#summary-measures-for-nominal-and-ordinal-variables",
+    "href": "mecompare/help.html#summary-measures-for-nominal-and-ordinal-variables",
+    "title": "mecompare help file",
+    "section": "Summary measures for nominal and ordinal variables",
+    "text": "Summary measures for nominal and ordinal variables\npwcompare for focal variables specified as nominal (i.), the pwcompare option reports all pairwise contrasts between levels instead of the default of each non-base level versus the base level. Continuous and binary focal variables are unaffected.\nmeinequality[(type)] for focal variables specified as nominal (i.), the meinequality option reports a marginal effect inequality summary statistic immediately above that variable’s contrasts. The ME inequality captures how much the outcome differs across the levels of the focal variable overall, as a weighted average of the absolute pairwise level contrasts (see Mize and Han 2025). type selects the weighting:\nweighted (the default) weights each pairwise contrast by the share of the sample in the two levels being contrasted.\nunweighted gives the simple mean of the absolute pairwise contrasts, ignoring the sizes of the levels.\nall shows both, weighted first (labeled ME Inequality) then unweighted (labeled Unwgt ME Ineq.).\nWith groups, each model’s contrasts are weighted by its own sample’s shares; specify unweighted to compare the marginal effects alone.\ntotalme[(type)] adds a Total ME summary above every focal variable’s rows. The Total ME aggregates a variable’s effect on a (usually multi-category) outcome into a single number: the total probability mass the variable shifts across the outcome categories (see Mize and Han 2025). For a continuous or binary focal variable the row is labeled Total ME; for a nominal (i.) focal variable it is a Total ME inequality – the same aggregation applied to the pairwise level contrasts – labeled Total ME Ineq. type selects the weighting and applies to nominal focal variables only:\nweighted (the default) weights each pairwise contrast by the share of the sample in the two levels being contrasted.\nunweighted averages the absolute pairwise contrasts without weights; labeled Unwgt Total ME Ineq..\nall shows both, weighted first then unweighted.\n\n\nGroup options\ngroups specifies that the two models in models( ) were fit on distinct (non-overlapping) samples – for example, one model per group – and that mecompare should compare marginal effects across the two groups. Each model’s estimation sample defines its group; the two samples must not overlap.\ngroupnames(name1 name2) labels the two groups in the output (name1 for the first model, name2 for the second); by default the groups are labeled by their model names. Requires the groups option. Each name is truncated to 10 characters.\ngroupme reports the average conditional difference in the outcome across the two groups, shown beneath the table. With a multi-category outcome one difference is reported for each outcome category, labeled Pr(category). Requires the groups option.\ngroupsd with groups and amount(sd), each +SD change is calculated using that group’s own standard deviation rather than the pooled SD used by default. Not recommended for most applications: effects can differ only because the groups’ SDs differ.\n\n\n\nAdditional Optional Options\npredict(pred) the prediction margins should compute if you want something other than the default for that model type; see specifying the prediction below.\nmarginsopt(string) passes string to margins exactly as typed. Options mecompare sets itself (at(), over(), predict(), post, atmeans, and the derivative and contrast options) are refused. expression() is allowed with one model and no predict(): the marginal effects are then changes in the expression, e.g. marginsopt(expression(100*predict(pr))) for effects in percentage points. marginsopt(vce(unconditional)) requests standard errors that treat the covariates as sampled. Use with caution; the result is not checked so the user should verify results; use commands to see the margins line and details to see the margins output.\ndecimals(#) changes the number of decimal places reported in the table. The default is 3. Any integer between 0 - 7 is allowed.\nmod1name(string) and mod2name(string) name the rows in the table corresponding to the marginal effects for model 1 and model 2. The default is the name of the stored estimates given in models( ), or the group when the groups option is used. Names over 10 characters will be truncated in the output.\nlabwidth(#) changes the width of the leftmost column of the table that provides the labels for the variables and associated marginal effects. The default is 32. Any integer from 20 to 32 is allowed.\nstatwidth(#) changes the width of the columns of the table that report the statistics (e.g. estimate, SE, pvalue, etc.). The default is 9. Any integer between 9 - 20 is allowed.\nnorownum removes the column from the table with a number designation for each estimate in the table.\nstore(stub) saves the calculated marginal effects as separate stored estimates so they can be plotted with coefplot or tabulated with esttab, estimates table, or etable. With two models, three estimates are saved – stub_model1, stub_model2, and stub_diff (the cross-model differences) – where model1 and model2 are the names given in models( ). With one model, a single estimate stub_model1 is saved. Each stored estimate is keyed by variable, so coefplot and esttab arrange results by variable automatically. With by() or over(), each stored estimate carries one coefficient per cell (e.g. age_collgrad_0 and age_collgrad_1). See Plotting and tabulating results for examples.\ncommands displays the commands used for the margins estimates and, if two models are used, the suest2 command.\ndetails displays the output of the margins estimates and, if two models are used, the suest2 output.\n\n\n\nSpecifying the prediction\nWith a single model any prediction margins accepts after that command may be given. For multi-category models, the default reports a prediction per outcome; a single outcome may be selected, as in predict(pr outcome(2)).\nWith two models, a non-default prediction can be requested if it returns a single quantity per model.\nMixed-effects and panel models. When no predict() is given each model contributes its own margins default. For the me family and for mixed, that default averages over the random effects rather than holding them at zero, and that is the recommended quantity. Random intercepts, random slopes, unstructured covariance and multi-level fits are supported.\n\n\n\nModels that can be compared\nTwo models are comparable when they return the same number of predictions. Same-family pairs (e.g., two logits, two glms, two mestregs) always qualify. Cross-family pairs qualify on the same rule: logit vs regress, xtlogit vs mixed, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (ologit vs oprobit, mlogit vs ologit, and so on). Each model contributes its own default prediction, or the one given in predict(), so a cross-family comparison contrasts, e.g., logit’s predicted probabilities with regress’s linear predictions. Models that return different numbers of predictions (e.g. a 3-category ologit vs a logit) cannot be compared.\nWhen both models have a multi-category outcome, the outcome categories are matched in order, so the two dependent variables must have the same number of categories and the same values. mecompare errors if they differ (e.g. one outcome coded 0/1/2 and the other 1/2/3). If the values agree but the value labels differ, the comparison proceeds and the table is labeled with the first model’s labels.\n\n\n\nsvy and mi est support\nModels can be fit using the svy:, mi est:, or mi est: svy: prefixes. The prefix should be specified on the stored models, not on mecompare.\nFor most cases, survey weights and complex sample designs should be specified using svyset and the svy: prefix should be used on the individual models before mecompare. For svy:, all models must be svy: and the relevant svyset design must be active when mecompare is run.\nWeights carry through to every quantity mecompare computes from the data (standard deviations, means, trimmed ranges, level shares); under mi estimate these quantities are pooled across the imputations.\n\nmecompare also supports models fit with the mi estimate prefix (multiply-imputed data). All models must be mi estimate and pooled with post (mi estimate, post: command), and the user-written mimrgns package must be installed (search mimrgns). Families not on Stata’s list of commands mi estimate officially supports can often be estimated with mi estimate, post cmdok: command; whether to override Stata’s list is the user’s judgement.\nThe two prefixes may also be combined: models fit with mi estimate: svy: are supported. Declare the design with mi svyset rather than svyset. All models must carry the same prefixes.\n\n\n\nWeights\nWhen possible, use svyset and svy: to specify weights. However, weights can instead be applied on the stored models – e.g. logit y x [pw=w]. With two models, both must carry the same weight.\nMultilevel models need a stage weight. For the me families and mixed, the model must carry a higher-level weight too, as in melogit y x [pw=w2] || group:, pweight(w1). The svy: prefix, which carries the whole design from svyset, is the recommended way to specify one.",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#testing-and-combining-the-marginal-effects",
+    "href": "mecompare/help.html#testing-and-combining-the-marginal-effects",
+    "title": "mecompare help file",
+    "section": "Testing and combining the marginal effects",
+    "text": "Testing and combining the marginal effects\nEvery estimate shown in the table is posted to e(b) and e(V), in the same order as the ME # column. metest automates non-standard tests of the marginal effects that mecompare calculates.\nmetest takes either an ME # or a coefficient name. An expression without = is evaluated with nlcom, so sums, differences, ratios, products and nonlinear functions are all allowed; an expression containing = is passed to test, including chained and multiple equalities. To refer to a number for a mathematical expression, use a leading #, as in / #2 which will divide by 2, rather than referring to the 2nd ME.\nmetest 1 the marginal effect numbered 1\nmetest 1 - 2 the difference between MEs 1 and 2\nmetest (1 + 2) / #2 their average; division by 2\nmetest 1 / 2 the ratio of MEs 1 and 2\nmetest 1 = 2 = 3 a joint test that all three are equal\nThe estimates are ordinary e(b)/e(V) results, so lincom, nlcom, test and mlincom can also be used directly. Type mecompare, coeflegend to list the coefficient names.\nlincom _b[collegemental] - _b[college:physical]\ntest _b[collegemental] = _b[age:mental]\nmlincom 11 - 10\n\n\nSaved estimates and matrices\nWith two models, mecompare combines the stored estimates into a single system using suest2. It then uses margins to calculate the marginal effects. These results are stored and can be restored after mecompare has been run. See estimates restore. The combined model estimates are stored as mec_suest2. The margins estimates which contain the constituent pieces that are used to calculate the marginal effects are stored as mec_margins.\nmecompare saves the current table of estimates to the matrix _mecompare. The matrix has columns corresponding to the displayed results. Rows that only contain labels (no statistics) have values of .z\nmecompare is an e-class command. It posts the marginal effects – and, with two models, the cross-model differences – to e(b) and e(V) (with the full covariance among the estimates), so they can be used directly by post-estimation commands such as coefplot and esttab.\nThe following are stored in e():\nScalars\nMacros\nMatrices\nFunctions\n\n\n\n\n\n\n\n\nOption\nDescription\n\n\n\n\ne(N)\nnumber of observations in the marginal-effects sample; equal to the number of observations marked by e(sample)\n\n\ne(n_mods)\nnumber of models compared (1 or 2)\n\n\ne(n_vars)\nnumber of focal variables (all model predictors when no varlist is given)\n\n\ne(V_complete)\n1 if every estimate and its covariances were recovered; 0 otherwise\n\n\ne(k_failed)\nnumber of quantities that could not be computed (posted as 0 with a warning)\n\n\ne(V_zeroed)\nnumber of covariance elements set to 0 for the same reason\n\n\ne(cmd)\nmecompare\n\n\ne(properties)\nb V\n\n\ne(predict_label)\nthe prediction the effects were computed from, as shown on the Predicting: line\n\n\ne(predict1_label)\n\n\n\ne(predict2_label)\nposted only when the two models use different predictions\n\n\ne(marginsopt)\nthe string given in marginsopt(), when used\n\n\ne(b)\nmarginal effects (and, with two models, cross-model differences)\n\n\ne(V)\nvariance-covariance matrix of the estimates. In the rare case that a quantity cannot be computed, its estimate is posted as 0 and its row and column of e(V) are zeroed, with a warning; e(V_complete) reports whether this happened\n\n\ne(table)\nthe displayed table; label-only rows have value .z\n\n\ne(sample)\nmarks the estimation sample (not set after mi estimate)",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#plotting-and-tabulating-results",
+    "href": "mecompare/help.html#plotting-and-tabulating-results",
+    "title": "mecompare help file",
+    "section": "Plotting and tabulating results",
+    "text": "Plotting and tabulating results\nThe store(stub) option saves the marginal effects as separate stored estimates keyed by variable, which makes plotting with coefplot and tabulating with esttab straightforward. If needed, install these user-written packages first: ssc install coefplot and ssc install estout.\nFit and store two models:\nsysuse nlsw88, clear\ndrop if missing(union, married, age, race, hours, collgrad, ttl_exp, grade, wage)\nlogit union i.married age i.race hours i.collgrad ttl_exp, vce(robust)\nest store m1\nlogit union i.married age i.race hours i.collgrad ttl_exp grade wage, vce(robust)\nest store m2\nCalculate the marginal effects and save the pieces with store(). This saves mec_m1, mec_m2, and mec_diff:\nmecompare i.married age i.race hours i.collgrad ttl_exp, models(m1 m2) store(mec)\ncoefplot – both models’ marginal effects, arranged by variable:\ncoefplot mec_m1 mec_m2, xline(0) xtitle(\"Average marginal effect\")\ncoefplot – just the cross-model differences:\ncoefplot mec_diff, xline(0) xtitle(\"Difference in AME (model 1 - model 2)\")\nesttab – a three-column table (model 1, model 2, difference):\nesttab mec_m1 mec_m2 mec_diff, se mtitles(\"Model 1\" \"Model 2\" \"Difference\")\nFor a single model, store() saves one estimate (stub_model1) that plots and tabulates the same way:\nmecompare i.married age i.race hours i.collgrad ttl_exp, models(m1) store(me1)\ncoefplot me1_m1, xline(0) xtitle(\"Average marginal effect\")",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#fixed-effects-models-via-hybrid-correlated-random-effects-mundlak-specifications",
+    "href": "mecompare/help.html#fixed-effects-models-via-hybrid-correlated-random-effects-mundlak-specifications",
+    "title": "mecompare help file",
+    "section": "Fixed effects models via hybrid correlated random effects (Mundlak) specifications",
+    "text": "Fixed effects models via hybrid correlated random effects (Mundlak) specifications\nFixed effects models (fe estimator for xt commands) have known issues in calculating marginal effects, especially for categorical outcome models. One common recommendation is to use a hybrid model specification such as the correlated random effects (Mundlak) model, which estimates both within-person (“fixed effects”) estimates and between-person estimates, and has no issue in calculating marginal effects (Mize and Han 2026).\nxtreg, cre is not supported, but an identical hybrid correlated-random-effects (Mundlak) specification can be estimated and used with mecompare by including each time-varying predictor’s panel mean alongside the predictor when fit with the re estimator.\nbysort id: egen mean_x = mean(x)\nxtreg y x mean_x i.d, re\nWhere the x coefficient represents the within-person (“fixed effect”) estimate and the mean_x coefficient represents the between-person estimate. The same recipe extends to any supported panel or multilevel family, e.g. xtlogit or xtpoisson, etc.",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#examples",
+    "href": "mecompare/help.html#examples",
+    "title": "mecompare help file",
+    "section": "Examples",
+    "text": "Examples\nsysuse nlsw88, clear\nFit and store the models, then compare marginal effects. Factor syntax required for the regression model; optional for mecompare.\nlogit union i.married age i.race hours i.collgrad, vce(robust)\nest store basemod\nlogit union i.married age i.race hours i.collgrad wage, vce(robust)\nest store medmod\nmecompare age collgrad race hours, models(basemod medmod)\nAmount of change for continuous variables:\nmecompare age collgrad race hours, models(basemod medmod) amount(sd)\nmecompare age collgrad race hours, models(basemod medmod) amount(sd 10)\namount(rate) gives the instantaneous rate of change; amount(dydx) and amount(slope) are synonyms:\nmecompare age hours, models(basemod medmod) amount(rate)\nLabeling the models:\nmecompare age collgrad race hours, models(basemod medmod) mod1name(Base Model) mod2name(Mediation Model)\nEffects within levels of a variable (by, over):\nmecompare age race, models(basemod medmod) over(collgrad)\nmecompare age race, models(basemod medmod) by(collgrad)\nmecompare age race, models(basemod medmod) by(collgrad married)\nValues of the focal variables and covariates, including lists of values:\nmecompare age race, models(basemod medmod) atmeans\nmecompare age, models(basemod) start(age=(30 40 50))\nmecompare age race, models(basemod medmod) covariates(hours=(20 40 60))\nSummary measures for nominal variables:\nmecompare race, models(basemod medmod) pwcompare\nmecompare race, models(basemod) meineq(weighted)\nmecompare race, models(basemod medmod) meineq(all)\nTotal ME, which sums effects across outcome categories. E.g., with an ordinal outcome:\negen hours_ord = cut(hours), at(0 30 40 50 81)\nologit hours_ord c.age i.married i.race, vce(robust)\nmecompare age married race, totalme\nComparing models fit over distinct groups:\nlogit union age hours i.collgrad if south==1, vce(robust)\nest store msouth\nlogit union age hours i.collgrad if south==0, vce(robust)\nest store mnonsouth\nmecompare age hours collgrad, models(msouth mnonsouth) groups groupnames(South NonSouth)\nCross-family comparison (same number of predictions):\nlogit union i.married age i.race hours i.collgrad, vce(robust)\nest store logitmod\nregress union i.married age i.race hours i.collgrad, vce(robust)\nest store lpmmod\nmecompare age race, models(logitmod lpmmod)\nChoosing the prediction. With one model, any prediction margins allows; a count model offers several:\nnbreg hours c.age i.collgrad i.race, vce(robust)\nest store cntbase\nmecompare age collgrad race, models(cntbase)\nmecompare age collgrad race, models(cntbase) predict(n)\nmecompare age collgrad race, models(cntbase) predict(ir)\nmecompare age collgrad race, models(cntbase) predict(pr(0))\nWith two models, any prediction returning one quantity per model:\nnbreg hours c.age i.collgrad i.race i.married, vce(robust)\nest store cntmed\nmecompare age collgrad race, models(cntbase cntmed) predict(n)\nPassing an option to margins, e.g. effects in percentage points:\nmecompare age race, models(basemod) marginsopt(expression(100*predict(pr)))",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#comments",
+    "href": "mecompare/help.html#comments",
+    "title": "mecompare help file",
+    "section": "Comments",
+    "text": "Comments\nmecompare implements the methods described in Mize, Doan, and Long’s 2019 article “A General Framework for Comparing Predictions and Marginal Effects Across Models”.\nmecompare uses seemingly unrelated estimation via the suest2 command to combine the model estimates. See suest and Weesie (1999) for details on the method.\nMany of the features of mecompare intentionally mimic and borrow from Long and Freese’s (2014) SPost13 command mchange.",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#authorship",
+    "href": "mecompare/help.html#authorship",
+    "title": "mecompare help file",
+    "section": "Authorship",
+    "text": "Authorship\nmecompare and metest are written by Trenton D Mize (Departments of Sociology & Statistics [by courtesy] and the Methodology Center, Purdue University). Questions can be sent to tmize@purdue.edu",
+    "crumbs": [
+      "help mecompare"
+    ]
+  },
+  {
+    "objectID": "mecompare/help.html#references",
+    "href": "mecompare/help.html#references",
+    "title": "mecompare help file",
+    "section": "References",
+    "text": "References\nMize, Trenton D., Long Doan, and J. Scott Long. 2019. A General Framework for Comparing Predictions and Marginal Effects Across Models. Sociological Methodology. 49:152-189.\nMize, T. D., & Han, B. (2025). Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables. Sociological Science. 12, 115-157.\nMize, T. D., & Han, B. (2026). Marginal effects: flexible methods for interpretation across linear and nonlinear models. In Handbook on Data Modeling and Data Analysis, edited by David Weakliem. Edward Elgar Publishing.\nLong, J. Scott and Jeremy Freese. 2014. Regression Models for Categorical Dependent Variables Using Stata. Third Edition. Stata Press.\nGelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15). 2865-2873.\nWeesie, Jeroen. 1999. sg121: Seemingly Unrelated Estimation and the Cluster-Adjusted Sandwich Estimator. Stata Technical Bulletin. 52:34-47.",
+    "crumbs": [
+      "help mecompare"
     ]
   },
   {
@@ -1145,168 +1345,174 @@
     ]
   },
   {
-    "objectID": "mecompare/help.html",
-    "href": "mecompare/help.html",
-    "title": "mecompare help file",
+    "objectID": "mecompare/index.html",
+    "href": "mecompare/index.html",
+    "title": "mecompare",
     "section": "",
-    "text": "This page is generated from mecompare.sthlp by build.do, so it matches the installed version. In Stata, type help mecompare.",
+    "text": "mecompare calculates marginal effects and compares them across models. It implements the framework of Mize, Doan, and Long (2019): the models are combined using seemingly-unrelated estimation with suest2 so that the difference in marginal effects across models accounts for cross-model covariances of effects, even though the models were estimated separately.\nThe comparisons mecompare handles include effects across nested models (e.g., mediation and confounding), across alternative predictors, across different outcomes, across different model types (for example ordinal versus nominal), and across models fit to separate groups or samples.\nmecompare also automates comparisons of effects within a single model. This can be used to compare effect sizes across predictors, for tests of interaction, and for other within-model comparisons.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#title",
-    "href": "mecompare/help.html#title",
-    "title": "mecompare help file",
-    "section": "Title",
-    "text": "Title\nmecompare – mecompare (Marginal Effects Compar[e]ison) calculates marginal effects from one or two models for easy comparisons of effects within and across models. When two models are specified, mecompare uses seemingly unrelated estimation to combine the model estimates, and provides tests of the equality of marginal effects across models.",
+    "objectID": "mecompare/index.html#installation",
+    "href": "mecompare/index.html#installation",
+    "title": "mecompare",
+    "section": "Installation",
+    "text": "Installation\nnet install mecompare, from(\"https://tdmize.github.io/data\") replace\nmecompare requires suest2, which installs the same way (net install suest2, from(\"https://tdmize.github.io/data\") replace), and it ships with metest, which automates non-standard tests of contrasts between rows of the mecompare table.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#general-syntax",
-    "href": "mecompare/help.html#general-syntax",
-    "title": "mecompare help file",
-    "section": "General syntax",
-    "text": "General syntax\nmecompare varlist ifin weight [, models( ) options]",
+    "objectID": "mecompare/index.html#where-to-start",
+    "href": "mecompare/index.html#where-to-start",
+    "title": "mecompare",
+    "section": "Where to start",
+    "text": "Where to start\n\nGetting started walks through one comparison and explains the table.\nOptions goes through every option with an example of each; Plotting and tabulating results covers store() with coefplot and esttab.\nThe Examples in the sidebar reproduce the examples from Mize, Doan, and Long (2019) plus a within-model comparison; the Interactions pages reproduce the analyses of Mize (2019) on nonlinear interaction effects.\nExamples from the help file runs the help file’s examples in full, and the help file itself is on the site, rendered from the installed version (help mecompare in Stata).",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#overview",
-    "href": "mecompare/help.html#overview",
-    "title": "mecompare help file",
-    "section": "Overview",
-    "text": "Overview\nmecompare calculates marginal effects from one or two models. When two models are specified, mecompare combines the model estimates using seemingly unrelated estimation via the suest2 command and then calculates marginal effects for each model, as well as the cross-model comparisons of the marginal effects.\nFactor syntax should have been used on the stored model estimates to ensure mecompare calculates the correct statistics (i.e., binary and nominal variables must be entered into the variable list with the i. prefix; continuous predictor variables with the c. prefix). Factor syntax is allowed but not required for the mecompare command itself: each variable is treated as the stored models specified it. See fvvarlist for details on factor syntax. If you do not specify a variable list, marginal effects are calculated for all variables across the model(s).\nBy default, marginal effects for a nominal independent variable are shown in reference to a base category. To specify a reference category other than the default first category you can use the ib#. syntax on the stored models passed to mecompare. See fvvarlist for details on specifying base levels with factor syntax. Alternatively, the pwcompare option will calculate all pairwise contrasts; the meinequality option will calculate a single summary marginal effect inequality statistic.\nFor additional tests of the marginal effects beyond those given by default, use metest, which combines and tests the estimates by the ME # shown in the mecompare table. See Testing and combining the marginal effects.",
+    "objectID": "mecompare/index.html#citation",
+    "href": "mecompare/index.html#citation",
+    "title": "mecompare",
+    "section": "Citation",
+    "text": "Citation\nmecompare implements the methods proposed by Mize, Doan, and Long (2019). If you use mecompare, please cite:\n\nMize, Trenton D., Long Doan, and J. Scott Long. 2019. “A General Framework for Comparing Predictions and Marginal Effects Across Models.” Sociological Methodology 49(1): 152–189. https://doi.org/10.1177/0081175019852763",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#table-of-contents",
-    "href": "mecompare/help.html#table-of-contents",
-    "title": "mecompare help file",
-    "section": "Table of contents",
-    "text": "Table of contents\n\nOverview\nWhich models and estimators are supported\nSpecifying the models\nWhich statistics to include in table\nAmount of change to compute for continuous variables\nSetting starting values of variables in varlist\nSetting values of covariates\nMarginal effects within levels of a variable (by, over)\nSummary measures for nominal and ordinal variables\nOptions for comparing models fit over distinct groups\nOptional options for formatting, reporting, missing data, etc.\nSpecifying the prediction\nModel combinations that can be compared\nsvy and mi est support\nWeights\nTesting and combining the marginal effects\nSaved estimates and matrices\nPlotting and tabulating results (coefplot, esttab)\nFixed effects via hybrid specifications\nExamples",
+    "objectID": "mecompare/index.html#related-commands",
+    "href": "mecompare/index.html#related-commands",
+    "title": "mecompare",
+    "section": "Related commands",
+    "text": "Related commands\n\n\n\n\nCommand\nWhat it does\n\n\n\n\nsuest2\nCombines separately estimated models so that quantities from different models can be tested against each other. The engine underneath cross-model comparisons for mecompare.\n\n\nmetest\nTests contrasts between rows of the tables produced by mecompare, meinequality, and totalme (or any posted margins results).\n\n\nmeinequality\nSummarizes how unequal the marginal effects of a categorical predictor are across its categories.\n\n\ntotalme\nSummarizes a predictor’s effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#supported-estimators",
-    "href": "mecompare/help.html#supported-estimators",
-    "title": "mecompare help file",
-    "section": "Supported estimators",
-    "text": "Supported estimators\nmecompare accepts one or two models from the following families.\n\nOrdinary single-level models\nregress; logit and logistic; probit; poisson; nbreg; ologit; oprobit; and mlogit.\nglm; cloglog; tobit; intreg; maximum-likelihood heckman; and parametric streg, all parametric distributions.\ngologit2, all forms.\nivregress 2sls.\nfracreg with estimators: logit, probit.\nbetareg, all four links; truncreg; hetprobit; zip and zinb, both inflation links; and biprobit.\nivprobit and ivtobit.\n\n\nPanel models\nxtreg with estimators: mle, fe, be, re, pa.\nxtreg, cre is not supported; see Correlated random effects (Mundlak) specifications below for the supported way to fit these models.\nxtlogit with estimators: re, fe, pa. xtprobit with estimators: re, pa. xtcloglog with estimators: re, pa; the re estimator combines when fit with intpoints(24) (or &gt;24).\nxtologit and xtoprobit.\nxtmlogit with estimators: re, fe.\nxtpoisson with estimators: re (normal or gamma random effects), fe, pa. xtnbreg with estimators: re, pa.\nxtnbreg, fe is not supported.\nWhen using the fixed effects fe estimator, marginal effects estimates can have issues. See the fixed effects and correlated random effects section below for alternatives.\n\n\nMultilevel models\nmixed, mle; melogit; meprobit; mecloglog; mepoisson; menbreg; meologit; meoprobit; and mestreg, all parametric distributions.\nSupported meglm family-link pairs are Gaussian-identity and Gamma-log.\nSee Models that can be compared below for the cross-family combinations that are supported.",
+    "objectID": "mecompare/interactions/index.html",
+    "href": "mecompare/interactions/index.html",
+    "title": "Interaction effects",
+    "section": "",
+    "text": "Mize (2019) argues that in nonlinear models – and in linear models with nonlinear terms – the coefficient on a product term is not a test of interaction on the scale that matters. Interaction should instead be assessed in the natural metric of the outcome by (1) plotting the predictions, (2) computing the marginal effect of one variable at chosen levels of the other, and (3) testing whether those marginal effects differ: a second difference. It also matters to look at both sides of an interaction – the effect of X across levels of Z, and the effect of Z across levels of X.\nThe 2019 replication files do all of this with margins followed by mlincom. mecompare does the same in one call per question, with the second-difference test one metest line away. The pages in this section reproduce the article’s examples, section by section:",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#options",
-    "href": "mecompare/help.html#options",
-    "title": "mecompare help file",
-    "section": "Options",
-    "text": "Options\n\n\nSpecifying the models\nmodels(list) names the stored model estimates to use. mecompare is limited to one or two models; with two models, each model must have been estimated and saved using estimates store before running mecompare.\nmodels( ) may be omitted, in which case the estimates are taken from e():\no If suest2 was just run, the two models of that system are used, and the results are identical to naming them in models( ).\no Otherwise the single model in e() is used, and it is labelled m1 in the table. It does not need to have been stored.\n\n\n\nStatistics to include in the table\nstatistics(list) selects statistics to display. The default is to include the estimate, se, and pvalue. The following statistics can be included in list.\n\n\n\nName\nDescription\n\n\n\n\nestimate\nEstimate of the marginal effect\n\n\nse\nStandard error of estimate\n\n\npvalue\np-value for test that estimate = 0\n\n\nll\nLower level bound of confidence interval\n\n\nul\nUpper level bound of confidence interval\n\n\nz\nValue of z-statistic\n\n\nall\nDisplay all statistics\n\n\n\n\n\n\nAmount of change and related options for continuous independent variables\namount(list) specifies the amount of change to be computed for the continuous independent variables. If only one value is specified in amount( ), this amount of change is applied to all of the continuous independent variables. To specify different amounts for each continuous independent variable, amounts in list are applied in the order of the continuous independent variables. E.g. In a varlist of c.age i.woman c.income i.race c.polviews there are three continuous variables, of which changes of (1) age + sd, (2) income + 5, and (3) polviews + one can be specified with amount(sd 5 one)\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\none\nA one unit change; the default. 1 is a synonym\n\n\nsd\nA standard deviation change\n\n\n#\nA change of #, which can be any amount. E.g. A 10 unit increase can be specified with amount(10)\n\n\ntwosd\nA two standard deviation change (Gelman 2008), useful for comparing continuous effects to categorical effects. 2sd is a synonym\n\n\ntrimrange\nA change across the trimmed range of the variable, from its 5th to its 95th percentile. Suggested by Mize and Han (2025) as a more robust alternative to 2sd for comparing effects across variables.\n\n\nrate\nAn instantaneous rate of change, i.e. the derivative, approximated with a small centered change; slope and dydx are synonyms\n\n\n\ncentered Changes for continuous independent variables are centered by default: computed from half the amount below to half the amount above, e.g., [mean - SD/2] to [mean + SD/2]. The default if no option is specified.\nuncentered Requests uncentered changes: an increase of the amount from the value of the independent variable, e.g., [mean] to [mean + SD], rather than the default centered change.\n\n\n\nSetting starting values of variables in varlist\nstart(list) By default, the observed values of the focal independent variables specified in the varlist are used as the starting points for calculating the marginal effects (i.e. the margins default of asobserved is used; see margins). The means of the focal independent variables can instead be used for all observations by specifying start(atmeans). Other starting values can be specified within the start( ) option, e.g. start(age=20). Multiple focal independent variables can be listed in start( ), e.g. start(age=20 income=100).\nOne continuous focal variable may be given a numlist of starting values, e.g. start(age=(20 30 60)): the marginal effect is reported once per value, in rows labelled at 20, at 30, at 60, numbered so that metest can compare them.\n\n\n\nSetting values of covariates\ncovariates(list) Covariates are other independent variables in the model other than the focal independent variables the marginal effects are calculated for. By default, covariates are held at their observed values (i.e. the margins default of asobserved is used; see margins). The covariates can instead be held at their sample means by specifying covariates(atmeans), or simply atmeans. Other covariate values can be specified within the covariates( ) option, e.g. covariates(woman=1) would calculate all marginal effects holding the value of woman at 1. Multiple covariates can be listed in covariates( ), e.g. covariates(woman=1 polviews=5).\nOne covariate may be given a numlist of values, e.g. covariates(age=(25 44 72)): every marginal effect is reported once per value, in rows labelled age=25, age=44, age=72, numbered so that metest can test whether the effect differs across them. Each value is a counterfactual in the sense of by(): the whole sample is set to that value and the effect is averaged over the sample.\n\n\n\nMarginal effects within levels of a variable (by, over)\nby(varlist) reports the marginal effect of each focal variable as a counterfactual at each level of varname – the effect computed with the whole sample set to varname = level, one level at a time, and averaged over the sample (via the at() option of margins). One set of rows is reported per level of varname. With two or more variables, e.g. by(woman college), one set of rows is reported per combination of their levels.\nover(varlist) reports the marginal effect of each focal variable within each subpopulation defined by varname – the effect computed using only the observations for which varname equals a given level (via the over() option of margins). One set of rows is reported per level of varname. With two or more variables, e.g. over(woman college), one set of rows is reported per combination of levels.\nThe difference between the two is a subpopulation-versus-counterfactual distinction. over() describes the effect as it is in each observed group; by() describes the effect that would obtain if the entire sample were placed at each level. The two can differ due to nonlinearities, distributional differences, and/or interactive effects. See Mize and Han (2026). For most applications, by() is recommended. For a continuous moderator, covariates(varname=(numlist)) does what by() does at the listed values; see covariates().\nFor the by() or over() options, each variable must be a binary or nominal variable entered with a factor prefix in the model(s) (i. or ib#.). Both may name multiple variables. The two may not be specified together, and neither may be combined with groups.",
+    "objectID": "mecompare/interactions/index.html#the-three-ingredients",
+    "href": "mecompare/interactions/index.html#the-three-ingredients",
+    "title": "Interaction effects",
+    "section": "The three ingredients",
+    "text": "The three ingredients\nA nominal moderator: by(). by(woman) reports the marginal effect of the focal variable at each level of woman, one numbered row per level, computed as a counterfactual: the whole sample set to each level in turn, then averaged. This is what margins woman, at(...) followed by mlincom does in the 2019 files. (over(woman) instead uses only the observations in each group; see help mecompare for the distinction.)\nA continuous moderator: covariates(z=(numlist)). covariates(age=(25 55)) reports the marginal effect of the focal variable with everyone set to age 25, then to age 55, as numbered rows in one table. Any numlist works, so covariates(age=(20(5)70)) gives the effect across the range of the moderator – the numbers behind the “marginal effect of X across Z” plots.\nWhere and how far the focal variable moves: start(), amount(), uncentered. start(age=25) amount(5) is the change from 25 to 30; amount(5) alone is a five-unit change from each observation’s own value; amount(sd) is a standard-deviation change and amount(rate) the instantaneous rate (the dydx() of margins). By default a change is centered on the starting value (half below, half above); uncentered makes it run upward from the start, which is what at(x=gen(x)) at(x=gen(x+1)) did in the 2019 files.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#summary-measures-for-nominal-and-ordinal-variables",
-    "href": "mecompare/help.html#summary-measures-for-nominal-and-ordinal-variables",
-    "title": "mecompare help file",
-    "section": "Summary measures for nominal and ordinal variables",
-    "text": "Summary measures for nominal and ordinal variables\npwcompare for focal variables specified as nominal (i.), the pwcompare option reports all pairwise contrasts between levels instead of the default of each non-base level versus the base level. Continuous and binary focal variables are unaffected.\nmeinequality[(type)] for focal variables specified as nominal (i.), the meinequality option reports a marginal effect inequality summary statistic immediately above that variable’s contrasts. The ME inequality captures how much the outcome differs across the levels of the focal variable overall, as a weighted average of the absolute pairwise level contrasts (see Mize and Han 2025). type selects the weighting:\nweighted (the default) weights each pairwise contrast by the share of the sample in the two levels being contrasted.\nunweighted gives the simple mean of the absolute pairwise contrasts, ignoring the sizes of the levels.\nall shows both, weighted first (labeled ME Inequality) then unweighted (labeled Unwgt ME Ineq.).\nWith groups, each model’s contrasts are weighted by its own sample’s shares; specify unweighted to compare the marginal effects alone.\ntotalme[(type)] adds a Total ME summary above every focal variable’s rows. The Total ME aggregates a variable’s effect on a (usually multi-category) outcome into a single number: the total probability mass the variable shifts across the outcome categories (see Mize and Han 2025). For a continuous or binary focal variable the row is labeled Total ME; for a nominal (i.) focal variable it is a Total ME inequality – the same aggregation applied to the pairwise level contrasts – labeled Total ME Ineq. type selects the weighting and applies to nominal focal variables only:\nweighted (the default) weights each pairwise contrast by the share of the sample in the two levels being contrasted.\nunweighted averages the absolute pairwise contrasts without weights; labeled Unwgt Total ME Ineq..\nall shows both, weighted first then unweighted.\n\n\nGroup options\ngroups specifies that the two models in models( ) were fit on distinct (non-overlapping) samples – for example, one model per group – and that mecompare should compare marginal effects across the two groups. Each model’s estimation sample defines its group; the two samples must not overlap.\ngroupnames(name1 name2) labels the two groups in the output (name1 for the first model, name2 for the second); by default the groups are labeled by their model names. Requires the groups option. Each name is truncated to 10 characters.\ngroupme reports the average conditional difference in the outcome across the two groups, shown beneath the table. With a multi-category outcome one difference is reported for each outcome category, labeled Pr(category). Requires the groups option.\ngroupsd with groups and amount(sd), each +SD change is calculated using that group’s own standard deviation rather than the pooled SD used by default. Not recommended for most applications: effects can differ only because the groups’ SDs differ.\n\n\n\nAdditional Optional Options\npredict(pred) the prediction margins should compute if you want something other than the default for that model type; see specifying the prediction below.\nmarginsopt(string) passes string to margins exactly as typed. Options mecompare sets itself (at(), over(), predict(), post, atmeans, and the derivative and contrast options) are refused. expression() is allowed with one model and no predict(): the marginal effects are then changes in the expression, e.g. marginsopt(expression(100*predict(pr))) for effects in percentage points. marginsopt(vce(unconditional)) requests standard errors that treat the covariates as sampled. Use with caution; the result is not checked so the user should verify results; use commands to see the margins line and details to see the margins output.\ndecimals(#) changes the number of decimal places reported in the table. The default is 3. Any integer between 0 - 7 is allowed.\nmod1name(string) and mod2name(string) name the rows in the table corresponding to the marginal effects for model 1 and model 2. The default is the name of the stored estimates given in models( ), or the group when the groups option is used. Names over 10 characters will be truncated in the output.\nlabwidth(#) changes the width of the leftmost column of the table that provides the labels for the variables and associated marginal effects. The default is 32. Any integer from 20 to 32 is allowed.\nstatwidth(#) changes the width of the columns of the table that report the statistics (e.g. estimate, SE, pvalue, etc.). The default is 9. Any integer between 9 - 20 is allowed.\nnorownum removes the column from the table with a number designation for each estimate in the table.\nstore(stub) saves the calculated marginal effects as separate stored estimates so they can be plotted with coefplot or tabulated with esttab, estimates table, or etable. With two models, three estimates are saved – stub_model1, stub_model2, and stub_diff (the cross-model differences) – where model1 and model2 are the names given in models( ). With one model, a single estimate stub_model1 is saved. Each stored estimate is keyed by variable, so coefplot and esttab arrange results by variable automatically. With by() or over(), each stored estimate carries one coefficient per cell (e.g. age_collgrad_0 and age_collgrad_1). See Plotting and tabulating results for examples.\ncommands displays the commands used for the margins estimates and, if two models are used, the suest2 command.\ndetails displays the output of the margins estimates and, if two models are used, the suest2 output.\n\n\n\nSpecifying the prediction\nWith a single model any prediction margins accepts after that command may be given. For multi-category models, the default reports a prediction per outcome; a single outcome may be selected, as in predict(pr outcome(2)).\nWith two models, a non-default prediction can be requested if it returns a single quantity per model.\nMixed-effects and panel models. When no predict() is given each model contributes its own margins default. For the me family and for mixed, that default averages over the random effects rather than holding them at zero, and that is the recommended quantity. Random intercepts, random slopes, unstructured covariance and multi-level fits are supported.\n\n\n\nModels that can be compared\nTwo models are comparable when they return the same number of predictions. Same-family pairs (e.g., two logits, two glms, two mestregs) always qualify. Cross-family pairs qualify on the same rule: logit vs regress, xtlogit vs mixed, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (ologit vs oprobit, mlogit vs ologit, and so on). Each model contributes its own default prediction, or the one given in predict(), so a cross-family comparison contrasts, e.g., logit’s predicted probabilities with regress’s linear predictions. Models that return different numbers of predictions (e.g. a 3-category ologit vs a logit) cannot be compared.\nWhen both models have a multi-category outcome, the outcome categories are matched in order, so the two dependent variables must have the same number of categories and the same values. mecompare errors if they differ (e.g. one outcome coded 0/1/2 and the other 1/2/3). If the values agree but the value labels differ, the comparison proceeds and the table is labeled with the first model’s labels.\n\n\n\nsvy and mi est support\nModels can be fit using the svy:, mi est:, or mi est: svy: prefixes. The prefix should be specified on the stored models, not on mecompare.\nFor most cases, survey weights and complex sample designs should be specified using svyset and the svy: prefix should be used on the individual models before mecompare. For svy:, all models must be svy: and the relevant svyset design must be active when mecompare is run.\nWeights carry through to every quantity mecompare computes from the data (standard deviations, means, trimmed ranges, level shares); under mi estimate these quantities are pooled across the imputations.\n\nmecompare also supports models fit with the mi estimate prefix (multiply-imputed data). All models must be mi estimate and pooled with post (mi estimate, post: command), and the user-written mimrgns package must be installed (search mimrgns). Families not on Stata’s list of commands mi estimate officially supports can often be estimated with mi estimate, post cmdok: command; whether to override Stata’s list is the user’s judgement.\nThe two prefixes may also be combined: models fit with mi estimate: svy: are supported. Declare the design with mi svyset rather than svyset. All models must carry the same prefixes.\n\n\n\nWeights\nWhen possible, use svyset and svy: to specify weights. However, weights can instead be applied on the stored models – e.g. logit y x [pw=w]. With two models, both must carry the same weight.\nMultilevel models need a stage weight. For the me families and mixed, the model must carry a higher-level weight too, as in melogit y x [pw=w2] || group:, pweight(w1). The svy: prefix, which carries the whole design from svyset, is the recommended way to specify one.",
+    "objectID": "mecompare/interactions/index.html#testing-the-second-difference",
+    "href": "mecompare/interactions/index.html#testing-the-second-difference",
+    "title": "Interaction effects",
+    "section": "Testing the second difference",
+    "text": "Testing the second difference\nEvery row of the mecompare table is numbered, and metest tests any combination of rows: metest 1 - 2 is the second difference between the first two rows, metest 1 = 2 = 3 is a joint test that three effects are equal, and metest 2 - 1, add rowname(\"...\") accumulates results into one table. The rows are posted to e(b) and e(V) with their full covariance, so the tests are the Wald tests of the article’s equation 6.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#testing-and-combining-the-marginal-effects",
-    "href": "mecompare/help.html#testing-and-combining-the-marginal-effects",
-    "title": "mecompare help file",
-    "section": "Testing and combining the marginal effects",
-    "text": "Testing and combining the marginal effects\nEvery estimate shown in the table is posted to e(b) and e(V), in the same order as the ME # column. metest automates non-standard tests of the marginal effects that mecompare calculates.\nmetest takes either an ME # or a coefficient name. An expression without = is evaluated with nlcom, so sums, differences, ratios, products and nonlinear functions are all allowed; an expression containing = is passed to test, including chained and multiple equalities. To refer to a number for a mathematical expression, use a leading #, as in / #2 which will divide by 2, rather than referring to the 2nd ME.\nmetest 1 the marginal effect numbered 1\nmetest 1 - 2 the difference between MEs 1 and 2\nmetest (1 + 2) / #2 their average; division by 2\nmetest 1 / 2 the ratio of MEs 1 and 2\nmetest 1 = 2 = 3 a joint test that all three are equal\nThe estimates are ordinary e(b)/e(V) results, so lincom, nlcom, test and mlincom can also be used directly. Type mecompare, coeflegend to list the coefficient names.\nlincom _b[collegemental] - _b[college:physical]\ntest _b[collegemental] = _b[age:mental]\nmlincom 11 - 10\n\n\nSaved estimates and matrices\nWith two models, mecompare combines the stored estimates into a single system using suest2. It then uses margins to calculate the marginal effects. These results are stored and can be restored after mecompare has been run. See estimates restore. The combined model estimates are stored as mec_suest2. The margins estimates which contain the constituent pieces that are used to calculate the marginal effects are stored as mec_margins.\nmecompare saves the current table of estimates to the matrix _mecompare. The matrix has columns corresponding to the displayed results. Rows that only contain labels (no statistics) have values of .z\nmecompare is an e-class command. It posts the marginal effects – and, with two models, the cross-model differences – to e(b) and e(V) (with the full covariance among the estimates), so they can be used directly by post-estimation commands such as coefplot and esttab.\nThe following are stored in e():\nScalars\nMacros\nMatrices\nFunctions\n\n\n\n\n\n\n\n\nOption\nDescription\n\n\n\n\ne(N)\nnumber of observations in the marginal-effects sample; equal to the number of observations marked by e(sample)\n\n\ne(n_mods)\nnumber of models compared (1 or 2)\n\n\ne(n_vars)\nnumber of focal variables (all model predictors when no varlist is given)\n\n\ne(V_complete)\n1 if every estimate and its covariances were recovered; 0 otherwise\n\n\ne(k_failed)\nnumber of quantities that could not be computed (posted as 0 with a warning)\n\n\ne(V_zeroed)\nnumber of covariance elements set to 0 for the same reason\n\n\ne(cmd)\nmecompare\n\n\ne(properties)\nb V\n\n\ne(predict_label)\nthe prediction the effects were computed from, as shown on the Predicting: line\n\n\ne(predict1_label)\n\n\n\ne(predict2_label)\nposted only when the two models use different predictions\n\n\ne(marginsopt)\nthe string given in marginsopt(), when used\n\n\ne(b)\nmarginal effects (and, with two models, cross-model differences)\n\n\ne(V)\nvariance-covariance matrix of the estimates. In the rare case that a quantity cannot be computed, its estimate is posted as 0 and its row and column of e(V) are zeroed, with a warning; e(V_complete) reports whether this happened\n\n\ne(table)\nthe displayed table; label-only rows have value .z\n\n\ne(sample)\nmarks the estimation sample (not set after mi estimate)",
+    "objectID": "mecompare/interactions/index.html#plotting-the-marginal-effects",
+    "href": "mecompare/interactions/index.html#plotting-the-marginal-effects",
+    "title": "Interaction effects",
+    "section": "Plotting the marginal effects",
+    "text": "Plotting the marginal effects\nstore(stub) saves the table as stored estimates, and coefplot plots them. With by() or covariates() there is one coefficient per level, so a plot of the effect of gender across the range of age is mecompare i.woman, covariates(age=(20(5)70)) store(gap) followed by coefplot gap_m1, vertical yline(0). Plots of predictions are not mecompare’s job; those stay with margins and marginsplot, exactly as in the article.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#plotting-and-tabulating-results",
-    "href": "mecompare/help.html#plotting-and-tabulating-results",
-    "title": "mecompare help file",
-    "section": "Plotting and tabulating results",
-    "text": "Plotting and tabulating results\nThe store(stub) option saves the marginal effects as separate stored estimates keyed by variable, which makes plotting with coefplot and tabulating with esttab straightforward. If needed, install these user-written packages first: ssc install coefplot and ssc install estout.\nFit and store two models:\nsysuse nlsw88, clear\ndrop if missing(union, married, age, race, hours, collgrad, ttl_exp, grade, wage)\nlogit union i.married age i.race hours i.collgrad ttl_exp, vce(robust)\nest store m1\nlogit union i.married age i.race hours i.collgrad ttl_exp grade wage, vce(robust)\nest store m2\nCalculate the marginal effects and save the pieces with store(). This saves mec_m1, mec_m2, and mec_diff:\nmecompare i.married age i.race hours i.collgrad ttl_exp, models(m1 m2) store(mec)\ncoefplot – both models’ marginal effects, arranged by variable:\ncoefplot mec_m1 mec_m2, xline(0) xtitle(\"Average marginal effect\")\ncoefplot – just the cross-model differences:\ncoefplot mec_diff, xline(0) xtitle(\"Difference in AME (model 1 - model 2)\")\nesttab – a three-column table (model 1, model 2, difference):\nesttab mec_m1 mec_m2 mec_diff, se mtitles(\"Model 1\" \"Model 2\" \"Difference\")\nFor a single model, store() saves one estimate (stub_model1) that plots and tabulates the same way:\nmecompare i.married age i.race hours i.collgrad ttl_exp, models(m1) store(me1)\ncoefplot me1_m1, xline(0) xtitle(\"Average marginal effect\")",
+    "objectID": "mecompare/interactions/index.html#translating-the-2019-files",
+    "href": "mecompare/interactions/index.html#translating-the-2019-files",
+    "title": "Interaction effects",
+    "section": "Translating the 2019 files",
+    "text": "Translating the 2019 files\n\n\n\n\n\n\n\nIn the replication files\nWith mecompare\n\n\n\n\nmargins woman, at(age=(25 30)) post then mlincom 3 - 1, mlincom 4 - 2, mlincom (3 - 1) - (4 - 2)\nmecompare age, start(age=25) amount(5) uncentered by(woman) then metest 1 - 2\n\n\nmargins woman, at(age=gen(age)) at(age=gen(age+5)) post then the three mlincom lines\nmecompare age, amount(5) uncentered by(woman) then metest 1 - 2\n\n\nmargins, dydx(woman) at(age=(25 55)) post then mlincom 2 - 1\nmecompare i.woman, covariates(age=(25 55)) then metest 2 - 1\n\n\nmargins, dydx(woman) at(age=(18(2)72)) then marginsplot\nmecompare i.woman, covariates(age=(18(2)72)) store(gap) then coefplot gap_m1, vertical\n\n\nmargins parrole#woman, post then mlincom 3 - 1, mlincom 4 - 2, mlincom (1 - 2) - (3 - 4)\nmecompare i.parrole, by(woman) then metest 1 - 2\n\n\nmargins educ, dydx(woman) pwcompare(pve)\nmecompare i.woman, by(educ) then metest 1 = 2 = 3 = 4 = 5 and metest 1 - 2, …\n\n\nmargins woman, at(role=gen(role)) at(role=gen(role + 1)) post then mlincom\nmecompare role, by(woman) uncentered then metest 1 - 2\n\n\nmargins woman, dydx(role) post then mlincom 2 - 1\nmecompare role, by(woman) amount(rate) then metest 1 - 2\n\n\nmchange year1976 conviewSS\nmecompare year1976 conviewSS, amount(sd) uncentered\n\n\nmargins, dydx(conviewSS) at(year=(0 40)) post then mlincom 2 - 1\nmecompare conviewSS, covariates(year1976=(0 40)) amount(rate) then metest 2 - 1\n\n\nmargins, at(year1976=gen(year1976) conview=(-1 1)) at(year1976=gen(year1976 + 2) conview=(-1 1)) post then mlincom\nmecompare year1976, covariates(conviewSS=(-1 1)) amount(2) uncentered then metest 1 - 2\n\n\n\nIn each case the models() option names the stored model, or is omitted when the model is the one in memory.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#fixed-effects-models-via-hybrid-correlated-random-effects-mundlak-specifications",
-    "href": "mecompare/help.html#fixed-effects-models-via-hybrid-correlated-random-effects-mundlak-specifications",
-    "title": "mecompare help file",
-    "section": "Fixed effects models via hybrid correlated random effects (Mundlak) specifications",
-    "text": "Fixed effects models via hybrid correlated random effects (Mundlak) specifications\nFixed effects models (fe estimator for xt commands) have known issues in calculating marginal effects, especially for categorical outcome models. One common recommendation is to use a hybrid model specification such as the correlated random effects (Mundlak) model, which estimates both within-person (“fixed effects”) estimates and between-person estimates, and has no issue in calculating marginal effects (Mize and Han 2026).\nxtreg, cre is not supported, but an identical hybrid correlated-random-effects (Mundlak) specification can be estimated and used with mecompare by including each time-varying predictor’s panel mean alongside the predictor when fit with the re estimator.\nbysort id: egen mean_x = mean(x)\nxtreg y x mean_x i.d, re\nWhere the x coefficient represents the within-person (“fixed effect”) estimate and the mean_x coefficient represents the between-person estimate. The same recipe extends to any supported panel or multilevel family, e.g. xtlogit or xtpoisson, etc.",
+    "objectID": "mecompare/interactions/index.html#reference",
+    "href": "mecompare/interactions/index.html#reference",
+    "title": "Interaction effects",
+    "section": "Reference",
+    "text": "Reference\n\nMize, Trenton D. 2019. “Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.” Sociological Science 6: 81–117. https://doi.org/10.15195/v6.a4\n\nThe article’s data and replication files are at trentonmize.com/research.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "Overview"
     ]
   },
   {
-    "objectID": "mecompare/help.html#examples",
-    "href": "mecompare/help.html#examples",
-    "title": "mecompare help file",
-    "section": "Examples",
-    "text": "Examples\nsysuse nlsw88, clear\nFit and store the models, then compare marginal effects. Factor syntax required for the regression model; optional for mecompare.\nlogit union i.married age i.race hours i.collgrad, vce(robust)\nest store basemod\nlogit union i.married age i.race hours i.collgrad wage, vce(robust)\nest store medmod\nmecompare age collgrad race hours, models(basemod medmod)\nAmount of change for continuous variables:\nmecompare age collgrad race hours, models(basemod medmod) amount(sd)\nmecompare age collgrad race hours, models(basemod medmod) amount(sd 10)\namount(rate) gives the instantaneous rate of change; amount(dydx) and amount(slope) are synonyms:\nmecompare age hours, models(basemod medmod) amount(rate)\nLabeling the models:\nmecompare age collgrad race hours, models(basemod medmod) mod1name(Base Model) mod2name(Mediation Model)\nEffects within levels of a variable (by, over):\nmecompare age race, models(basemod medmod) over(collgrad)\nmecompare age race, models(basemod medmod) by(collgrad)\nmecompare age race, models(basemod medmod) by(collgrad married)\nValues of the focal variables and covariates, including lists of values:\nmecompare age race, models(basemod medmod) atmeans\nmecompare age, models(basemod) start(age=(30 40 50))\nmecompare age race, models(basemod medmod) covariates(hours=(20 40 60))\nSummary measures for nominal variables:\nmecompare race, models(basemod medmod) pwcompare\nmecompare race, models(basemod) meineq(weighted)\nmecompare race, models(basemod medmod) meineq(all)\nTotal ME, which sums effects across outcome categories. E.g., with an ordinal outcome:\negen hours_ord = cut(hours), at(0 30 40 50 81)\nologit hours_ord c.age i.married i.race, vce(robust)\nmecompare age married race, totalme\nComparing models fit over distinct groups:\nlogit union age hours i.collgrad if south==1, vce(robust)\nest store msouth\nlogit union age hours i.collgrad if south==0, vce(robust)\nest store mnonsouth\nmecompare age hours collgrad, models(msouth mnonsouth) groups groupnames(South NonSouth)\nCross-family comparison (same number of predictions):\nlogit union i.married age i.race hours i.collgrad, vce(robust)\nest store logitmod\nregress union i.married age i.race hours i.collgrad, vce(robust)\nest store lpmmod\nmecompare age race, models(logitmod lpmmod)\nChoosing the prediction. With one model, any prediction margins allows; a count model offers several:\nnbreg hours c.age i.collgrad i.race, vce(robust)\nest store cntbase\nmecompare age collgrad race, models(cntbase)\nmecompare age collgrad race, models(cntbase) predict(n)\nmecompare age collgrad race, models(cntbase) predict(ir)\nmecompare age collgrad race, models(cntbase) predict(pr(0))\nWith two models, any prediction returning one quantity per model:\nnbreg hours c.age i.collgrad i.race i.married, vce(robust)\nest store cntmed\nmecompare age collgrad race, models(cntbase cntmed) predict(n)\nPassing an option to margins, e.g. effects in percentage points:\nmecompare age race, models(basemod) marginsopt(expression(100*predict(pr)))",
+    "objectID": "mecompare/interactions/nominal-by-continuous.html",
+    "href": "mecompare/interactions/nominal-by-continuous.html",
+    "title": "A nominal and a continuous variable",
+    "section": "",
+    "text": "When one of the interacting variables is continuous, a plot of the predictions is almost always needed, and the tests have two sides: the effect of the continuous variable within each group, and the group difference at each value of the continuous variable. The article’s example is whether holding more social roles protects against high depressive symptoms equally for men and women (Add Health Wave IV).",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "A nominal and a continuous variable"
     ]
   },
   {
-    "objectID": "mecompare/help.html#comments",
-    "href": "mecompare/help.html#comments",
-    "title": "mecompare help file",
-    "section": "Comments",
-    "text": "Comments\nmecompare implements the methods described in Mize, Doan, and Long’s 2019 article “A General Framework for Comparing Predictions and Marginal Effects Across Models”.\nmecompare uses seemingly unrelated estimation via the suest2 command to combine the model estimates. See suest and Weesie (1999) for details on the method.\nMany of the features of mecompare intentionally mimic and borrow from Long and Freese’s (2014) SPost13 command mchange.",
+    "objectID": "mecompare/interactions/nominal-by-continuous.html#the-model",
+    "href": "mecompare/interactions/nominal-by-continuous.html#the-model",
+    "title": "A nominal and a continuous variable",
+    "section": "The model",
+    "text": "The model\n\nuse \"https://tdmize.github.io/data/data/nli_ah4\", clear\n(Add Health Wave IV | NLI - Nonlinear Interaction Effects | 2018-12-17)\n\n. \nquietly logit depB c.role##i.woman i.parrole c.age i.race c.income i.college, vce(robust)\nestimates store depmod",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "A nominal and a continuous variable"
     ]
   },
   {
-    "objectID": "mecompare/help.html#authorship",
-    "href": "mecompare/help.html#authorship",
-    "title": "mecompare help file",
-    "section": "Authorship",
-    "text": "Authorship\nmecompare and metest are written by Trenton D Mize (Departments of Sociology & Statistics [by courtesy] and the Methodology Center, Purdue University). Questions can be sent to tmize@purdue.edu",
+    "objectID": "mecompare/interactions/nominal-by-continuous.html#the-predictions-figure-14",
+    "href": "mecompare/interactions/nominal-by-continuous.html#the-predictions-figure-14",
+    "title": "A nominal and a continuous variable",
+    "section": "The predictions (Figure 14)",
+    "text": "The predictions (Figure 14)\n\nquietly margins woman, at(role=(0(1)10))\nmarginsplot, xdimension(role) recastci(rline) ciopts(lpattern(dash)) plotopts(msymbol(none)) ///\n    xlabel(0(1)10) ylabel(0(0.1)0.7) xtitle(\"Number of social roles\") ///\n    ytitle(\"Pr(High depressive symptoms)\") title(\"\")\nVariables that uniquely identify margins: role woman\ngraph export \"fig/nli-roles-predictions.png\", replace width(1400)\n(file fig/nli-roles-predictions.png not found)\nfile fig/nli-roles-predictions.png saved as PNG format\n\n\n\n\nPredicted probability of high depressive symptoms by number of social roles, for men and women.\n\n\nBoth curves fall as roles accumulate, and women sit above men. The two questions are whether the slope differs by gender and where along the range of roles the gender gap is significant.",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "A nominal and a continuous variable"
     ]
   },
   {
-    "objectID": "mecompare/help.html#references",
-    "href": "mecompare/help.html#references",
-    "title": "mecompare help file",
-    "section": "References",
-    "text": "References\nMize, Trenton D., Long Doan, and J. Scott Long. 2019. A General Framework for Comparing Predictions and Marginal Effects Across Models. Sociological Methodology. 49:152-189.\nMize, T. D., & Han, B. (2025). Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables. Sociological Science. 12, 115-157.\nMize, T. D., & Han, B. (2026). Marginal effects: flexible methods for interpretation across linear and nonlinear models. In Handbook on Data Modeling and Data Analysis, edited by David Weakliem. Edward Elgar Publishing.\nLong, J. Scott and Jeremy Freese. 2014. Regression Models for Categorical Dependent Variables Using Stata. Third Edition. Stata Press.\nGelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15). 2865-2873.\nWeesie, Jeroen. 1999. sg121: Seemingly Unrelated Estimation and the Cluster-Adjusted Sandwich Estimator. Stata Technical Bulletin. 52:34-47.",
+    "objectID": "mecompare/interactions/nominal-by-continuous.html#the-effect-of-social-roles-for-men-and-women",
+    "href": "mecompare/interactions/nominal-by-continuous.html#the-effect-of-social-roles-for-men-and-women",
+    "title": "A nominal and a continuous variable",
+    "section": "The effect of social roles for men and women",
+    "text": "The effect of social roles for men and women\nThe average effect of one additional role, for men and for women, and the second difference. uncentered makes the change run from each person’s observed count to one more, as in the article; the default would center the one-unit change on the observed value.\n\nmecompare role, models(depmod) by(woman) uncentered\nPredicting: Pr(depB)\n\nMarginal effects (N_depmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nrole + 1 (uncentered)            |                                       \n                             Man |     1     -0.032      0.005      0.000\n                           Woman |     2     -0.030      0.006      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n     role_woman_0 - role_woman_1 |    -0.002      0.008      0.758 \n\nEach additional role lowers the probability of high depressive symptoms by about three percentage points for both men and women; the second difference is not significant. The instantaneous version of the same effect, the dydx() of margins, is amount(rate):\n\nmecompare role, models(depmod) by(woman) amount(rate)\nPredicting: Pr(depB)\n\nMarginal effects (N_depmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nrole(rate)                       |                                       \n                             Man |     1     -0.035      0.006      0.000\n                           Woman |     2     -0.031      0.007      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n     role_woman_0 - role_woman_1 |    -0.004      0.008      0.664",
     "crumbs": [
-      "Help files",
-      "help mecompare"
+      "Interactions",
+      "A nominal and a continuous variable"
+    ]
+  },
+  {
+    "objectID": "mecompare/interactions/nominal-by-continuous.html#the-gender-gap-at-each-number-of-roles",
+    "href": "mecompare/interactions/nominal-by-continuous.html#the-gender-gap-at-each-number-of-roles",
+    "title": "A nominal and a continuous variable",
+    "section": "The gender gap at each number of roles",
+    "text": "The gender gap at each number of roles\nThe other side of the interaction: the marginal effect of gender at each value of role, from covariates() with the full range. One numbered row per value, each with its own test.\n\nmecompare i.woman, models(depmod) covariates(role=(0(1)10)) store(gap)\nPredicting: Pr(depB)\n\nMarginal effects (N_depmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nwoman                            |                                       \n                 Woman - Man     |                                       \n                          role=0 |     1      0.017      0.073      0.811\n                          role=1 |     2      0.035      0.060      0.554\n                          role=2 |     3      0.052      0.046      0.267\n                          role=3 |     4      0.065      0.034      0.054\n                          role=4 |     5      0.076      0.023      0.001\n                          role=5 |     6      0.084      0.016      0.000\n                          role=6 |     7      0.088      0.014      0.000\n                          role=7 |     8      0.090      0.016      0.000\n                          role=8 |     9      0.089      0.019      0.000\n                          role=9 |    10      0.086      0.022      0.000\n                         role=10 |    11      0.082      0.024      0.001\n\nThis is the information Figure 14 encodes in solid versus dashed lines: the gender gap is significant at three or more roles and not at zero to two. Plotted directly:\n\ncoefplot gap_depmod, vertical yline(0) ///\n    coeflabels(woman_role_0 = \"0\" woman_role_1 = \"1\" woman_role_2 = \"2\" ///\n               woman_role_3 = \"3\" woman_role_4 = \"4\" woman_role_5 = \"5\" ///\n               woman_role_6 = \"6\" woman_role_7 = \"7\" woman_role_8 = \"8\" ///\n               woman_role_9 = \"9\" woman_role_10 = \"10\") ///\n    xtitle(\"Number of social roles\") ytitle(\"Effect of gender: women - men\") ///\n    note(\"Effects above zero indicate women have a higher probability of high depressive symptoms\"\n)\ngraph export \"fig/nli-roles-gender-gap.png\", replace width(1400)\n(file fig/nli-roles-gender-gap.png not found)\nfile fig/nli-roles-gender-gap.png saved as PNG format\n\n\n\n\nThe marginal effect of gender at each number of social roles, with 95% confidence intervals.\n\n\nA joint test that the gap is the same at every number of roles is the overall test of interaction on this side:\n\nmetest 1 = 2 = 3 = 4 = 5 = 6 = 7 = 8 = 9 = 10 = 11\nTests of equality\n\n                                 |      chi2         df     pvalue \n---------------------------------+--------------------------------\n         1=2=3=4=5=6=7=8=9=10=11 |   104.705      5.000      0.000",
+    "crumbs": [
+      "Interactions",
+      "A nominal and a continuous variable"
     ]
   },
   {

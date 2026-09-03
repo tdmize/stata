@@ -16,8 +16,9 @@ An expression without `=` goes to `nlcom`, so sums, differences, ratios,
 products, and functions such as `abs()`, `exp()`, `ln()`, and `min()` are all
 allowed; an expression with `=` goes to `test`, including chained equalities
 and several constraints at once. Results accumulate into one table with `add`.
-`metest` replaces the retired `melincom` (see
-[melincom (retired)](../mecompare/help-melincom.html)).
+`metest` replaces the retired `melincom`: the same `ME #` references work,
+so `melincom 1 - 2` becomes `metest 1 - 2`, `melincom 1 - 2, add` becomes
+`metest 1 - 2, add`, and `melincom clear` becomes `metest, clear`.
 
 ## Installation
 

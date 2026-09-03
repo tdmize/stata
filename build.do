@@ -153,7 +153,6 @@ if `dyn' {
         * help files -> web pages (from the installed .sthlp, via python)
         if "`p'" == "mecompare" {
             _build_help "`python'" mecompare mecompare help "mecompare help file"
-            _build_help "`python'" melincom  mecompare help-melincom "melincom (retired)"
         }
         else if "`p'" == "metest" {
             _build_help "`python'" metest metest help "metest help file"

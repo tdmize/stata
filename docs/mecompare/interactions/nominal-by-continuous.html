@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curvilinear effects and mediation/attenuation – Stata software — Trenton D. Mize</title>
+<title>A nominal and a continuous variable – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,8 +71,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/examples/nested-models.html" rel="next">
-<link href="../../mecompare/plotting.html" rel="prev">
+<link href="../../mecompare/interactions/continuous-by-continuous.html" rel="next">
+<link href="../../mecompare/interactions/nominal-by-nominal.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Curvilinear effects and mediation/attenuation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/nominal-by-continuous.html">A nominal and a continuous variable</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/nominal-by-continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/interactions/nominal-by-continuous.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">A nominal and a continuous variable</span></a>
   </div>
 </li>
@@ -279,7 +279,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-model" id="toc-the-model" class="nav-link active" data-scroll-target="#the-model">The model</a></li>
+  <li><a href="#the-predictions-figure-14" id="toc-the-predictions-figure-14" class="nav-link" data-scroll-target="#the-predictions-figure-14">The predictions (Figure 14)</a></li>
+  <li><a href="#the-effect-of-social-roles-for-men-and-women" id="toc-the-effect-of-social-roles-for-men-and-women" class="nav-link" data-scroll-target="#the-effect-of-social-roles-for-men-and-women">The effect of social roles for men and women</a></li>
+  <li><a href="#the-gender-gap-at-each-number-of-roles" id="toc-the-gender-gap-at-each-number-of-roles" class="nav-link" data-scroll-target="#the-gender-gap-at-each-number-of-roles">The gender gap at each number of roles</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -288,10 +297,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Curvilinear effects and mediation/attenuation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/nominal-by-continuous.html">A nominal and a continuous variable</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Curvilinear effects and mediation/attenuation</h1>
-<p class="subtitle lead">Example 6.1 of Mize, Doan, and Long (2019)</p>
+<h1 class="title">A nominal and a continuous variable</h1>
+<p class="subtitle lead">Gender × social roles: Figure 14 of Mize (2019)</p>
 </div>
 
 
@@ -308,50 +317,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Marginal effects can summarize the effect of a curvilinear relationship in a single number which can facilitate tests of that relationship. For example, to see if a nonlinear relationship is attenuated across models. Here, we compare an effect across a model with and without a proposed mediator. Here income is entered with a squared term in a linear regression of depressive symptoms; the second model adds job satisfaction as a mediator.</p>
+<p>When one of the interacting variables is continuous, a plot of the predictions is almost always needed, and the tests have two sides: the effect of the continuous variable within each group, and the group difference at each value of the continuous variable. The article’s example is whether holding more social roles protects against high depressive symptoms equally for men and women (Add Health Wave IV).</p>
+<section id="the-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-model">The model</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/ah4_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(ah4_cme.dta | Add Health Wave 4 | 2018-07-10)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(depsympB, income, inc10, age, woman, race, college, jobsat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(0 observations deleted)
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/nli_ah4"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(Add Health Wave IV | NLI - Nonlinear Interaction Effects | 2018-12-17)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> depsympB c.income##c.income c.age i.woman i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> basemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> depsympB c.income##c.income c.age i.woman i.race i.jobsat, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> medmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> depB c.role##i.woman i.parrole c.age i.race c.income i.college, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> depmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The marginal effect of a one-standard-deviation increase in income in each model, and the difference between them:</p>
+</section>
+<section id="the-predictions-figure-14" class="level2">
+<h2 class="anchored" data-anchor-id="the-predictions-figure-14">The predictions (Figure 14)</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare income, models(basemod medmod) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (basemod) is:
-     regress depsympB c.income##c.income c.age i.woman i.race
-Model 2 (medmod) is:
-     regress depsympB c.income##c.income c.age i.woman i.race i.jobsat
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins woman, <span class="fu">at</span>(role=(0(1)10))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>marginsplot, xdimension(role) recastci(rline) ciopts(lpattern(<span class="kw">dash</span>)) plotopts(<span class="bn">msymbol</span>(<span class="kw">none</span>)) <span class="co">///</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">xlabel</span>(0(1)10) <span class="kw">ylabel</span>(0(0.1)0.7) <span class="bn">xtitle</span>(<span class="st">"Number of social roles"</span>) <span class="co">///</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Pr(High depressive symptoms)"</span>) <span class="bn">title</span>(<span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Variables that uniquely identify margins: role woman</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-roles-predictions.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-roles-predictions.png not found)
+file fig/nli-roles-predictions.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-roles-predictions.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Predicted probability of high depressive symptoms by number of social roles, for men and women.</figcaption>
+</figure>
+</div>
+<p>Both curves fall as roles accumulate, and women sit above men. The two questions are whether the slope differs by gender and where along the range of roles the gender gap is significant.</p>
+</section>
+<section id="the-effect-of-social-roles-for-men-and-women" class="level2">
+<h2 class="anchored" data-anchor-id="the-effect-of-social-roles-for-men-and-women">The effect of social roles for men and women</h2>
+<p>The average effect of one additional role, for men and for women, and the second difference. <code>uncentered</code> makes the change run from each person’s observed count to one more, as in the article; the default would center the one-unit change on the observed value.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare role, models(depmod) <span class="kw">by</span>(woman) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(depB)
 
-
-Predicting: Linear prediction
-
-Marginal effects and cross-model differences (N_basemod=4307) (N_medmod=4307)
+Marginal effects (N_depmod=4307)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-income + SD                      |                                       
-                         basemod |     1     -0.982      0.098      0.000
-                          medmod |     2     -0.797      0.096      0.000
-                      Difference |     3     -0.184      0.027      0.000</code></pre>
-</div>
-<p>The <strong>Difference</strong> row is the test of whether the income effect is attenuated after adding job satisfaction to the model. And, the cross-model covariances have been accounted for via <code>suest2</code> so we have accurate standard errors for the cross-model test. The proportion of the effect that is mediated is a contrast between rows, so <a href="../../metest/index.html"><code>metest</code></a> can report it with a standard error:</p>
-<div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+role + 1 (uncentered)            |                                       
+                             Man |     1     -0.032      0.005      0.000
+                           Woman |     2     -0.030      0.006      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-income                           |                                
-    (basemod - medmod) / basemod |     0.188      0.030      0.000 </code></pre>
+     role_woman_0 - role_woman_1 |    -0.002      0.008      0.758 </code></pre>
+</div>
+<p>Each additional role lowers the probability of high depressive symptoms by about three percentage points for both men and women; the second difference is not significant. The instantaneous version of the same effect, the <code>dydx()</code> of <code>margins</code>, is <code>amount(rate)</code>:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare role, models(depmod) <span class="kw">by</span>(woman) amount(rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(depB)
+
+Marginal effects (N_depmod=4307)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+role(rate)                       |                                       
+                             Man |     1     -0.035      0.006      0.000
+                           Woman |     2     -0.031      0.007      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+     role_woman_0 - role_woman_1 |    -0.004      0.008      0.664 </code></pre>
+</div>
+</section>
+<section id="the-gender-gap-at-each-number-of-roles" class="level2">
+<h2 class="anchored" data-anchor-id="the-gender-gap-at-each-number-of-roles">The gender gap at each number of roles</h2>
+<p>The other side of the interaction: the marginal effect of gender at each value of <code>role</code>, from <code>covariates()</code> with the full range. One numbered row per value, each with its own test.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(depmod) covariates(role=(0(1)10)) <span class="kw">store</span>(gap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(depB)
+
+Marginal effects (N_depmod=4307)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+woman                            |                                       
+                 Woman - Man     |                                       
+                          role=0 |     1      0.017      0.073      0.811
+                          role=1 |     2      0.035      0.060      0.554
+                          role=2 |     3      0.052      0.046      0.267
+                          role=3 |     4      0.065      0.034      0.054
+                          role=4 |     5      0.076      0.023      0.001
+                          role=5 |     6      0.084      0.016      0.000
+                          role=6 |     7      0.088      0.014      0.000
+                          role=7 |     8      0.090      0.016      0.000
+                          role=8 |     9      0.089      0.019      0.000
+                          role=9 |    10      0.086      0.022      0.000
+                         role=10 |    11      0.082      0.024      0.001</code></pre>
+</div>
+<p>This is the information Figure 14 encodes in solid versus dashed lines: the gender gap is significant at three or more roles and not at zero to two. Plotted directly:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>coefplot gap_depmod, vertical <span class="kw">yline</span>(0) <span class="co">///</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    coeflabels(woman_role_0 = <span class="st">"0"</span> woman_role_1 = <span class="st">"1"</span> woman_role_2 = <span class="st">"2"</span> <span class="co">///</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>               woman_role_3 = <span class="st">"3"</span> woman_role_4 = <span class="st">"4"</span> woman_role_5 = <span class="st">"5"</span> <span class="co">///</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               woman_role_6 = <span class="st">"6"</span> woman_role_7 = <span class="st">"7"</span> woman_role_8 = <span class="st">"8"</span> <span class="co">///</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>               woman_role_9 = <span class="st">"9"</span> woman_role_10 = <span class="st">"10"</span>) <span class="co">///</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">"Number of social roles"</span>) <span class="bn">ytitle</span>(<span class="st">"Effect of gender: women - men"</span>) <span class="co">///</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects above zero indicate women have a higher probability of high depressive symptoms"</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-roles-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-roles-gender-gap.png not found)
+file fig/nli-roles-gender-gap.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-roles-gender-gap.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>The marginal effect of gender at each number of social roles, with 95% confidence intervals.</figcaption>
+</figure>
+</div>
+<p>A joint test that the gap is the same at every number of roles is the overall test of interaction on this side:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>metest 1 = 2 = 3 = 4 = 5 = 6 = 7 = 8 = 9 = 10 = 11</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Tests of equality
+
+                                 |      chi2         df     pvalue 
+---------------------------------+--------------------------------
+         1=2=3=4=5=6=7=8=9=10=11 |   104.705      5.000      0.000 </code></pre>
 </div>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -761,13 +852,13 @@ income                           |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/plotting.html" class="pagination-link" aria-label="Plotting and tabulating results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plotting and tabulating results</span>
+      <a href="../../mecompare/interactions/nominal-by-nominal.html" class="pagination-link" aria-label="Two nominal variables">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Two nominal variables</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/examples/nested-models.html" class="pagination-link" aria-label="Nested logit models and mediation/attenuation">
-        <span class="nav-page-text">Nested logit models and mediation/attenuation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/interactions/continuous-by-continuous.html" class="pagination-link" aria-label="Two continuous variables">
+        <span class="nav-page-text">Two continuous variables</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

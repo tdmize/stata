@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>melincom (retired) – Stata software — Trenton D. Mize</title>
+<title>Interaction effects – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,24 +29,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../mecompare/help.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-120b4804e0c736fa0e2bf96564216d06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../mecompare/interactions/linear-model.html" rel="next">
+<link href="../../mecompare/examples/within-model.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-120b4804e0c736fa0e2bf96564216d06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -86,7 +87,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../mecompare/help.html">Help files</a></li><li class="breadcrumb-item"><a href="../mecompare/help-melincom.html">help melincom (retired)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Overview</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -101,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">mecompare</a> 
+      <a href="../../">mecompare</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://www.trentonmize.com/software/mecompare" title="trentonmize.com" class="quarto-navigation-tool px-1" aria-label="trentonmize.com"><i class="bi bi-house-door"></i></a>
     <a href="https://github.com/tdmize" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
@@ -113,25 +114,25 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/getting-started.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/getting-started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting started</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/options.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/options.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Options</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/plotting.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/plotting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
@@ -146,43 +147,43 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/alternative-predictors.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/alternative-predictors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Alternative predictors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/different-outcomes.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/different-outcomes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Different outcomes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/model-types.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/model-types.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Different model types</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/groups.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/groups.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Separate samples or groups</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/examples/within-model.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/within-model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Within a single model</span></a>
   </div>
 </li>
@@ -199,62 +200,59 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/interactions/index.qmd" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/linear-model.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/interactions/linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Nonlinear effects in a linear model</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/nominal-by-nominal.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/interactions/nominal-by-nominal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two nominal variables</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/nominal-by-continuous.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/interactions/nominal-by-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A nominal and a continuous variable</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">mecompare/interactions/continuous-by-continuous.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/interactions/continuous-by-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two continuous variables</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/help-examples.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/help-examples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Examples from the help file</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Help files</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../mecompare/help.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/help.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">help mecompare</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../mecompare/help-melincom.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">help melincom (retired)</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#title" id="toc-title" class="nav-link active" data-scroll-target="#title">Title</a></li>
-  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
-  <li><a href="#also-see" id="toc-also-see" class="nav-link" data-scroll-target="#also-see">Also see</a></li>
+  <li><a href="#the-three-ingredients" id="toc-the-three-ingredients" class="nav-link active" data-scroll-target="#the-three-ingredients">The three ingredients</a></li>
+  <li><a href="#testing-the-second-difference" id="toc-testing-the-second-difference" class="nav-link" data-scroll-target="#testing-the-second-difference">Testing the second difference</a></li>
+  <li><a href="#plotting-the-marginal-effects" id="toc-plotting-the-marginal-effects" class="nav-link" data-scroll-target="#plotting-the-marginal-effects">Plotting the marginal effects</a></li>
+  <li><a href="#translating-the-2019-files" id="toc-translating-the-2019-files" class="nav-link" data-scroll-target="#translating-the-2019-files">Translating the 2019 files</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul>
 </nav>
 </nav>
@@ -265,10 +263,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../mecompare/help.html">Help files</a></li><li class="breadcrumb-item"><a href="../mecompare/help-melincom.html">help melincom (retired)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Overview</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">melincom (retired)</h1>
-<p class="subtitle lead">The installed help file, rendered for the web</p>
+<h1 class="title">Interaction effects</h1>
+<p class="subtitle lead">Testing nonlinear interactions with mecompare: the approach of Mize (2019)</p>
 </div>
 
 
@@ -285,31 +283,96 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This page is generated from <code>melincom.sthlp</code> by <code>build.do</code>, so it matches the installed version. In Stata, type <code>help melincom</code>.</p>
-</div>
-</div>
-</div>
-<section id="title" class="level2">
-<h2 class="anchored" data-anchor-id="title">Title</h2>
-<p><strong><code>melincom</code> –</strong> retired; replaced by <a href="../metest/help.html">metest</a></p>
+<p>Mize (2019) argues that in nonlinear models – and in linear models with nonlinear terms – the coefficient on a product term is not a test of interaction on the scale that matters. Interaction should instead be assessed in the natural metric of the outcome by (1) plotting the predictions, (2) computing the marginal effect of one variable at chosen levels of the other, and (3) testing whether those marginal effects differ: a <em>second difference</em>. It also matters to look at both sides of an interaction – the effect of X across levels of Z, and the effect of Z across levels of X.</p>
+<p>The 2019 replication files do all of this with <code>margins</code> followed by <code>mlincom</code>. <code>mecompare</code> does the same in one call per question, with the second-difference test one <code>metest</code> line away. The pages in this section reproduce the article’s examples, section by section:</p>
+<ul>
+<li><a href="linear-model.html">Nonlinear effects in a linear model</a>: age, age², and gender (Table 2, Figures 1–2).</li>
+<li><a href="nominal-by-nominal.html">Two nominal variables</a>: gender × parenthood and gender × education (Tables 3–4, Figures 12–13).</li>
+<li><a href="nominal-by-continuous.html">A nominal and a continuous variable</a>: gender × social roles (Figure 14).</li>
+<li><a href="continuous-by-continuous.html">Two continuous variables</a>: political views × survey year (Figures 15–17).</li>
+</ul>
+<section id="the-three-ingredients" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-ingredients">The three ingredients</h2>
+<p><strong>A nominal moderator: <code>by()</code>.</strong> <code>by(woman)</code> reports the marginal effect of the focal variable at each level of <code>woman</code>, one numbered row per level, computed as a counterfactual: the whole sample set to each level in turn, then averaged. This is what <code>margins woman, at(...)</code> followed by <code>mlincom</code> does in the 2019 files. (<code>over(woman)</code> instead uses only the observations in each group; see <code>help mecompare</code> for the distinction.)</p>
+<p><strong>A continuous moderator: <code>covariates(z=(numlist))</code>.</strong> <code>covariates(age=(25 55))</code> reports the marginal effect of the focal variable with everyone set to age 25, then to age 55, as numbered rows in one table. Any numlist works, so <code>covariates(age=(20(5)70))</code> gives the effect across the range of the moderator – the numbers behind the “marginal effect of X across Z” plots.</p>
+<p><strong>Where and how far the focal variable moves: <code>start()</code>, <code>amount()</code>, <code>uncentered</code>.</strong> <code>start(age=25) amount(5)</code> is the change from 25 to 30; <code>amount(5)</code> alone is a five-unit change from each observation’s own value; <code>amount(sd)</code> is a standard-deviation change and <code>amount(rate)</code> the instantaneous rate (the <code>dydx()</code> of <code>margins</code>). By default a change is centered on the starting value (half below, half above); <code>uncentered</code> makes it run upward from the start, which is what <code>at(x=gen(x)) at(x=gen(x+1))</code> did in the 2019 files.</p>
 </section>
-<section id="description" class="level2">
-<h2 class="anchored" data-anchor-id="description">Description</h2>
-<p><code>melincom</code> has been retired. Its replacement is <a href="../metest/help.html">metest</a>, which takes the same <em>ME #</em> references, so most calls translate directly:</p>
-<p><code>melincom 1 - 2</code> becomes <code>metest 1 - 2</code></p>
-<p><code>melincom 1 - 2, add</code> becomes <code>metest 1 - 2, add</code></p>
-<p><code>melincom clear</code> becomes <code>metest, clear</code></p>
-<p><code>metest</code> additionally accepts coefficient names, multiplication and division, nonlinear functions, and equality tests, and it can be used after any estimation command rather than only after <code>mecompare</code>.</p>
+<section id="testing-the-second-difference" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-second-difference">Testing the second difference</h2>
+<p>Every row of the <code>mecompare</code> table is numbered, and <code>metest</code> tests any combination of rows: <code>metest 1 - 2</code> is the second difference between the first two rows, <code>metest 1 = 2 = 3</code> is a joint test that three effects are equal, and <code>metest 2 - 1, add rowname("...")</code> accumulates results into one table. The rows are posted to <code>e(b)</code> and <code>e(V)</code> with their full covariance, so the tests are the Wald tests of the article’s equation 6.</p>
 </section>
-<section id="also-see" class="level2">
-<h2 class="anchored" data-anchor-id="also-see">Also see</h2>
-<p><a href="../metest/help.html">metest</a>, <a href="help.html">mecompare</a></p>
+<section id="plotting-the-marginal-effects" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-the-marginal-effects">Plotting the marginal effects</h2>
+<p><code>store(stub)</code> saves the table as stored estimates, and <code>coefplot</code> plots them. With <code>by()</code> or <code>covariates()</code> there is one coefficient per level, so a plot of the effect of gender across the range of age is <code>mecompare i.woman, covariates(age=(20(5)70)) store(gap)</code> followed by <code>coefplot gap_m1, vertical yline(0)</code>. Plots of <em>predictions</em> are not <code>mecompare</code>’s job; those stay with <code>margins</code> and <code>marginsplot</code>, exactly as in the article.</p>
+</section>
+<section id="translating-the-2019-files" class="level2">
+<h2 class="anchored" data-anchor-id="translating-the-2019-files">Translating the 2019 files</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">In the replication files</th>
+<th style="text-align: left;">With <code>mecompare</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>margins woman, at(age=(25 30)) post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (3 - 1) - (4 - 2)</code></td>
+<td style="text-align: left;"><code>mecompare age, start(age=25) amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>margins woman, at(age=gen(age)) at(age=gen(age+5)) post</code> then the three <code>mlincom</code> lines</td>
+<td style="text-align: left;"><code>mecompare age, amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>margins, dydx(woman) at(age=(25 55)) post</code> then <code>mlincom 2 - 1</code></td>
+<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(25 55))</code> then <code>metest 2 - 1</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>margins, dydx(woman) at(age=(18(2)72))</code> then <code>marginsplot</code></td>
+<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(18(2)72)) store(gap)</code> then <code>coefplot gap_m1, vertical</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>margins parrole#woman, post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (1 - 2) - (3 - 4)</code></td>
+<td style="text-align: left;"><code>mecompare i.parrole, by(woman)</code> then <code>metest 1 - 2</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>margins educ, dydx(woman) pwcompare(pve)</code></td>
+<td style="text-align: left;"><code>mecompare i.woman, by(educ)</code> then <code>metest 1 = 2 = 3 = 4 = 5</code> and <code>metest 1 - 2</code>, …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>margins woman, at(role=gen(role)) at(role=gen(role + 1)) post</code> then <code>mlincom</code></td>
+<td style="text-align: left;"><code>mecompare role, by(woman) uncentered</code> then <code>metest 1 - 2</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>margins woman, dydx(role) post</code> then <code>mlincom 2 - 1</code></td>
+<td style="text-align: left;"><code>mecompare role, by(woman) amount(rate)</code> then <code>metest 1 - 2</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>mchange year1976 conviewSS</code></td>
+<td style="text-align: left;"><code>mecompare year1976 conviewSS, amount(sd) uncentered</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>margins, dydx(conviewSS) at(year=(0 40)) post</code> then <code>mlincom 2 - 1</code></td>
+<td style="text-align: left;"><code>mecompare conviewSS, covariates(year1976=(0 40)) amount(rate)</code> then <code>metest 2 - 1</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>margins, at(year1976=gen(year1976) conview=(-1 1)) at(year1976=gen(year1976 + 2) conview=(-1 1)) post</code> then <code>mlincom</code></td>
+<td style="text-align: left;"><code>mecompare year1976, covariates(conviewSS=(-1 1)) amount(2) uncentered</code> then <code>metest 1 - 2</code></td>
+</tr>
+</tbody>
+</table>
+<p>In each case the <code>models()</code> option names the stored model, or is omitted when the model is the one in memory.</p>
+</section>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+<blockquote class="blockquote">
+<p>Mize, Trenton D. 2019. “Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.” <em>Sociological Science</em> 6: 81–117. <a href="https://doi.org/10.15195/v6.a4" class="uri">https://doi.org/10.15195/v6.a4</a></p>
+</blockquote>
+<p>The article’s data and replication files are at <a href="https://www.trentonmize.com/research/mize_2019_SocSci">trentonmize.com/research</a>.</p>
 
 
 </section>
@@ -722,11 +785,14 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../mecompare/help.html" class="pagination-link" aria-label="help mecompare">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">help mecompare</span>
+      <a href="../../mecompare/examples/within-model.html" class="pagination-link" aria-label="Within a single model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Within a single model</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../mecompare/interactions/linear-model.html" class="pagination-link" aria-label="Nonlinear effects in a linear model">
+        <span class="nav-page-text">Nonlinear effects in a linear model</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

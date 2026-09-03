@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Curvilinear effects and mediation/attenuation – Stata software — Trenton D. Mize</title>
+<title>Two continuous variables – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,8 +71,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/examples/nested-models.html" rel="next">
-<link href="../../mecompare/plotting.html" rel="prev">
+<link href="../../mecompare/help-examples.html" rel="next">
+<link href="../../mecompare/interactions/nominal-by-continuous.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Curvilinear effects and mediation/attenuation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/continuous-by-continuous.html">Two continuous variables</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/continuous-by-continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/interactions/continuous-by-continuous.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Two continuous variables</span></a>
   </div>
 </li>
@@ -279,7 +279,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-model" id="toc-the-model" class="nav-link active" data-scroll-target="#the-model">The model</a></li>
+  <li><a href="#average-effects-of-each-variable" id="toc-average-effects-of-each-variable" class="nav-link" data-scroll-target="#average-effects-of-each-variable">Average effects of each variable</a></li>
+  <li><a href="#ideal-types-figure-15" id="toc-ideal-types-figure-15" class="nav-link" data-scroll-target="#ideal-types-figure-15">Ideal types (Figure 15)</a></li>
+  <li><a href="#the-effect-of-political-views-across-years-figure-16" id="toc-the-effect-of-political-views-across-years-figure-16" class="nav-link" data-scroll-target="#the-effect-of-political-views-across-years-figure-16">The effect of political views across years (Figure 16)</a></li>
+  <li><a href="#the-effect-of-time-across-political-views-figure-17" id="toc-the-effect-of-time-across-political-views-figure-17" class="nav-link" data-scroll-target="#the-effect-of-time-across-political-views-figure-17">The effect of time across political views (Figure 17)</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -288,10 +298,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Curvilinear effects and mediation/attenuation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/continuous-by-continuous.html">Two continuous variables</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Curvilinear effects and mediation/attenuation</h1>
-<p class="subtitle lead">Example 6.1 of Mize, Doan, and Long (2019)</p>
+<h1 class="title">Two continuous variables</h1>
+<p class="subtitle lead">Political views × survey year: Figures 15–17 of Mize (2019)</p>
 </div>
 
 
@@ -308,50 +318,196 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Marginal effects can summarize the effect of a curvilinear relationship in a single number which can facilitate tests of that relationship. For example, to see if a nonlinear relationship is attenuated across models. Here, we compare an effect across a model with and without a proposed mediator. Here income is entered with a squared term in a linear regression of depressive symptoms; the second model adds job satisfaction as a mediator.</p>
+<p>Interactions between two continuous variables are the hardest to present. The article’s example is whether the growth in acceptance of same-sex relationships in the GSS between 1976 and 2016 has been broad-based or concentrated among people with particular political views. Political views are a standardized scale (0 = moderate, negative = liberal, positive = conservative); year is coded as years since 1976.</p>
+<section id="the-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-model">The model</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/ah4_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(ah4_cme.dta | Add Health Wave 4 | 2018-07-10)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(depsympB, income, inc10, age, woman, race, college, jobsat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(0 observations deleted)
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/nli_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(sameokB, year1976, conviewSS, age, <span class="bn">white</span>, male, income, married, college)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(42,940 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> depsympB c.income##c.income c.age i.woman i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> basemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> depsympB c.income##c.income c.age i.woman i.race i.jobsat, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> medmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> sameokB c.year1976##c.year1976##c.conviewSS c.age i.<span class="bn">white</span> i.male <span class="co">///</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>              c.income i.married i.college, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> samemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The marginal effect of a one-standard-deviation increase in income in each model, and the difference between them:</p>
+</section>
+<section id="average-effects-of-each-variable" class="level2">
+<h2 class="anchored" data-anchor-id="average-effects-of-each-variable">Average effects of each variable</h2>
+<p>Before looking at the interaction, the average effect of a standard-deviation increase in each variable (the <code>mchange</code> line of the replication file):</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare income, models(basemod medmod) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (basemod) is:
-     regress depsympB c.income##c.income c.age i.woman i.race
-Model 2 (medmod) is:
-     regress depsympB c.income##c.income c.age i.woman i.race i.jobsat
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976 conviewSS, models(samemod) amount(<span class="fu">sd</span>) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(sameokB)
 
-
-Predicting: Linear prediction
-
-Marginal effects and cross-model differences (N_basemod=4307) (N_medmod=4307)
+Marginal effects (N_samemod=19337)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-income + SD                      |                                       
-                         basemod |     1     -0.982      0.098      0.000
-                          medmod |     2     -0.797      0.096      0.000
-                      Difference |     3     -0.184      0.027      0.000</code></pre>
+year1976 + SD (uncentered)       |                                       
+                         samemod |     1      0.150      0.003      0.000
+---------------------------------+---------------------------------------
+conviewSS + SD (uncentered)      |                                       
+                         samemod |     2     -0.078      0.003      0.000</code></pre>
 </div>
-<p>The <strong>Difference</strong> row is the test of whether the income effect is attenuated after adding job satisfaction to the model. And, the cross-model covariances have been accounted for via <code>suest2</code> so we have accurate standard errors for the cross-model test. The proportion of the effect that is mediated is a contrast between rows, so <a href="../../metest/index.html"><code>metest</code></a> can report it with a standard error:</p>
+<p>Conservatives are less likely to view same-sex relationships as acceptable, and acceptance has risen over time.</p>
+</section>
+<section id="ideal-types-figure-15" class="level2">
+<h2 class="anchored" data-anchor-id="ideal-types-figure-15">Ideal types (Figure 15)</h2>
+<p>The first way to present the interaction is to pick “ideal types” on one variable – here one standard deviation below and above the mean of political views, labeled liberal and conservative – and plot the predictions across the other.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins, <span class="fu">at</span>(conviewSS=(-1 1) year1976=(0(2)40))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>marginsplot, x(year1976) recastci(rline) ciopts(lpattern(<span class="kw">dash</span>)) <span class="kw">ylabel</span>(0(0.2)1) <span class="co">///</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">xlabel</span>(0 <span class="st">"1976"</span> 8 <span class="st">"1984"</span> 16 <span class="st">"1992"</span> 24 <span class="st">"2000"</span> 32 <span class="st">"2008"</span> 40 <span class="st">"2016"</span>) <span class="co">///</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">"GSS survey year"</span>) <span class="bn">ytitle</span>(<span class="st">"Pr(Same-sex relationships OK)"</span>) <span class="co">///</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bn">legend</span>(<span class="kw">order</span>(3 <span class="st">"Liberal"</span> 4 <span class="st">"Conservative"</span>)) <span class="bn">title</span>(<span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Variables that uniquely identify margins: conviewSS year1976</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-predictions.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-sameok-predictions.png not found)
+file fig/nli-sameok-predictions.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-sameok-predictions.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Probability of viewing same-sex relationships as acceptable, over time, for liberals and conservatives.</figcaption>
+</figure>
+</div>
+<p>The effect of time at the two ideal types, and whether it differs, is the marginal effect of year with <code>conviewSS</code> held at each value:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976, models(samemod) covariates(conviewSS=(-1 1)) amount(rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(sameokB)
+
+Marginal effects (N_samemod=19337)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+year1976(rate)                   |                                       
+                    conviewSS=-1 |     1      0.013      0.001      0.000
+                     conviewSS=1 |     2      0.007      0.000      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-income                           |                                
-    (basemod - medmod) / basemod |     0.188      0.030      0.000 </code></pre>
+ year1976_con~1 - year1976_con~1 |     0.006      0.001      0.000 </code></pre>
 </div>
+</section>
+<section id="the-effect-of-political-views-across-years-figure-16" class="level2">
+<h2 class="anchored" data-anchor-id="the-effect-of-political-views-across-years-figure-16">The effect of political views across years (Figure 16)</h2>
+<p>The second way to present the interaction is to plot the marginal effect of one variable across the range of the other. First the test the article reports: the effect of political views in 1976 versus 2016, the instantaneous effect (<code>amount(rate)</code>) with year held at 0 and at 40.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mecompare conviewSS, models(samemod) covariates(year1976=(0 40)) amount(rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(sameokB)
+
+Marginal effects (N_samemod=19337)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+conviewSS(rate)                  |                                       
+                      year1976=0 |     1     -0.044      0.016      0.005
+                     year1976=40 |     2     -0.159      0.013      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+ conviewSS_y~40 - conviewSS_ye~0 |    -0.115      0.016      0.000 </code></pre>
+</div>
+<p>Political views matter more in 2016 than in 1976: the effect is negative in both years and significantly larger in magnitude in the later one. Across all years:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mecompare conviewSS, models(samemod) covariates(year1976=(0(4)40)) amount(rate) <span class="kw">store</span>(pv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(sameokB)
+
+Marginal effects (N_samemod=19337)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+conviewSS(rate)                  |                                       
+                      year1976=0 |     1     -0.044      0.016      0.005
+                      year1976=4 |     2     -0.059      0.010      0.000
+                      year1976=8 |     3     -0.074      0.007      0.000
+                     year1976=12 |     4     -0.090      0.005      0.000
+                     year1976=16 |     5     -0.106      0.005      0.000
+                     year1976=20 |     6     -0.123      0.006      0.000
+                     year1976=24 |     7     -0.141      0.006      0.000
+                     year1976=28 |     8     -0.157      0.006      0.000
+                     year1976=32 |     9     -0.168      0.007      0.000
+                     year1976=36 |    10     -0.170      0.009      0.000
+                     year1976=40 |    11     -0.159      0.013      0.000
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>coefplot pv_samemod, vertical <span class="kw">yline</span>(0) <span class="co">///</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    coeflabels(conviewSS_year1976_0 = <span class="st">"1976"</span> conviewSS_year1976_4 = <span class="st">"1980"</span> <span class="co">///</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>               conviewSS_year1976_8 = <span class="st">"1984"</span> conviewSS_year1976_12 = <span class="st">"1988"</span> <span class="co">///</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>               conviewSS_year1976_16 = <span class="st">"1992"</span> conviewSS_year1976_20 = <span class="st">"1996"</span> <span class="co">///</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>               conviewSS_year1976_24 = <span class="st">"2000"</span> conviewSS_year1976_28 = <span class="st">"2004"</span> <span class="co">///</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>               conviewSS_year1976_32 = <span class="st">"2008"</span> conviewSS_year1976_36 = <span class="st">"2012"</span> <span class="co">///</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>               conviewSS_year1976_40 = <span class="st">"2016"</span>) <span class="co">///</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">"GSS survey year"</span>) <span class="bn">ytitle</span>(<span class="st">"AME of conservative political views"</span>) <span class="co">///</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Negative effects indicate conservatives are less supportive of same-sex relationships"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-views-by-year.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-sameok-views-by-year.png not found)
+file fig/nli-sameok-views-by-year.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-sameok-views-by-year.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>The marginal effect of conservative political views on acceptance, by survey year.</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-effect-of-time-across-political-views-figure-17" class="level2">
+<h2 class="anchored" data-anchor-id="the-effect-of-time-across-political-views-figure-17">The effect of time across political views (Figure 17)</h2>
+<p>The other side: how much acceptance has changed over time for people with different views. The article reports a two-year change (the survey interval) for liberals and conservatives:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976, models(samemod) covariates(conviewSS=(-1 1)) amount(2) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(sameokB)
+
+Marginal effects (N_samemod=19337)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+year1976 + 2 (uncentered)        |                                       
+                    conviewSS=-1 |     1      0.026      0.001      0.000
+                     conviewSS=1 |     2      0.015      0.001      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+ year1976_con~1 - year1976_con~1 |     0.011      0.002      0.000 </code></pre>
+</div>
+<p>Everyone has become more accepting, liberals significantly more so than conservatives per two-year interval. Across the range of political views, from two standard deviations below the mean to two above:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976, models(samemod) covariates(conviewSS=(-2(1)2)) amount(2) uncentered <span class="kw">store</span>(tm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(sameokB)
+
+Marginal effects (N_samemod=19337)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+year1976 + 2 (uncentered)        |                                       
+                    conviewSS=-2 |     1      0.029      0.002      0.000
+                    conviewSS=-1 |     2      0.026      0.001      0.000
+                     conviewSS=0 |     3      0.021      0.001      0.000
+                     conviewSS=1 |     4      0.015      0.001      0.000
+                     conviewSS=2 |     5      0.009      0.001      0.000
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>coefplot tm_samemod, vertical <span class="kw">yline</span>(0) <span class="co">///</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    coeflabels(year1976_conviewSS__2 = <span class="st">"Very liberal"</span> year1976_conviewSS__1 = <span class="st">"Liberal"</span> <span class="co">///</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>               year1976_conviewSS_0 = <span class="st">"Moderate"</span> year1976_conviewSS_1 = <span class="st">"Conservative"</span> <span class="co">///</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>               year1976_conviewSS_2 = <span class="st">"Very conservative"</span>) <span class="co">///</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">""</span>) <span class="bn">ytitle</span>(<span class="st">"Effect of two years on Pr(Same-sex relationships OK)"</span>) <span class="co">///</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Positive effects: the group has become more supportive over time"</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-time-by-views.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/nli-sameok-time-by-views.png not found)
+file fig/nli-sameok-time-by-views.png saved as PNG format</code></pre>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../fig/nli-sameok-time-by-views.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>The marginal effect of two years of time on acceptance, across political views.</figcaption>
+</figure>
+</div>
+<p>The article’s final presentation, a contour plot of the predictions over both variables (Figure 18), is a <code>margins</code> and <code>twoway contour</code> exercise rather than a marginal-effects one; the code is in the replication files at <a href="https://www.trentonmize.com/research/mize_2019_SocSci">trentonmize.com/research</a>.</p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -761,13 +917,13 @@ income                           |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/plotting.html" class="pagination-link" aria-label="Plotting and tabulating results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plotting and tabulating results</span>
+      <a href="../../mecompare/interactions/nominal-by-continuous.html" class="pagination-link" aria-label="A nominal and a continuous variable">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">A nominal and a continuous variable</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/examples/nested-models.html" class="pagination-link" aria-label="Nested logit models and mediation/attenuation">
-        <span class="nav-page-text">Nested logit models and mediation/attenuation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/help-examples.html" class="pagination-link" aria-label="Examples from the help file">
+        <span class="nav-page-text">Examples from the help file</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
