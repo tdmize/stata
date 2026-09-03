@@ -3,40 +3,49 @@ title: "mecompare"
 subtitle: "Marginal effects and cross-model comparisons of effects in Stata"
 ---
 
-`mecompare` calculates marginal effects and compares them across models. It fits
-the framework of Mize, Doan, and Long (2019): the models are combined with
-[`suest2`](../suest2/index.html) so that the difference between a marginal effect
-in one model and the same effect in another has a proper standard error, even
-though the models were estimated separately.
+`mecompare` calculates marginal effects and compares them across models. It 
+implements the framework of Mize, Doan, and Long (2019): the models are combined 
+using seemingly-unrelated estimation with [`suest2`](../suest2/index.html) so 
+that the difference in marginal effects across models accounts for cross-model 
+covariances of effects, even though the models were estimated separately.
 
-The comparisons it handles include effects across nested models (mediation and
-confounding), across alternative predictors, across different outcomes, across
-different model types (for example ordinal versus nominal), and across models fit
-to separate groups or samples. It also compares effects within a single model.
+The comparisons `mecompare` handles include effects across nested models 
+(e.g., mediation and confounding), across alternative predictors, across different outcomes, across different model types (for example ordinal versus nominal), and across models fit to separate groups or samples. 
+
+`mecompare` also automates comparisons of effects within a single model. This 
+can be used to compare effect sizes across predictors, for tests of interaction, 
+and for other within-model comparisons.
 
 ## Installation
 
 ```stata
-net install mecompare, from("https://tdmize.github.io/data/mecompare") replace
+net install mecompare, from("https://tdmize.github.io/data") replace
 ```
 
-`mecompare` calls [`suest2`](../suest2/index.html) and works with
-[`metest`](../metest/index.html), which tests contrasts between rows of the
-`mecompare` table. Each installs the same way.
+`mecompare` requires [`suest2`](../suest2/index.html), which installs the
+same way (`net install suest2, from("https://tdmize.github.io/data") replace`),
+and it ships with [`metest`](../metest/index.html), which automates
+non-standard tests of contrasts between rows of the `mecompare` table.
 
-<!-- CHECK: does the mecompare .pkg pull in suest2/metest automatically, or do they
-     need their own net install lines here? -->
 
 ## Where to start
 
 - [Getting started](getting-started.html) walks through one comparison and
   explains the table.
-- The **Examples** in the sidebar reproduce the examples from Section 6 of
-  Mize, Doan, and Long (2019) plus a within-model comparison.
-- The help file (`help mecompare` in Stata) documents every option.
+- [Options](options.html) goes through every option with an example of each;
+  [Plotting and tabulating results](plotting.html) covers `store()` with
+  `coefplot` and `esttab`.
+- The **Examples** in the sidebar reproduce the examples from
+  Mize, Doan, and Long (2019) plus a within-model comparison; the
+  **Interactions** pages reproduce the analyses of Mize (2019) on nonlinear
+  interaction effects.
+- [Examples from the help file](help-examples.html) runs the help file's
+  examples in full, and the [help file](help.html) itself is on the site,
+  rendered from the installed version (`help mecompare` in Stata).
 
 ## Citation
 
+`mecompare` implements the methods proposed by Mize, Doan, and Long (2019). 
 If you use `mecompare`, please cite:
 
 > Mize, Trenton D., Long Doan, and J. Scott Long. 2019. "A General Framework
@@ -49,7 +58,7 @@ If you use `mecompare`, please cite:
 ::: {.command-table}
 | Command | What it does |
 |:------|:-------------------------------------------------------------|
-| [`suest2`](../suest2/index.html) | Combines separately estimated models so that quantities from different models can be tested against each other. The engine underneath `mecompare`. |
+| [`suest2`](../suest2/index.html) | Combines separately estimated models so that quantities from different models can be tested against each other. The engine underneath cross-model comparisons for `mecompare`. |
 | [`metest`](../metest/index.html) | Tests contrasts between rows of the tables produced by `mecompare`, `meinequality`, and `totalme` (or any posted `margins` results). |
 | [`meinequality`](../meinequality/index.html) | Summarizes how unequal the marginal effects of a categorical predictor are across its categories. |
 | [`totalme`](../totalme/index.html) | Summarizes a predictor's effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect. |

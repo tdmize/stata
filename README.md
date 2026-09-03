@@ -137,7 +137,7 @@ an ordinary fence:
 
 ````markdown
 ```stata
-net install mecompare, from("https://tdmize.github.io/data/mecompare") replace
+net install mecompare, from("https://tdmize.github.io/data") replace
 ```
 ````
 

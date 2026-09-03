@@ -4,22 +4,42 @@ subtitle: "Tests and contrasts of marginal effects"
 ---
 <<dd_version: 2>>
 
-`metest` tests linear and nonlinear combinations of the rows of the table
-produced by [`mecompare`](../mecompare/index.html),
-[`meinequality`](../meinequality/index.html), or
-[`totalme`](../totalme/index.html) -- or of any results posted by
+`metest` tests linear and nonlinear combinations of the marginal effects
+reported by [`mecompare`](../mecompare/index.html) -- or of any results posted by
 `margins, post`. Rows are referred to by the number in the `#` column of the
-table, so a difference between two effects is `metest 2 - 1`, a ratio is
+`mecompare` table, so a difference between two effects is `metest 2 - 1`, a ratio is
 `metest 2 / 1`, and a test that several effects are equal is
-`metest 1 = 2 = 3`.
+`metest 1 = 2 = 3`. To refer to an actual number for a mathematical expression,
+use a leading # -- e.g. to divide by 2 use / #2.
+
+An expression without `=` goes to `nlcom`, so sums, differences, ratios,
+products, and functions such as `abs()`, `exp()`, `ln()`, and `min()` are all
+allowed; an expression with `=` goes to `test`, including chained equalities
+and several constraints at once. Results accumulate into one table with `add`.
+`metest` replaces the retired `melincom` (see
+[melincom (retired)](../mecompare/help-melincom.html)).
 
 ## Installation
 
+`metest` is part of the `mecompare` package and is installed with it:
+
 ```stata
-net install metest, from("https://tdmize.github.io/data/metest") replace
+net install mecompare, from("https://tdmize.github.io/data") replace
 ```
 
-<!-- CHECK: install location. -->
+
+## Where to start
+
+- [Usage and examples](usage.html) runs every form of the command from the
+  help file: single effects, differences, ratios and averages, scaling by a
+  literal, equality tests, accumulated tables, and use after commands other
+  than `mecompare`.
+- The [help file](help.html) is on the site, rendered from the installed
+  version (`help metest` in Stata).
+- The `mecompare` pages use `metest` throughout, especially the
+  [within-model example](../mecompare/examples/within-model.html) and the
+  [interactions pages](../mecompare/interactions/index.html), where every
+  second difference is a `metest` line.
 
 ## Basic use
 
@@ -44,11 +64,3 @@ metest 1 - 2
 metest 1 - 3
 <</dd_do>>
 ```
-
-## Documentation
-
-`help metest` in Stata documents the syntax, the forms an expression can take,
-and the options for accumulating several tests into one table.
-
-<!-- CHECK: a short list of the expression forms and the accumulate/rowname-type
-     options, taken from the help file. -->

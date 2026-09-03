@@ -1,0 +1,300 @@
+---
+title: "Options"
+subtitle: "Every mecompare option, with an example of each"
+---
+<<dd_version: 2>>
+
+This page goes through the options of `mecompare` in the order of the help
+file, running each one on Stata's `nlsw88` data so that the effect of the
+option is visible in the output. The [help file](help.html) has the full
+statement of each option; the [Getting started](getting-started.html) page
+explains how to read the table.
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+drop if missing(union, married, age, race, hours, collgrad, ttl_exp, grade, wage)
+
+quietly logit union i.married age i.race hours i.collgrad, vce(robust)
+estimates store m1
+
+quietly logit union i.married age i.race hours i.collgrad wage grade, vce(robust)
+estimates store m2
+<</dd_do>>
+```
+
+## Syntax
+
+```stata
+mecompare [varlist] [if] [in] [weight] [, models(name1 [name2]) options]
+```
+
+With no *varlist*, marginal effects are computed for every variable in the
+model(s). Factor-variable notation (`i.`, `c.`) is required on the stored
+models; on `mecompare` itself it is optional, since each variable is treated
+as the models specified it.
+
+## `models()` -- one model, two models, or none
+
+`models()` names the stored estimates. Two names give the cross-model
+comparison; one name gives that model's marginal effects. It can be omitted:
+`mecompare` then uses the estimates in memory, which are either the model just
+fit (labeled `m1`) or, after [`suest2`](../suest2/index.html), the two models
+of that system.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married age, models(m1 m2)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married age, models(m2)
+<</dd_do>>
+```
+
+With no varlist, every predictor:
+
+```{.stata-run}
+<<dd_do>>
+mecompare, models(m1 m2)
+<</dd_do>>
+```
+
+## `statistics()` -- which columns to show
+
+The default columns are the estimate, its standard error, and the p-value.
+`statistics()` takes any of `estimate`, `se`, `pvalue`, `z`, `ll`, `ul`, or
+`all`.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married age, models(m1 m2) statistics(est se ll ul)
+<</dd_do>>
+```
+
+## `amount()`, `centered`, `uncentered` -- the size of a continuous change
+
+For a continuous variable the default is a one-unit change, centered on the
+observed value (half a unit below to half a unit above). `amount()` takes a
+number, `sd`, `2sd`, `trimrange` (5th to 95th percentile), or `rate` (the
+instantaneous rate of change, `dydx` in `margins`). One value applies to all
+continuous variables; several values apply in order.
+
+```{.stata-run}
+<<dd_do>>
+mecompare age hours, models(m1 m2) amount(sd)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age hours, models(m1 m2) amount(10 sd)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1 m2) amount(rate)
+<</dd_do>>
+```
+
+`uncentered` makes the change run upward from the observed value (from *x*
+to *x* + amount) rather than being centered on it. The two conventions give
+different numbers whenever the effect is nonlinear.
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1 m2) amount(sd) uncentered
+<</dd_do>>
+```
+
+## `start()` -- where the change begins
+
+By default each observation's own value is the starting point. `start()`
+sets it: a value, `atmeans`, or a list of values for one variable, which
+gives one numbered row set per value so that `metest` can compare them.
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1 m2) start(age=30) amount(10)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1) start(age=(30 40 50)) amount(10)
+<</dd_do>>
+```
+
+## `covariates()` and `atmeans` -- values of the other variables
+
+Covariates are the model's other variables. By default they stay at their
+observed values and the effect is averaged over the sample. `covariates()`
+fixes them: `covariates(atmeans)` (or just `atmeans`) at their means,
+`covariates(married=1)` at a value, and a list for one covariate --
+`covariates(hours=(20 40 60))` -- gives one row set per value, each a
+counterfactual with the whole sample set to that value.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married, models(m1 m2) atmeans
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married, models(m2) covariates(hours=(20 40 60))
+metest 1 = 2 = 3
+<</dd_do>>
+```
+
+## `by()` and `over()` -- effects within levels of another variable
+
+`by(varlist)` reports the marginal effect at each level of a binary or
+nominal moderator, computed as a counterfactual (everyone set to that level,
+then averaged); `over(varlist)` computes it within each observed subgroup
+instead. Both can take more than one variable. For a continuous moderator,
+`covariates(z=(numlist))` plays the same role as `by()`. The
+[interactions pages](interactions/index.html) use these throughout.
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1 m2) by(collgrad)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1 m2) over(collgrad)
+<</dd_do>>
+```
+
+## `pwcompare` -- all pairwise contrasts of a nominal variable
+
+For an `i.` variable the default rows contrast each level with the base
+level. `pwcompare` reports every pair.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.race, models(m1 m2) pwcompare
+<</dd_do>>
+```
+
+## `meinequality` and `totalme` -- summary measures
+
+`meinequality` adds the marginal-effect inequality summary of
+[`meinequality`](../meinequality/index.html) above a nominal variable's
+contrasts (`weighted`, the default, `unweighted`, or `all`). `totalme` adds
+the Total Marginal Effect of [`totalme`](../totalme/index.html) above every
+focal variable, which matters for multi-category outcomes.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.race, models(m1 m2) meinequality(all)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+egen hours_ord = cut(hours), at(0 30 40 50 81)
+quietly ologit hours_ord c.age i.married i.race, vce(robust)
+mecompare age married race, totalme
+<</dd_do>>
+```
+
+## `groups`, `groupnames()`, `groupme`, `groupsd` -- models fit to separate samples
+
+`groups` says the two models were fit to non-overlapping samples, so each
+model's marginal effects are averaged over its own sample and the
+**Difference** row compares the groups. `groupnames()` labels the rows;
+`groupme` adds the average difference in the outcome between the groups;
+`groupsd` uses each group's own SD for `amount(sd)`.
+
+```{.stata-run}
+<<dd_do>>
+quietly logit union age hours i.collgrad if south == 1, vce(robust)
+estimates store msouth
+quietly logit union age hours i.collgrad if south == 0, vce(robust)
+estimates store mnonsouth
+
+mecompare age hours collgrad, models(msouth mnonsouth) groups groupnames(South NonSouth) groupme
+<</dd_do>>
+```
+
+## `predict()` -- which prediction
+
+With one model any prediction that `margins` accepts after that command can be
+requested; with two models, any prediction returning one quantity per model.
+Multi-category models report every outcome by default, or one with
+`predict(pr outcome(#))`.
+
+```{.stata-run}
+<<dd_do>>
+quietly nbreg hours c.age i.collgrad i.race, vce(robust)
+estimates store cnt
+
+mecompare age collgrad, models(cnt)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age collgrad, models(cnt) predict(pr(0))
+<</dd_do>>
+```
+
+## `marginsopt()` -- anything else margins should be told
+
+`marginsopt(string)` is passed to `margins` verbatim. Its main use is
+`expression()` with one model, for example effects in percentage points:
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married age, models(m2) marginsopt(expression(100*predict(pr)))
+<</dd_do>>
+```
+
+## Display options
+
+`decimals(#)` sets the decimal places (default 3), `mod1name()` and
+`mod2name()` label the model rows, `labwidth(#)` and `statwidth(#)` set the
+column widths, and `norownum` drops the `#` column.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married age, models(m1 m2) decimals(4) mod1name(Base) mod2name(Full) norownum
+<</dd_do>>
+```
+
+## `commands` and `details` -- seeing what was run
+
+`commands` prints the `suest2` and `margins` commands `mecompare` used;
+`details` prints their output too.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married, models(m1 m2) commands
+<</dd_do>>
+```
+
+## `store()` -- results for coefplot and esttab
+
+`store(stub)` saves the marginal effects as stored estimates (`stub_model1`,
+`stub_model2`, `stub_diff`) keyed by variable, ready for `coefplot` and
+`esttab`. The [plotting page](plotting.html) shows how.
+
+## After mecompare: `metest`, `e(b)`, `e(V)`
+
+Every row of the table is posted to `e(b)` and `e(V)` in `#` order, so
+[`metest`](../metest/index.html), `lincom`, `nlcom`, and `test` all work on
+them. `mecompare, coeflegend` lists the coefficient names.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.married age, models(m1 m2)
+metest 1 - 4
+mecompare, coeflegend
+<</dd_do>>
+```

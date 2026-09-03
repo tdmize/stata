@@ -71,6 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../suest2/usage.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -151,6 +152,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../suest2/usage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Usage</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../suest2/help-examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples from the help file</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Help files</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../suest2/help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help suest2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../suest2/help-suest2_cleanup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help suest2_cleanup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../suest2/help-suest2_mi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help suest2_mi</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -158,8 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#where-to-start" id="toc-where-to-start" class="nav-link" data-scroll-target="#where-to-start">Where to start</a></li>
   <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
-  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   </ul>
 </nav>
 </nav>
@@ -173,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">suest2</h1>
-<p class="subtitle lead">Seemingly unrelated estimation of separately fit models</p>
+<p class="subtitle lead">Seemingly unrelated estimation for most models in Stata, with margins support</p>
 </div>
 
 
@@ -190,17 +232,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>suest2</code> combines models that were estimated separately into one set of results, so that coefficients, predictions, and marginal effects from different models can be tested against each other with <code>test</code>, <code>lincom</code>, <code>nlcom</code>, or <code>margins</code>. It is the engine underneath <a href="../mecompare/index.html"><code>mecompare</code></a>, <a href="../meinequality/index.html"><code>meinequality</code></a>, and <a href="../totalme/index.html"><code>totalme</code></a>, and it can be used on its own.</p>
-<!-- CHECK: one or two sentences on what suest2 adds over Stata's suest (the
-     models it accepts, svy/mi prefixes, weights), taken from the help file. -->
+<p><code>suest2</code> combines models that were estimated separately into one set of results, including cross-model covariances which are necessary for tests across models. After <code>suest2</code>, coefficients, predictions, and marginal effects from different models can be tested against each other with <a href="../mecompare/index.html"><code>mecompare</code></a> or with <code>test</code>, <code>lincom</code>, <code>nlcom</code>, or <code>margins</code>. <a href="../mecompare/index.html"><code>mecompare</code></a> is written specifically to automate a range of cross-model comparisons of effects.</p>
+<p><code>suest2</code> extends Stata’s <code>suest</code> to panel, multilevel, weighted, survey, multiply-imputed, generalized ordered, and instrumental-variable models, and it lets <code>predict</code> and <code>margins</code> select a constituent model from the combined system, so that most any post-estimation work – predictions, marginal effects, graphs of either – can be done within and across models.</p>
+<p><code>suest2</code> is used by <a href="../mecompare/index.html"><code>mecompare</code></a>, <a href="../meinequality/index.html"><code>meinequality</code></a>, and <a href="../totalme/index.html"><code>totalme</code></a> to combine model estimates before those commands’ post-estimation calculations, and those three packages require it.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install suest2, from(<span class="st">"https://tdmize.github.io/data/suest2"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<!-- CHECK: install location. -->
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install suest2, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="where-to-start" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
+<ul>
+<li><a href="usage.html">Usage</a>: the workflow, the options of <code>suest2</code>, how to point <code>margins</code> at one model of the system, and the rules for weights, survey data, and multiple imputation.</li>
+<li><a href="help-examples.html">Examples from the help file</a>: single-level, panel, multilevel, and instrumental-variable systems, run in full.</li>
+<li>The help files, rendered from the installed versions: <a href="help.html">suest2</a>, <a href="help-suest2_cleanup.html">suest2_cleanup</a>, and <a href="help-suest2_mi.html">suest2_mi</a>.</li>
+</ul>
 </section>
 <section id="basic-use" class="level2">
 <h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
-<p>Fit and store the models, then combine them and refer to each model’s coefficients by equation name:</p>
+<p>Fit and store the models, then combine them:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
@@ -242,14 +291,43 @@ College grad  |      0.311      0.132    2.356   0.018        0.052       0.570
         _cons |     -1.761      0.719   -2.448   0.014       -3.171      -0.351
 -------------------------------------------------------------------------------</code></pre>
 </div>
-<p>The combined results are now the active estimates, so <code>lincom</code>, <code>test</code>, <code>nlcom</code>, and <code>margins</code> work on them, with each model’s coefficients referred to by the equation names shown in the output.</p>
-<!-- CHECK: add a lincom line comparing the collgrad coefficients across the two
-     equations once the equation names suest2 posts are confirmed, e.g.
-     lincom [eq1]1.collgrad - [eq2]1.collgrad -->
-</section>
-<section id="documentation" class="level2">
-<h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
-<p><code>help suest2</code> in Stata documents the syntax and options. Examples of the full workflow are on the <a href="../mecompare/index.html"><code>mecompare</code></a> pages.</p>
+<p>The combined results are now the active estimates. Each model is an equation, named after the stored estimate, so <code>lincom</code>, <code>test</code>, and <code>nlcom</code> can compare coefficients across the models:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">lincom</span> [m1_union]1.collgrad - [m2_union]1.collgrad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code> ( 1)  [m1_union]1.collgrad - [m2_union]1.collgrad = 0
+
+------------------------------------------------------------------------------
+             | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         (1) |      0.196      0.046    4.241   0.000        0.105       0.286
+------------------------------------------------------------------------------</code></pre>
+</div>
+<p>And <a href="../mecompare/index.html"><code>mecompare</code></a> with no <code>models()</code> option picks up the two models of the system:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mecompare i.collgrad age</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (m1) is:
+     logit union i.collgrad c.age i.south
+Model 2 (m2) is:
+     logit union i.collgrad c.age i.south c.wage c.ttl_exp
+
+
+Predicting: Pr(union)
+
+Marginal effects and cross-model differences (N_m1=1878) (N_m2=1878)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+collgrad                         |                                       
+         College  - Not coll     |                                       
+                              m1 |     1      0.097      0.024      0.000
+                              m2 |     2      0.057      0.025      0.023
+                      Difference |     3      0.039      0.009      0.000
+---------------------------------+---------------------------------------
+age + 1                          |                                       
+                              m1 |     4      0.002      0.003      0.604
+                              m2 |     5      0.001      0.003      0.668
+                      Difference |     6      0.000      0.001      0.587</code></pre>
+</div>
 
 
 </section>
@@ -660,6 +738,15 @@ College grad  |      0.311      0.132    2.356   0.018        0.052       0.570
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../suest2/usage.html" class="pagination-link" aria-label="Usage">
+        <span class="nav-page-text">Usage</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

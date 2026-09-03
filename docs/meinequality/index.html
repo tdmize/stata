@@ -71,6 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../meinequality/options.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -137,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="../">meinequality</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://www.trentonmize.com/software" title="trentonmize.com" class="quarto-navigation-tool px-1" aria-label="trentonmize.com"><i class="bi bi-house-door"></i></a>
+    <a href="https://www.trentonmize.com/software/meineq" title="trentonmize.com" class="quarto-navigation-tool px-1" aria-label="trentonmize.com"><i class="bi bi-house-door"></i></a>
     <a href="https://github.com/tdmize" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
     <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
 </div>
@@ -151,6 +152,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Options</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/examples/summary-measure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inequality as a summary measure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/examples/categorical-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inequality in categorical models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/examples/across-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparing ME inequalities across models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/examples/across-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparing ME inequalities across groups</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/help-examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples from the help file</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../meinequality/help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help meinequality</span></a>
+  </div>
+</li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -158,9 +212,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
+  <li><a href="#where-to-start" id="toc-where-to-start" class="nav-link" data-scroll-target="#where-to-start">Where to start</a></li>
+  <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic syntax</a></li>
+  <li><a href="#a-first-example" id="toc-a-first-example" class="nav-link" data-scroll-target="#a-first-example">A first example</a></li>
   <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
-  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
+  <li><a href="#authors" id="toc-authors" class="nav-link" data-scroll-target="#authors">Authors</a></li>
   </ul>
 </nav>
 </nav>
@@ -174,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">meinequality</h1>
-<p class="subtitle lead">Marginal effect inequality: summarizing the effects of a categorical predictor</p>
+<p class="subtitle lead">Inequality summary effects of nominal and ordinal independent variables</p>
 </div>
 
 
@@ -191,26 +247,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>A nominal predictor with several categories produces a set of marginal effects – one contrast for every pair of categories. <code>meinequality</code> summarizes that set in a single measure of how unequal the categories are, with a standard error, so that the overall importance of a categorical variable can be reported, compared across predictors, and compared across models or groups.</p>
-<!-- CHECK: definition sentence and the citation for the measure (Mize & Han).
-     Add the weighted/unweighted distinction if it belongs in the overview. -->
+<p><code>meinequality</code> (Marginal Effects Inequality) is a companion package to Mize and Han’s 2025 <em>Sociological Science</em> article, “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” A nominal independent variable with <em>L</em> categories has <em>L(L-1)/2</em> pairwise marginal effects – one for every pair of categories. <code>meinequality</code> summarizes them in a single <strong>ME inequality</strong> statistic: the average absolute pairwise difference in predictions across the categories, with a standard error. It answers “how much does the outcome differ across the levels of this variable, overall?” and it can be compared across predictors, across models, and across groups.</p>
+<p>The command calculates <strong>weighted</strong> ME inequality (the default), which accounts for the relative size of each category in the sample, and/or <strong>unweighted</strong> ME inequality, which gives every pairwise comparison the same weight. It works after most regression models, for one model or for two; with two models the difference in ME inequality across the models is tested, using <a href="../suest2/index.html"><code>suest2</code></a> to combine the estimates.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install meinequality, from(<span class="st">"https://tdmize.github.io/data/meinequality"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<!-- CHECK: install location. -->
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install meinequality, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>meinequality</code> requires the <a href="../suest2/index.html"><code>suest2</code></a> package.</p>
 </section>
-<section id="basic-use" class="level2">
-<h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
+<section id="where-to-start" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
+<ul>
+<li><a href="options.html">Options</a> goes through every option with an example of each.</li>
+<li>The <strong>Examples</strong> in the sidebar reproduce the examples from Mize and Han (2025): inequality as a summary measure, inequality in categorical models, and comparisons of ME inequality across models and across groups.</li>
+<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples in full, and the <a href="help.html">help file</a> is on the site, rendered from the installed version (<code>help meinequality</code> in Stata).</li>
+<li>The same summary is available as the <code>meinequality</code> option of <a href="../mecompare/index.html"><code>mecompare</code></a>, which places it above the pairwise contrasts it summarizes.</li>
+</ul>
+</section>
+<section id="basic-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="basic-syntax">Basic syntax</h2>
+<p>For a single model, fit it and call <code>meinequality</code> with the nominal variable(s):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">regress</span> ...</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>meinequality <span class="kw">varlist</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For two models, store them and name both in <code>models()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> dv iv1 iv2, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span> basemod</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> dv iv1 iv2 med1 med2, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span> medmod</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>meinequality <span class="kw">varlist</span>, models(basemod medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For two models fit on separate samples, add <code>groups</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>meinequality <span class="kw">varlist</span>, models(grp1mod grp2mod) groups</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="a-first-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-first-example">A first example</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(<span class="kw">union</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(<span class="kw">union</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(368 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.race i.collgrad c.age i.south, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.race i.collgrad c.age i.south, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>meinequality race</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>meinequality race</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (meineq_mod1) is:
      logit union i.race i.collgrad c.age i.south, vce(robust)
 
@@ -221,15 +301,18 @@ ME Inequality Estimates (N = 1878)
 ME Inequality            |                                               
                     race |      0.106       0.025       4.225       0.000 </code></pre>
 </div>
-<p>With no <code>models()</code> option the summary is computed for the model in memory; with two stored models in <code>models()</code> it is computed for each and the difference is tested, as in <a href="../mecompare/index.html"><code>mecompare</code></a>.</p>
+<p>With no <code>models()</code> option the summary is computed for the model in memory; with two stored models in <code>models()</code> it is computed for each and the difference is tested.</p>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<!-- CHECK: add the reference for the marginal effect inequality measure. -->
+<p>Please cite the use of <code>meinequality</code> by citing the corresponding article:</p>
+<blockquote class="blockquote">
+<p>Mize, Trenton D. and Bing Han. 2025. “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” <em>Sociological Science</em> 12: 115–157.</p>
+</blockquote>
 </section>
-<section id="documentation" class="level2">
-<h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
-<p><code>help meinequality</code> in Stata documents the syntax and options. The same summary is available as an option of <a href="../mecompare/index.html"><code>mecompare</code></a>, which places it beneath the marginal effects it summarizes.</p>
+<section id="authors" class="level2">
+<h2 class="anchored" data-anchor-id="authors">Authors</h2>
+<p><code>meinequality</code> and its sister command <a href="../totalme/index.html"><code>totalme</code></a> are written by Bing Han (Population Research Institute, Penn State University) and Trenton D. Mize (Purdue University).</p>
 
 
 </section>
@@ -640,6 +723,15 @@ ME Inequality            |
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../meinequality/options.html" class="pagination-link" aria-label="Options">
+        <span class="nav-page-text">Options</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

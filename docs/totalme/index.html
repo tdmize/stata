@@ -71,6 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../totalme/options.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -137,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="../">totalme</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://www.trentonmize.com/software" title="trentonmize.com" class="quarto-navigation-tool px-1" aria-label="trentonmize.com"><i class="bi bi-house-door"></i></a>
+    <a href="https://www.trentonmize.com/software/totalme" title="trentonmize.com" class="quarto-navigation-tool px-1" aria-label="trentonmize.com"><i class="bi bi-house-door"></i></a>
     <a href="https://github.com/tdmize" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
     <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
 </div>
@@ -151,6 +152,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../totalme/options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Options</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../totalme/examples/single-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Total MEs for a single model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../totalme/examples/across-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparing Total MEs across models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../totalme/examples/inequalities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Total ME inequalities for nominal independent variables</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../totalme/help-examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples from the help file</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../totalme/help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help totalme</span></a>
+  </div>
+</li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -158,9 +206,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
+  <li><a href="#where-to-start" id="toc-where-to-start" class="nav-link" data-scroll-target="#where-to-start">Where to start</a></li>
+  <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic syntax</a></li>
+  <li><a href="#a-first-example" id="toc-a-first-example" class="nav-link" data-scroll-target="#a-first-example">A first example</a></li>
   <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
-  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
+  <li><a href="#authors" id="toc-authors" class="nav-link" data-scroll-target="#authors">Authors</a></li>
   </ul>
 </nav>
 </nav>
@@ -174,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">totalme</h1>
-<p class="subtitle lead">The Total Marginal Effect for multiple-outcome models</p>
+<p class="subtitle lead">Holistic effect size measures for nominal and ordinal outcome models</p>
 </div>
 
 
@@ -191,29 +241,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In a model with several outcome categories – a multinomial or ordered logit, or the probabilities of individual counts – a predictor has one marginal effect per category. <code>totalme</code> summarizes them in a single Total Marginal Effect: the total amount of probability the predictor moves across the outcome categories, with a standard error. The summary can be reported for one model, compared across predictors, and compared across models or groups.</p>
-<!-- CHECK: definition sentence and the citation (Mize & Han 2025, Sociological
-     Science). -->
+<p><code>totalme</code> (Total Marginal Effect) is a companion package to Mize and Han’s 2025 <em>Sociological Science</em> article, “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” In a model with several outcome categories – a multinomial or ordered logit or probit, or a generalized ordered logit – a predictor has one marginal effect per category, and no single one of them says how much the predictor matters. <code>totalme</code> summarizes them in a single <strong>Total marginal effect</strong>: the sum of the absolute values of the marginal effects across all outcome categories, divided by two, which is the total amount of probability the predictor moves between the categories.</p>
+<p><code>totalme</code> handles any kind of independent variable. For a continuous or binary variable the Total ME is built from its marginal effect on each outcome. For a nominal variable it is built from the ME inequality of <a href="../meinequality/index.html"><code>meinequality</code></a> on each outcome, giving a <strong>Total ME inequality</strong> (weighted or unweighted). It works for one model or for two; with two models the difference in Total ME across the models is tested, using <a href="../suest2/index.html"><code>suest2</code></a> to combine the estimates.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install totalme, from(<span class="st">"https://tdmize.github.io/data/totalme"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<!-- CHECK: install location. -->
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install totalme, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>totalme</code> requires the <a href="../suest2/index.html"><code>suest2</code></a> package.</p>
 </section>
-<section id="basic-use" class="level2">
-<h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
+<section id="where-to-start" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
+<ul>
+<li><a href="options.html">Options</a> goes through every option with an example of each.</li>
+<li>The <strong>Examples</strong> in the sidebar reproduce the examples from Mize and Han (2025): Total MEs for a single model, comparisons across models, and Total ME inequalities for nominal predictors.</li>
+<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples in full, and the <a href="help.html">help file</a> is on the site, rendered from the installed version (<code>help totalme</code> in Stata).</li>
+<li>The same summary is available as the <code>totalme</code> option of <a href="../mecompare/index.html"><code>mecompare</code></a>, which places it above the per-outcome marginal effects it summarizes.</li>
+</ul>
+</section>
+<section id="basic-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="basic-syntax">Basic syntax</h2>
+<p>For a single model, fit it and call <code>totalme</code> with the variable(s):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span> ...</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>totalme <span class="kw">varlist</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For two models, store them and name both in <code>models()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ologit</span> dv iv1 iv2, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span> basemod</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ologit</span> dv iv1 iv2 med1 med2, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span> medmod</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>totalme <span class="kw">varlist</span>, models(basemod medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For two models fit on separate samples, add <code>groups</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>totalme <span class="kw">varlist</span>, models(grp1mod grp2mod) groups</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="a-first-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-first-example">A first example</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(occupation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(occupation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(9 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> occupation (1/2 = 1 <span class="st">"Professional/managerial"</span>) (3/5 = 2 <span class="st">"Sales/clerical/craft"</span>) <span class="co">///</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  (6/13 = 3 <span class="st">"Other"</span>), <span class="kw">gen</span>(occ3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> occupation (1/2 = 1 <span class="st">"Professional/managerial"</span>) (3/5 = 2 <span class="st">"Sales/clerical/craft"</span>) <span class="co">///</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                  (6/13 = 3 <span class="st">"Other"</span>), <span class="kw">gen</span>(occ3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(1,920 differences between occupation and occ3)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> occ3 i.collgrad c.age i.south, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> occ3 i.collgrad c.age i.south, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (totalme_mod1) is:
      mlogit occ3 i.collgrad c.age i.south, vce(robust)
 Continuous/Binary IV(s): 
@@ -226,15 +300,18 @@ Total ME Estimates (N = 2237)
 collgrad                 |                                               
 College grad vs Not co~d |      0.245       0.021      11.474       0.000 </code></pre>
 </div>
-<p>The Total Marginal Effect of a college degree is the total change in the predicted distribution across the three occupation groups. <code>totalme</code> can also be requested as an option of <a href="../mecompare/index.html"><code>mecompare</code></a>, which places the summary beneath the per-outcome marginal effects.</p>
+<p>The Total ME of a college degree is the total change in the predicted distribution across the three occupation groups.</p>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<!-- CHECK: add the reference for the Total Marginal Effect. -->
+<p>Please cite the use of <code>totalme</code> by citing the corresponding article:</p>
+<blockquote class="blockquote">
+<p>Mize, Trenton D. and Bing Han. 2025. “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” <em>Sociological Science</em> 12: 115–157.</p>
+</blockquote>
 </section>
-<section id="documentation" class="level2">
-<h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
-<p><code>help totalme</code> in Stata documents the syntax and options.</p>
+<section id="authors" class="level2">
+<h2 class="anchored" data-anchor-id="authors">Authors</h2>
+<p><code>totalme</code> and its sister command <a href="../meinequality/index.html"><code>meinequality</code></a> are written by Bing Han (Population Research Institute, Penn State University) and Trenton D. Mize (Purdue University).</p>
 
 
 </section>
@@ -645,6 +722,15 @@ College grad vs Not co~d |      0.245       0.021      11.474       0.000 </code
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../totalme/options.html" class="pagination-link" aria-label="Options">
+        <span class="nav-page-text">Options</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

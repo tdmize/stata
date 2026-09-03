@@ -158,6 +158,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Getting started</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Options</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/plotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plotting and tabulating results</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -211,6 +223,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/interactions/index.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">mecompare/interactions/linear-model.qmd</span>
+  </li>
+          <li class="sidebar-item">
+ <span class="menu-text">mecompare/interactions/nominal-by-nominal.qmd</span>
+  </li>
+          <li class="sidebar-item">
+ <span class="menu-text">mecompare/interactions/nominal-by-continuous.qmd</span>
+  </li>
+          <li class="sidebar-item">
+ <span class="menu-text">mecompare/interactions/continuous-by-continuous.qmd</span>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/help-examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples from the help file</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Help files</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help mecompare</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/help-melincom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help melincom (retired)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -251,26 +321,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>mecompare</code> calculates marginal effects and compares them across models. It fits the framework of Mize, Doan, and Long (2019): the models are combined with <a href="../suest2/index.html"><code>suest2</code></a> so that the difference between a marginal effect in one model and the same effect in another has a proper standard error, even though the models were estimated separately.</p>
-<p>The comparisons it handles include effects across nested models (mediation and confounding), across alternative predictors, across different outcomes, across different model types (for example ordinal versus nominal), and across models fit to separate groups or samples. It also compares effects within a single model.</p>
+<p><code>mecompare</code> calculates marginal effects and compares them across models. It implements the framework of Mize, Doan, and Long (2019): the models are combined using seemingly-unrelated estimation with <a href="../suest2/index.html"><code>suest2</code></a> so that the difference in marginal effects across models accounts for cross-model covariances of effects, even though the models were estimated separately.</p>
+<p>The comparisons <code>mecompare</code> handles include effects across nested models (e.g., mediation and confounding), across alternative predictors, across different outcomes, across different model types (for example ordinal versus nominal), and across models fit to separate groups or samples.</p>
+<p><code>mecompare</code> also automates comparisons of effects within a single model. This can be used to compare effect sizes across predictors, for tests of interaction, and for other within-model comparisons.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install mecompare, from(<span class="st">"https://tdmize.github.io/data/mecompare"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>mecompare</code> calls <a href="../suest2/index.html"><code>suest2</code></a> and works with <a href="../metest/index.html"><code>metest</code></a>, which tests contrasts between rows of the <code>mecompare</code> table. Each installs the same way.</p>
-<!-- CHECK: does the mecompare .pkg pull in suest2/metest automatically, or do they
-     need their own net install lines here? -->
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install mecompare, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>mecompare</code> requires <a href="../suest2/index.html"><code>suest2</code></a>, which installs the same way (<code>net install suest2, from("https://tdmize.github.io/data") replace</code>), and it ships with <a href="../metest/index.html"><code>metest</code></a>, which automates non-standard tests of contrasts between rows of the <code>mecompare</code> table.</p>
 </section>
 <section id="where-to-start" class="level2">
 <h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
 <ul>
 <li><a href="getting-started.html">Getting started</a> walks through one comparison and explains the table.</li>
-<li>The <strong>Examples</strong> in the sidebar reproduce the examples from Section 6 of Mize, Doan, and Long (2019) plus a within-model comparison.</li>
-<li>The help file (<code>help mecompare</code> in Stata) documents every option.</li>
+<li><a href="options.html">Options</a> goes through every option with an example of each; <a href="plotting.html">Plotting and tabulating results</a> covers <code>store()</code> with <code>coefplot</code> and <code>esttab</code>.</li>
+<li>The <strong>Examples</strong> in the sidebar reproduce the examples from Mize, Doan, and Long (2019) plus a within-model comparison; the <strong>Interactions</strong> pages reproduce the analyses of Mize (2019) on nonlinear interaction effects.</li>
+<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples in full, and the <a href="help.html">help file</a> itself is on the site, rendered from the installed version (<code>help mecompare</code> in Stata).</li>
 </ul>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p>If you use <code>mecompare</code>, please cite:</p>
+<p><code>mecompare</code> implements the methods proposed by Mize, Doan, and Long (2019). If you use <code>mecompare</code>, please cite:</p>
 <blockquote class="blockquote">
 <p>Mize, Trenton D., Long Doan, and J. Scott Long. 2019. “A General Framework for Comparing Predictions and Marginal Effects Across Models.” <em>Sociological Methodology</em> 49(1): 152–189. <a href="https://doi.org/10.1177/0081175019852763" class="uri">https://doi.org/10.1177/0081175019852763</a></p>
 </blockquote>
@@ -288,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><a href="../suest2/index.html"><code>suest2</code></a></td>
-<td style="text-align: left;">Combines separately estimated models so that quantities from different models can be tested against each other. The engine underneath <code>mecompare</code>.</td>
+<td style="text-align: left;">Combines separately estimated models so that quantities from different models can be tested against each other. The engine underneath cross-model comparisons for <code>mecompare</code>.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="../metest/index.html"><code>metest</code></a></td>

@@ -43,8 +43,30 @@ set rmsg off
 * full path, e.g.  local quarto `"C:\Users\trent\AppData\Local\Programs\Quarto\bin\quarto.exe"'
 local quarto "quarto"
 
+* Python executable, used to render the installed help files as web pages
+* (tools/sthlp2qmd.py).  "python" or "py" on most Windows installs.
+local python "python"
+
 * Packages documented on the site (folder names).
 local all_pkgs "mecompare suest2 metest meinequality totalme"
+
+* Render one installed help file as <section>/<page>.qmd  (the page is written
+* next to the generated pages, not under _src/, and is overwritten each build)
+capture program drop _build_help
+program define _build_help
+    args python name section page title
+    capture findfile `name'.sthlp
+    if _rc {
+        di as err "  `name'.sthlp not found on the adopath; `section'/`page'.qmd left as is"
+        exit
+    }
+    local src "`r(fn)'"
+    di as txt `"  sthlp2qmd `name'.sthlp  ->  `section'/`page'.qmd"'
+    capture erase "build_help.log"
+    !`python' tools/sthlp2qmd.py "`src'" "`section'/`page'.qmd" --cmd `section' --title "`title'" > build_help.log 2>&1
+    capture confirm file "build_help.log"
+    if !_rc  type "build_help.log"
+end
 
 * ---------------------------------------------------------------- arguments --
 local pkgs   ""
@@ -127,8 +149,29 @@ if `dyn' {
 
     foreach p of local pkgs {
         di as txt _n "{hline 72}" _n "build.do: `p'" _n "{hline 72}"
+
+        * help files -> web pages (from the installed .sthlp, via python)
+        if "`p'" == "mecompare" {
+            _build_help "`python'" mecompare mecompare help "mecompare help file"
+            _build_help "`python'" melincom  mecompare help-melincom "melincom (retired)"
+        }
+        else if "`p'" == "metest" {
+            _build_help "`python'" metest metest help "metest help file"
+        }
+        else if "`p'" == "suest2" {
+            _build_help "`python'" suest2         suest2 help "suest2 help file"
+            _build_help "`python'" suest2_cleanup suest2 help-suest2_cleanup "suest2_cleanup help file"
+            _build_help "`python'" suest2_mi      suest2 help-suest2_mi "suest2_mi help file"
+        }
+        else if "`p'" == "meinequality" {
+            _build_help "`python'" meinequality meinequality help "meinequality help file"
+        }
+        else if "`p'" == "totalme" {
+            _build_help "`python'" totalme totalme help "totalme help file"
+        }
+
         cd "`root'/`p'"
-        capture mkdir fig                 // for <<dd_graph: saving(fig/...)>>
+        capture mkdir fig                 // for graphs exported by the pages
         est clear
 
         * pages at the top level of _src/

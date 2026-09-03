@@ -17,4 +17,7 @@
 .DS_Store
 Thumbs.db
 
+# build.do scratch
+/build_help.log
+
 **/*.quarto_ipynb

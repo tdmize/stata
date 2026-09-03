@@ -1,0 +1,22 @@
+---
+title: "suest2_mi help file"
+subtitle: "The installed help file, rendered for the web"
+toc-depth: 3
+---
+
+::: {.callout-note appearance="simple"}
+This page is generated from `suest2_mi.sthlp` by `build.do`, so it matches the
+installed version. In Stata, type `help suest2_mi`.
+:::
+
+## Title
+
+**suest2_mi** Internal multiple-imputation execution engine for `suest2`
+
+## Description
+
+When called through the ordinary stored-estimates interface, `suest2` preserves the exact imputation set recorded by the source estimates and separately replays every stored command on the current MI data. Each replay must reproduce the source pooled coefficients and VCE before the joint system is constructed. The final joint system must preserve each source coefficient block; its diagonal sandwich blocks are not equated with standalone VCEs. A mismatch is rejected with an explanation that the current MI data, weights, survey settings, offsets/exposures, or analysis variables may have changed.
+
+`suest2_mi` is the internal engine used when ordinary `suest2` receives separately stored `mi estimate, post:` results. Users should normally estimate and store the individual MI models and call `suest2` with their stored names. See [suest2](help.html#multiple_imputation).
+
+The engine executes labeled constituent commands within the current imputation, stores them temporarily, and calls `suest2`. Official `mi estimate` then pools the complete stacked coefficient vector and covariance matrix. The model labels are retained for postestimation through `mimrgns`.

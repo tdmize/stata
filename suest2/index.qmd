@@ -1,30 +1,48 @@
 ---
 title: "suest2"
-subtitle: "Seemingly unrelated estimation of separately fit models"
+subtitle: "Seemingly unrelated estimation for most models in Stata, with margins support"
 ---
 
 `suest2` combines models that were estimated separately into one set of
-results, so that coefficients, predictions, and marginal effects from
-different models can be tested against each other with `test`, `lincom`,
-`nlcom`, or `margins`. It is the engine underneath
-[`mecompare`](../mecompare/index.html), [`meinequality`](../meinequality/index.html),
-and [`totalme`](../totalme/index.html), and it can be used on its own.
+results, including cross-model covariances which are necessary for tests
+across models. After `suest2`, coefficients, predictions, and marginal effects
+from different models can be tested against each other with
+[`mecompare`](../mecompare/index.html) or with `test`, `lincom`,
+`nlcom`, or `margins`. [`mecompare`](../mecompare/index.html) is written
+specifically to automate a range of cross-model comparisons of effects.
 
-<!-- CHECK: one or two sentences on what suest2 adds over Stata's suest (the
-     models it accepts, svy/mi prefixes, weights), taken from the help file. -->
+`suest2` extends Stata's `suest` to panel, multilevel, weighted, survey,
+multiply-imputed, generalized ordered, and instrumental-variable models, and
+it lets `predict` and `margins` select a constituent model from the combined
+system, so that most any post-estimation work -- predictions, marginal
+effects, graphs of either -- can be done within and across models.
+
+`suest2` is used by [`mecompare`](../mecompare/index.html), [`meinequality`](../meinequality/index.html),
+and [`totalme`](../totalme/index.html) to combine model estimates before
+those commands' post-estimation calculations, and those three packages require
+it.
 
 ## Installation
 
 ```stata
-net install suest2, from("https://tdmize.github.io/data/suest2") replace
+net install suest2, from("https://tdmize.github.io/data") replace
 ```
 
-<!-- CHECK: install location. -->
+
+## Where to start
+
+- [Usage](usage.html): the workflow, the options of `suest2`, how to point
+  `margins` at one model of the system, and the rules for weights, survey
+  data, and multiple imputation.
+- [Examples from the help file](help-examples.html): single-level, panel,
+  multilevel, and instrumental-variable systems, run in full.
+- The help files, rendered from the installed versions: [suest2](help.html),
+  [suest2_cleanup](help-suest2_cleanup.html), and
+  [suest2_mi](help-suest2_mi.html).
 
 ## Basic use
 
-Fit and store the models, then combine them and refer to each model's
-coefficients by equation name:
+Fit and store the models, then combine them:
 
 ```{.stata-run}
 . sysuse nlsw88, clear
@@ -75,16 +93,52 @@ College grad  |      0.311      0.132    2.356   0.018        0.052       0.570
 
 ```
 
-The combined results are now the active estimates, so `lincom`, `test`,
-`nlcom`, and `margins` work on them, with each model's coefficients referred to
-by the equation names shown in the output.
+The combined results are now the active estimates. Each model is an equation,
+named after the stored estimate, so `lincom`, `test`, and `nlcom` can compare
+coefficients across the models:
 
-<!-- CHECK: add a lincom line comparing the collgrad coefficients across the two
-     equations once the equation names suest2 posts are confirmed, e.g.
-     lincom [eq1]1.collgrad - [eq2]1.collgrad -->
+```{.stata-run}
+. lincom [m1_union]1.collgrad - [m2_union]1.collgrad
+
+ ( 1)  [m1_union]1.collgrad - [m2_union]1.collgrad = 0
+
+------------------------------------------------------------------------------
+             | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         (1) |      0.196      0.046    4.241   0.000        0.105       0.286
+------------------------------------------------------------------------------
+
+```
+
+And [`mecompare`](../mecompare/index.html) with no `models()` option picks up
+the two models of the system:
+
+```{.stata-run}
+. mecompare i.collgrad age
 
 
-## Documentation
 
-`help suest2` in Stata documents the syntax and options. Examples of the full
-workflow are on the [`mecompare`](../mecompare/index.html) pages.
+Model 1 (m1) is:
+     logit union i.collgrad c.age i.south
+Model 2 (m2) is:
+     logit union i.collgrad c.age i.south c.wage c.ttl_exp
+
+
+Predicting: Pr(union)
+
+Marginal effects and cross-model differences (N_m1=1878) (N_m2=1878)
+
+                                 |  ME #   Estimate  Robust SE      P>|z|
+---------------------------------+---------------------------------------
+collgrad                         |                                       
+         College  - Not coll     |                                       
+                              m1 |     1      0.097      0.024      0.000
+                              m2 |     2      0.057      0.025      0.023
+                      Difference |     3      0.039      0.009      0.000
+---------------------------------+---------------------------------------
+age + 1                          |                                       
+                              m1 |     4      0.002      0.003      0.604
+                              m2 |     5      0.001      0.003      0.668
+                      Difference |     6      0.000      0.001      0.587
+
+```

@@ -71,6 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../metest/usage.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -151,6 +152,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../metest/usage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Usage and examples</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../metest/help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">help metest</span></a>
+  </div>
+</li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -158,8 +171,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#where-to-start" id="toc-where-to-start" class="nav-link" data-scroll-target="#where-to-start">Where to start</a></li>
   <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
-  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   </ul>
 </nav>
 </nav>
@@ -190,11 +203,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>metest</code> tests linear and nonlinear combinations of the rows of the table produced by <a href="../mecompare/index.html"><code>mecompare</code></a>, <a href="../meinequality/index.html"><code>meinequality</code></a>, or <a href="../totalme/index.html"><code>totalme</code></a> – or of any results posted by <code>margins, post</code>. Rows are referred to by the number in the <code>#</code> column of the table, so a difference between two effects is <code>metest 2 - 1</code>, a ratio is <code>metest 2 / 1</code>, and a test that several effects are equal is <code>metest 1 = 2 = 3</code>.</p>
+<p><code>metest</code> tests linear and nonlinear combinations of the marginal effects reported by <a href="../mecompare/index.html"><code>mecompare</code></a> – or of any results posted by <code>margins, post</code>. Rows are referred to by the number in the <code>#</code> column of the <code>mecompare</code> table, so a difference between two effects is <code>metest 2 - 1</code>, a ratio is <code>metest 2 / 1</code>, and a test that several effects are equal is <code>metest 1 = 2 = 3</code>. To refer to an actual number for a mathematical expression, use a leading # – e.g.&nbsp;to divide by 2 use / #2.</p>
+<p>An expression without <code>=</code> goes to <code>nlcom</code>, so sums, differences, ratios, products, and functions such as <code>abs()</code>, <code>exp()</code>, <code>ln()</code>, and <code>min()</code> are all allowed; an expression with <code>=</code> goes to <code>test</code>, including chained equalities and several constraints at once. Results accumulate into one table with <code>add</code>. <code>metest</code> replaces the retired <code>melincom</code> (see <a href="../mecompare/help-melincom.html">melincom (retired)</a>).</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install metest, from(<span class="st">"https://tdmize.github.io/data/metest"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<!-- CHECK: install location. -->
+<p><code>metest</code> is part of the <code>mecompare</code> package and is installed with it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install mecompare, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="where-to-start" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
+<ul>
+<li><a href="usage.html">Usage and examples</a> runs every form of the command from the help file: single effects, differences, ratios and averages, scaling by a literal, equality tests, accumulated tables, and use after commands other than <code>mecompare</code>.</li>
+<li>The <a href="help.html">help file</a> is on the site, rendered from the installed version (<code>help metest</code> in Stata).</li>
+<li>The <code>mecompare</code> pages use <code>metest</code> throughout, especially the <a href="../mecompare/examples/within-model.html">within-model example</a> and the <a href="../mecompare/interactions/index.html">interactions pages</a>, where every second difference is a <code>metest</code> line.</li>
+</ul>
 </section>
 <section id="basic-use" class="level2">
 <h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
@@ -238,12 +260,6 @@ smsa                             |
 ---------------------------------+--------------------------------
                  collgrad - smsa |     0.025      0.034      0.465 </code></pre>
 </div>
-</section>
-<section id="documentation" class="level2">
-<h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
-<p><code>help metest</code> in Stata documents the syntax, the forms an expression can take, and the options for accumulating several tests into one table.</p>
-<!-- CHECK: a short list of the expression forms and the accumulate/rowname-type
-     options, taken from the help file. -->
 
 
 </section>
@@ -654,6 +670,15 @@ smsa                             |
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../metest/usage.html" class="pagination-link" aria-label="Usage and examples">
+        <span class="nav-page-text">Usage and examples</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

@@ -39,6 +39,8 @@ website:
         - text: "Overview"
           href: mecompare/index.qmd
         - mecompare/getting-started.qmd
+        - mecompare/options.qmd
+        - mecompare/plotting.qmd
         - section: "Examples"
           contents:
             - mecompare/examples/mediation.qmd
@@ -48,11 +50,27 @@ website:
             - mecompare/examples/model-types.qmd
             - mecompare/examples/groups.qmd
             - mecompare/examples/within-model.qmd
+        - section: "Interactions"
+          contents:
+            - text: "Overview"
+              href: mecompare/interactions/index.qmd
+            - mecompare/interactions/linear-model.qmd
+            - mecompare/interactions/nominal-by-nominal.qmd
+            - mecompare/interactions/nominal-by-continuous.qmd
+            - mecompare/interactions/continuous-by-continuous.qmd
+        - mecompare/help-examples.qmd
+        - section: "Help files"
+          contents:
+            - text: "help mecompare"
+              href: mecompare/help.qmd
+            - text: "help melincom (retired)"
+              href: mecompare/help-melincom.qmd
 
     # ------------------------------------------------------------------- suest2
     - id: suest2
       title: "suest2"
       style: docked
+      collapse-level: 2
       tools:
         - icon: house-door
           text: "trentonmize.com"
@@ -63,6 +81,16 @@ website:
       contents:
         - text: "Overview"
           href: suest2/index.qmd
+        - suest2/usage.qmd
+        - suest2/help-examples.qmd
+        - section: "Help files"
+          contents:
+            - text: "help suest2"
+              href: suest2/help.qmd
+            - text: "help suest2_cleanup"
+              href: suest2/help-suest2_cleanup.qmd
+            - text: "help suest2_mi"
+              href: suest2/help-suest2_mi.qmd
 
     # ------------------------------------------------------------------- metest
     - id: metest
@@ -78,36 +106,60 @@ website:
       contents:
         - text: "Overview"
           href: metest/index.qmd
+        - metest/usage.qmd
+        - text: "help metest"
+          href: metest/help.qmd
 
     # ------------------------------------------------------------- meinequality
     - id: meinequality
       title: "meinequality"
       style: docked
+      collapse-level: 2
       tools:
         - icon: house-door
           text: "trentonmize.com"
-          href: https://www.trentonmize.com/software
+          href: https://www.trentonmize.com/software/meineq
         - icon: github
           text: "GitHub"
           href: https://github.com/tdmize
       contents:
         - text: "Overview"
           href: meinequality/index.qmd
+        - meinequality/options.qmd
+        - section: "Examples"
+          contents:
+            - meinequality/examples/summary-measure.qmd
+            - meinequality/examples/categorical-models.qmd
+            - meinequality/examples/across-models.qmd
+            - meinequality/examples/across-groups.qmd
+        - meinequality/help-examples.qmd
+        - text: "help meinequality"
+          href: meinequality/help.qmd
 
     # ------------------------------------------------------------------ totalme
     - id: totalme
       title: "totalme"
       style: docked
+      collapse-level: 2
       tools:
         - icon: house-door
           text: "trentonmize.com"
-          href: https://www.trentonmize.com/software
+          href: https://www.trentonmize.com/software/totalme
         - icon: github
           text: "GitHub"
           href: https://github.com/tdmize
       contents:
         - text: "Overview"
           href: totalme/index.qmd
+        - totalme/options.qmd
+        - section: "Examples"
+          contents:
+            - totalme/examples/single-model.qmd
+            - totalme/examples/across-models.qmd
+            - totalme/examples/inequalities.qmd
+        - totalme/help-examples.qmd
+        - text: "help totalme"
+          href: totalme/help.qmd
 
 format:
   html:
