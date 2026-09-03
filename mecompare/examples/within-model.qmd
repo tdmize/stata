@@ -1,0 +1,66 @@
+---
+title: "Within a single model"
+subtitle: "Example 7: comparing the effects of different variables"
+---
+
+The primary purpose of `mecompare` is to compare effects across models, but with
+one model in `models()` it reports the marginal effects of the listed variables
+and [`metest`](../../metest/index.html) compares them. Here: does a college
+degree or being married have the larger association with being very happy?
+
+```{.stata-run}
+. use "https://tdmize.github.io/data/data/gss_cme", clear
+(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)
+
+. drop if year < 2000
+(38,116 observations deleted)
+
+. drop if employed != 1
+(9,556 observations deleted)
+
+. drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+(5,578 observations deleted)
+
+. 
+. quietly logit vhappy i.college i.married i.parent i.woman i.conserv i.race i.reltrad ///
+>               i.year c.age##c.age c.occprest, vce(robust)
+
+. estimates store happymod
+
+```
+
+```{.stata-run}
+. mecompare i.college i.married, models(happymod)
+
+
+Predicting: Pr(vhappy)
+
+Marginal effects (N_happymod=9216)
+
+                                 |  ME #   Estimate  Robust SE      P>|z|
+---------------------------------+---------------------------------------
+college                          |                                       
+         College  - No Col D     |                                       
+                        happymod |     1      0.033      0.012      0.004
+---------------------------------+---------------------------------------
+married                          |                                       
+          Married - Not Marr     |                                       
+                        happymod |     2      0.200      0.010      0.000
+
+```
+
+`metest` takes an expression in the row numbers from the `#` column. The
+difference between the two marginal effects, with its standard error:
+
+```{.stata-run}
+. metest 2 - 1
+
+                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+               married - college |     0.167      0.016      0.000 
+
+```
+
+Any linear or nonlinear combination of rows works the same way -- for example a
+ratio, `metest 2 / 1`, or a test that several effects are equal,
+`metest 1 = 2`.

@@ -9,21 +9,29 @@
 *!     do build.do mecompare norender     // regenerate output only
 *!     do build.do render                 // quarto render only, no Stata output
 *!
-*! What it does.  For every  <pkg>/_src/**/*.qmd  it runs -dyntext-, which
-*! executes the Stata code inside  <<dd_do>> ... <</dd_do>>  tags and writes
-*! the finished page -- code and output filled in -- to  <pkg>/  under the
-*! same relative name.  Then it calls  quarto render, which builds the site
-*! into  docs/  (the folder GitHub Pages serves).  Commit and push when done.
+*! What it does.  For every .qmd page in  <pkg>/_src/  (and its subfolders) it
+*! runs -dyntext-, which executes the Stata code inside  <<dd_do>> ... <</dd_do>>
+*! tags and writes the finished page -- code and output filled in -- to  <pkg>/
+*! under the same relative name.  Then it calls  quarto render, which builds
+*! the site into  docs/  (the folder GitHub Pages serves).  Commit and push.
+*!
+*! (Comment lines in this file must not contain the two characters slash-star,
+*! which open a block comment in Stata even inside a comment.)
 *!
 *! Only edit the files in  _src/.  The .qmd files next to them are generated
 *! and are overwritten on every build.
 *!
-*! Requirements: Stata 15+ (dyntext); Quarto installed and on the PATH
+*! Requirements: Stata 16+ (the floor for mecompare and its siblings; dyntext
+*! itself needs 15); Quarto installed and on the PATH
 *! (https://quarto.org/docs/download/) -- or put its full path in the -quarto-
 *! local below.  Whatever version of each command is first on the adopath is
-*! the version that produces the output, so check  which mecompare  first.
+*! the version that produces the output; the build log records it.
+*!
+*! The -version- line below must stay at 16 or higher.  Under version 15 the
+*! documented commands fail with r(509) even though each declares version 16
+*! itself: the behaviour is keyed to the version set at the do-file level.
 
-version 15
+version 16
 set more off
 set linesize 100
 set rmsg off
@@ -71,6 +79,13 @@ local root "`c(pwd)'"
 
 * ---------------------------------------------- 1. regenerate Stata output --
 if `dyn' {
+    * record which version of each command produces the output
+    di as txt _n "{hline 72}" _n "build.do: commands on the adopath" _n "{hline 72}"
+    foreach c of local all_pkgs {
+        capture noisily which `c'
+        if _rc di as err "  `c' not found on the adopath"
+    }
+
     foreach p of local pkgs {
         di as txt _n "{hline 72}" _n "build.do: `p'" _n "{hline 72}"
         cd "`root'/`p'"
@@ -84,7 +99,7 @@ if `dyn' {
             dyntext "_src/`f'", saving("`f'") replace
         }
 
-        * pages one folder down, e.g. _src/examples/*.qmd -> examples/*.qmd
+        * pages one folder down, e.g. _src/examples/  ->  examples/
         local subs : dir "_src" dirs "*"
         foreach s of local subs {
             if "`s'" == "." | "`s'" == ".." continue

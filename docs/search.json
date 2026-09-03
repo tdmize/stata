@@ -1,0 +1,386 @@
+[
+  {
+    "objectID": "totalme/index.html",
+    "href": "totalme/index.html",
+    "title": "totalme",
+    "section": "",
+    "text": "In a model with several outcome categories – a multinomial or ordered logit, or the probabilities of individual counts – a predictor has one marginal effect per category. totalme summarizes them in a single Total Marginal Effect: the total amount of probability the predictor moves across the outcome categories, with a standard error. The summary can be reported for one model, compared across predictors, and compared across models or groups.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "totalme/index.html#installation",
+    "href": "totalme/index.html#installation",
+    "title": "totalme",
+    "section": "Installation",
+    "text": "Installation\nnet install totalme, from(\"https://tdmize.github.io/data/totalme\") replace",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "totalme/index.html#basic-use",
+    "href": "totalme/index.html#basic-use",
+    "title": "totalme",
+    "section": "Basic use",
+    "text": "Basic use\n\nsysuse nlsw88, clear\n(NLSW, 1988 extract)\ndrop if missing(occupation)\n(9 observations deleted)\nrecode occupation (1/2 = 1 \"Professional/managerial\") (3/5 = 2 \"Sales/clerical/craft\") ///\n                  (6/13 = 3 \"Other\"), gen(occ3)\n(1,920 differences between occupation and occ3)\n\n. \nquietly mlogit occ3 i.collgrad c.age i.south, vce(robust)\n. \ntotalme collgrad\nModel (totalme_mod1) is:\n     mlogit occ3 i.collgrad c.age i.south, vce(robust)\nContinuous/Binary IV(s): \n     collgrad\n\nTotal ME Estimates (N = 2237)\n\n                         |   Estimate   Std. err.           z       P&gt;|z| \n-------------------------+-----------------------------------------------\ncollgrad                 |                                               \nCollege grad vs Not co~d |      0.245       0.021      11.474       0.000 \n\nThe Total Marginal Effect of a college degree is the total change in the predicted distribution across the three occupation groups. totalme can also be requested as an option of mecompare, which places the summary beneath the per-outcome marginal effects.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "totalme/index.html#citation",
+    "href": "totalme/index.html#citation",
+    "title": "totalme",
+    "section": "Citation",
+    "text": "Citation",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "totalme/index.html#documentation",
+    "href": "totalme/index.html#documentation",
+    "title": "totalme",
+    "section": "Documentation",
+    "text": "Documentation\nhelp totalme in Stata documents the syntax and options.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "metest/index.html",
+    "href": "metest/index.html",
+    "title": "metest",
+    "section": "",
+    "text": "metest tests linear and nonlinear combinations of the rows of the table produced by mecompare, meinequality, or totalme – or of any results posted by margins, post. Rows are referred to by the number in the # column of the table, so a difference between two effects is metest 2 - 1, a ratio is metest 2 / 1, and a test that several effects are equal is metest 1 = 2 = 3.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "metest/index.html#installation",
+    "href": "metest/index.html#installation",
+    "title": "metest",
+    "section": "Installation",
+    "text": "Installation\nnet install metest, from(\"https://tdmize.github.io/data/metest\") replace",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "metest/index.html#basic-use",
+    "href": "metest/index.html#basic-use",
+    "title": "metest",
+    "section": "Basic use",
+    "text": "Basic use\n\nsysuse nlsw88, clear\n(NLSW, 1988 extract)\ndrop if missing(union)\n(368 observations deleted)\n\n. \nquietly logit union i.collgrad i.south i.smsa c.age c.wage, vce(robust)\nestimates store m\n. \nmecompare i.collgrad i.south i.smsa, models(m)\nPredicting: Pr(union)\n\nMarginal effects (N_m=1878)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\ncollgrad                         |                                       \n         College  - Not coll     |                                       \n                               m |     1      0.056      0.025      0.026\n---------------------------------+---------------------------------------\nsouth                            |                                       \n            South - Not sout     |                                       \n                               m |     2     -0.114      0.020      0.000\n---------------------------------+---------------------------------------\nsmsa                             |                                       \n             SMSA - Not SMSA     |                                       \n                               m |     3      0.031      0.022      0.161\n\nIs the college gap in union membership the same size as the regional gap? And is the college gap larger than the city/non-city gap?\n\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                collgrad - south |     0.170      0.034      0.000 \nmetest 1 - 3\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                 collgrad - smsa |     0.025      0.034      0.465",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "metest/index.html#documentation",
+    "href": "metest/index.html#documentation",
+    "title": "metest",
+    "section": "Documentation",
+    "text": "Documentation\nhelp metest in Stata documents the syntax, the forms an expression can take, and the options for accumulating several tests into one table.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "mecompare/index.html",
+    "href": "mecompare/index.html",
+    "title": "mecompare",
+    "section": "",
+    "text": "mecompare calculates marginal effects and compares them across models. It fits the framework of Mize, Doan, and Long (2019): the models are combined with suest2 so that the difference between a marginal effect in one model and the same effect in another has a proper standard error, even though the models were estimated separately.\nThe comparisons it handles include effects across nested models (mediation and confounding), across alternative predictors, across different outcomes, across different model types (for example ordinal versus nominal), and across models fit to separate groups or samples. It also compares effects within a single model.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "mecompare/index.html#installation",
+    "href": "mecompare/index.html#installation",
+    "title": "mecompare",
+    "section": "Installation",
+    "text": "Installation\nnet install mecompare, from(\"https://tdmize.github.io/data/mecompare\") replace\nmecompare calls suest2 and works with metest, which tests contrasts between rows of the mecompare table. Each installs the same way.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "mecompare/index.html#where-to-start",
+    "href": "mecompare/index.html#where-to-start",
+    "title": "mecompare",
+    "section": "Where to start",
+    "text": "Where to start\n\nGetting started walks through one comparison and explains the table.\nThe Examples in the sidebar reproduce the examples from Section 6 of Mize, Doan, and Long (2019) plus a within-model comparison.\nThe help file (help mecompare in Stata) documents every option.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "mecompare/index.html#citation",
+    "href": "mecompare/index.html#citation",
+    "title": "mecompare",
+    "section": "Citation",
+    "text": "Citation\nIf you use mecompare, please cite:\n\nMize, Trenton D., Long Doan, and J. Scott Long. 2019. “A General Framework for Comparing Predictions and Marginal Effects Across Models.” Sociological Methodology 49(1): 152–189. https://doi.org/10.1177/0081175019852763",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "mecompare/index.html#related-commands",
+    "href": "mecompare/index.html#related-commands",
+    "title": "mecompare",
+    "section": "Related commands",
+    "text": "Related commands\n\n\n\n\nCommand\nWhat it does\n\n\n\n\nsuest2\nCombines separately estimated models so that quantities from different models can be tested against each other. The engine underneath mecompare.\n\n\nmetest\nTests contrasts between rows of the tables produced by mecompare, meinequality, and totalme (or any posted margins results).\n\n\nmeinequality\nSummarizes how unequal the marginal effects of a categorical predictor are across its categories.\n\n\ntotalme\nSummarizes a predictor’s effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "mecompare/examples/within-model.html",
+    "href": "mecompare/examples/within-model.html",
+    "title": "Within a single model",
+    "section": "",
+    "text": "The primary purpose of mecompare is to compare effects across models, but with one model in models() it reports the marginal effects of the listed variables and metest compares them. Here: does a college degree or being married have the larger association with being very happy?\n\nuse \"https://tdmize.github.io/data/data/gss_cme\", clear\n(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)\ndrop if year &lt; 2000\n(38,116 observations deleted)\ndrop if employed != 1\n(9,556 observations deleted)\ndrop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)\n(5,578 observations deleted)\n\n. \nquietly logit vhappy i.college i.married i.parent i.woman i.conserv i.race i.reltrad ///\n              i.year c.age##c.age c.occprest, vce(robust)\nestimates store happymod\n\n\nmecompare i.college i.married, models(happymod)\nPredicting: Pr(vhappy)\n\nMarginal effects (N_happymod=9216)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\ncollege                          |                                       \n         College  - No Col D     |                                       \n                        happymod |     1      0.033      0.012      0.004\n---------------------------------+---------------------------------------\nmarried                          |                                       \n          Married - Not Marr     |                                       \n                        happymod |     2      0.200      0.010      0.000\n\nmetest takes an expression in the row numbers from the # column. The difference between the two marginal effects, with its standard error:\n\nmetest 2 - 1\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n               married - college |     0.167      0.016      0.000 \n\nAny linear or nonlinear combination of rows works the same way – for example a ratio, metest 2 / 1, or a test that several effects are equal, metest 1 = 2.\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Within a single model"
+    ]
+  },
+  {
+    "objectID": "mecompare/examples/model-types.html",
+    "href": "mecompare/examples/model-types.html",
+    "title": "Different model types",
+    "section": "",
+    "text": "Marginal effects are on the scale of the outcome – here, probabilities of each party-identification category – so they can be compared across models that make different assumptions about the outcome. This example fits an ordered logit and a multinomial logit to the same five-category party identification variable with the same predictors, and asks whether the two models imply different effects of age.\n\nuse \"https://tdmize.github.io/data/data/gss_cme\", clear\n(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)\ndrop if year &lt; 2010\n(53,043 observations deleted)\ndrop if missing(partyid5, woman, edyrs, age, parent, married, faminc, employed, region4, year)\n(1,244 observations deleted)\n\n. \nquietly ologit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race ///\n               c.faminc i.employed i.region4 i.year, vce(robust)\nestimates store ordinal\n. \nquietly mlogit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race ///\n               c.faminc i.employed i.region4 i.year, vce(robust)\nestimates store nominal\n\nAge enters with a squared term, so the marginal effect depends on where the change starts. start(age=20) and amount(10) define the effect as the change in each probability from age 20 to age 30, with the other variables held at their means:\n\nmecompare age, models(ordinal nominal) start(age=20) amount(10) covariates(atmeans)\nModel 1 (ordinal) is:\n     ologit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.re\n&gt; gion4 i.year\nModel 2 (nominal) is:\n     mlogit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.re\n&gt; gion4 i.year\n\n\nPredicting: Pr(partyid5==0) (ordinal), Pr(partyid5==1) (nominal)\n\nMarginal effects and cross-model differences (N_ordinal=8179) (N_nominal=8179)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nage + 10                         |                                       \n            Strong Dem - ordinal |     1      0.021      0.004      0.000\n            Strong Dem - nominal |     2      0.029      0.003      0.000\n         Strong Dem - Difference |     3     -0.008      0.003      0.011\n              Democrat - ordinal |     4      0.028      0.007      0.000\n              Democrat - nominal |     5     -0.008      0.013      0.556\n           Democrat - Difference |     6      0.035      0.011      0.001\n           Independent - ordinal |     7     -0.002      0.001      0.033\n           Independent - nominal |     8      0.008      0.012      0.485\n        Independent - Difference |     9     -0.010      0.012      0.400\n            Republican - ordinal |    10     -0.028      0.006      0.000\n            Republican - nominal |    11     -0.039      0.013      0.004\n         Republican - Difference |    12      0.011      0.012      0.346\n          Strong Repub - ordinal |    13     -0.020      0.005      0.000\n          Strong Repub - nominal |    14      0.009      0.003      0.005\n       Strong Repub - Difference |    15     -0.029      0.005      0.000\n\nEach outcome category gets its own block of the table. Where the Difference rows are large relative to their standard errors, the ordinal model’s proportional-odds assumption is changing the substantive conclusion for that category.\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Different model types"
+    ]
+  },
+  {
+    "objectID": "mecompare/examples/groups.html",
+    "href": "mecompare/examples/groups.html",
+    "title": "Separate samples or groups",
+    "section": "",
+    "text": "When a model is fit separately to two groups – here, GSS respondents in 1986 and in 2016 – the question is whether an effect differs between the groups. mecompare with the groups option compares marginal effects across models that were estimated on non-overlapping samples. The example asks whether the association between political conservatism and support for government help with medical costs changed over 30 years.\n\nuse \"https://tdmize.github.io/data/data/gss_cme\", clear\n(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)\ndrop if missing(helpsickB, polviews, faminc, employed, woman, age, college, married, parent)\n(36,143 observations deleted)\n\n. \nquietly logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac\ne ///\n              if year == 1986, vce(robust)\nestimates store mod1986\n. \nquietly logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac\ne ///\n              if year == 2016, vce(robust)\nestimates store mod2016\n\n\nmecompare i.conserv, models(mod1986 mod2016) groups\nModel 1 (mod1986) is:\n     logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.race\nModel 2 (mod2016) is:\n     logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.race\n\n\nPredicting: Pr(helpsickB)\n\nMarginal effects and cross-model differences (N_mod1986=1254) (N_mod2016=1670)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nconserv                          |                                       \n         Conserva - Not Cons     |                                       \n                         mod1986 |     1     -0.092      0.030      0.002\n                         mod2016 |     2     -0.258      0.025      0.000\n                      Difference |     3      0.166      0.039      0.000\n\ngroups tells mecompare that each model’s estimation sample is a different group, so the marginal effect for each model is averaged over that model’s own sample. The Difference row tests whether the conservatism gap in 2016 differs from the gap in 1986.\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Separate samples or groups"
+    ]
+  },
+  {
+    "objectID": "mecompare/examples/alternative-predictors.html",
+    "href": "mecompare/examples/alternative-predictors.html",
+    "title": "Alternative predictors",
+    "section": "",
+    "text": "Two models can differ in how the same construct is measured. Here support for same-sex relationships is predicted by sexual orientation measured two ways: by reported sexual behavior in one model and by self-identification in the other. mecompare puts the marginal effects of both measures in one table and allows a test of whether the measures give the same answer.\n\nuse \"https://tdmize.github.io/data/data/gss_cme\", clear\n(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)\ndrop if missing(samesexB, sexident, sexbehav, college, woman, race, age, year)\n(57,545 observations deleted)\n\n. \nquietly logit samesexB i.sexbehav i.woman i.college c.age i.race i.year, vce(robust)\nestimates store behavior\n. \nquietly logit samesexB i.sexident i.woman i.college c.age i.race i.year, vce(robust)\nestimates store identity\n\nEach predictor appears in only one of the models, so the table reports each effect for the model that contains it:\n\nmecompare i.sexbehav i.sexident, models(behavior identity)\nModel 1 (behavior) is:\n     logit samesexB i.sexbehav i.woman i.college c.age i.race i.year\nModel 2 (identity) is:\n     logit samesexB i.sexident i.woman i.college c.age i.race i.year\n\n\nPredicting: Pr(samesexB)\n\nMarginal effects and cross-model differences (N_behavior=4921) (N_identity=4921)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nsexbehav                         |                                       \n       Bisexual - Heterosexu     |                                       \n                        behavior |     1     -0.097      0.023      0.000\n                        identity |                                       \n                      Difference |                                       \n            Gay - Heterosexu     |                                       \n                        behavior |     2     -0.362      0.038      0.000\n                        identity |                                       \n                      Difference |                                       \n---------------------------------+---------------------------------------\nsexident                         |                                       \n       Bisexual - Heterosexu     |                                       \n                        behavior |                                       \n                        identity |     3     -0.274      0.041      0.000\n                      Difference |                                       \n            Gay - Heterosexu     |                                       \n                        behavior |                                       \n                        identity |     4     -0.428      0.034      0.000\n                      Difference |                                       \n\nContrasts across the two measures – for example, whether the bisexual versus heterosexual difference is the same when measured by behavior as when measured by identity – are contrasts between rows of this table. Use metest with the row numbers from the # column, as in the within-model example.\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Alternative predictors"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stata software",
+    "section": "",
+    "text": "Documentation for the Stata commands written by Trenton D. Mize. Each command has its own set of pages; installation instructions are on each overview page.\n\n\n\n\nCommand\nWhat it does\n\n\n\n\nmecompare\nMarginal effects, and tests of whether an effect differs across models: nested models, alternative predictors, different outcomes, different model types, separate groups.\n\n\nsuest2\nCombines separately estimated models so that quantities from different models can be tested against each other.\n\n\nmetest\nTests contrasts between rows of the tables produced by mecompare, meinequality, and totalme.\n\n\nmeinequality\nSummarizes how unequal the marginal effects of a categorical predictor are across its categories.\n\n\ntotalme\nSummarizes a predictor’s effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect.\n\n\n\n\nOther software – the cleanplots graph scheme, irt_me, and R packages – is listed at trentonmize.com/software.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "mecompare/examples/different-outcomes.html",
+    "href": "mecompare/examples/different-outcomes.html",
+    "title": "Different outcomes",
+    "section": "",
+    "text": "The same predictors can have different effects on different outcomes. Here two negative binomial models predict days of poor mental health and days of poor physical health from the same set of variables, and mecompare tests whether each predictor matters more for one outcome than the other. With no variable listed before the comma, marginal effects are computed for every predictor in the models.\n\nuse \"https://tdmize.github.io/data/data/gss_cme\", clear\n(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)\ndrop if missing(mntlhlth, physhlth, woman, married, age, faminc, race, college, parent, reltrad)\n(57,404 observations deleted)\n\n. \nquietly nbreg mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robust\n)\nestimates store mental\n. \nquietly nbreg physhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robust\n)\nestimates store physical\n\nFor the count models the marginal effects are changes in the predicted rate (expected number of days). Continuous predictors are changed by one standard deviation:\n\nmecompare, models(mental physical) amount(sd)\nModel 1 (mental) is:\n     nbreg mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.year\nModel 2 (physical) is:\n     nbreg physhlth i.woman i.married i.parent i.college c.age faminc i.race i.year\n\n\nPredicting: Predicted mean of mntlhlth (mental), Predicted mean of physhlth (physical)\n\nMarginal effects and cross-model differences (N_mental=5062) (N_physical=5062)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nwoman                            |                                       \n                 Women - Men     |                                       \n                          mental |     1      0.993      0.208      0.000\n                        physical |     2      0.773      0.174      0.000\n                      Difference |     3      0.220      0.229      0.337\n---------------------------------+---------------------------------------\nmarried                          |                                       \n          Married - Not Marr     |                                       \n                          mental |     4     -1.010      0.230      0.000\n                        physical |     5     -0.159      0.192      0.408\n                      Difference |     6     -0.851      0.250      0.001\n---------------------------------+---------------------------------------\nparent                           |                                       \n           Parent - No Child     |                                       \n                          mental |     7      0.274      0.248      0.268\n                        physical |     8     -0.269      0.219      0.218\n                      Difference |     9      0.543      0.274      0.048\n---------------------------------+---------------------------------------\ncollege                          |                                       \n         College  - No Col D     |                                       \n                          mental |    10     -0.879      0.229      0.000\n                        physical |    11     -0.542      0.189      0.004\n                      Difference |    12     -0.337      0.254      0.184\n---------------------------------+---------------------------------------\nage + SD                         |                                       \n                          mental |    13     -0.496      0.124      0.000\n                        physical |    14      0.450      0.099      0.000\n                      Difference |    15     -0.946      0.133      0.000\n---------------------------------+---------------------------------------\nfaminc + SD                      |                                       \n                          mental |    16     -0.476      0.135      0.000\n                        physical |    17     -0.413      0.120      0.001\n                      Difference |    18     -0.063      0.154      0.682\n---------------------------------+---------------------------------------\nrace                             |                                       \n               black - white     |                                       \n                          mental |    19     -1.016      0.258      0.000\n                        physical |    20     -0.531      0.217      0.015\n                      Difference |    21     -0.485      0.279      0.083\n               other - white     |                                       \n                          mental |    22     -0.438      0.356      0.219\n                        physical |    23      0.145      0.343      0.672\n                      Difference |    24     -0.583      0.385      0.130\n---------------------------------+---------------------------------------\nyear                             |                                       \n                 2006 - 2002     |                                       \n                          mental |    25     -0.944      0.270      0.000\n                        physical |    26     -0.292      0.225      0.194\n                      Difference |    27     -0.652      0.298      0.029\n                 2010 - 2002     |                                       \n                          mental |    28     -0.068      0.318      0.832\n                        physical |    29      0.323      0.261      0.215\n                      Difference |    30     -0.391      0.355      0.271\n                 2014 - 2002     |                                       \n                          mental |    31     -0.582      0.302      0.054\n                        physical |    32     -0.229      0.245      0.351\n                      Difference |    33     -0.353      0.324      0.275\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Different outcomes"
+    ]
+  },
+  {
+    "objectID": "mecompare/examples/mediation.html",
+    "href": "mecompare/examples/mediation.html",
+    "title": "Curvilinear effects and mediation",
+    "section": "",
+    "text": "Marginal effects summarize a curvilinear relationship in a single number, and comparing that number across a model with and without a proposed mediator tests how much of the effect the mediator accounts for. Here income is entered with a squared term in a linear regression of depressive symptoms; the second model adds job satisfaction as a mediator.\n\nuse \"https://tdmize.github.io/data/data/ah4_cme\", clear\n(ah4_cme.dta | Add Health Wave 4 | 2018-07-10)\ndrop if missing(depsympB, income, inc10, age, woman, race, college, jobsat)\n(0 observations deleted)\n\n. \nquietly regress depsympB c.income##c.income c.age i.woman i.race, vce(robust)\nestimates store basemod\n. \nquietly regress depsympB c.income##c.income c.age i.woman i.race i.jobsat, vce(robust)\nestimates store medmod\n\nThe marginal effect of a one-standard-deviation increase in income in each model, and the difference between them:\n\nmecompare income, models(basemod medmod) amount(sd)\nModel 1 (basemod) is:\n     regress depsympB c.income##c.income c.age i.woman i.race\nModel 2 (medmod) is:\n     regress depsympB c.income##c.income c.age i.woman i.race i.jobsat\n\n\nPredicting: Linear prediction\n\nMarginal effects and cross-model differences (N_basemod=4307) (N_medmod=4307)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nincome + SD                      |                                       \n                         basemod |     1     -0.982      0.098      0.000\n                          medmod |     2     -0.797      0.096      0.000\n                      Difference |     3     -0.184      0.027      0.000\n\nThe Difference row is the part of the income effect that runs through job satisfaction, with a standard error that accounts for the two models being estimated on the same data. The proportion of the effect that is mediated is a contrast between rows, so metest can report it with a standard error:\n\nmetest (1 - 2) / 1\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\nincome                           |                                \n    (basemod - medmod) / basemod |     0.188      0.030      0.000 \n\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Curvilinear effects and mediation"
+    ]
+  },
+  {
+    "objectID": "mecompare/examples/nested-models.html",
+    "href": "mecompare/examples/nested-models.html",
+    "title": "Nested logit models",
+    "section": "",
+    "text": "The most common cross-model question is whether an effect changes when controls are added. Here the effect of a college degree on the probability of being very happy is compared between a bivariate logit and a logit with a full set of controls. Because the outcome is binary, the marginal effect is a discrete change in the predicted probability, and comparing it across models is not subject to the rescaling problem that makes comparing logit coefficients across models misleading.\n\nuse \"https://tdmize.github.io/data/data/gss_cme\", clear\n(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)\ndrop if year &lt; 2000\n(38,116 observations deleted)\ndrop if employed != 1\n(9,556 observations deleted)\ndrop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)\n(5,578 observations deleted)\n\n. \nquietly logit vhappy i.college, vce(robust)\nestimates store mod1\n. \nquietly logit vhappy i.college i.married i.parent i.woman i.conserv ///\n              i.reltrad i.year c.age##c.age, vce(robust)\nestimates store mod2\n\n\nmecompare i.college, models(mod1 mod2)\nModel 1 (mod1) is:\n     logit vhappy i.college\nModel 2 (mod2) is:\n     logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age\n\n\nPredicting: Pr(vhappy)\n\nMarginal effects and cross-model differences (N_mod1=9216) (N_mod2=9216)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\ncollege                          |                                       \n         College  - No Col D     |                                       \n                            mod1 |     1      0.072      0.010      0.000\n                            mod2 |     2      0.060      0.011      0.000\n                      Difference |     3      0.012      0.004      0.003\n\nThe Difference row tests whether the college effect is smaller once the controls are included. More than two nested models can be compared by running mecompare for each pair of interest.\n\n\n\n Back to top",
+    "crumbs": [
+      "Examples",
+      "Nested logit models"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html",
+    "href": "mecompare/getting-started.html",
+    "title": "Getting started",
+    "section": "",
+    "text": "Every mecompare analysis has the same three steps: fit the models, store them, compare. This page runs through one example with Stata’s nlsw88 data and then explains how to read the table.",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html#fit-and-store-the-models",
+    "href": "mecompare/getting-started.html#fit-and-store-the-models",
+    "title": "Getting started",
+    "section": "1. Fit and store the models",
+    "text": "1. Fit and store the models\nThe question: does the association between having a college degree and union membership change once we account for wages and work experience? Fit the model without those variables, then the model with them, storing each with estimates store.\n\nsysuse nlsw88, clear\n(NLSW, 1988 extract)\ndrop if missing(union)\n(368 observations deleted)\n\n. \nquietly logit union i.collgrad c.age i.south i.smsa, vce(robust)\nestimates store base\n. \nquietly logit union i.collgrad c.age i.south i.smsa c.wage c.ttl_exp, vce(robust)\nestimates store full\n\nNothing here is specific to mecompare; any estimation command that works with margins can be used, and vce(robust) is recommended because the models will be combined with suest2.",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html#compare-the-marginal-effects",
+    "href": "mecompare/getting-started.html#compare-the-marginal-effects",
+    "title": "Getting started",
+    "section": "2. Compare the marginal effects",
+    "text": "2. Compare the marginal effects\nName the variable whose effect you want and the stored models in models().\n\nmecompare i.collgrad, models(base full)\nModel 1 (base) is:\n     logit union i.collgrad c.age i.south i.smsa\nModel 2 (full) is:\n     logit union i.collgrad c.age i.south i.smsa c.wage c.ttl_exp\n\n\nPredicting: Pr(union)\n\nMarginal effects and cross-model differences (N_base=1878) (N_full=1878)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\ncollgrad                         |                                       \n         College  - Not coll     |                                       \n                            base |     1      0.092      0.024      0.000\n                            full |     2      0.057      0.025      0.024\n                      Difference |     3      0.035      0.009      0.000",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html#read-the-table",
+    "href": "mecompare/getting-started.html#read-the-table",
+    "title": "Getting started",
+    "section": "3. Read the table",
+    "text": "3. Read the table\nEach block of the table is one marginal effect. For a binary or factor variable the effect is the discrete change in the predicted probability between its levels; for a continuous variable it is the change for a one-unit increase (other amounts are set with amount()). Within a block:\n\nthe first rows give the marginal effect in each model, in the order the models were listed in models();\nthe Difference row is the effect in the first model minus the effect in the second, with a standard error and p-value that account for the fact that both effects were estimated from the same data.\n\nThe # column numbers the rows so that you can refer to them in metest for any other contrast.",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html#continuous-variables-and-the-size-of-the-change",
+    "href": "mecompare/getting-started.html#continuous-variables-and-the-size-of-the-change",
+    "title": "Getting started",
+    "section": "Continuous variables and the size of the change",
+    "text": "Continuous variables and the size of the change\nFor a continuous variable, amount() sets the size of the change. Here the effect of a one-standard-deviation increase in age:\n\nmecompare age, models(base full) amount(sd)\nModel 1 (base) is:\n     logit union i.collgrad c.age i.south i.smsa\nModel 2 (full) is:\n     logit union i.collgrad c.age i.south i.smsa c.wage c.ttl_exp\n\n\nPredicting: Pr(union)\n\nMarginal effects and cross-model differences (N_base=1878) (N_full=1878)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\nage + SD                         |                                       \n                            base |     1      0.005      0.010      0.607\n                            full |     2      0.004      0.010      0.676\n                      Difference |     3      0.001      0.002      0.553",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html#comparing-effects-within-one-model",
+    "href": "mecompare/getting-started.html#comparing-effects-within-one-model",
+    "title": "Getting started",
+    "section": "Comparing effects within one model",
+    "text": "Comparing effects within one model\nWith a single model in models(), mecompare reports the marginal effects of the variables listed, and metest compares them. Here, is the union-membership gap by college degree the same size as the gap by region?\n\nmecompare i.collgrad i.south, models(full)\nPredicting: Pr(union)\n\nMarginal effects (N_full=1878)\n\n                                 |  ME #   Estimate  Robust SE      P&gt;|z|\n---------------------------------+---------------------------------------\ncollgrad                         |                                       \n         College  - Not coll     |                                       \n                            full |     1      0.057      0.025      0.024\n---------------------------------+---------------------------------------\nsouth                            |                                       \n            South - Not sout     |                                       \n                            full |     2     -0.114      0.020      0.000\nmetest 1 - 2\n                                 |  estimate         se     pvalue \n---------------------------------+--------------------------------\n                collgrad - south |     0.171      0.034      0.000",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "mecompare/getting-started.html#frequently-used-options",
+    "href": "mecompare/getting-started.html#frequently-used-options",
+    "title": "Getting started",
+    "section": "Frequently used options",
+    "text": "Frequently used options\nThe help file (help mecompare) documents everything; these are the options that come up most often.\n\n\n\nOption\nPurpose\n\n\n\n\nmodels(name1 [name2])\nThe stored estimates to compare. One model gives marginal effects for that model alone.\n\n\namount()\nSize of the change for a continuous variable: a number, sd or 2sd (one or two standard deviations), or rate (the instantaneous rate of change).\n\n\nstart()\nWhere the change in a continuous variable begins: start(varname=#) or start(atmeans).\n\n\ncovariates(varname=# ...), atmeans\nHold other variables at specified values or at their means (the default averages over the observed values).\n\n\nby(varlist)\nMarginal effects within each level of another variable, in one table, so that they can be compared with metest.\n\n\nover(varlist)\nMarginal effects within subsamples defined by another variable.\n\n\npwcompare\nAll pairwise contrasts among the levels of a nominal variable, not just contrasts with the base level.\n\n\ngroups\nThe models were fit to separate groups (see the groups example).\n\n\ntotalme, meinequality\nAdd the Total Marginal Effect or the marginal-effect inequality summary for the compared effects.\n\n\nstore(stub)\nStore the results so that they can be graphed with coefplot or tabled with esttab.",
+    "crumbs": [
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "meinequality/index.html",
+    "href": "meinequality/index.html",
+    "title": "meinequality",
+    "section": "",
+    "text": "A nominal predictor with several categories produces a set of marginal effects – one contrast for every pair of categories. meinequality summarizes that set in a single measure of how unequal the categories are, with a standard error, so that the overall importance of a categorical variable can be reported, compared across predictors, and compared across models or groups.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "meinequality/index.html#installation",
+    "href": "meinequality/index.html#installation",
+    "title": "meinequality",
+    "section": "Installation",
+    "text": "Installation\nnet install meinequality, from(\"https://tdmize.github.io/data/meinequality\") replace",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "meinequality/index.html#basic-use",
+    "href": "meinequality/index.html#basic-use",
+    "title": "meinequality",
+    "section": "Basic use",
+    "text": "Basic use\n\nsysuse nlsw88, clear\n(NLSW, 1988 extract)\ndrop if missing(union)\n(368 observations deleted)\n\n. \nquietly logit union i.race i.collgrad c.age i.south, vce(robust)\n. \nmeinequality race\nModel (meineq_mod1) is:\n     logit union i.race i.collgrad c.age i.south, vce(robust)\n\nME Inequality Estimates (N = 1878)\n\n                         |   Estimate   Std. err.           z       P&gt;|z| \n-------------------------+-----------------------------------------------\nME Inequality            |                                               \n                    race |      0.106       0.025       4.225       0.000 \n\nWith no models() option the summary is computed for the model in memory; with two stored models in models() it is computed for each and the difference is tested, as in mecompare.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "meinequality/index.html#citation",
+    "href": "meinequality/index.html#citation",
+    "title": "meinequality",
+    "section": "Citation",
+    "text": "Citation",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "meinequality/index.html#documentation",
+    "href": "meinequality/index.html#documentation",
+    "title": "meinequality",
+    "section": "Documentation",
+    "text": "Documentation\nhelp meinequality in Stata documents the syntax and options. The same summary is available as an option of mecompare, which places it beneath the marginal effects it summarizes.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "suest2/index.html",
+    "href": "suest2/index.html",
+    "title": "suest2",
+    "section": "",
+    "text": "suest2 combines models that were estimated separately into one set of results, so that coefficients, predictions, and marginal effects from different models can be tested against each other with test, lincom, nlcom, or margins. It is the engine underneath mecompare, meinequality, and totalme, and it can be used on its own.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "suest2/index.html#installation",
+    "href": "suest2/index.html#installation",
+    "title": "suest2",
+    "section": "Installation",
+    "text": "Installation\nnet install suest2, from(\"https://tdmize.github.io/data/suest2\") replace",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "suest2/index.html#basic-use",
+    "href": "suest2/index.html#basic-use",
+    "title": "suest2",
+    "section": "Basic use",
+    "text": "Basic use\nFit and store the models, then combine them and refer to each model’s coefficients by equation name:\n\nsysuse nlsw88, clear\n(NLSW, 1988 extract)\ndrop if missing(union)\n(368 observations deleted)\n\n. \nquietly logit union i.collgrad c.age i.south, vce(robust)\nestimates store m1\n. \nquietly logit union i.collgrad c.age i.south c.wage c.ttl_exp, vce(robust)\nestimates store m2\n. \nsuest2 m1 m2\nSimultaneous results for m1, m2                          Number of obs = 1,878\n\n-------------------------------------------------------------------------------\n              |               Robust\n              | Coefficient  std. err.      z    P&gt;|z|     [95% conf. interval]\n--------------+----------------------------------------------------------------\nm1_union      |\n     collgrad |\nCollege grad  |      0.507      0.119    4.246   0.000        0.273       0.741\n          age |      0.009      0.018    0.519   0.604       -0.026       0.044\n              |\n        south |\n       South  |     -0.747      0.116   -6.431   0.000       -0.974      -0.519\n        _cons |     -1.340      0.704   -1.903   0.057       -2.720       0.040\n--------------+----------------------------------------------------------------\nm2_union      |\n     collgrad |\nCollege grad  |      0.311      0.132    2.356   0.018        0.052       0.570\n          age |      0.008      0.018    0.428   0.668       -0.028       0.043\n              |\n        south |\n       South  |     -0.677      0.118   -5.719   0.000       -0.909      -0.445\n         wage |      0.054      0.014    3.820   0.000        0.026       0.081\n      ttl_exp |      0.006      0.013    0.469   0.639       -0.020       0.032\n        _cons |     -1.761      0.719   -2.448   0.014       -3.171      -0.351\n-------------------------------------------------------------------------------\n\nThe combined results are now the active estimates, so lincom, test, nlcom, and margins work on them, with each model’s coefficients referred to by the equation names shown in the output.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "suest2/index.html#documentation",
+    "href": "suest2/index.html#documentation",
+    "title": "suest2",
+    "section": "Documentation",
+    "text": "Documentation\nhelp suest2 in Stata documents the syntax and options. Examples of the full workflow are on the mecompare pages.",
+    "crumbs": [
+      "Overview"
+    ]
+  }
+]

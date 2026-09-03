@@ -1,0 +1,67 @@
+---
+title: "Nested logit models"
+subtitle: "Example 6.2 of Mize, Doan, and Long (2019)"
+---
+
+The most common cross-model question is whether an effect changes when
+controls are added. Here the effect of a college degree on the probability of
+being very happy is compared between a bivariate logit and a logit with a full
+set of controls. Because the outcome is binary, the marginal effect is a
+discrete change in the predicted probability, and comparing it across models is
+not subject to the rescaling problem that makes comparing logit coefficients
+across models misleading.
+
+```{.stata-run}
+. use "https://tdmize.github.io/data/data/gss_cme", clear
+(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)
+
+. drop if year < 2000
+(38,116 observations deleted)
+
+. drop if employed != 1
+(9,556 observations deleted)
+
+. drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+(5,578 observations deleted)
+
+. 
+. quietly logit vhappy i.college, vce(robust)
+
+. estimates store mod1
+
+. 
+. quietly logit vhappy i.college i.married i.parent i.woman i.conserv ///
+>               i.reltrad i.year c.age##c.age, vce(robust)
+
+. estimates store mod2
+
+```
+
+```{.stata-run}
+. mecompare i.college, models(mod1 mod2)
+
+
+
+Model 1 (mod1) is:
+     logit vhappy i.college
+Model 2 (mod2) is:
+     logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
+
+
+Predicting: Pr(vhappy)
+
+Marginal effects and cross-model differences (N_mod1=9216) (N_mod2=9216)
+
+                                 |  ME #   Estimate  Robust SE      P>|z|
+---------------------------------+---------------------------------------
+college                          |                                       
+         College  - No Col D     |                                       
+                            mod1 |     1      0.072      0.010      0.000
+                            mod2 |     2      0.060      0.011      0.000
+                      Difference |     3      0.012      0.004      0.003
+
+```
+
+The **Difference** row tests whether the college effect is smaller once the
+controls are included. More than two nested models can be compared by running
+`mecompare` for each pair of interest.
