@@ -59,8 +59,27 @@ build.
    git push
    ```
 
+### Small edits (wording, a sentence, a typo)
+
+The page you edit is in `_src/`; the page the site is built from is the
+generated copy next to it. So even a wording change has to go through
+`dyntext` once. Rebuild just that page rather than the whole package:
+
+```stata
+do build.do mecompare/_src/examples/mediation.qmd
+```
+
+That reruns only that page's Stata code (seconds), re-renders the site, and
+you push as usual. Several pages can be listed on one line. Editing the
+`_src` file on GitHub's website works too, but the site will not change until
+someone runs the build locally, so prefer editing locally.
+
+### Other build modes
+
 `do build.do mecompare norender` regenerates output without rendering;
-`do build.do render` renders without touching the output (for text-only edits).
+`do build.do render` renders without touching the output (for changes to
+`_quarto.yml`, `theme.scss`, the filter, or the root `index.qmd`, none of
+which go through `dyntext`).
 
 Whatever version of each command is first on the adopath is the version that
 produces the output. Check with `which mecompare` before building for a release.

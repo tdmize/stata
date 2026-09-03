@@ -4,8 +4,10 @@ subtitle: "One comparison, start to finish"
 ---
 <<dd_version: 2>>
 
-Every `mecompare` analysis has the same three steps: fit the models, store them,
-compare. This page runs through one example with Stata's `nlsw88` data and then
+`mecompare` can be used to calculate marginal effects within a single model and 
+then, optionally, compare them. Or, you can fit two models, store them, and then 
+call `mecompare` to calculate the marginal effects from each model and compare 
+them. This page runs through one example with Stata's `nlsw88` data and then
 explains how to read the table.
 
 ## 1. Fit and store the models
@@ -28,9 +30,10 @@ estimates store full
 <</dd_do>>
 ```
 
-Nothing here is specific to `mecompare`; any estimation command that works with
-`margins` can be used, and `vce(robust)` is recommended because the models will
-be combined with `suest2`.
+Most regression commands in Stata are supported by `mecompare`; see the full 
+list of supported models in the `help mecompare` file. Fitting the models 
+with `vce(robust)` is recommended because with two models, the estimates are 
+combined with `suest2` which uses `vce(robust)`.
 
 ## 2. Compare the marginal effects
 
@@ -46,7 +49,7 @@ mecompare i.collgrad, models(base full)
 
 Each block of the table is one marginal effect. For a binary or factor variable
 the effect is the discrete change in the predicted probability between its
-levels; for a continuous variable it is the change for a one-unit increase
+levels; for a continuous variable, the default is a change for a one-unit increase
 (other amounts are set with `amount()`). Within a block:
 
 - the first rows give the marginal effect in each model, in the order the
@@ -60,8 +63,9 @@ The `#` column numbers the rows so that you can refer to them in
 
 ## Continuous variables and the size of the change
 
-For a continuous variable, `amount()` sets the size of the change. Here the
-effect of a one-standard-deviation increase in age:
+For a continuous independent variable, `amount()` sets the size of the change. Here the
+effect of a one-standard-deviation increase in age. All changes for continuous 
+independent variables are centered by default.
 
 ```{.stata-run}
 <<dd_do>>
@@ -72,8 +76,7 @@ mecompare age, models(base full) amount(sd)
 ## Comparing effects within one model
 
 With a single model in `models()`, `mecompare` reports the marginal effects of
-the variables listed, and `metest` compares them. Here, is the union-membership
-gap by college degree the same size as the gap by region?
+the variables listed, and `metest` can be used to compare them. Here, is the union-membership gap by college degree the same size as the gap by region?
 
 ```{.stata-run}
 <<dd_do>>
@@ -97,7 +100,7 @@ that come up most often.
 | `over(varlist)` | Marginal effects within subsamples defined by another variable. |
 | `pwcompare` | All pairwise contrasts among the levels of a nominal variable, not just contrasts with the base level. |
 | `groups` | The models were fit to separate groups (see the [groups example](examples/groups.html)). |
-| `totalme`, `meinequality` | Add the Total Marginal Effect or the marginal-effect inequality summary for the compared effects. |
+| `totalme`, `meinequality` | Add the Total Marginal Effect and/or the marginal-effect inequality summary for the compared effects. |
 | `store(stub)` | Store the results so that they can be graphed with `coefplot` or tabled with `esttab`. |
 
 <!-- CHECK against the current help file before publishing: option names,

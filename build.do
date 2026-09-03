@@ -6,6 +6,9 @@
 *!     cd "C:\path\to\stata"
 *!     do build.do                        // every package, then quarto render
 *!     do build.do mecompare              // one package, then quarto render
+*!     do build.do mecompare/_src/examples/mediation.qmd
+*!                                        // one page (e.g. after a wording edit),
+*!                                        // then quarto render
 *!     do build.do mecompare norender     // regenerate output only
 *!     do build.do render                 // quarto render only, no Stata output
 *!
@@ -45,6 +48,7 @@ local all_pkgs "mecompare suest2 metest meinequality totalme"
 
 * ---------------------------------------------------------------- arguments --
 local pkgs   ""
+local pages  ""
 local dyn    1
 local render 1
 foreach tok in `0' {
@@ -54,6 +58,9 @@ foreach tok in `0' {
     else if "`tok'" == "all" {
         local pkgs "`all_pkgs'"
     }
+    else if strpos("`tok'", ".qmd") {
+        local pages "`pages' `tok'"
+    }
     else if "`tok'" == "norender" {
         local render 0
     }
@@ -62,11 +69,12 @@ foreach tok in `0' {
     }
     else {
         di as err "build.do: unknown argument `tok'"
-        di as err "usage:  do build.do [pkgname ...|all] [norender] | do build.do render"
+        di as err "usage:  do build.do [pkgname ...|all] [pkg/_src/page.qmd ...] [norender]"
+        di as err "        do build.do render"
         exit 198
     }
 }
-if "`pkgs'" == "" & `dyn' local pkgs "`all_pkgs'"
+if "`pkgs'" == "" & "`pages'" == "" & `dyn' local pkgs "`all_pkgs'"
 
 * --------------------------------------------------------------- root check --
 capture confirm file "_quarto.yml"
@@ -84,6 +92,37 @@ if `dyn' {
     foreach c of local all_pkgs {
         capture noisily which `c'
         if _rc di as err "  `c' not found on the adopath"
+    }
+
+    * single pages, given as  pkg/_src/page.qmd  or  pkg/page.qmd  (from the root)
+    foreach pg of local pages {
+        local pg : subinstr local pg "\" "/", all
+        if !strpos("`pg'", "/") {
+            di as err "build.do: give the page as a path from the repository root, e.g. mecompare/_src/getting-started.qmd"
+            exit 198
+        }
+        local pkg = substr("`pg'", 1, strpos("`pg'", "/") - 1)
+        local rel = substr("`pg'", strpos("`pg'", "/") + 1, .)
+        if substr("`rel'", 1, 5) == "_src/"  local rel = substr("`rel'", 6, .)
+        if !`:list posof "`pkg'" in all_pkgs' {
+            di as err "build.do: `pg' is not under one of: `all_pkgs'"
+            exit 198
+        }
+        capture confirm file "`root'/`pkg'/_src/`rel'"
+        if _rc {
+            di as err "build.do: source page not found: `pkg'/_src/`rel'"
+            exit 601
+        }
+        di as txt _n "{hline 72}" _n "build.do: `pkg'/_src/`rel'  ->  `pkg'/`rel'" _n "{hline 72}"
+        cd "`root'/`pkg'"
+        capture mkdir fig
+        est clear
+        if strpos("`rel'", "/") {
+            local sub = substr("`rel'", 1, strpos("`rel'", "/") - 1)
+            capture mkdir "`sub'"
+        }
+        dyntext "_src/`rel'", saving("`rel'") replace
+        cd "`root'"
     }
 
     foreach p of local pkgs {

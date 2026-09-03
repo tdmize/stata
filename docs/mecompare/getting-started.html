@@ -254,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Every <code>mecompare</code> analysis has the same three steps: fit the models, store them, compare. This page runs through one example with Stata’s <code>nlsw88</code> data and then explains how to read the table.</p>
+<p><code>mecompare</code> can be used to calculate marginal effects within a single model and then, optionally, compare them. Or, you can fit two models, store them, and then call <code>mecompare</code> to calculate the marginal effects from each model and compare them. This page runs through one example with Stata’s <code>nlsw88</code> data and then explains how to read the table.</p>
 <section id="fit-and-store-the-models" class="level2">
 <h2 class="anchored" data-anchor-id="fit-and-store-the-models">1. Fit and store the models</h2>
 <p>The question: does the association between having a college degree and union membership change once we account for wages and work experience? Fit the model without those variables, then the model with them, storing each with <code>estimates store</code>.</p>
@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.collgrad c.age i.south i.smsa c.wage c.ttl_exp, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Nothing here is specific to <code>mecompare</code>; any estimation command that works with <code>margins</code> can be used, and <code>vce(robust)</code> is recommended because the models will be combined with <code>suest2</code>.</p>
+<p>Most regression commands in Stata are supported by <code>mecompare</code>; see the full list of supported models in the <code>help mecompare</code> file. Fitting the models with <code>vce(robust)</code> is recommended because with two models, the estimates are combined with <code>suest2</code> which uses <code>vce(robust)</code>.</p>
 </section>
 <section id="compare-the-marginal-effects" class="level2">
 <h2 class="anchored" data-anchor-id="compare-the-marginal-effects">2. Compare the marginal effects</h2>
@@ -299,7 +299,7 @@ collgrad                         |
 </section>
 <section id="read-the-table" class="level2">
 <h2 class="anchored" data-anchor-id="read-the-table">3. Read the table</h2>
-<p>Each block of the table is one marginal effect. For a binary or factor variable the effect is the discrete change in the predicted probability between its levels; for a continuous variable it is the change for a one-unit increase (other amounts are set with <code>amount()</code>). Within a block:</p>
+<p>Each block of the table is one marginal effect. For a binary or factor variable the effect is the discrete change in the predicted probability between its levels; for a continuous variable, the default is a change for a one-unit increase (other amounts are set with <code>amount()</code>). Within a block:</p>
 <ul>
 <li>the first rows give the marginal effect in each model, in the order the models were listed in <code>models()</code>;</li>
 <li>the <strong>Difference</strong> row is the effect in the first model minus the effect in the second, with a standard error and p-value that account for the fact that both effects were estimated from the same data.</li>
@@ -308,7 +308,7 @@ collgrad                         |
 </section>
 <section id="continuous-variables-and-the-size-of-the-change" class="level2">
 <h2 class="anchored" data-anchor-id="continuous-variables-and-the-size-of-the-change">Continuous variables and the size of the change</h2>
-<p>For a continuous variable, <code>amount()</code> sets the size of the change. Here the effect of a one-standard-deviation increase in age:</p>
+<p>For a continuous independent variable, <code>amount()</code> sets the size of the change. Here the effect of a one-standard-deviation increase in age. All changes for continuous independent variables are centered by default.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(base full) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (base) is:
@@ -331,7 +331,7 @@ age + SD                         |
 </section>
 <section id="comparing-effects-within-one-model" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-effects-within-one-model">Comparing effects within one model</h2>
-<p>With a single model in <code>models()</code>, <code>mecompare</code> reports the marginal effects of the variables listed, and <code>metest</code> compares them. Here, is the union-membership gap by college degree the same size as the gap by region?</p>
+<p>With a single model in <code>models()</code>, <code>mecompare</code> reports the marginal effects of the variables listed, and <code>metest</code> can be used to compare them. Here, is the union-membership gap by college degree the same size as the gap by region?</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare i.collgrad i.south, models(full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(union)
@@ -398,7 +398,7 @@ south                            |
 </tr>
 <tr class="odd">
 <td><code>totalme</code>, <code>meinequality</code></td>
-<td>Add the Total Marginal Effect or the marginal-effect inequality summary for the compared effects.</td>
+<td>Add the Total Marginal Effect and/or the marginal-effect inequality summary for the compared effects.</td>
 </tr>
 <tr class="even">
 <td><code>store(stub)</code></td>
