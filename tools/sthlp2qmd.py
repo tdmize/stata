@@ -28,6 +28,7 @@ SITE_PAGES = {
     "suest2": "suest2/help.html",
     "meinequality": "meinequality/help.html",
     "totalme": "totalme/help.html",
+    "balanceplot": "balanceplot/help.html",
 }
 
 # Syntax placeholders written as bare directives, e.g. {varlist} {ifin} {weight}

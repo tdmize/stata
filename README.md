@@ -1,7 +1,8 @@
 # Stata software documentation site
 
 Source for <https://tdmize.github.io/stata/> — the documentation pages for
-`mecompare`, `suest2`, `metest`, `meinequality`, and `totalme`. Each package
+`mecompare`, `suest2`, `metest`, `meinequality`, `totalme`, and `balanceplot`.
+Each package
 has its own sidebar and its own URL (`/stata/mecompare/`, `/stata/suest2/`, …),
 so each can be embedded on its own page of trentonmize.com.
 
@@ -27,7 +28,7 @@ stata/
 │   ├── getting-started.qmd
 │   ├── examples/*.qmd
 │   └── fig/             graphs exported by <<dd_graph>> (if any)
-├── suest2/  metest/  meinequality/  totalme/     same layout, one page each
+├── suest2/  metest/  meinequality/  totalme/  balanceplot/    same layout
 ├── docs/                the rendered site; GitHub Pages serves this folder
 └── tools/preview_nostata.py   render without Stata, for layout checks
 ```

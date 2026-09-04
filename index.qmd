@@ -1,6 +1,6 @@
 ---
 title: "Stata software"
-subtitle: "Commands for marginal effects and cross-model comparisons"
+subtitle: "Commands for marginal effects, cross-model comparisons, and covariate balance"
 toc: false
 sidebar: false
 ---
@@ -17,6 +17,7 @@ of pages; installation instructions are on each overview page.
 | [**metest**](metest/index.html) | Tests contrasts between rows of the tables produced by `mecompare`, `meinequality`, and `totalme`. |
 | [**meinequality**](meinequality/index.html) | Summarizes how unequal the marginal effects of a categorical predictor are across its categories. |
 | [**totalme**](totalme/index.html) | Summarizes a predictor's effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect. |
+| [**balanceplot**](balanceplot/index.html) | Plots and tabulates standardized covariate imbalance across groups, for a continuous treatment, and before and after matching or weighting. |
 :::
 
 Other software -- the `cleanplots` graph scheme, `irt_me`, and R packages -- is

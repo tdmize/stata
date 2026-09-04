@@ -48,7 +48,7 @@ local quarto "quarto"
 local python "python"
 
 * Packages documented on the site (folder names).
-local all_pkgs "mecompare suest2 metest meinequality totalme"
+local all_pkgs "mecompare suest2 metest meinequality totalme balanceplot"
 
 * Render one installed help file as <section>/<page>.qmd  (the page is written
 * next to the generated pages, not under _src/, and is overwritten each build)
@@ -165,6 +165,9 @@ if `dyn' {
         }
         else if "`p'" == "totalme" {
             _build_help "`python'" totalme totalme help "totalme help file"
+        }
+        else if "`p'" == "balanceplot" {
+            _build_help "`python'" balanceplot balanceplot help "balanceplot help file"
         }
 
         cd "`root'/`p'"

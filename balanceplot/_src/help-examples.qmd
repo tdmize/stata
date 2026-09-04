@@ -1,0 +1,103 @@
+---
+title: "Examples from the help file"
+subtitle: "The examples in help balanceplot, run in full"
+---
+<<dd_version: 2>>
+
+These are the examples at the end of `help balanceplot`, run in order with
+their printed output. Every call also draws a graph; the graphs for these
+commands are on the [Options](options.html),
+[Continuous treatments](continuous-treatment.html), and
+[Matching and teffects](matching.html) pages. The session starts with
+`estimates clear` so that the `store()` examples, which do not use
+`replace`, have nothing to collide with.
+
+## Comparing groups
+
+```{.stata-run}
+<<dd_do>>
+estimates clear
+sysuse nlsw88, clear
+balanceplot wage age i.married i.race tenure, group(union)
+balanceplot wage age i.married i.race tenure, group(union) cohensh
+balanceplot wage age i.married i.race tenure, group(union) fadens
+balanceplot wage age i.married i.race tenure, group(union) cohensH noci
+balanceplot wage age i.married i.race tenure, group(union) sort
+balanceplot wage age i.married i.race tenure, group(union) absolute sort threshold(.1)
+balanceplot wage age i.married i.race tenure, group(union) threshold(.1)
+<</dd_do>>
+```
+
+## Tables
+
+```{.stata-run}
+<<dd_do>>
+balanceplot wage age i.married i.race tenure, group(union) table
+balanceplot wage age i.married i.race tenure, group(union) tablefull
+balanceplot wage age i.married i.race tenure, group(union) table labwidth(30) width(11)
+<</dd_do>>
+```
+
+## More than two groups
+
+```{.stata-run}
+<<dd_do>>
+balanceplot wage age i.married tenure, group(race)
+<</dd_do>>
+```
+
+## Store results for esttab
+
+```{.stata-run}
+<<dd_do>>
+balanceplot wage age i.married i.race tenure, group(union) store(bp)
+esttab bp_mean_g0 bp_mean_g1 bp_imbalance, se label mtitles
+balanceplot wage age i.married tenure, group(race) store(br)
+esttab br_mean_g1 br_mean_g2 br_mean_g3 br_imb_g2 br_imb_g3, se label mtitles
+<</dd_do>>
+```
+
+## Continuous treatment
+
+```{.stata-run}
+<<dd_do>>
+balanceplot age i.union i.race tenure, contreat(wage)
+balanceplot age i.union i.race tenure, contreat(wage) threshold(.1)
+balanceplot age i.union i.race tenure, contreat(wage) abs sort threshold(.1)
+balanceplot age i.union i.race tenure, contreat(wage) fadens sort tablefull
+balanceplot age i.union i.race tenure, contreat(wage) store(ct)
+esttab ct_correlation, se label mtitles
+<</dd_do>>
+```
+
+## Matching-weight examples
+
+After ATT matching with `psmatch2`, `_weight` equals 1 for treated
+observations and records how often or how strongly each matched control
+contributes; unmatched controls have missing weights. `matchweight()`
+displays both the original complete-case balance and the weighted matched
+balance.
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+psmatch2 union age tenure grade, neighbor(1) logit
+balanceplot age tenure grade, group(union) matchweight(_weight)
+balanceplot age tenure grade, group(union) matchweight(_weight) store(bm)
+esttab bm_unw_mean_g0 bm_unw_mean_g1 bm_unw_imbalance, se label mtitles
+esttab bm_w_mean_g0 bm_w_mean_g1 bm_w_imbalance, se label mtitles
+<</dd_do>>
+```
+
+Official `teffects` and `stteffects` estimators provide raw and matched or
+weighted standardized differences through `tebalance summarize`;
+`balanceplot, tebalance` calls that command and plots the results.
+
+```{.stata-run}
+<<dd_do>>
+sysuse nlsw88, clear
+teffects psmatch (wage) (union age tenure grade), atet
+balanceplot, tebalance
+balanceplot age tenure, tebalance absolute sort threshold(.1)
+<</dd_do>>
+```

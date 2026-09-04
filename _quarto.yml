@@ -70,7 +70,7 @@ website:
       tools:
         - icon: house-door
           text: "trentonmize.com"
-          href: https://www.trentonmize.com/software
+          href: https://www.trentonmize.com/software/suest2
         - icon: github
           text: "GitHub"
           href: https://github.com/tdmize
@@ -90,7 +90,7 @@ website:
       tools:
         - icon: house-door
           text: "trentonmize.com"
-          href: https://www.trentonmize.com/software
+          href: https://www.trentonmize.com/software/metest
         - icon: github
           text: "GitHub"
           href: https://github.com/tdmize
@@ -151,6 +151,29 @@ website:
         - totalme/help-examples.qmd
         - text: "help totalme"
           href: totalme/help.qmd
+
+    # -------------------------------------------------------------- balanceplot
+    - id: balanceplot
+      title: "balanceplot"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/balanceplot
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: balanceplot/index.qmd
+        - balanceplot/options.qmd
+        - balanceplot/tables.qmd
+        - balanceplot/continuous-treatment.qmd
+        - balanceplot/matching.qmd
+        - balanceplot/help-examples.qmd
+        - text: "help balanceplot"
+          href: balanceplot/help.qmd
 
 format:
   html:
