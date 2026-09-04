@@ -34,11 +34,15 @@ net install suest2, from("https://tdmize.github.io/data") replace
 - [Usage](usage.html): the workflow, the options of `suest2`, how to point
   `margins` at one model of the system, and the rules for weights, survey
   data, and multiple imputation.
+- [Predictions and graphs](plotting.html): `margins`, `marginsplot`, and
+  `coefplot` after `suest2`, remaking four figures from Mize, Doan, and Long
+  (2019) -- predictions from each model, the difference in predictions
+  across models with its confidence interval, and predicted probabilities
+  from binary, ordinal, and multinomial models.
 - [Examples from the help file](help-examples.html): single-level, panel,
   multilevel, and instrumental-variable systems, run in full.
-- The help files, rendered from the installed versions: [suest2](help.html),
-  [suest2_cleanup](help-suest2_cleanup.html), and
-  [suest2_mi](help-suest2_mi.html).
+- The [help file](help.html), rendered from the installed version
+  (`help suest2` in Stata).
 
 ## Basic use
 

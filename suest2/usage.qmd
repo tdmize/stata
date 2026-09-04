@@ -136,7 +136,10 @@ m2           |
 the constituent command supports the requested prediction, and inference uses
 the complete joint covariance matrix. For multi-category models an outcome
 is selected the same way, e.g. `predict(model(o1) pr outcome(3))`; for
-multilevel models, `predict(model(me1) mu fixedonly)`.
+multilevel models, `predict(model(me1) mu fixedonly)`. The
+[Predictions and graphs](plotting.html) page puts this to work with
+`marginsplot` and `coefplot`, including a difference between two models'
+predictions in one `margins` call via `expression()`.
 
 Because the joint covariance is there, `margins, post` followed by `lincom`
 or [`metest`](../metest/index.html) tests a marginal effect across the two
@@ -249,14 +252,71 @@ available after MI pooling. The supported families are listed in the
 
 ## Supported estimators
 
-The [help file](help.html#estimators) lists the supported families in full:
-the ordinary single-level models (`regress` through `biprobit`, including
-`gologit2`, `ivregress 2sls`, `fracreg`, `betareg`, `ivprobit`, and
-`ivtobit`), the panel models (`xtreg`, `xtlogit`, `xtprobit`, `xtologit`,
-`xtoprobit`, `xtmlogit`, `xtpoisson`, `xtnbreg`, `xtcloglog`, with the
-estimators supported for each), and the multilevel models (`mixed`,
-`melogit`, `meprobit`, `mecloglog`, `mepoisson`, `menbreg`, `meologit`,
-`meoprobit`, `mestreg`, and `meglm` for the listed family-link pairs).
+The lists below follow the [help file](help.html#estimators). Store the
+models with `estimates store` and pass their names to `suest2`; the notes at
+the end of each group give the rules that group must follow.
+
+### Ordinary single-level models
+
+`regress`; `logit` and `logistic`; `probit`; `ologit`; `oprobit`; `mlogit`;
+`poisson`; `nbreg`; `zip`; and `zinb` with either inflation link.
+
+`glm`; `cloglog`; `tobit`; `intreg`; maximum-likelihood `heckman`; and
+parametric `streg`. Active-system `glm` prediction supports the identity,
+log, logit, probit, cloglog, and loglog links.
+
+`gologit2`, including proportional-odds, partial proportional-odds,
+unrestricted, alternative-link, and `autofit()` results.
+
+`ivregress 2sls`. `fracreg` with estimators logit and probit. Every model in
+an instrumental-variables system must use the same estimation mode: either
+unweighted conventional estimates, or linearized `svy: ivregress 2sls`
+estimates under one active survey design.
+
+`betareg` with links logit, probit, cloglog, and loglog. `truncreg`.
+`hetprobit`. `biprobit`. `ivprobit`. `ivtobit`.
+
+### Panel models
+
+`xtreg` with estimators re, fe, be, mle, and pa.
+
+`xtlogit` with estimators re, fe, and pa. `xtprobit` with estimators re and
+pa.
+
+`xtologit` and `xtoprobit`.
+
+`xtmlogit` with estimators re and fe.
+
+`xtpoisson` with estimators re, fe, and pa. `xtnbreg` with estimators re and
+pa.
+
+`xtcloglog` with estimators re and pa.
+
+Panel systems are unweighted and ordinarily require a common panel
+identifier. Store conventional constituent results and request robust or
+higher-level clustered covariance with `suest2`. Correlated random effects
+models are specified as described in the next section.
+
+### Multilevel models
+
+`mixed, mle`; `melogit`; `meprobit`; `mecloglog`; `mepoisson`; `menbreg`;
+`meologit`; `meoprobit`; and `mestreg`.
+
+`meglm` with the family-link pairs Gaussian-identity, Bernoulli-logit,
+Bernoulli-probit, Bernoulli-cloglog, Poisson-log, negative-binomial-log,
+Gamma-log, ordinal-logit, and ordinal-probit.
+
+`mestreg` with the exponential, Weibull, lognormal, loglogistic, and gamma
+distributions, including the applicable proportional-hazards and
+accelerated-failure-time forms.
+
+Supported multilevel families may be combined in one system, and every model
+must use the same highest-level grouping variable. A mixed system may also
+include an ordinary `ologit` or `oprobit` model beside an `xtologit`,
+`xtoprobit`, `meologit`, or `meoprobit` one; the ordinary model must be
+stored unprefixed, unweighted, and with conventional (non-robust) standard
+errors, and it inherits the system's cluster variable from its multilevel
+partner.
 
 ## Fixed effects and correlated random effects
 
@@ -274,11 +334,3 @@ xtreg y x mean_x i.d, re
 The coefficient on `x` is the within-person ("fixed effect") estimate and the
 coefficient on `mean_x` the between-person estimate. The same recipe applies
 to any supported panel or multilevel family.
-
-## Housekeeping: suest2_cleanup
-
-Each `suest2` run leaves private copies of its constituent estimates stored,
-and Stata caps stored estimation sets at 300. In a long session,
-`suest2_cleanup, force` reclaims them while preserving your own stored
-estimates; `mecompare` does this automatically at the start of each run. See
-[suest2_cleanup](help-suest2_cleanup.html).

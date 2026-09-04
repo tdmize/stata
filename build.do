@@ -158,9 +158,7 @@ if `dyn' {
             _build_help "`python'" metest metest help "metest help file"
         }
         else if "`p'" == "suest2" {
-            _build_help "`python'" suest2         suest2 help "suest2 help file"
-            _build_help "`python'" suest2_cleanup suest2 help-suest2_cleanup "suest2_cleanup help file"
-            _build_help "`python'" suest2_mi      suest2 help-suest2_mi "suest2_mi help file"
+            _build_help "`python'" suest2 suest2 help "suest2 help file"
         }
         else if "`p'" == "meinequality" {
             _build_help "`python'" meinequality meinequality help "meinequality help file"

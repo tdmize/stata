@@ -227,39 +227,9 @@ F test that all u_i=0: F(4149, 15038) = 4.29                 Prob > F = 0.0000
 
 . estimates store fe2
 
-. suest2 fe1 fe2, cluster(idcode)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
-(1,037 missing values generated)
+. quietly suest2 fe1 fe2, cluster(idcode)
+
+. suest2
 Simultaneous fixed-effects results for fe1 fe2
                                 (Std. err. adjusted for 4,150 clusters in idcode)
 ---------------------------------------------------------------------------------
@@ -332,6 +302,9 @@ ttl_exp      |
 ------------------------------------------------------------------------------
 
 ```
+
+Typing `suest2` on its own redisplays the table, as with any estimation
+command.
 
 ## Mixed models
 

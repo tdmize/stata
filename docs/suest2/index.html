@@ -160,39 +160,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../suest2/plotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Predictions and graphs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../suest2/help-examples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Examples from the help file</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Help files</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../suest2/help.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">help suest2</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../suest2/help-suest2_cleanup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">help suest2_cleanup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../suest2/help-suest2_mi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">help suest2_mi</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -243,8 +226,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
 <ul>
 <li><a href="usage.html">Usage</a>: the workflow, the options of <code>suest2</code>, how to point <code>margins</code> at one model of the system, and the rules for weights, survey data, and multiple imputation.</li>
+<li><a href="plotting.html">Predictions and graphs</a>: <code>margins</code>, <code>marginsplot</code>, and <code>coefplot</code> after <code>suest2</code>, remaking four figures from Mize, Doan, and Long
+<ol start="2019" type="1">
+<li>– predictions from each model, the difference in predictions across models with its confidence interval, and predicted probabilities from binary, ordinal, and multinomial models.</li>
+</ol></li>
 <li><a href="help-examples.html">Examples from the help file</a>: single-level, panel, multilevel, and instrumental-variable systems, run in full.</li>
-<li>The help files, rendered from the installed versions: <a href="help.html">suest2</a>, <a href="help-suest2_cleanup.html">suest2_cleanup</a>, and <a href="help-suest2_mi.html">suest2_mi</a>.</li>
+<li>The <a href="help.html">help file</a>, rendered from the installed version (<code>help suest2</code> in Stata).</li>
 </ul>
 </section>
 <section id="basic-use" class="level2">

@@ -78,15 +78,10 @@ website:
         - text: "Overview"
           href: suest2/index.qmd
         - suest2/usage.qmd
+        - suest2/plotting.qmd
         - suest2/help-examples.qmd
-        - section: "Help files"
-          contents:
-            - text: "help suest2"
-              href: suest2/help.qmd
-            - text: "help suest2_cleanup"
-              href: suest2/help-suest2_cleanup.qmd
-            - text: "help suest2_mi"
-              href: suest2/help-suest2_mi.qmd
+        - text: "help suest2"
+          href: suest2/help.qmd
 
     # ------------------------------------------------------------------- metest
     - id: metest

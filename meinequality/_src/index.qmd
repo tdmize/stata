@@ -45,30 +45,30 @@ net install meinequality, from("https://tdmize.github.io/data") replace
 
 ## Basic syntax
 
-For a single model, fit it and call `meinequality` with the nominal
-variable(s):
+For a single model, fit it with the nominal variable entered as a factor
+variable (`i.`), then call `meinequality` with that variable:
 
 ```stata
-regress ...
-meinequality varlist
+regress dv i.nominalvar iv2, vce(robust)
+meinequality i.nominalvar
 ```
 
 For two models, store them and name both in `models()`:
 
 ```stata
-logit dv iv1 iv2, vce(robust)
+logit dv i.nominalvar iv2, vce(robust)
 est store basemod
 
-logit dv iv1 iv2 med1 med2, vce(robust)
+logit dv i.nominalvar iv2 med1 med2, vce(robust)
 est store medmod
 
-meinequality varlist, models(basemod medmod)
+meinequality i.nominalvar, models(basemod medmod)
 ```
 
 For two models fit on separate samples, add `groups`:
 
 ```stata
-meinequality varlist, models(grp1mod grp2mod) groups
+meinequality i.nominalvar, models(grp1mod grp2mod) groups
 ```
 
 ## A first example

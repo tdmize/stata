@@ -186,7 +186,7 @@ age                              |
 
 ## Scaling by a literal value
 
-The effect of a 10-year change in age:
+10 times the effect for a change in age:
 
 ```{.stata-run}
 . metest 1 * #10

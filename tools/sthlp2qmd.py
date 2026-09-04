@@ -26,8 +26,6 @@ SITE_PAGES = {
     "mecompare": "mecompare/help.html",
     "metest": "metest/help.html",
     "suest2": "suest2/help.html",
-    "suest2_cleanup": "suest2/help-suest2_cleanup.html",
-    "suest2_mi": "suest2/help-suest2_mi.html",
     "meinequality": "meinequality/help.html",
     "totalme": "totalme/help.html",
 }

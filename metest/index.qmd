@@ -9,14 +9,13 @@ reported by [`mecompare`](../mecompare/index.html) -- or of any results posted b
 `mecompare` table, so a difference between two effects is `metest 2 - 1`, a ratio is
 `metest 2 / 1`, and a test that several effects are equal is
 `metest 1 = 2 = 3`. To refer to an actual number for a mathematical expression,
-use a leading # -- e.g. to divide by 2 use / #2.
+use a leading # -- e.g. to divide the 5th marginal by 2 use `metest 5 / #2`.
 
 An expression without `=` goes to `nlcom`, so sums, differences, ratios,
 products, and functions such as `abs()`, `exp()`, `ln()`, and `min()` are all
 allowed; an expression with `=` goes to `test`, including chained equalities
-and several constraints at once. Results accumulate into one table with `add`.
-`metest` replaces the retired `melincom` (see
-[melincom (retired)](../mecompare/help-melincom.html)).
+and several constraints at once. Results can be accumulated into one table 
+with `add`.
 
 ## Installation
 
@@ -31,7 +30,7 @@ net install mecompare, from("https://tdmize.github.io/data") replace
 
 - [Usage and examples](usage.html) runs every form of the command from the
   help file: single effects, differences, ratios and averages, scaling by a
-  literal, equality tests, accumulated tables, and use after commands other
+  literal value, equality tests, accumulated tables, and use after commands other
   than `mecompare`.
 - The [help file](help.html) is on the site, rendered from the installed
   version (`help metest` in Stata).

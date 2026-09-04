@@ -35,10 +35,14 @@ xtreg ln_wage c.ttl_exp##i.union i.year, fe
 estimates store fe1
 xtreg hours c.ttl_exp##i.union i.year, fe
 estimates store fe2
-suest2 fe1 fe2, cluster(idcode)
+quietly suest2 fe1 fe2, cluster(idcode)
+suest2
 margins, dydx(ttl_exp)
 <</dd_do>>
 ```
+
+Typing `suest2` on its own redisplays the table, as with any estimation
+command.
 
 ## Mixed models
 

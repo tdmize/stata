@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../suest2/help-examples.html" rel="next">
+<link href="../suest2/plotting.html" rel="next">
 <link href="../suest2/index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -161,39 +161,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../suest2/plotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Predictions and graphs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../suest2/help-examples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Examples from the help file</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Help files</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../suest2/help.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">help suest2</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../suest2/help-suest2_cleanup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">help suest2_cleanup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../suest2/help-suest2_mi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">help suest2_mi</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -205,9 +188,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#margins-after-suest2" id="toc-margins-after-suest2" class="nav-link" data-scroll-target="#margins-after-suest2">margins after suest2</a></li>
   <li><a href="#options" id="toc-options" class="nav-link" data-scroll-target="#options">Options</a></li>
   <li><a href="#weights-survey-data-and-multiple-imputation" id="toc-weights-survey-data-and-multiple-imputation" class="nav-link" data-scroll-target="#weights-survey-data-and-multiple-imputation">Weights, survey data, and multiple imputation</a></li>
-  <li><a href="#supported-estimators" id="toc-supported-estimators" class="nav-link" data-scroll-target="#supported-estimators">Supported estimators</a></li>
+  <li><a href="#supported-estimators" id="toc-supported-estimators" class="nav-link" data-scroll-target="#supported-estimators">Supported estimators</a>
+  <ul class="collapse">
+  <li><a href="#ordinary-single-level-models" id="toc-ordinary-single-level-models" class="nav-link" data-scroll-target="#ordinary-single-level-models">Ordinary single-level models</a></li>
+  <li><a href="#panel-models" id="toc-panel-models" class="nav-link" data-scroll-target="#panel-models">Panel models</a></li>
+  <li><a href="#multilevel-models" id="toc-multilevel-models" class="nav-link" data-scroll-target="#multilevel-models">Multilevel models</a></li>
+  </ul></li>
   <li><a href="#fixed-effects-and-correlated-random-effects" id="toc-fixed-effects-and-correlated-random-effects" class="nav-link" data-scroll-target="#fixed-effects-and-correlated-random-effects">Fixed effects and correlated random effects</a></li>
-  <li><a href="#housekeeping-suest2_cleanup" id="toc-housekeeping-suest2_cleanup" class="nav-link" data-scroll-target="#housekeeping-suest2_cleanup">Housekeeping: suest2_cleanup</a></li>
   </ul>
 </nav>
 </nav>
@@ -333,7 +320,7 @@ m2           |
          age |      0.001      0.003    0.428   0.669       -0.005       0.008
 ------------------------------------------------------------------------------</code></pre>
 </div>
-<p><code>at()</code>, <code>over()</code>, <code>post</code>, and the other standard <code>margins</code> options work when the constituent command supports the requested prediction, and inference uses the complete joint covariance matrix. For multi-category models an outcome is selected the same way, e.g.&nbsp;<code>predict(model(o1) pr outcome(3))</code>; for multilevel models, <code>predict(model(me1) mu fixedonly)</code>.</p>
+<p><code>at()</code>, <code>over()</code>, <code>post</code>, and the other standard <code>margins</code> options work when the constituent command supports the requested prediction, and inference uses the complete joint covariance matrix. For multi-category models an outcome is selected the same way, e.g.&nbsp;<code>predict(model(o1) pr outcome(3))</code>; for multilevel models, <code>predict(model(me1) mu fixedonly)</code>. The <a href="plotting.html">Predictions and graphs</a> page puts this to work with <code>marginsplot</code> and <code>coefplot</code>, including a difference between two models’ predictions in one <code>margins</code> call via <code>expression()</code>.</p>
 <p>Because the joint covariance is there, <code>margins, post</code> followed by <code>lincom</code> or <a href="../metest/index.html"><code>metest</code></a> tests a marginal effect across the two models – which is what <a href="../mecompare/index.html"><code>mecompare</code></a> automates:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mecompare age</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -458,7 +445,32 @@ collgrad#c.age |
 </section>
 <section id="supported-estimators" class="level2">
 <h2 class="anchored" data-anchor-id="supported-estimators">Supported estimators</h2>
-<p>The <a href="help.html#estimators">help file</a> lists the supported families in full: the ordinary single-level models (<code>regress</code> through <code>biprobit</code>, including <code>gologit2</code>, <code>ivregress 2sls</code>, <code>fracreg</code>, <code>betareg</code>, <code>ivprobit</code>, and <code>ivtobit</code>), the panel models (<code>xtreg</code>, <code>xtlogit</code>, <code>xtprobit</code>, <code>xtologit</code>, <code>xtoprobit</code>, <code>xtmlogit</code>, <code>xtpoisson</code>, <code>xtnbreg</code>, <code>xtcloglog</code>, with the estimators supported for each), and the multilevel models (<code>mixed</code>, <code>melogit</code>, <code>meprobit</code>, <code>mecloglog</code>, <code>mepoisson</code>, <code>menbreg</code>, <code>meologit</code>, <code>meoprobit</code>, <code>mestreg</code>, and <code>meglm</code> for the listed family-link pairs).</p>
+<p>The lists below follow the <a href="help.html#estimators">help file</a>. Store the models with <code>estimates store</code> and pass their names to <code>suest2</code>; the notes at the end of each group give the rules that group must follow.</p>
+<section id="ordinary-single-level-models" class="level3">
+<h3 class="anchored" data-anchor-id="ordinary-single-level-models">Ordinary single-level models</h3>
+<p><code>regress</code>; <code>logit</code> and <code>logistic</code>; <code>probit</code>; <code>ologit</code>; <code>oprobit</code>; <code>mlogit</code>; <code>poisson</code>; <code>nbreg</code>; <code>zip</code>; and <code>zinb</code> with either inflation link.</p>
+<p><code>glm</code>; <code>cloglog</code>; <code>tobit</code>; <code>intreg</code>; maximum-likelihood <code>heckman</code>; and parametric <code>streg</code>. Active-system <code>glm</code> prediction supports the identity, log, logit, probit, cloglog, and loglog links.</p>
+<p><code>gologit2</code>, including proportional-odds, partial proportional-odds, unrestricted, alternative-link, and <code>autofit()</code> results.</p>
+<p><code>ivregress 2sls</code>. <code>fracreg</code> with estimators logit and probit. Every model in an instrumental-variables system must use the same estimation mode: either unweighted conventional estimates, or linearized <code>svy: ivregress 2sls</code> estimates under one active survey design.</p>
+<p><code>betareg</code> with links logit, probit, cloglog, and loglog. <code>truncreg</code>. <code>hetprobit</code>. <code>biprobit</code>. <code>ivprobit</code>. <code>ivtobit</code>.</p>
+</section>
+<section id="panel-models" class="level3">
+<h3 class="anchored" data-anchor-id="panel-models">Panel models</h3>
+<p><code>xtreg</code> with estimators re, fe, be, mle, and pa.</p>
+<p><code>xtlogit</code> with estimators re, fe, and pa. <code>xtprobit</code> with estimators re and pa.</p>
+<p><code>xtologit</code> and <code>xtoprobit</code>.</p>
+<p><code>xtmlogit</code> with estimators re and fe.</p>
+<p><code>xtpoisson</code> with estimators re, fe, and pa. <code>xtnbreg</code> with estimators re and pa.</p>
+<p><code>xtcloglog</code> with estimators re and pa.</p>
+<p>Panel systems are unweighted and ordinarily require a common panel identifier. Store conventional constituent results and request robust or higher-level clustered covariance with <code>suest2</code>. Correlated random effects models are specified as described in the next section.</p>
+</section>
+<section id="multilevel-models" class="level3">
+<h3 class="anchored" data-anchor-id="multilevel-models">Multilevel models</h3>
+<p><code>mixed, mle</code>; <code>melogit</code>; <code>meprobit</code>; <code>mecloglog</code>; <code>mepoisson</code>; <code>menbreg</code>; <code>meologit</code>; <code>meoprobit</code>; and <code>mestreg</code>.</p>
+<p><code>meglm</code> with the family-link pairs Gaussian-identity, Bernoulli-logit, Bernoulli-probit, Bernoulli-cloglog, Poisson-log, negative-binomial-log, Gamma-log, ordinal-logit, and ordinal-probit.</p>
+<p><code>mestreg</code> with the exponential, Weibull, lognormal, loglogistic, and gamma distributions, including the applicable proportional-hazards and accelerated-failure-time forms.</p>
+<p>Supported multilevel families may be combined in one system, and every model must use the same highest-level grouping variable. A mixed system may also include an ordinary <code>ologit</code> or <code>oprobit</code> model beside an <code>xtologit</code>, <code>xtoprobit</code>, <code>meologit</code>, or <code>meoprobit</code> one; the ordinary model must be stored unprefixed, unweighted, and with conventional (non-robust) standard errors, and it inherits the system’s cluster variable from its multilevel partner.</p>
+</section>
 </section>
 <section id="fixed-effects-and-correlated-random-effects" class="level2">
 <h2 class="anchored" data-anchor-id="fixed-effects-and-correlated-random-effects">Fixed effects and correlated random effects</h2>
@@ -466,10 +478,6 @@ collgrad#c.age |
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bysort</span> id: <span class="kw">egen</span> mean_x = <span class="kw">mean</span>(x)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> <span class="fu">y</span> x mean_x i.<span class="kw">d</span>, re</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The coefficient on <code>x</code> is the within-person (“fixed effect”) estimate and the coefficient on <code>mean_x</code> the between-person estimate. The same recipe applies to any supported panel or multilevel family.</p>
-</section>
-<section id="housekeeping-suest2_cleanup" class="level2">
-<h2 class="anchored" data-anchor-id="housekeeping-suest2_cleanup">Housekeeping: suest2_cleanup</h2>
-<p>Each <code>suest2</code> run leaves private copies of its constituent estimates stored, and Stata caps stored estimation sets at 300. In a long session, <code>suest2_cleanup, force</code> reclaims them while preserving your own stored estimates; <code>mecompare</code> does this automatically at the start of each run. See <a href="help-suest2_cleanup.html">suest2_cleanup</a>.</p>
 
 
 </section>
@@ -887,8 +895,8 @@ collgrad#c.age |
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../suest2/help-examples.html" class="pagination-link" aria-label="Examples from the help file">
-        <span class="nav-page-text">Examples from the help file</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../suest2/plotting.html" class="pagination-link" aria-label="Predictions and graphs">
+        <span class="nav-page-text">Predictions and graphs</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
