@@ -45,18 +45,23 @@ variable -- here one standard deviation below and above the mean of political
 views, labeled liberal and conservative -- and plot the predictions across the
 other.
 
+`mecompare` leaves its own table as the active estimates, so the model is
+restored first.
+
 ```{.stata-run}
 <<dd_do>>
+estimates restore samemod
 quietly margins, at(conviewSS=(-1 1) year1976=(0(2)40))
-marginsplot, x(year1976) recastci(rline) ciopts(lpattern(dash)) ylabel(0(0.2)1) ///
+marginsplot, x(year1976) recastci(rline) ciopts(lpattern(dash) color(*.4)) ylabel(0(0.2)1) ///
     xlabel(0 "1976" 8 "1984" 16 "1992" 24 "2000" 32 "2008" 40 "2016") ///
     xtitle("GSS survey year") ytitle("Pr(Same-sex relationships OK)") ///
-    legend(order(3 "Liberal" 4 "Conservative")) title("")
+    legend(order(3 "Liberal" 4 "Conservative")) ///
+    title("Figure 15. Pr(same-sex OK) by political views and year")
 graph export "fig/nli-sameok-predictions.png", replace width(1400)
 <</dd_do>>
 ```
 
-![Probability of viewing same-sex relationships as acceptable, over time, for liberals and conservatives.](../fig/nli-sameok-predictions.png){width=80%}
+![](../fig/nli-sameok-predictions.png){width=80% fig-alt="Probability of viewing same-sex relationships as acceptable, over time, for liberals and conservatives, with confidence intervals."}
 
 The effect of time at the two ideal types, and whether it differs, is the
 marginal effect of year with `conviewSS` held at each value:
@@ -90,20 +95,23 @@ years:
 <<dd_do>>
 mecompare conviewSS, models(samemod) covariates(year1976=(0(4)40)) amount(rate) store(pv)
 
-coefplot pv_samemod, vertical yline(0) ///
+coefplot pv_samemod, vertical recast(connected) ///
+    ciopts(recast(rline) lpattern(dash) color(*.4)) yline(0) ///
     coeflabels(conviewSS_year1976_0 = "1976" conviewSS_year1976_4 = "1980" ///
                conviewSS_year1976_8 = "1984" conviewSS_year1976_12 = "1988" ///
                conviewSS_year1976_16 = "1992" conviewSS_year1976_20 = "1996" ///
                conviewSS_year1976_24 = "2000" conviewSS_year1976_28 = "2004" ///
                conviewSS_year1976_32 = "2008" conviewSS_year1976_36 = "2012" ///
                conviewSS_year1976_40 = "2016") ///
-    xtitle("GSS survey year") ytitle("AME of conservative political views") ///
+    ylabel(-0.25(0.05)0.05) xtitle("GSS survey year") ///
+    ytitle("AME of conservative political views") ///
+    title("Figure 16. AME of political views by survey year") ///
     note("Negative effects indicate conservatives are less supportive of same-sex relationships")
 graph export "fig/nli-sameok-views-by-year.png", replace width(1400)
 <</dd_do>>
 ```
 
-![The marginal effect of conservative political views on acceptance, by survey year.](../fig/nli-sameok-views-by-year.png){width=80%}
+![](../fig/nli-sameok-views-by-year.png){width=80% fig-alt="The marginal effect of conservative political views on acceptance, by survey year, with confidence intervals."}
 
 ## The effect of time across political views (Figure 17)
 
@@ -126,17 +134,19 @@ two standard deviations below the mean to two above:
 <<dd_do>>
 mecompare year1976, models(samemod) covariates(conviewSS=(-2(1)2)) amount(2) uncentered store(tm)
 
-coefplot tm_samemod, vertical yline(0) ///
+coefplot tm_samemod, vertical recast(connected) ///
+    ciopts(recast(rline) lpattern(dash) color(*.4)) yline(0) ///
     coeflabels(year1976_conviewSS__2 = "Very liberal" year1976_conviewSS__1 = "Liberal" ///
                year1976_conviewSS_0 = "Moderate" year1976_conviewSS_1 = "Conservative" ///
                year1976_conviewSS_2 = "Very conservative") ///
     xtitle("") ytitle("Effect of two years on Pr(Same-sex relationships OK)") ///
+    title("Figure 17. AME of time by political views") ///
     note("Positive effects: the group has become more supportive over time")
 graph export "fig/nli-sameok-time-by-views.png", replace width(1400)
 <</dd_do>>
 ```
 
-![The marginal effect of two years of time on acceptance, across political views.](../fig/nli-sameok-time-by-views.png){width=80%}
+![](../fig/nli-sameok-time-by-views.png){width=80% fig-alt="The marginal effect of two years of time on acceptance, across political views, with confidence intervals."}
 
 The article's final presentation, a contour plot of the predictions over both
 variables (Figure 18), is a `margins` and `twoway contour` exercise rather than

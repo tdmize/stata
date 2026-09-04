@@ -27,14 +27,15 @@ estimates store depmod
 ```{.stata-run}
 <<dd_do>>
 quietly margins woman, at(role=(0(1)10))
-marginsplot, xdimension(role) recastci(rline) ciopts(lpattern(dash)) plotopts(msymbol(none)) ///
+marginsplot, xdimension(role) recastci(rline) ciopts(lpattern(dash) color(*.4)) ///
     xlabel(0(1)10) ylabel(0(0.1)0.7) xtitle("Number of social roles") ///
-    ytitle("Pr(High depressive symptoms)") title("")
+    ytitle("Pr(High depressive symptoms)") ///
+    title("Figure 14. Pr(high depressive symptoms) by gender and roles")
 graph export "fig/nli-roles-predictions.png", replace width(1400)
 <</dd_do>>
 ```
 
-![Predicted probability of high depressive symptoms by number of social roles, for men and women.](../fig/nli-roles-predictions.png){width=80%}
+![](../fig/nli-roles-predictions.png){width=80% fig-alt="Predicted probability of high depressive symptoms by number of social roles, for men and women, with confidence intervals."}
 
 Both curves fall as roles accumulate, and women sit above men. The two
 questions are whether the slope differs by gender and where along the range of
@@ -84,18 +85,21 @@ directly:
 
 ```{.stata-run}
 <<dd_do>>
-coefplot gap_depmod, vertical yline(0) ///
+coefplot gap_depmod, vertical recast(line) ///
+    ciopts(recast(rline) lpattern(dash) color(*.4)) yline(0) ///
     coeflabels(woman_role_0 = "0" woman_role_1 = "1" woman_role_2 = "2" ///
                woman_role_3 = "3" woman_role_4 = "4" woman_role_5 = "5" ///
                woman_role_6 = "6" woman_role_7 = "7" woman_role_8 = "8" ///
                woman_role_9 = "9" woman_role_10 = "10") ///
-    xtitle("Number of social roles") ytitle("Effect of gender: women - men") ///
+    ylabel(-.2(.1).2) xtitle("Number of social roles") ///
+    ytitle("Effect of gender: women - men") ///
+    title("AME of gender by number of social roles") ///
     note("Effects above zero indicate women have a higher probability of high depressive symptoms")
 graph export "fig/nli-roles-gender-gap.png", replace width(1400)
 <</dd_do>>
 ```
 
-![The marginal effect of gender at each number of social roles, with 95% confidence intervals.](../fig/nli-roles-gender-gap.png){width=80%}
+![](../fig/nli-roles-gender-gap.png){width=80% fig-alt="The marginal effect of gender at each number of social roles, with 95% confidence intervals."}
 
 A joint test that the gap is the same at every number of roles is the overall
 test of interaction on this side:

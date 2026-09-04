@@ -333,20 +333,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-predictions-figure-14">The predictions (Figure 14)</h2>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins woman, <span class="fu">at</span>(role=(0(1)10))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>marginsplot, xdimension(role) recastci(rline) ciopts(lpattern(<span class="kw">dash</span>)) plotopts(<span class="bn">msymbol</span>(<span class="kw">none</span>)) <span class="co">///</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>marginsplot, xdimension(role) recastci(rline) ciopts(lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="co">///</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">xlabel</span>(0(1)10) <span class="kw">ylabel</span>(0(0.1)0.7) <span class="bn">xtitle</span>(<span class="st">"Number of social roles"</span>) <span class="co">///</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Pr(High depressive symptoms)"</span>) <span class="bn">title</span>(<span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Pr(High depressive symptoms)"</span>) <span class="co">///</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 14. Pr(high depressive symptoms) by gender and roles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Variables that uniquely identify margins: role woman</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-roles-predictions.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/nli-roles-predictions.png not found)
-file fig/nli-roles-predictions.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/nli-roles-predictions.png saved as PNG format</code></pre>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../fig/nli-roles-predictions.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Predicted probability of high depressive symptoms by number of social roles, for men and women.</figcaption>
-</figure>
-</div>
+<p><img src="../fig/nli-roles-predictions.png" class="img-fluid" style="width:80.0%" alt="Predicted probability of high depressive symptoms by number of social roles, for men and women, with confidence intervals."></p>
 <p>Both curves fall as roles accumulate, and women sit above men. The two questions are whether the slope differs by gender and where along the range of roles the gender gap is significant.</p>
 </section>
 <section id="the-effect-of-social-roles-for-men-and-women" class="level2">
@@ -413,24 +408,21 @@ woman                            |
 </div>
 <p>This is the information Figure 14 encodes in solid versus dashed lines: the gender gap is significant at three or more roles and not at zero to two. Plotted directly:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>coefplot gap_depmod, vertical <span class="kw">yline</span>(0) <span class="co">///</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    coeflabels(woman_role_0 = <span class="st">"0"</span> woman_role_1 = <span class="st">"1"</span> woman_role_2 = <span class="st">"2"</span> <span class="co">///</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>               woman_role_3 = <span class="st">"3"</span> woman_role_4 = <span class="st">"4"</span> woman_role_5 = <span class="st">"5"</span> <span class="co">///</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               woman_role_6 = <span class="st">"6"</span> woman_role_7 = <span class="st">"7"</span> woman_role_8 = <span class="st">"8"</span> <span class="co">///</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>               woman_role_9 = <span class="st">"9"</span> woman_role_10 = <span class="st">"10"</span>) <span class="co">///</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">"Number of social roles"</span>) <span class="bn">ytitle</span>(<span class="st">"Effect of gender: women - men"</span>) <span class="co">///</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects above zero indicate women have a higher probability of high depressive symptoms"</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-roles-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/nli-roles-gender-gap.png not found)
-file fig/nli-roles-gender-gap.png saved as PNG format</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>coefplot gap_depmod, vertical <span class="kw">recast</span>(<span class="kw">line</span>) <span class="co">///</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    ciopts(<span class="kw">recast</span>(rline) lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="kw">yline</span>(0) <span class="co">///</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    coeflabels(woman_role_0 = <span class="st">"0"</span> woman_role_1 = <span class="st">"1"</span> woman_role_2 = <span class="st">"2"</span> <span class="co">///</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               woman_role_3 = <span class="st">"3"</span> woman_role_4 = <span class="st">"4"</span> woman_role_5 = <span class="st">"5"</span> <span class="co">///</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>               woman_role_6 = <span class="st">"6"</span> woman_role_7 = <span class="st">"7"</span> woman_role_8 = <span class="st">"8"</span> <span class="co">///</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>               woman_role_9 = <span class="st">"9"</span> woman_role_10 = <span class="st">"10"</span>) <span class="co">///</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(-.2(.1).2) <span class="bn">xtitle</span>(<span class="st">"Number of social roles"</span>) <span class="co">///</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Effect of gender: women - men"</span>) <span class="co">///</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"AME of gender by number of social roles"</span>) <span class="co">///</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects above zero indicate women have a higher probability of high depressive symptoms"</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-roles-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>file fig/nli-roles-gender-gap.png saved as PNG format</code></pre>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../fig/nli-roles-gender-gap.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>The marginal effect of gender at each number of social roles, with 95% confidence intervals.</figcaption>
-</figure>
-</div>
+<p><img src="../fig/nli-roles-gender-gap.png" class="img-fluid" style="width:80.0%" alt="The marginal effect of gender at each number of social roles, with 95% confidence intervals."></p>
 <p>A joint test that the gap is the same at every number of roles is the overall test of interaction on this side:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>metest 1 = 2 = 3 = 4 = 5 = 6 = 7 = 8 = 9 = 10 = 11</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

@@ -42,17 +42,17 @@ them by parental status within gender.
 
 . 
 . coefplot prno prpar, vertical recast(bar) barwidth(0.3) ///
->     ciopts(recast(rcap)) citop ///
+>     ciopts(recast(rcap) color(gs10)) citop ///
 >     legend(order(1 "No children" 3 "Parent")) ///
->     xlabel(1 "Men" 2 "Women") ytitle("Pr(Alcohol use)") ylabel(0(.2)1)
+>     xlabel(1 "Men" 2 "Women") ytitle("Pr(Alcohol use)") ylabel(0(.2)1) ///
+>     title("Figure 12. Pr(alcohol use) by gender and parenthood")
 
 . graph export "fig/nli-alcohol-predictions.png", replace width(1400)
-(file fig/nli-alcohol-predictions.png not found)
 file fig/nli-alcohol-predictions.png saved as PNG format
 
 ```
 
-![Probability of alcohol use by gender and parental status.](../fig/nli-alcohol-predictions.png){width=75%}
+![](../fig/nli-alcohol-predictions.png){width=75% fig-alt="Probability of alcohol use by gender and parental status, as bars with confidence intervals."}
 
 ### First and second differences (Table 3)
 
@@ -125,24 +125,34 @@ simply more comparisons.
 
 ### The predictions (Figure 13)
 
-A dot plot of the ten predicted probabilities, education on the axis and one
-marker per gender:
+The ten predicted probabilities as a dot plot, education on the axis and one
+marker per gender. As for Figure 12, the predictions for each gender are
+posted and stored separately so that `coefplot` labels the levels of
+education and lines the two genders up:
 
 ```{.stata-run}
-. quietly margins woman#educ
+. quietly margins educ, at(woman=0) post
 
-. marginsplot, recast(scatter) recastci(rspike) xdimension(educ) horizontal ///
->     ytitle("") xtitle("Pr(Alcohol use)") xlabel(.2(.2).8) title("")
+. estimates store Men
 
-Variables that uniquely identify margins: woman educ
+. estimates restore alcedmod
+(results alcedmod are active now)
+
+. quietly margins educ, at(woman=1) post
+
+. estimates store Women
+
+. 
+. coefplot Men Women, ciopts(color(*.4)) ///
+>     xtitle("Pr(Alcohol use)") xlabel(.2(.2).8) ///
+>     title("Figure 13. Pr(alcohol use) by gender and education")
 
 . graph export "fig/nli-alcohol-education.png", replace width(1400)
-(file fig/nli-alcohol-education.png not found)
 file fig/nli-alcohol-education.png saved as PNG format
 
 ```
 
-![Probability of alcohol use by gender and educational attainment.](../fig/nli-alcohol-education.png){width=80%}
+![](../fig/nli-alcohol-education.png){width=80% fig-alt="Probability of alcohol use by gender and educational attainment, one marker per gender at each level of education."}
 
 ### The gender gap at each level of education (Table 4)
 
