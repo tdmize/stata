@@ -8,8 +8,8 @@ When one of the interacting variables is continuous, a plot of the predictions
 is almost always needed, and the tests have two sides: the effect of the
 continuous variable within each group, and the group difference at each value
 of the continuous variable. The article's example is whether holding more
-social roles protects against high depressive symptoms equally for men and
-women (Add Health Wave IV).
+social roles protects against high depressive symptoms (as a binary outcome) 
+equally for men and women (Add Health Wave IV).
 
 ## The model
 
@@ -57,8 +57,8 @@ metest 1 - 2
 
 Each additional role lowers the probability of high depressive symptoms by
 about three percentage points for both men and women; the second difference
-is not significant. The instantaneous version of the same effect, the
-`dydx()` of `margins`, is `amount(rate)`:
+is not significant. The instantaneous rate of change for the same effect, the
+`dydx()` of `margins`, can be calculated with `mecompare` using `amount(rate)`:
 
 ```{.stata-run}
 <<dd_do>>
@@ -69,9 +69,25 @@ metest 1 - 2
 
 ## The gender gap at each number of roles
 
-The other side of the interaction: the marginal effect of gender at each value
-of `role`, from `covariates()` with the full range. One numbered row per value,
-each with its own test.
+The other side of the interaction is the marginal effect of gender at chosen
+numbers of roles. A good default for a continuous moderator is its 10th,
+50th, and 90th percentiles, from `summarize, detail`: a low, a typical, and a
+high number of roles, all in the range of the data. The joint test is the
+test of interaction on this side; `metest 3 - 1` is how much the gap changes
+from the 10th to the 90th percentile.
+
+```{.stata-run}
+<<dd_do>>
+quietly summarize role, detail
+mecompare i.woman, models(depmod) covariates(role=(`r(p10)' `r(p50)' `r(p90)'))
+metest 1 = 2 = 3
+metest 3 - 1
+<</dd_do>>
+```
+
+The full picture is the marginal effect of gender at each value of `role`,
+from `covariates()` with the full range. One numbered row per value, each
+with its own test.
 
 ```{.stata-run}
 <<dd_do>>

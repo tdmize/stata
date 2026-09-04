@@ -317,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Even in linear regression, an effect is nonlinear when the model has a squared term or a product term, and then “does the effect of age differ for men and women?” has no single answer: it depends on where in the range of age you ask. The article’s first example regresses hourly wages on age, age², gender, and their products, using employed respondents from the pooled GSS.</p>
+<p>Even linear regression models often produce nonlinear effects, e.g.&nbsp;when the model has a polynomial specification such as a squared term. In the case of nonlinearities, questions like “does the effect of age differ for men and women?” have no single answer: it depends on where in the range of age you ask. The article’s first example regresses hourly wages on age, age², gender, and their products, using employed respondents from the pooled GSS.</p>
 <section id="the-model" class="level2">
 <h2 class="anchored" data-anchor-id="the-model">The model</h2>
 <div class="stata-run">
@@ -336,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="start-with-the-predictions-figure-1" class="level2">
 <h2 class="anchored" data-anchor-id="start-with-the-predictions-figure-1">Start with the predictions (Figure 1)</h2>
-<p>The recommendation in the article is to plot the predictions first and let the plot guide the tests. That is <code>margins</code> and <code>marginsplot</code>; <code>mecompare</code> takes over from here.</p>
+<p>The recommendation in the article is to plot the predictions first and let the plot guide the tests. That is <code>margins</code> and <code>marginsplot</code>; <code>mecompare</code> can then be used subsequently for quantifying effects and testing them.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins woman, <span class="fu">at</span>(age=(18(2)72))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>marginsplot, recastci(rline) ciopts(lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="co">///</span></span>
@@ -352,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-effect-of-age-for-men-and-women-table-2" class="level2">
 <h2 class="anchored" data-anchor-id="the-effect-of-age-for-men-and-women-table-2">The effect of age for men and women (Table 2)</h2>
-<p>The first row of Table 2 is the effect of aging from 25 to 30. <code>start(age=25)</code> puts everyone at 25, <code>amount(5) uncentered</code> moves them to 30, and <code>by(woman)</code> does it for men and for women. The two rows are numbered, and the second difference – whether the effect of aging is the same for men and women – is <code>metest 1 - 2</code>.</p>
+<p>The first row of Table 2 is the effect of aging from 25 to 30. <code>start(age=25)</code> puts everyone at 25, <code>amount(5) uncentered</code> moves them to 30, and <code>by(woman)</code> calculates these effects for both men and for women. The rows of <code>mecompare</code> are always numbered to automate subsequent tests with <code>metest</code> which refers to these row numbers. The second difference – whether the effect of aging is the same for men and women – is simply <code>metest 1 - 2</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(regwages) <span class="bn">start</span>(age=25) amount(5) uncentered <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction
@@ -386,7 +386,7 @@ age + 5 (uncentered)             |
 ---------------------------------+--------------------------------
        age_woman_0 - age_woman_1 |     0.046      0.206      0.823 </code></pre>
 </div>
-<p>Getting older raises wages more for men than for women in the twenties, while in the sixties the effect is negative and the same for both. An interaction that exists at one part of the range of age need not exist at another.</p>
+<p>Getting older raises wages more for men than for women in the twenties, while in the sixties the effect is negative and not statistically different across genders. An interaction that exists at one part of the range of age need not exist at another.</p>
 <p>Absent a specific age of interest, the last row of Table 2 asks the question on average: a five-year increase from each person’s own age, averaged over the sample. Dropping <code>start()</code> does that.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(regwages) amount(5) uncentered <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -404,10 +404,11 @@ age + 5 (uncentered)             |
 ---------------------------------+--------------------------------
        age_woman_0 - age_woman_1 |     0.589      0.050      0.000 </code></pre>
 </div>
+<p>On average, there is a difference in the effect of age for men and women.</p>
 </section>
 <section id="the-other-side-the-effect-of-gender-across-age-figure-2" class="level2">
 <h2 class="anchored" data-anchor-id="the-other-side-the-effect-of-gender-across-age-figure-2">The other side: the effect of gender across age (Figure 2)</h2>
-<p>An interaction has two sides. The gender gap in wages at a given age is the marginal effect of <code>woman</code> with age held at that value, and <code>covariates(age=(25 55))</code> reports it at 25 and at 55 in one table so that the two can be compared.</p>
+<p>An interaction involves two variables and has two sides. The tests above focus on the effect of age; the other side is the effect of gender. The gender gap in wages at a given age is the marginal effect of <code>woman</code> with age held at that value. E.g. <code>covariates(age=(25 55))</code> reports it at 25 and at 55 in one table so that the two can be compared.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(regwages) covariates(age=(25 55))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction
@@ -425,9 +426,35 @@ woman                            |
 ---------------------------------+--------------------------------
      woman_age_55 - woman_age_25 |    -3.964      0.278      0.000 </code></pre>
 </div>
-<p>Women earn less than men at both ages, and the gap is significantly larger at 55. The full picture is the effect of gender across the whole range of age: give <code>covariates()</code> the range, save the results with <code>store()</code>, and plot them with <code>coefplot</code>. <code>recast(line)</code> connects the effects and <code>ciopts(recast(rline))</code> draws the confidence interval as a band, the same look as the <code>marginsplot</code> figures.</p>
+<p>Women earn less than men at both ages, and the gap is significantly larger at 55. Absent particular ages of interest, a good default for a continuous moderator is its 10th, 50th, and 90th percentiles – a low, a typical, and a high value that are all in the range of the data. <code>summarize, detail</code> returns them and they go straight into <code>covariates()</code>. The joint test that the three gaps are equal is the test of interaction on this side, and the difference between the 90th and the 10th percentile is the single summary of how much the gap changes across age:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(regwages) covariates(age=(20(5)70)) <span class="kw">store</span>(gap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> age, <span class="kw">detail</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(regwages) covariates(age=(<span class="ot">`r(p10)'</span> <span class="ot">`r(p50)'</span> <span class="ot">`r(p90)'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_regwages=30931)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+woman                            |                                       
+                 Woman - Man     |                                       
+                          age=25 |     1     -2.841      0.167      0.000
+                          age=39 |     2     -5.192      0.168      0.000
+                          age=59 |     3     -7.030      0.270      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metest 1 = 2 = 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Tests of equality
+
+                                 |      chi2         df     pvalue 
+---------------------------------+--------------------------------
+  woman~25 = woman~39 = woman~59 |   205.170      2.000      0.000 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>metest 3 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+     woman_age_59 - woman_age_25 |    -4.188      0.319      0.000 </code></pre>
+</div>
+<p>The full picture is the effect of gender across the whole range of age: give <code>covariates()</code> the range, save the results with <code>store()</code>, and plot them with <code>coefplot</code>. <code>recast(line)</code> connects the effects and <code>ciopts(recast(rline))</code> draws the confidence interval as a band, the same look as the <code>marginsplot</code> figures.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mecompare i.woman, models(regwages) covariates(age=(20(5)70)) <span class="kw">store</span>(gap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction
 
 Marginal effects (N_regwages=30931)
@@ -449,16 +476,16 @@ woman                            |
                           age=70 |    11     -7.278      0.616      0.000
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>coefplot gap_regwages, vertical <span class="kw">recast</span>(<span class="kw">line</span>) <span class="co">///</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    ciopts(<span class="kw">recast</span>(rline) lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="kw">yline</span>(0) <span class="co">///</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    coeflabels(woman_age_20 = <span class="st">"20"</span> woman_age_25 = <span class="st">"25"</span> woman_age_30 = <span class="st">"30"</span> <span class="co">///</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>               woman_age_35 = <span class="st">"35"</span> woman_age_40 = <span class="st">"40"</span> woman_age_45 = <span class="st">"45"</span> <span class="co">///</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>               woman_age_50 = <span class="st">"50"</span> woman_age_55 = <span class="st">"55"</span> woman_age_60 = <span class="st">"60"</span> <span class="co">///</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>               woman_age_65 = <span class="st">"65"</span> woman_age_70 = <span class="st">"70"</span>) <span class="co">///</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(-10(2)2) <span class="bn">xtitle</span>(<span class="st">"Age"</span>) <span class="bn">ytitle</span>(<span class="st">"Effect of gender: women - men"</span>) <span class="co">///</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 2. AME of gender across age"</span>) <span class="co">///</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects below zero indicate women earn less than men at that age"</span>)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-wages-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>coefplot gap_regwages, vertical <span class="kw">recast</span>(<span class="kw">line</span>) <span class="co">///</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    ciopts(<span class="kw">recast</span>(rline) lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="kw">yline</span>(0) <span class="co">///</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    coeflabels(woman_age_20 = <span class="st">"20"</span> woman_age_25 = <span class="st">"25"</span> woman_age_30 = <span class="st">"30"</span> <span class="co">///</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>               woman_age_35 = <span class="st">"35"</span> woman_age_40 = <span class="st">"40"</span> woman_age_45 = <span class="st">"45"</span> <span class="co">///</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>               woman_age_50 = <span class="st">"50"</span> woman_age_55 = <span class="st">"55"</span> woman_age_60 = <span class="st">"60"</span> <span class="co">///</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>               woman_age_65 = <span class="st">"65"</span> woman_age_70 = <span class="st">"70"</span>) <span class="co">///</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(-10(2)2) <span class="bn">xtitle</span>(<span class="st">"Age"</span>) <span class="bn">ytitle</span>(<span class="st">"Effect of gender: women - men"</span>) <span class="co">///</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 2. AME of gender across age"</span>) <span class="co">///</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects below zero indicate women earn less than men at that age"</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-wages-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>file fig/nli-wages-gender-gap.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/nli-wages-gender-gap.png" class="img-fluid" style="width:80.0%" alt="The marginal effect of gender across the range of age, with 95% confidence intervals."></p>

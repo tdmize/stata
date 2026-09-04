@@ -4,18 +4,19 @@ subtitle: "Testing nonlinear interactions with mecompare: the approach of Mize (
 ---
 <<dd_version: 2>>
 
-Mize (2019) argues that in nonlinear models -- and in linear models with
-nonlinear terms -- the coefficient on a product term is not a test of
-interaction on the scale that matters. Interaction should instead be assessed
+Mize (2019) shows that in nonlinear models -- and in linear models with
+nonlinearities -- the coefficient on a product term is not a test of
+interaction on the metric of interest. Interaction should instead be assessed
 in the natural metric of the outcome by (1) plotting the predictions, (2)
 computing the marginal effect of one variable at chosen levels of the other,
 and (3) testing whether those marginal effects differ: a *second difference*.
-It also matters to look at both sides of an interaction -- the effect of X
+It is also important to look at both sides of an interaction -- the effect of X
 across levels of Z, and the effect of Z across levels of X.
 
 The 2019 replication files do all of this with `margins` followed by
-`mlincom`. `mecompare` does the same in one call per question, with the
-second-difference test one `metest` line away. The pages in this section
+`mlincom`. `mecompare` now automates these tests much more simply and with 
+a wider range of capabilities. Second-difference tests can be performed with 
+a single call to `metest`. The pages in this section
 reproduce the article's examples, section by section:
 
 - [Nonlinear effects in a linear model](linear-model.html): age, age², and
@@ -29,18 +30,29 @@ reproduce the article's examples, section by section:
 
 ## The three ingredients
 
-**A nominal moderator: `by()`.** `by(woman)` reports the marginal effect of the
-focal variable at each level of `woman`, one numbered row per level, computed
-as a counterfactual: the whole sample set to each level in turn, then averaged.
+**A nominal moderator: `by()`.** `by()` reports the marginal effect of a
+focal variable at each level of `by()`, e.g. `by(woman)` reports one marginal 
+effect for each level of `woman`, computed as a counterfactual: the 
+whole sample set to each level in turn, then averaged.
 This is what `margins woman, at(...)` followed by `mlincom` does in the 2019
 files. (`over(woman)` instead uses only the observations in each group; see
 `help mecompare` for the distinction.)
 
-**A continuous moderator: `covariates(z=(numlist))`.** `covariates(age=(25 55))`
+**A continuous moderator: `covariates(z=(numlist))`.** E.g. `covariates(age=(25 55))`
 reports the marginal effect of the focal variable with everyone set to age 25,
 then to age 55, as numbered rows in one table. Any numlist works, so
 `covariates(age=(20(5)70))` gives the effect across the range of the moderator
 -- the numbers behind the "marginal effect of X across Z" plots.
+
+**Where to evaluate a continuous moderator.** When there is no substantive
+reason to pick particular values, a good default is the 10th, 50th, and 90th
+percentiles of the moderator: a low, a typical, and a high value that are all
+in the range of the data. `summarize z, detail` returns them as `r(p10)`,
+`r(p50)`, and `r(p90)`, so the pattern is
+``mecompare x, covariates(z=(`r(p10)' `r(p50)' `r(p90)'))`` followed by
+`metest 1 = 2 = 3` for the joint test and `metest 3 - 1` for the change from
+the 10th to the 90th percentile. The pages with a continuous moderator each
+show it.
 
 **Where and how far the focal variable moves: `start()`, `amount()`,
 `uncentered`.** `start(age=25) amount(5)` is the change from 25 to 30;
@@ -48,26 +60,28 @@ then to age 55, as numbered rows in one table. Any numlist works, so
 `amount(sd)` is a standard-deviation change and `amount(rate)` the instantaneous
 rate (the `dydx()` of `margins`). By default a change is centered on the
 starting value (half below, half above); `uncentered` makes it run upward from
-the start, which is what `at(x=gen(x)) at(x=gen(x+1))` did in the 2019 files.
+the start.
 
 ## Testing the second difference
 
 Every row of the `mecompare` table is numbered, and `metest` tests any
-combination of rows: `metest 1 - 2` is the second difference between the first
-two rows, `metest 1 = 2 = 3` is a joint test that three effects are equal, and
+combination of rows: `metest 1 - 2` is the second difference between the marginal 
+effects in rows 1 and 2, `metest 1 = 2 = 3` is a joint test that the first three 
+marginal effects in the table are equal, and
 `metest 2 - 1, add rowname("...")` accumulates results into one table. The
 rows are posted to `e(b)` and `e(V)` with their full covariance, so the tests
-are the Wald tests of the article's equation 6.
+are the Wald tests recommended in the article's equation 6.
 
 ## Plotting the marginal effects
 
-`store(stub)` saves the table as stored estimates, and `coefplot` plots them.
+`store(stub)` saves the table as stored estimates so that `esttab` can be 
+used to make publication-ready tables and `coefplot` can be used to plot them.
 With `by()` or `covariates()` there is one coefficient per level, so a plot of
 the effect of gender across the range of age is
 `mecompare i.woman, covariates(age=(20(5)70)) store(gap)` followed by
 `coefplot gap_m1, vertical yline(0)`. Plots of *predictions* are not
 `mecompare`'s job; those stay with `margins` and `marginsplot`, exactly as in
-the article.
+the article and the associated replication files.
 
 ## Translating the 2019 files
 

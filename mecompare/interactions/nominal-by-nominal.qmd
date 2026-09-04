@@ -84,9 +84,9 @@ parrole                          |
 ```
 
 Parents are less likely to drink than non-parents of the same gender, and the
-drop is larger for women than for men: the second difference is significant.
-The other side of the interaction is the gender gap for non-parents and for
-parents, which is the same model with the roles reversed:
+drop is larger for women than for men (though the second difference is only 
+marginally significant). The other side of the interaction is the gender gap 
+for non-parents and for parents:
 
 ```{.stata-run}
 . mecompare i.woman, models(alcmod) by(parrole)
