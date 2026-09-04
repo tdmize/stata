@@ -133,7 +133,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/index-default.png", replace width(1400)
-(file fig/index-default.png not found)
 file fig/index-default.png saved as PNG format
 
 ```

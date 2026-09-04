@@ -109,6 +109,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<!-- Included in <head> of every page (see _quarto.yml: include-in-header).
+     The site is embedded in an iframe on trentonmize.com. Google Sites
+     scales that frame down on phones, leaving only a short strip, so on a
+     narrow screen inside a frame this (1) tries to open the page in the full
+     window and (2) failing that, adds a link to open it in a new tab. -->
+<script>
+(function () {
+  var framed = false;
+  try { framed = (window.self !== window.top); } catch (e) { framed = true; }
+  if (!framed || window.innerWidth >= 600) return;
+  var url = window.location.href;
+  try { window.top.location.replace(url); } catch (e) {}
+  document.addEventListener("DOMContentLoaded", function () {
+    var notice = document.createElement("div");
+    notice.className = "frame-notice";
+    notice.innerHTML = 'Small screen: <a href="' + url + '" target="_blank" rel="noopener">open this page in a full window</a>.';
+    document.body.insertBefore(notice, document.body.firstChild);
+  });
+})();
+</script>
+<style>
+.frame-notice { background: #fff3cd; color: #664d03; border-bottom: 1px solid #ffe69c;
+  padding: 0.5rem 0.75rem; font-size: 0.9rem; text-align: center; }
+.frame-notice a { color: #664d03; font-weight: 600; }
+</style>
 
 
 </head>
@@ -336,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.collgrad c.age i.south i.smsa c.wage c.ttl_exp, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Most regression commands in Stata are supported by <code>mecompare</code>; see the full list of supported models in the <code>help mecompare</code> file. Fitting the models with <code>vce(robust)</code> is recommended because with two models, the estimates are combined with <code>suest2</code> which uses <code>vce(robust)</code>.</p>
+<p>Most regression commands in Stata are supported by <code>mecompare</code>; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. Fitting the models with <code>vce(robust)</code> is recommended because with two models, the estimates are combined with <code>suest2</code> which uses <code>vce(robust)</code>.</p>
 </section>
 <section id="compare-the-marginal-effects" class="level2">
 <h2 class="anchored" data-anchor-id="compare-the-marginal-effects">2. Compare the marginal effects</h2>

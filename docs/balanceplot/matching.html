@@ -109,6 +109,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<!-- Included in <head> of every page (see _quarto.yml: include-in-header).
+     The site is embedded in an iframe on trentonmize.com. Google Sites
+     scales that frame down on phones, leaving only a short strip, so on a
+     narrow screen inside a frame this (1) tries to open the page in the full
+     window and (2) failing that, adds a link to open it in a new tab. -->
+<script>
+(function () {
+  var framed = false;
+  try { framed = (window.self !== window.top); } catch (e) { framed = true; }
+  if (!framed || window.innerWidth >= 600) return;
+  var url = window.location.href;
+  try { window.top.location.replace(url); } catch (e) {}
+  document.addEventListener("DOMContentLoaded", function () {
+    var notice = document.createElement("div");
+    notice.className = "frame-notice";
+    notice.innerHTML = 'Small screen: <a href="' + url + '" target="_blank" rel="noopener">open this page in a full window</a>.';
+    document.body.insertBefore(notice, document.body.firstChild);
+  });
+})();
+</script>
+<style>
+.frame-notice { background: #fff3cd; color: #664d03; border-bottom: 1px solid #ffe69c;
+  padding: 0.5rem 0.75rem; font-size: 0.9rem; text-align: center; }
+.frame-notice a { color: #664d03; font-weight: 600; }
+</style>
 
 
 </head>
@@ -267,8 +292,7 @@ matchweight(_weight) applies to the base group only; all nonbase groups have wei
 - N for union = 0_Nonunion: 347; sum of matching weights =          459
 - N for union = 1_Union: 459</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/matching-matchweight.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/matching-matchweight.png not found)
-file fig/matching-matchweight.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/matching-matchweight.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/matching-matchweight.png" class="img-fluid" style="width:85.0%" alt="Standardized imbalance of age, tenure, and grade between union and nonunion workers, unweighted and after propensity-score matching."></p>
 <p>This matches <code>psmatch2</code>’s convention of controls coded 0 and treated coded 1. If the control category is not the default base, name it with <code>base()</code>. <code>fadens</code> fades each estimate according to its own p-value, and <code>sort</code> orders the covariates by the weighted estimates.</p>
@@ -390,16 +414,14 @@ ATET                 |
 --------------------------------------------------------------------------------------</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>balanceplot, tebalance</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/matching-tebalance.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/matching-tebalance.png not found)
-file fig/matching-tebalance.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/matching-tebalance.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/matching-tebalance.png" class="img-fluid" style="width:85.0%" alt="Standardized differences in age, tenure, and grade before and after propensity-score matching, from tebalance summarize."></p>
 <p>A <em>varlist</em> restricts the plot to some of the treatment-model covariates, and <code>sort</code>, <code>absolute</code>, <code>threshold()</code>, <code>graphop()</code>, and <code>plotcommand</code> are available:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>balanceplot age tenure, tebalance absolute <span class="kw">sort</span> threshold(.1)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/matching-tebalance-sorted.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/matching-tebalance-sorted.png not found)
-file fig/matching-tebalance-sorted.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/matching-tebalance-sorted.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/matching-tebalance-sorted.png" class="img-fluid" style="width:85.0%" alt="Sorted absolute standardized differences for age and tenure before and after matching, with a reference line at 0.1."></p>
 <p>Because <code>tebalance summarize</code> does not return standard errors, confidence intervals and <code>fadens</code> are not available in this mode. With a multivalued treatment, each nonbase comparison is shown as its own block under the treatment category’s heading. The matrices from <code>tebalance summarize</code> are returned in <code>r(table)</code> and <code>r(size)</code>, and its two standardized-difference columns in <code>r(balance)</code>.</p>

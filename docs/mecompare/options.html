@@ -109,6 +109,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<!-- Included in <head> of every page (see _quarto.yml: include-in-header).
+     The site is embedded in an iframe on trentonmize.com. Google Sites
+     scales that frame down on phones, leaving only a short strip, so on a
+     narrow screen inside a frame this (1) tries to open the page in the full
+     window and (2) failing that, adds a link to open it in a new tab. -->
+<script>
+(function () {
+  var framed = false;
+  try { framed = (window.self !== window.top); } catch (e) { framed = true; }
+  if (!framed || window.innerWidth >= 600) return;
+  var url = window.location.href;
+  try { window.top.location.replace(url); } catch (e) {}
+  document.addEventListener("DOMContentLoaded", function () {
+    var notice = document.createElement("div");
+    notice.className = "frame-notice";
+    notice.innerHTML = 'Small screen: <a href="' + url + '" target="_blank" rel="noopener">open this page in a full window</a>.';
+    document.body.insertBefore(notice, document.body.firstChild);
+  });
+})();
+</script>
+<style>
+.frame-notice { background: #fff3cd; color: #664d03; border-bottom: 1px solid #ffe69c;
+  padding: 0.5rem 0.75rem; font-size: 0.9rem; text-align: center; }
+.frame-notice a { color: #664d03; font-weight: 600; }
+</style>
 
 
 </head>
@@ -285,6 +310,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#syntax" id="toc-syntax" class="nav-link active" data-scroll-target="#syntax">Syntax</a></li>
   <li><a href="#models-one-model-two-models-or-none" id="toc-models-one-model-two-models-or-none" class="nav-link" data-scroll-target="#models-one-model-two-models-or-none"><code>models()</code> – one model, two models, or none</a></li>
+  <li><a href="#supported-models" id="toc-supported-models" class="nav-link" data-scroll-target="#supported-models">Supported models</a>
+  <ul class="collapse">
+  <li><a href="#ordinary-single-level-models" id="toc-ordinary-single-level-models" class="nav-link" data-scroll-target="#ordinary-single-level-models">Ordinary single-level models</a></li>
+  <li><a href="#panel-models" id="toc-panel-models" class="nav-link" data-scroll-target="#panel-models">Panel models</a></li>
+  <li><a href="#multilevel-models" id="toc-multilevel-models" class="nav-link" data-scroll-target="#multilevel-models">Multilevel models</a></li>
+  <li><a href="#which-two-models-can-be-compared" id="toc-which-two-models-can-be-compared" class="nav-link" data-scroll-target="#which-two-models-can-be-compared">Which two models can be compared</a></li>
+  <li><a href="#survey-multiply-imputed-and-weighted-models" id="toc-survey-multiply-imputed-and-weighted-models" class="nav-link" data-scroll-target="#survey-multiply-imputed-and-weighted-models">Survey, multiply imputed, and weighted models</a></li>
+  </ul></li>
   <li><a href="#statistics-which-columns-to-show" id="toc-statistics-which-columns-to-show" class="nav-link" data-scroll-target="#statistics-which-columns-to-show"><code>statistics()</code> – which columns to show</a></li>
   <li><a href="#amount-centered-uncentered-the-size-of-a-continuous-change" id="toc-amount-centered-uncentered-the-size-of-a-continuous-change" class="nav-link" data-scroll-target="#amount-centered-uncentered-the-size-of-a-continuous-change"><code>amount()</code>, <code>centered</code>, <code>uncentered</code> – the size of a continuous change</a></li>
   <li><a href="#start-where-the-change-begins" id="toc-start-where-the-change-begins" class="nav-link" data-scroll-target="#start-where-the-change-begins"><code>start()</code> – where the change begins</a></li>
@@ -449,6 +482,41 @@ grade + 1                        |
                               m2 |    20      0.001      0.007      0.830
                       Difference |                                       </code></pre>
 </div>
+</section>
+<section id="supported-models" class="level2">
+<h2 class="anchored" data-anchor-id="supported-models">Supported models</h2>
+<p><code>mecompare</code> accepts one or two models from the following families. The list follows the <a href="help.html#estimators">help file</a>; two models are combined with <a href="../suest2/index.html"><code>suest2</code></a>, whose own <a href="../suest2/usage.html#supported-estimators">list of estimators</a> is the same.</p>
+<section id="ordinary-single-level-models" class="level3">
+<h3 class="anchored" data-anchor-id="ordinary-single-level-models">Ordinary single-level models</h3>
+<p><code>regress</code>; <code>logit</code> and <code>logistic</code>; <code>probit</code>; <code>poisson</code>; <code>nbreg</code>; <code>ologit</code>; <code>oprobit</code>; and <code>mlogit</code>.</p>
+<p><code>glm</code>; <code>cloglog</code>; <code>tobit</code>; <code>intreg</code>; maximum-likelihood <code>heckman</code>; and parametric <code>streg</code>, all parametric distributions.</p>
+<p><code>gologit2</code>, all forms.</p>
+<p><code>ivregress 2sls</code>. <code>fracreg</code> with estimators logit and probit.</p>
+<p><code>betareg</code>, all four links; <code>truncreg</code>; <code>hetprobit</code>; <code>zip</code> and <code>zinb</code>, both inflation links; and <code>biprobit</code>.</p>
+<p><code>ivprobit</code> and <code>ivtobit</code>.</p>
+</section>
+<section id="panel-models" class="level3">
+<h3 class="anchored" data-anchor-id="panel-models">Panel models</h3>
+<p><code>xtreg</code> with estimators mle, fe, be, re, and pa. <code>xtreg, cre</code> is not supported; the correlated random effects (Mundlak) specification is fit with the <code>re</code> estimator instead, as described in the <a href="help.html#cre">help file</a>.</p>
+<p><code>xtlogit</code> with estimators re, fe, and pa. <code>xtprobit</code> with estimators re and pa. <code>xtcloglog</code> with estimators re and pa; the re estimator combines when fit with <code>intpoints(24)</code> or more.</p>
+<p><code>xtologit</code> and <code>xtoprobit</code>.</p>
+<p><code>xtmlogit</code> with estimators re and fe.</p>
+<p><code>xtpoisson</code> with estimators re (normal or gamma random effects), fe, and pa. <code>xtnbreg</code> with estimators re and pa; <code>xtnbreg, fe</code> is not supported.</p>
+<p>Marginal effects after the fixed-effects (<code>fe</code>) estimators have known problems, especially for categorical outcomes; the help file’s section on <a href="help.html#cre">correlated random effects</a> gives the alternative.</p>
+</section>
+<section id="multilevel-models" class="level3">
+<h3 class="anchored" data-anchor-id="multilevel-models">Multilevel models</h3>
+<p><code>mixed, mle</code>; <code>melogit</code>; <code>meprobit</code>; <code>mecloglog</code>; <code>mepoisson</code>; <code>menbreg</code>; <code>meologit</code>; <code>meoprobit</code>; and <code>mestreg</code>, all parametric distributions.</p>
+<p><code>meglm</code> with the family-link pairs Gaussian-identity and Gamma-log.</p>
+</section>
+<section id="which-two-models-can-be-compared" class="level3">
+<h3 class="anchored" data-anchor-id="which-two-models-can-be-compared">Which two models can be compared</h3>
+<p>Two models are comparable when they return the same number of predictions. Same-family pairs (two logits, two <code>glm</code>s, two <code>mestreg</code>s) always qualify. Cross-family pairs qualify on the same rule: <code>logit</code> vs <code>regress</code>, <code>xtlogit</code> vs <code>mixed</code>, any pair of binary-, count-, or continuous-outcome models, and any pair of ordinal or nominal models with the same number of outcome categories (<code>ologit</code> vs <code>oprobit</code>, <code>mlogit</code> vs <code>ologit</code>). Each model contributes its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions. Models that return different numbers of predictions (a three-category <code>ologit</code> vs a <code>logit</code>) cannot be compared, and two multi-category outcomes must have the same number of categories with the same values.</p>
+</section>
+<section id="survey-multiply-imputed-and-weighted-models" class="level3">
+<h3 class="anchored" data-anchor-id="survey-multiply-imputed-and-weighted-models">Survey, multiply imputed, and weighted models</h3>
+<p>Models may be fit with the <code>svy:</code>, <code>mi estimate, post:</code>, or <code>mi estimate: svy:</code> prefixes, specified on the stored models rather than on <code>mecompare</code>; all models in a comparison must carry the same prefixes, and <code>mi estimate</code> requires the user-written <code>mimrgns</code> package. Weights can instead be applied on the stored models (<code>logit y x [pw=w]</code>, the same weight on both), and multilevel models need a stage weight as well. The <a href="help.html#svy_mi">help file</a> has the details.</p>
+</section>
 </section>
 <section id="statistics-which-columns-to-show" class="level2">
 <h2 class="anchored" data-anchor-id="statistics-which-columns-to-show"><code>statistics()</code> – which columns to show</h2>

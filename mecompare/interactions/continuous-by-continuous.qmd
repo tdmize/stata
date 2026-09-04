@@ -387,7 +387,6 @@ The saved dataset holds the predictions in `_margin` and the grid values in
 >     title("Figure 18. Pr(same-sex OK) across political views and year")
 
 . graph export "fig/nli-sameok-contour.png", replace width(1400)
-(file fig/nli-sameok-contour.png not found)
 file fig/nli-sameok-contour.png saved as PNG format
 
 ```

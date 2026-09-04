@@ -29,7 +29,6 @@ Continuous treatment = wage (Hourly wage)
 N used in correlation calculations =        1,868
 
 . graph export "fig/contreat-default.png", replace width(1400)
-(file fig/contreat-default.png not found)
 file fig/contreat-default.png saved as PNG format
 
 ```
@@ -54,7 +53,6 @@ Continuous treatment = wage (Hourly wage)
 N used in correlation calculations =        1,868
 
 . graph export "fig/contreat-absolute.png", replace width(1400)
-(file fig/contreat-absolute.png not found)
 file fig/contreat-absolute.png saved as PNG format
 
 ```
@@ -73,7 +71,6 @@ Continuous treatment = wage (Hourly wage)
 N used in correlation calculations =        1,868
 
 . graph export "fig/contreat-fadens.png", replace width(1400)
-(file fig/contreat-fadens.png not found)
 file fig/contreat-fadens.png saved as PNG format
 
 ```

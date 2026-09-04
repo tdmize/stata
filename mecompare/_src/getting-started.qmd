@@ -30,10 +30,11 @@ estimates store full
 <</dd_do>>
 ```
 
-Most regression commands in Stata are supported by `mecompare`; see the full 
-list of supported models in the `help mecompare` file. Fitting the models 
-with `vce(robust)` is recommended because with two models, the estimates are 
-combined with `suest2` which uses `vce(robust)`.
+Most regression commands in Stata are supported by `mecompare`; the full
+list is under [Supported models](options.html#supported-models) on the
+Options page. Fitting the models with `vce(robust)` is recommended because
+with two models, the estimates are combined with `suest2` which uses
+`vce(robust)`.
 
 ## 2. Compare the marginal effects
 

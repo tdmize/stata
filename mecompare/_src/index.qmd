@@ -33,7 +33,8 @@ non-standard tests of contrasts between rows of the `mecompare` table.
 
 - [Getting started](getting-started.html) walks through one comparison and
   explains the table.
-- [Options](options.html) goes through every option with an example of each;
+- [Options](options.html) goes through every option with an example of each
+  and lists the [supported models](options.html#supported-models);
   [Plotting and tabulating results](plotting.html) covers `store()` with
   `coefplot` and `esttab`.
 - The **Examples** in the sidebar reproduce the examples from

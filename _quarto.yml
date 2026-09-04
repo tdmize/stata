@@ -194,5 +194,6 @@ format:
     code-overflow: scroll
     highlight-style: github
     link-external-newwindow: true
+    include-in-header: mobile-frame.html   # phones inside the Google Sites frame
     filters:
       - stata-run.lua         # splits dyntext output into command + output blocks

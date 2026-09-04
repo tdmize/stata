@@ -109,6 +109,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<!-- Included in <head> of every page (see _quarto.yml: include-in-header).
+     The site is embedded in an iframe on trentonmize.com. Google Sites
+     scales that frame down on phones, leaving only a short strip, so on a
+     narrow screen inside a frame this (1) tries to open the page in the full
+     window and (2) failing that, adds a link to open it in a new tab. -->
+<script>
+(function () {
+  var framed = false;
+  try { framed = (window.self !== window.top); } catch (e) { framed = true; }
+  if (!framed || window.innerWidth >= 600) return;
+  var url = window.location.href;
+  try { window.top.location.replace(url); } catch (e) {}
+  document.addEventListener("DOMContentLoaded", function () {
+    var notice = document.createElement("div");
+    notice.className = "frame-notice";
+    notice.innerHTML = 'Small screen: <a href="' + url + '" target="_blank" rel="noopener">open this page in a full window</a>.';
+    document.body.insertBefore(notice, document.body.firstChild);
+  });
+})();
+</script>
+<style>
+.frame-notice { background: #fff3cd; color: #664d03; border-bottom: 1px solid #ffe69c;
+  padding: 0.5rem 0.75rem; font-size: 0.9rem; text-align: center; }
+.frame-notice a { color: #664d03; font-weight: 600; }
+</style>
 
 
 </head>
@@ -252,8 +277,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-default.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-default.png not found)
-file fig/options-default.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-default.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-default.png" class="img-fluid" style="width:85.0%" alt="Default balance plot: standardized imbalance of each covariate between union and nonunion workers, with confidence intervals."></p>
 <section id="which-group-is-the-base-base" class="level2">
@@ -272,8 +296,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-base.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-base.png not found)
-file fig/options-base.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-base.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-base.png" class="img-fluid" style="width:85.0%" alt="Balance plot with union members as the reference category, so every sign is reversed."></p>
 </section>
@@ -295,8 +318,7 @@ N used in balance calculations
 - N for race = 2_Black: 578
 - N for race = 3_Other: 26</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-groups.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-groups.png not found)
-file fig/options-groups.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-groups.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-groups.png" class="img-fluid" style="width:85.0%" alt="Balance plot comparing Black and Other workers with White workers."></p>
 <div class="stata-run">
@@ -315,8 +337,7 @@ N used in balance calculations
 - N for race = 2_Black: 578
 - N for race = 3_Other: 26</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-legend.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-legend.png not found)
-file fig/options-legend.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-legend.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-legend.png" class="img-fluid" style="width:85.0%" alt="The same plot with the legend labels supplied by leg1() and leg2()."></p>
 </section>
@@ -337,8 +358,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-cohensh.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-cohensh.png not found)
-file fig/options-cohensh.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-cohensh.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-cohensh.png" class="img-fluid" style="width:85.0%" alt="Balance plot using Cohen's h for the married and race covariates."></p>
 </section>
@@ -378,8 +398,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-level.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-level.png not found)
-file fig/options-level.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-level.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-level.png" class="img-fluid" style="width:85.0%" alt="Balance plot with 90% confidence intervals."></p>
 <div class="stata-run">
@@ -396,8 +415,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-noci.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-noci.png not found)
-file fig/options-noci.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-noci.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-noci.png" class="img-fluid" style="width:85.0%" alt="Balance plot without confidence intervals."></p>
 <div class="stata-run">
@@ -414,8 +432,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-fadens.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-fadens.png not found)
-file fig/options-fadens.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-fadens.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-fadens.png" class="img-fluid" style="width:85.0%" alt="Balance plot with the nonsignificant estimates faded."></p>
 </section>
@@ -436,8 +453,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-threshold.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-threshold.png not found)
-file fig/options-threshold.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-threshold.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-threshold.png" class="img-fluid" style="width:85.0%" alt="Balance plot with reference lines at plus and minus 0.1."></p>
 </section>
@@ -458,8 +474,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-sort.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-sort.png not found)
-file fig/options-sort.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-sort.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-sort.png" class="img-fluid" style="width:85.0%" alt="Balance plot with covariates sorted by imbalance."></p>
 <div class="stata-run">
@@ -476,8 +491,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-absolute.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-absolute.png not found)
-file fig/options-absolute.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-absolute.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-absolute.png" class="img-fluid" style="width:85.0%" alt="Balance plot of sorted absolute imbalance with a reference line at 0.1."></p>
 </section>
@@ -499,8 +513,7 @@ N used in balance calculations
 - N for union = 0_Nonunion: 1408
 - N for union = 1_Union: 460</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/options-graphop.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/options-graphop.png not found)
-file fig/options-graphop.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/options-graphop.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/options-graphop.png" class="img-fluid" style="width:85.0%" alt="Balance plot with a custom title, axis labels, and note passed through graphop()."></p>
 <div class="stata-run">

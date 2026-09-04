@@ -160,6 +160,84 @@ grade + 1                        |
 
 ```
 
+## Supported models
+
+`mecompare` accepts one or two models from the following families. The list
+follows the [help file](help.html#estimators); two models are combined with
+[`suest2`](../suest2/index.html), whose own
+[list of estimators](../suest2/usage.html#supported-estimators) is the same.
+
+### Ordinary single-level models
+
+`regress`; `logit` and `logistic`; `probit`; `poisson`; `nbreg`; `ologit`;
+`oprobit`; and `mlogit`.
+
+`glm`; `cloglog`; `tobit`; `intreg`; maximum-likelihood `heckman`; and
+parametric `streg`, all parametric distributions.
+
+`gologit2`, all forms.
+
+`ivregress 2sls`. `fracreg` with estimators logit and probit.
+
+`betareg`, all four links; `truncreg`; `hetprobit`; `zip` and `zinb`, both
+inflation links; and `biprobit`.
+
+`ivprobit` and `ivtobit`.
+
+### Panel models
+
+`xtreg` with estimators mle, fe, be, re, and pa. `xtreg, cre` is not
+supported; the correlated random effects (Mundlak) specification is fit with
+the `re` estimator instead, as described in the
+[help file](help.html#cre).
+
+`xtlogit` with estimators re, fe, and pa. `xtprobit` with estimators re and
+pa. `xtcloglog` with estimators re and pa; the re estimator combines when
+fit with `intpoints(24)` or more.
+
+`xtologit` and `xtoprobit`.
+
+`xtmlogit` with estimators re and fe.
+
+`xtpoisson` with estimators re (normal or gamma random effects), fe, and
+pa. `xtnbreg` with estimators re and pa; `xtnbreg, fe` is not supported.
+
+Marginal effects after the fixed-effects (`fe`) estimators have known
+problems, especially for categorical outcomes; the help file's section on
+[correlated random effects](help.html#cre) gives the alternative.
+
+### Multilevel models
+
+`mixed, mle`; `melogit`; `meprobit`; `mecloglog`; `mepoisson`; `menbreg`;
+`meologit`; `meoprobit`; and `mestreg`, all parametric distributions.
+
+`meglm` with the family-link pairs Gaussian-identity and Gamma-log.
+
+### Which two models can be compared
+
+Two models are comparable when they return the same number of predictions.
+Same-family pairs (two logits, two `glm`s, two `mestreg`s) always qualify.
+Cross-family pairs qualify on the same rule: `logit` vs `regress`, `xtlogit`
+vs `mixed`, any pair of binary-, count-, or continuous-outcome models, and
+any pair of ordinal or nominal models with the same number of outcome
+categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`). Each model
+contributes its own default prediction, or the one given in `predict()`, so
+a `logit` vs `regress` comparison contrasts predicted probabilities with
+linear predictions. Models that return different numbers of predictions (a
+three-category `ologit` vs a `logit`) cannot be compared, and two
+multi-category outcomes must have the same number of categories with the
+same values.
+
+### Survey, multiply imputed, and weighted models
+
+Models may be fit with the `svy:`, `mi estimate, post:`, or
+`mi estimate: svy:` prefixes, specified on the stored models rather than on
+`mecompare`; all models in a comparison must carry the same prefixes, and
+`mi estimate` requires the user-written `mimrgns` package. Weights can
+instead be applied on the stored models (`logit y x [pw=w]`, the same weight
+on both), and multilevel models need a stage weight as well. The
+[help file](help.html#svy_mi) has the details.
+
 ## `statistics()` -- which columns to show
 
 The default columns are the estimate, its standard error, and the p-value.

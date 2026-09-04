@@ -31,7 +31,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-default.png", replace width(1400)
-(file fig/options-default.png not found)
 file fig/options-default.png saved as PNG format
 
 ```
@@ -60,7 +59,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-base.png", replace width(1400)
-(file fig/options-base.png not found)
 file fig/options-base.png saved as PNG format
 
 ```
@@ -91,7 +89,6 @@ N used in balance calculations
 - N for race = 3_Other: 26
 
 . graph export "fig/options-groups.png", replace width(1400)
-(file fig/options-groups.png not found)
 file fig/options-groups.png saved as PNG format
 
 ```
@@ -117,7 +114,6 @@ N used in balance calculations
 - N for race = 3_Other: 26
 
 . graph export "fig/options-legend.png", replace width(1400)
-(file fig/options-legend.png not found)
 file fig/options-legend.png saved as PNG format
 
 ```
@@ -147,7 +143,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-cohensh.png", replace width(1400)
-(file fig/options-cohensh.png not found)
 file fig/options-cohensh.png saved as PNG format
 
 ```
@@ -203,7 +198,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-level.png", replace width(1400)
-(file fig/options-level.png not found)
 file fig/options-level.png saved as PNG format
 
 ```
@@ -227,7 +221,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-noci.png", replace width(1400)
-(file fig/options-noci.png not found)
 file fig/options-noci.png saved as PNG format
 
 ```
@@ -251,7 +244,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-fadens.png", replace width(1400)
-(file fig/options-fadens.png not found)
 file fig/options-fadens.png saved as PNG format
 
 ```
@@ -280,7 +272,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-threshold.png", replace width(1400)
-(file fig/options-threshold.png not found)
 file fig/options-threshold.png saved as PNG format
 
 ```
@@ -313,7 +304,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-sort.png", replace width(1400)
-(file fig/options-sort.png not found)
 file fig/options-sort.png saved as PNG format
 
 ```
@@ -337,7 +327,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-absolute.png", replace width(1400)
-(file fig/options-absolute.png not found)
 file fig/options-absolute.png saved as PNG format
 
 ```
@@ -369,7 +358,6 @@ N used in balance calculations
 - N for union = 1_Union: 460
 
 . graph export "fig/options-graphop.png", replace width(1400)
-(file fig/options-graphop.png not found)
 file fig/options-graphop.png saved as PNG format
 
 ```
