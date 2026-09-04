@@ -108,31 +108,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<!-- Included in <head> of every page (see _quarto.yml: include-in-header).
-     The site is embedded in an iframe on trentonmize.com. Google Sites
-     scales that frame down on phones, leaving only a short strip, so on a
-     narrow screen inside a frame this (1) tries to open the page in the full
-     window and (2) failing that, adds a link to open it in a new tab. -->
-<script>
-(function () {
-  var framed = false;
-  try { framed = (window.self !== window.top); } catch (e) { framed = true; }
-  if (!framed || window.innerWidth >= 600) return;
-  var url = window.location.href;
-  try { window.top.location.replace(url); } catch (e) {}
-  document.addEventListener("DOMContentLoaded", function () {
-    var notice = document.createElement("div");
-    notice.className = "frame-notice";
-    notice.innerHTML = 'Small screen: <a href="' + url + '" target="_blank" rel="noopener">open this page in a full window</a>.';
-    document.body.insertBefore(notice, document.body.firstChild);
-  });
-})();
-</script>
-<style>
-.frame-notice { background: #fff3cd; color: #664d03; border-bottom: 1px solid #ffe69c;
-  padding: 0.5rem 0.75rem; font-size: 0.9rem; text-align: center; }
-.frame-notice a { color: #664d03; font-weight: 600; }
-</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
