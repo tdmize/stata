@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><code>cleanplots</code> is a Stata and R graphics scheme that changes the default look of Stata graphics and of R graphics made with ggplot. It is designed to implement data visualization best practices by default – limiting the amount of time you have to spend tweaking a graph to be maximally readable and usable. The color palette is chosen to be colorblind friendly and to work when printed in black and white, so that a single figure will do for both color and grayscale.</p>
-<p>This page covers the Stata scheme. The companion R package is documented at <a href="https://tdmize.github.io/cleanplots/">tdmize.github.io/cleanplots</a>.</p>
+<p>This page covers the Stata scheme. The companion R package is documented at <a href="https://www.trentonmize.com/software/cleanplots_r">trentonmize.com/software/cleanplots_r</a>.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install cleanplots, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -256,8 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             #143755 #C0C0C0 #404040 #D9D7F0, <span class="bn">rows</span>(5) <span class="co">///</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     <span class="bn">title</span>(<span class="st">"cleanplots main color palette"</span> <span class="st">"RGB and Hex codes shown"</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/palette-main.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/palette-main.png not found)
-file fig/palette-main.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/palette-main.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/palette-main.png" class="img-fluid" style="width:85.0%" alt="The ten cleanplots colors as swatches in two columns of five, each labeled with its RGB and hex code: red, light blue, black, gray, purple, pink, navy, light gray, dark gray, and lavender."></p>
 <p>Bars, areas, and pies use softer, less saturated versions of the same colors:</p>
@@ -267,16 +266,14 @@ file fig/palette-main.png saved as PNG format</code></pre>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"cleanplots softer color palette for bars and area plots"</span> <span class="co">///</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">"RGB and Hex codes shown"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/palette-bars.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/palette-bars.png not found)
-file fig/palette-bars.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/palette-bars.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/palette-bars.png" class="img-fluid" style="width:85.0%" alt="The ten softer cleanplots colors used for bars and areas, as swatches labeled with RGB and hex codes."></p>
 <p>For comparison, the <code>cleanplots</code> colors beside the colors of Stata’s current default scheme (<code>stcolor</code>, since Stata 18) and its previous default (<code>s2color</code>):</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>colorpalette, span n(10) : cleanplots / <span class="kw">st</span> / s2</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/palette-compare.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/palette-compare.png not found)
-file fig/palette-compare.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/palette-compare.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/palette-compare.png" class="img-fluid" style="width:85.0%" alt="Three rows of ten color swatches: the cleanplots palette, the stcolor palette, and the s2color palette."></p>
 </section>
@@ -286,8 +283,7 @@ file fig/palette-compare.png saved as PNG format</code></pre>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>colorpalette, gscale span n(10) : cleanplots / <span class="kw">st</span> / s2</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/palette-compare-gray.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/palette-compare-gray.png not found)
-file fig/palette-compare-gray.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/palette-compare-gray.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/palette-compare-gray.png" class="img-fluid" style="width:85.0%" alt="The same three palettes converted to grayscale; the cleanplots row alternates dark and light swatches while the other two rows have several swatches of similar gray."></p>
 <p>A plot of predicted probabilities from an ordinal logit model, in color and as it prints in grayscale; the five outcome categories remain distinguishable by their line patterns and markers:</p>
@@ -312,8 +308,7 @@ file fig/palette-compare-gray.png saved as PNG format</code></pre>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>colorpalette, span : cleanplots11 / cleanplots9 / cleanplots7 / cleanplots5 / cleanplots3</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/palette-ordinal.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/palette-ordinal.png not found)
-file fig/palette-ordinal.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/palette-ordinal.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/palette-ordinal.png" class="img-fluid" style="width:85.0%" alt="Five rows of swatches running from light yellow through gray to dark navy, with eleven, nine, seven, five, and three steps."></p>
 <p>The same bar chart with the nominal palette and with <code>cleanplots5</code>, which matches the five ordered repair-record categories of Stata’s <code>auto</code> data:</p>
@@ -323,13 +318,11 @@ file fig/palette-ordinal.png saved as PNG format</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="bn">bar</span> price, <span class="bn">over</span>(rep78) asyvars <span class="dv">scheme</span>(cleanplots) <span class="co">///</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Nominal colors: cleanplots"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ordinal-nominal.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ordinal-nominal.png not found)
-file fig/ordinal-nominal.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ordinal-nominal.png saved as PNG format</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="bn">bar</span> price, <span class="bn">over</span>(rep78) asyvars <span class="dv">scheme</span>(cleanplots5) <span class="co">///</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Ordinal colors: cleanplots5"</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ordinal-ordinal.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ordinal-ordinal.png not found)
-file fig/ordinal-ordinal.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ordinal-ordinal.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -352,7 +345,7 @@ file fig/ordinal-ordinal.png saved as PNG format</code></pre>
 </section>
 <section id="r-package-version" class="level2">
 <h2 class="anchored" data-anchor-id="r-package-version">R package version</h2>
-<p>A companion <code>cleanplots</code> package is available for R. It shares this scheme’s colors, marker symbols, line patterns, and layout for ggplot2. Read more about the R package at <a href="https://tdmize.github.io/cleanplots/">tdmize.github.io/cleanplots</a>.</p>
+<p>A companion <code>cleanplots</code> package is available for R. It shares this scheme’s colors, marker symbols, line patterns, and layout for ggplot2. Read more about the R package at <a href="https://www.trentonmize.com/software/cleanplots_r">trentonmize.com/software/cleanplots_r</a>.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>

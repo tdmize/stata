@@ -12,7 +12,7 @@ work when printed in black and white, so that a single figure will do for
 both color and grayscale.
 
 This page covers the Stata scheme. The companion R package is documented at
-[tdmize.github.io/cleanplots](https://tdmize.github.io/cleanplots/).
+[trentonmize.com/software/cleanplots_r](https://www.trentonmize.com/software/cleanplots_r).
 
 ## Installation
 
@@ -90,7 +90,6 @@ Jann's `colorpalette` command):
 >      title("cleanplots main color palette" "RGB and Hex codes shown")
 
 . graph export "fig/palette-main.png", replace width(1400)
-(file fig/palette-main.png not found)
 file fig/palette-main.png saved as PNG format
 
 ```
@@ -107,7 +106,6 @@ colors:
 >           "RGB and Hex codes shown")
 
 . graph export "fig/palette-bars.png", replace width(1400)
-(file fig/palette-bars.png not found)
 file fig/palette-bars.png saved as PNG format
 
 ```
@@ -122,7 +120,6 @@ current default scheme (`stcolor`, since Stata 18) and its previous default
 . colorpalette, span n(10) : cleanplots / st / s2
 
 . graph export "fig/palette-compare.png", replace width(1400)
-(file fig/palette-compare.png not found)
 file fig/palette-compare.png saved as PNG format
 
 ```
@@ -143,7 +140,6 @@ as above, in grayscale:
 . colorpalette, gscale span n(10) : cleanplots / st / s2
 
 . graph export "fig/palette-compare-gray.png", replace width(1400)
-(file fig/palette-compare-gray.png not found)
 file fig/palette-compare-gray.png saved as PNG format
 
 ```
@@ -187,7 +183,6 @@ ordering survives black and white printing.
 . colorpalette, span : cleanplots11 / cleanplots9 / cleanplots7 / cleanplots5 / cleanplots3
 
 . graph export "fig/palette-ordinal.png", replace width(1400)
-(file fig/palette-ordinal.png not found)
 file fig/palette-ordinal.png saved as PNG format
 
 ```
@@ -205,14 +200,12 @@ matches the five ordered repair-record categories of Stata's `auto` data:
 >     title("Nominal colors: cleanplots")
 
 . graph export "fig/ordinal-nominal.png", replace width(1400)
-(file fig/ordinal-nominal.png not found)
 file fig/ordinal-nominal.png saved as PNG format
 
 . graph bar price, over(rep78) asyvars scheme(cleanplots5) ///
 >     title("Ordinal colors: cleanplots5")
 
 . graph export "fig/ordinal-ordinal.png", replace width(1400)
-(file fig/ordinal-ordinal.png not found)
 file fig/ordinal-ordinal.png saved as PNG format
 
 ```
@@ -254,7 +247,7 @@ and white scheme `plotplain` (Bischof 2017).
 A companion `cleanplots` package is available for R. It shares this
 scheme's colors, marker symbols, line patterns, and layout for ggplot2.
 Read more about the R package at
-[tdmize.github.io/cleanplots](https://tdmize.github.io/cleanplots/).
+[trentonmize.com/software/cleanplots_r](https://www.trentonmize.com/software/cleanplots_r).
 
 ## References
 
