@@ -61,7 +61,7 @@ website:
                 - mecompare/examples/chapter-summary-measures.qmd
                 - mecompare/examples/chapter-interactions.qmd
                 - mecompare/examples/chapter-groups.qmd
-        - section: "Interactions"
+        - section: "Interactions: Mize (2019)"
           contents:
             - text: "Overview"
               href: mecompare/interactions/index.qmd

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Interaction effects – Stata software — Trenton D. Mize</title>
+<title>mecompare – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -254,7 +289,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Interactions</span></a>
+ <span class="menu-text">Interactions: Mize (2019)</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -310,11 +345,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-three-ingredients" id="toc-the-three-ingredients" class="nav-link active" data-scroll-target="#the-three-ingredients">The three ingredients</a></li>
-  <li><a href="#testing-the-second-difference" id="toc-testing-the-second-difference" class="nav-link" data-scroll-target="#testing-the-second-difference">Testing the second difference</a></li>
-  <li><a href="#plotting-the-marginal-effects" id="toc-plotting-the-marginal-effects" class="nav-link" data-scroll-target="#plotting-the-marginal-effects">Plotting the marginal effects</a></li>
-  <li><a href="#translating-the-2019-files" id="toc-translating-the-2019-files" class="nav-link" data-scroll-target="#translating-the-2019-files">Translating the 2019 files</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#where-to-start" id="toc-where-to-start" class="nav-link" data-scroll-target="#where-to-start">Where to start</a></li>
+  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
+  <li><a href="#related-commands" id="toc-related-commands" class="nav-link" data-scroll-target="#related-commands">Related commands</a></li>
   </ul>
 </nav>
 </nav>
@@ -327,8 +361,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Interaction effects</h1>
-<p class="subtitle lead">Testing nonlinear interactions with mecompare: the approach of Mize (2019)</p>
+<h1 class="title">mecompare</h1>
+<p class="subtitle lead">Marginal effects and cross-model comparisons of effects in Stata</p>
 </div>
 
 
@@ -345,98 +379,61 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Mize (2019) shows that in nonlinear models – and in linear models with nonlinearities – the coefficient on a product term is not a test of interaction on the metric of interest. Interaction should instead be assessed in the natural metric of the outcome by (1) plotting the predictions, (2) computing the marginal effect of one variable at chosen levels of the other, and (3) testing whether those marginal effects differ: a <em>second difference</em>. It is also important to look at both sides of an interaction – the effect of X across levels of Z, and the effect of Z across levels of X.</p>
-<p>The 2019 replication files do all of this with <code>margins</code> followed by <code>mlincom</code>. <code>mecompare</code> now automates these tests much more simply and with a wider range of capabilities. Second-difference tests can be performed with a single call to <code>metest</code>. The pages in this section reproduce the article’s examples, section by section:</p>
+<p><code>mecompare</code> calculates marginal effects and compares them across models. It implements the framework of Mize, Doan, and Long (2019): the models are combined using seemingly-unrelated estimation with <a href="../suest2/index.html"><code>suest2</code></a> so that the difference in marginal effects across models accounts for cross-model covariances of effects, even though the models were estimated separately.</p>
+<p>Some examples of the cross-model comparisons <code>mecompare</code> can be used for are effects across nested models (e.g., mediation and confounding), across alternative predictors, across different outcomes, across different model types (e.g., ordinal versus nominal), and across models fit to separate groups or samples.</p>
+<p><code>mecompare</code> also calculates marginal effects within a single model and automates comparisons among them. Some examples are comparing effect sizes across predictors, tests of interaction (second differences), and the summary measures of Mize and Han (2025): the ME inequality of a nominal predictor and the Total ME across the categories of a multi-category outcome.</p>
+<p>More generally, <code>mecompare</code> can be used for most any test of marginal effects within or across models. Every marginal effect in its table is posted to <code>e(b)</code> and <code>e(V)</code>, so custom tests – any contrast, ratio, or joint test of the marginal effects – are accomplished with <a href="../metest/index.html"><code>metest</code></a>.</p>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install mecompare, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>mecompare</code> requires <a href="../suest2/index.html"><code>suest2</code></a>, which installs the same way (<code>net install suest2, from("https://tdmize.github.io/data") replace</code>), and it ships with <a href="../metest/index.html"><code>metest</code></a>, which automates non-standard tests of contrasts between rows of the <code>mecompare</code> table.</p>
+</section>
+<section id="where-to-start" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
 <ul>
-<li><a href="linear-model.html">Nonlinear effects in a linear model</a>: age, age², and gender (Table 2, Figures 1–2).</li>
-<li><a href="nominal-by-nominal.html">Two nominal variables</a>: gender × parenthood and gender × education (Tables 3–4, Figures 12–13).</li>
-<li><a href="nominal-by-continuous.html">A nominal and a continuous variable</a>: gender × social roles (Figure 14).</li>
-<li><a href="continuous-by-continuous.html">Two continuous variables</a>: political views × survey year (Figures 15–17).</li>
+<li><a href="getting-started.html">Getting started</a> walks through one comparison and explains the table.</li>
+<li><a href="options.html">Options</a> goes through every option with an example of each and lists the <a href="options.html#supported-models">supported models</a>; <a href="plotting.html">Plotting and tabulating results</a> covers <code>store()</code> with <code>coefplot</code> and <code>esttab</code>.</li>
+<li>The <strong>Examples</strong> in the sidebar are worked examples from the published papers: the cross-model comparisons of Mize, Doan, and Long (2019); the summary measures of Mize and Han (2025) – effect sizes across predictors, ME inequalities, and Total MEs; and the marginal effects chapter of Mize and Han (forthcoming) – MEMs, AMEs, MERs and ideal types, tests of interaction, and group comparisons. The <strong>Interactions</strong> pages reproduce the analyses of Mize (2019) on nonlinear interaction effects.</li>
+<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples in full, and the <a href="help.html">help file</a> itself is on the site, rendered from the installed version (<code>help mecompare</code> in Stata).</li>
 </ul>
-<p>The same methods, applied to the examples of the marginal effects chapter of Mize and Han (forthcoming) – including a multi-category outcome and a three-way interaction – are on the <a href="../examples/chapter-interactions.html">Tests of interaction</a> page.</p>
-<section id="the-three-ingredients" class="level2">
-<h2 class="anchored" data-anchor-id="the-three-ingredients">The three ingredients</h2>
-<p><strong>A nominal moderator: <code>by()</code>.</strong> <code>by()</code> reports the marginal effect of a focal variable at each level of <code>by()</code>, e.g.&nbsp;<code>by(woman)</code> reports one marginal effect for each level of <code>woman</code>, computed as a counterfactual: the whole sample set to each level in turn, then averaged. This is what <code>margins woman, at(...)</code> followed by <code>mlincom</code> does in the 2019 files. (<code>over(woman)</code> instead uses only the observations in each group; see <code>help mecompare</code> for the distinction.)</p>
-<p><strong>A continuous moderator: <code>covariates(z=(numlist))</code>.</strong> E.g. <code>covariates(age=(25 55))</code> reports the marginal effect of the focal variable with everyone set to age 25, then to age 55, as numbered rows in one table. Any numlist works, so <code>covariates(age=(20(5)70))</code> gives the effect across the range of the moderator – the numbers behind the “marginal effect of X across Z” plots.</p>
-<p><strong>Where to evaluate a continuous moderator.</strong> When there is no substantive reason to pick particular values, a good default is the 10th, 50th, and 90th percentiles of the moderator: a low, a typical, and a high value that are all in the range of the data. <code>summarize z, detail</code> returns them as <code>r(p10)</code>, <code>r(p50)</code>, and <code>r(p90)</code>, so the pattern is <code>mecompare x, covariates(z=(`r(p10)' `r(p50)' `r(p90)'))</code> followed by <code>metest 1 = 2 = 3</code> for the joint test and <code>metest 3 - 1</code> for the change from the 10th to the 90th percentile. The pages with a continuous moderator each show it.</p>
-<p><strong>Where and how far the focal variable moves: <code>start()</code>, <code>amount()</code>, <code>uncentered</code>.</strong> <code>start(age=25) amount(5)</code> is the change from 25 to 30; <code>amount(5)</code> alone is a five-unit change from each observation’s own value; <code>amount(sd)</code> is a standard-deviation change and <code>amount(rate)</code> the instantaneous rate (the <code>dydx()</code> of <code>margins</code>). By default a change is centered on the starting value (half below, half above); <code>uncentered</code> makes it run upward from the start.</p>
 </section>
-<section id="testing-the-second-difference" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-second-difference">Testing the second difference</h2>
-<p>Every row of the <code>mecompare</code> table is numbered, and <code>metest</code> tests any combination of rows: <code>metest 1 - 2</code> is the second difference between the marginal effects in rows 1 and 2, <code>metest 1 = 2 = 3</code> is a joint test that the first three marginal effects in the table are equal, and <code>metest 2 - 1, add rowname("...")</code> accumulates results into one table. The rows are posted to <code>e(b)</code> and <code>e(V)</code> with their full covariance, so the tests are the Wald tests recommended in the article’s equation 6.</p>
+<section id="citation" class="level2">
+<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<p><code>mecompare</code> implements the methods proposed by Mize, Doan, and Long (2019). If you use <code>mecompare</code>, please cite:</p>
+<blockquote class="blockquote">
+<p>Mize, Trenton D., Long Doan, and J. Scott Long. 2019. “A General Framework for Comparing Predictions and Marginal Effects Across Models.” <em>Sociological Methodology</em> 49(1): 152–189. <a href="https://doi.org/10.1177/0081175019852763" class="uri">https://doi.org/10.1177/0081175019852763</a></p>
+</blockquote>
 </section>
-<section id="plotting-the-marginal-effects" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-the-marginal-effects">Plotting the marginal effects</h2>
-<p><code>store(stub)</code> saves the table as stored estimates so that <code>esttab</code> can be used to make publication-ready tables and <code>coefplot</code> can be used to plot them. With <code>by()</code> or <code>covariates()</code> there is one coefficient per level, so a plot of the effect of gender across the range of age is <code>mecompare i.woman, covariates(age=(20(5)70)) store(gap)</code> followed by <code>coefplot gap_m1, vertical yline(0)</code>. Plots of <em>predictions</em> are not <code>mecompare</code>’s job; those stay with <code>margins</code> and <code>marginsplot</code>, exactly as in the article and the associated replication files.</p>
-</section>
-<section id="translating-the-2019-files" class="level2">
-<h2 class="anchored" data-anchor-id="translating-the-2019-files">Translating the 2019 files</h2>
+<section id="related-commands" class="level2">
+<h2 class="anchored" data-anchor-id="related-commands">Related commands</h2>
+<div class="command-table">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">In the replication files</th>
-<th style="text-align: left;">With <code>mecompare</code></th>
+<th style="text-align: left;">Command</th>
+<th style="text-align: left;">What it does</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>margins woman, at(age=(25 30)) post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (3 - 1) - (4 - 2)</code></td>
-<td style="text-align: left;"><code>mecompare age, start(age=25) amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
+<td style="text-align: left;"><a href="../suest2/index.html"><code>suest2</code></a></td>
+<td style="text-align: left;">Combines separately estimated models so that quantities from different models can be tested against each other. The engine underneath cross-model comparisons for <code>mecompare</code>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>margins woman, at(age=gen(age)) at(age=gen(age+5)) post</code> then the three <code>mlincom</code> lines</td>
-<td style="text-align: left;"><code>mecompare age, amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
+<td style="text-align: left;"><a href="../metest/index.html"><code>metest</code></a></td>
+<td style="text-align: left;">Tests contrasts between rows of the tables produced by <code>mecompare</code>, <code>meinequality</code>, and <code>totalme</code> (or any posted <code>margins</code> results).</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>margins, dydx(woman) at(age=(25 55)) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(25 55))</code> then <code>metest 2 - 1</code></td>
+<td style="text-align: left;"><a href="../meinequality/index.html"><code>meinequality</code></a></td>
+<td style="text-align: left;">Summarizes how unequal the marginal effects of a categorical predictor are across its categories.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>margins, dydx(woman) at(age=(18(2)72))</code> then <code>marginsplot</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(18(2)72)) store(gap)</code> then <code>coefplot gap_m1, vertical</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins parrole#woman, post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (1 - 2) - (3 - 4)</code></td>
-<td style="text-align: left;"><code>mecompare i.parrole, by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins educ, dydx(woman) pwcompare(pve)</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, by(educ)</code> then <code>metest 1 = 2 = 3 = 4 = 5</code> and <code>metest 1 - 2</code>, …</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins woman, at(role=gen(role)) at(role=gen(role + 1)) post</code> then <code>mlincom</code></td>
-<td style="text-align: left;"><code>mecompare role, by(woman) uncentered</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins woman, dydx(role) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare role, by(woman) amount(rate)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>mchange year1976 conviewSS</code></td>
-<td style="text-align: left;"><code>mecompare year1976 conviewSS, amount(sd) uncentered</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins, dydx(conviewSS) at(year=(0 40)) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare conviewSS, covariates(year1976=(0 40)) amount(rate)</code> then <code>metest 2 - 1</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins, at(year1976=gen(year1976) conview=(-1 1)) at(year1976=gen(year1976 + 2) conview=(-1 1)) post</code> then <code>mlincom</code></td>
-<td style="text-align: left;"><code>mecompare year1976, covariates(conviewSS=(-1 1)) amount(2) uncentered</code> then <code>metest 1 - 2</code></td>
+<td style="text-align: left;"><a href="../totalme/index.html"><code>totalme</code></a></td>
+<td style="text-align: left;">Summarizes a predictor’s effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect.</td>
 </tr>
 </tbody>
 </table>
-<p>In each case the <code>models()</code> option names the stored model, or is omitted when the model is the one in memory.</p>
-</section>
-<section id="reference" class="level2">
-<h2 class="anchored" data-anchor-id="reference">Reference</h2>
-<blockquote class="blockquote">
-<p>Mize, Trenton D. 2019. “Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.” <em>Sociological Science</em> 6: 81–117. <a href="https://doi.org/10.15195/v6.a4" class="uri">https://doi.org/10.15195/v6.a4</a></p>
-</blockquote>
-<p>The article’s data and replication files are at <a href="https://www.trentonmize.com/research/mize_2019_SocSci">trentonmize.com/research</a>.</p>
+</div>
 
 
 </section>
