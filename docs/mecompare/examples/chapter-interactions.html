@@ -413,8 +413,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 5. Predicted support by age and gender"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Variables that uniquely identify margins: age woman</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-fepol-age-gender.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/chapter-fepol-age-gender.png not found)
-file fig/chapter-fepol-age-gender.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/chapter-fepol-age-gender.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-fepol-age-gender.png" class="img-fluid" style="width:80.0%" alt="Predicted probability of supporting women in politics across age, for men and women. Young women are more supportive than young men; the gap closes around age 60 and reverses at older ages."></p>
 <p>Young women are more supportive than young men, but the gender gap shrinks with age and reverses for the oldest respondents. The effect of age is small or null at younger ages and clearly negative at older ages, so a single summary of “the effect of age” will not do; the chapter calculates the effect at ages 20, 30, and 60 as well as on average.</p>
@@ -528,8 +527,7 @@ woman                            |
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 6. Effect of gender across age"</span>) <span class="co">///</span></span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Effects above zero indicate women more likely to support women in politics"</span>)</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-fepol-gender-gap.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/chapter-fepol-gender-gap.png not found)
-file fig/chapter-fepol-gender-gap.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/chapter-fepol-gender-gap.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-fepol-gender-gap.png" class="img-fluid" style="width:80.0%" alt="The marginal effect of gender on supporting women in politics across age, with confidence intervals: positive at younger ages, crossing zero in the fifties, and negative at older ages."></p>
 <p>Women are more supportive than men up to about age 50, there is no gender gap in the fifties and early sixties, and the gap reverses at older ages. Table 4 tests the interaction at empirical ideal types of age – the 10th, 50th, and 90th percentiles (25, 44, and 72) – with the second differences between each pair:</p>
@@ -598,8 +596,7 @@ woman                            |
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"Pr(Supporting women in politics)"</span>) <span class="co">///</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 7. Predicted support by gender and college degree"</span>)</span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-fepol-gender-college.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/chapter-fepol-gender-college.png not found)
-file fig/chapter-fepol-gender-college.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/chapter-fepol-gender-college.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-fepol-gender-college.png" class="img-fluid" style="width:80.0%" alt="Bar chart of the predicted probability of supporting women in politics for men and women with and without a college degree. A degree raises support for both, slightly more for women."></p>
 <p>Table 5 is the effect of a college degree for men and for women and the second difference between them:</p>
@@ -645,8 +642,7 @@ college                          |
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 8. Predicted support by age, at low and high income"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Variables that uniquely identify margins: faminc age</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-fepol-age-income.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/chapter-fepol-age-income.png not found)
-file fig/chapter-fepol-age-income.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/chapter-fepol-age-income.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-fepol-age-income.png" class="img-fluid" style="width:80.0%" alt="Predicted probability of supporting women in politics across age at the 10th and 90th percentiles of family income. Support declines steeply with age at low income and is flat at high income."></p>
 <p>Age has a clear negative effect for those with low incomes and little or no effect for those with high incomes. The first differences are the marginal effects of age with everyone set to each income value, and the second difference is the test of interaction; here the chapter uses the instantaneous rate of change, <code>amount(rate)</code>.</p>
@@ -700,8 +696,7 @@ age(rate)                        |
 <span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"ME: age of respondent"</span>) <span class="co">///</span></span>
 <span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 9. Effect of age across family income"</span>)</span>
 <span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-fepol-age-me-by-income.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/chapter-fepol-age-me-by-income.png not found)
-file fig/chapter-fepol-age-me-by-income.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/chapter-fepol-age-me-by-income.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-fepol-age-me-by-income.png" class="img-fluid" style="width:80.0%" alt="The marginal effect of age on supporting women in politics across family income: negative at low incomes, crossing zero near sixty thousand dollars, and positive at the highest incomes."></p>
 <p>Age has a significant negative effect at lower incomes; the effect reverses and is positive at the highest incomes. Figure 10 flips the roles: the effect of income across age.</p>
@@ -741,8 +736,7 @@ faminc(rate)                     |
 <span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"ME: family income (in $1000s)"</span>) <span class="co">///</span></span>
 <span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 10. Effect of family income across age"</span>)</span>
 <span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-fepol-income-me-by-age.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/chapter-fepol-income-me-by-age.png not found)
-file fig/chapter-fepol-income-me-by-age.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/chapter-fepol-income-me-by-age.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-fepol-income-me-by-age.png" class="img-fluid" style="width:80.0%" alt="The marginal effect of family income on supporting women in politics across age: near zero for the youngest respondents and increasingly positive at older ages."></p>
 <p>Income has no effect for the youngest adults, and an increasingly positive effect at older ages.</p>

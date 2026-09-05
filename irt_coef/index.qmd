@@ -3,13 +3,13 @@ title: "irt_coef"
 subtitle: "Stata command for y*-standardized coefficients in item response theory models"
 ---
 
-`irt_coef` is a Stata command that calculates y*-standardized coefficients
+`irt_coef` is a Stata command that calculates y\*-standardized coefficients
 for binary and ordinal item response theory (IRT) models. The discrimination
 parameters of an IRT model are on the log-odds (or probit) scale of each
 item, which makes their size hard to judge; standardizing on the latent
-propensity y* behind each item puts the coefficients on a common scale for
+propensity y\* behind each item puts the coefficients on a common scale for
 interpreting them and for comparing across items and models. The raw
-coefficient, its standard error, and p-value are reported alongside the
+coefficient, its standard error, and *p*-value are reported alongside the
 standardized coefficient.
 
 Both types of coefficients are covered in my graduate course slides on

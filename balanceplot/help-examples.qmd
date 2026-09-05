@@ -720,7 +720,6 @@ matchweight(_weight) applies to the base group only; all nonbase groups have wei
 - N for union = 1_Union: 459
 
 . graph export "fig/helpex-matchweight.png", replace width(1400)
-(file fig/helpex-matchweight.png not found)
 file fig/helpex-matchweight.png saved as PNG format
 
 ```
@@ -823,7 +822,6 @@ ATET                 |
 . balanceplot, tebalance
 
 . graph export "fig/helpex-tebalance.png", replace width(1400)
-(file fig/helpex-tebalance.png not found)
 file fig/helpex-tebalance.png saved as PNG format
 
 ```
@@ -837,7 +835,6 @@ A varlist restricts the `tebalance` plot to selected covariates, and
 . balanceplot age tenure, tebalance absolute sort threshold(.1)
 
 . graph export "fig/helpex-tebalance-sorted.png", replace width(1400)
-(file fig/helpex-tebalance-sorted.png not found)
 file fig/helpex-tebalance-sorted.png saved as PNG format
 
 ```

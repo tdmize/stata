@@ -49,10 +49,8 @@ number of observations and variables. The folder itself is at
 [tdmize.github.io/data/data](https://tdmize.github.io/data/data.html), and
 the class and workshop materials that use these files are on the
 [Teaching](https://www.trentonmize.com/teaching) pages. Datasets marked
-"MCAP SI" are prepared for the MCAP Summer Institute on Longitudinal Data
-Analysis; "DMV" is the Data and Model Visualization workshop; "CDA", "LVM",
-and "NLI" are the Categorical Data Analysis course, the Latent Variable
-Modeling course, and the Nonlinear Interactions workshop.
+"si" are prepared for the Methodology Center's Summer Institute on Longitudinal Data
+Analysis; "CDA" is for my Categorical Data Analysis.
 
 ::: {.command-table}
 | Dataset | Obs. | Vars. | Description |

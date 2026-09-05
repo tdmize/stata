@@ -775,8 +775,7 @@ matchweight(_weight) applies to the base group only; all nonbase groups have wei
 - N for union = 0_Nonunion: 347; sum of matching weights =          459
 - N for union = 1_Union: 459</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/helpex-matchweight.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/helpex-matchweight.png not found)
-file fig/helpex-matchweight.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/helpex-matchweight.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/helpex-matchweight.png" class="img-fluid" style="width:85.0%" alt="Balance plot showing unweighted and matching-weighted imbalance for each covariate, before and after propensity-score matching."></p>
 <p>With <code>matchweight()</code>, <code>store(bm)</code> posts two complete sets of results, the unweighted set with the prefix <code>bm_unw_</code> and the weighted set with <code>bm_w_</code>, so each can be passed to <code>esttab</code> on its own; the graph is the one above.</p>
@@ -855,16 +854,14 @@ ATET                 |
 --------------------------------------------------------------------------------------</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>balanceplot, tebalance</span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/helpex-tebalance.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/helpex-tebalance.png not found)
-file fig/helpex-tebalance.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/helpex-tebalance.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/helpex-tebalance.png" class="img-fluid" style="width:85.0%" alt="Raw and matched standardized differences for age, tenure, and grade after teffects psmatch."></p>
 <p>A varlist restricts the <code>tebalance</code> plot to selected covariates, and <code>absolute sort threshold(.1)</code> work as they do in the other modes.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb95"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>balanceplot age tenure, tebalance absolute <span class="kw">sort</span> threshold(.1)</span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/helpex-tebalance-sorted.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/helpex-tebalance-sorted.png not found)
-file fig/helpex-tebalance-sorted.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/helpex-tebalance-sorted.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/helpex-tebalance-sorted.png" class="img-fluid" style="width:85.0%" alt="Absolute raw and matched standardized differences for age and tenure, sorted, with a reference line at 0.1."></p>
 

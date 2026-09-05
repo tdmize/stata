@@ -260,19 +260,15 @@ meinequality 	race
 
 **Bootstrap example**
 
+```stata
 capture program drop boot_mei
-
 program define boot_mei, rclass
-
 reg wage i.race c.age i.married
-
 meinequality race
-
 return scalar w_mei = r(wem11)
-
 end
-
 bootstrap w_mei=r(w_mei), reps(1000): boot_mei
+```
 
 <span id="prereq"></span>
 

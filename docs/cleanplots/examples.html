@@ -223,8 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">hist</span> vidtv, <span class="kw">percent</span> <span class="dv">scheme</span>(s2color)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(bin=36, start=0, width=4.6666667)</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ex-hist-s2color.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ex-hist-s2color.png not found)
-file fig/ex-hist-s2color.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ex-hist-s2color.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -262,8 +261,7 @@ file fig/ex-hist-s2color.png saved as PNG format</code></pre>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="bn">legend</span>(<span class="kw">order</span>(6 <span class="st">"Poor"</span> 7 <span class="st">"Fair"</span> 8 <span class="st">"Good"</span> 9 <span class="st">"Very Good"</span> 10 <span class="st">"Excellent"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Variables that uniquely identify margins: orole</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ex-ologit-s2color.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ex-ologit-s2color.png not found)
-file fig/ex-ologit-s2color.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ex-ologit-s2color.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -299,8 +297,7 @@ file fig/ex-ologit-s2color.png saved as PNG format</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>marginsplot, <span class="kw">recast</span>(<span class="kw">scatter</span>) x(educ) <span class="dv">scheme</span>(s2color)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Variables that uniquely identify margins: woman educ</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ex-pred-s2color.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ex-pred-s2color.png not found)
-file fig/ex-pred-s2color.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ex-pred-s2color.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -336,8 +333,7 @@ file fig/ex-pred-s2color.png saved as PNG format</code></pre>
 <pre class="stata-output"><code>file fig/ex-bar-cleanplots.png saved as PNG format</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="bn">bar</span> income, <span class="bn">over</span>(degree) <span class="bn">over</span>(woman) asyvars <span class="dv">scheme</span>(s2color)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ex-bar-s2color.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ex-bar-s2color.png not found)
-file fig/ex-bar-s2color.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ex-bar-s2color.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -384,8 +380,7 @@ file fig/ex-bar-s2color.png saved as PNG format</code></pre>
 (analytic weights assumed)
 (analytic weights assumed)</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ex-resid-s2color.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ex-resid-s2color.png not found)
-file fig/ex-resid-s2color.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ex-resid-s2color.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -420,8 +415,7 @@ file fig/ex-resid-s2color.png saved as PNG format</code></pre>
 <pre class="stata-output"><code>file fig/ex-lowess-cleanplots.png saved as PNG format</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">lowess</span> jobimp phd, <span class="dv">scheme</span>(s2color)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/ex-lowess-s2color.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(file fig/ex-lowess-s2color.png not found)
-file fig/ex-lowess-s2color.png saved as PNG format</code></pre>
+<pre class="stata-output"><code>file fig/ex-lowess-s2color.png saved as PNG format</code></pre>
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">

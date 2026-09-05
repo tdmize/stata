@@ -261,19 +261,15 @@ totalme 		college, models(menmod wommod) group
 
 **Bootstrap example**
 
+```stata
 capture program drop boot_tot
-
 program define boot_tot, rclass
-
 mlogit healthR i.race4 c.age i.woman, base(1)
-
 totalme race4
-
 return scalar w_tot = r(tmwm11)
-
 end
-
 bootstrap w_tot=r(w_tot), reps(1000): boot_tot
+```
 
 ## Comments
 

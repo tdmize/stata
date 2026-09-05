@@ -68,7 +68,6 @@ predictions shows where: income rises steeply at younger ages, peaks around
 Variables that uniquely identify margins: age
 
 . graph export "fig/chapter-income-age.png", replace width(1400)
-(file fig/chapter-income-age.png not found)
 file fig/chapter-income-age.png saved as PNG format
 
 ```

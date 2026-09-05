@@ -50,7 +50,6 @@ gender, with all of their products.
 Variables that uniquely identify margins: age woman
 
 . graph export "fig/chapter-fepol-age-gender.png", replace width(1400)
-(file fig/chapter-fepol-age-gender.png not found)
 file fig/chapter-fepol-age-gender.png saved as PNG format
 
 ```
@@ -216,7 +215,6 @@ woman                            |
 >     note("Effects above zero indicate women more likely to support women in politics")
 
 . graph export "fig/chapter-fepol-gender-gap.png", replace width(1400)
-(file fig/chapter-fepol-gender-gap.png not found)
 file fig/chapter-fepol-gender-gap.png saved as PNG format
 
 ```
@@ -323,7 +321,6 @@ made with `margins` and `coefplot`:
 >     title("Figure 7. Predicted support by gender and college degree")
 
 . graph export "fig/chapter-fepol-gender-college.png", replace width(1400)
-(file fig/chapter-fepol-gender-college.png not found)
 file fig/chapter-fepol-gender-college.png saved as PNG format
 
 ```
@@ -399,7 +396,6 @@ rounded to two decimals before they go into `at()` and `covariates()`.
 Variables that uniquely identify margins: faminc age
 
 . graph export "fig/chapter-fepol-age-income.png", replace width(1400)
-(file fig/chapter-fepol-age-income.png not found)
 file fig/chapter-fepol-age-income.png saved as PNG format
 
 ```
@@ -478,7 +474,6 @@ age(rate)                        |
 >     title("Figure 9. Effect of age across family income")
 
 . graph export "fig/chapter-fepol-age-me-by-income.png", replace width(1400)
-(file fig/chapter-fepol-age-me-by-income.png not found)
 file fig/chapter-fepol-age-me-by-income.png saved as PNG format
 
 ```
@@ -528,7 +523,6 @@ faminc(rate)                     |
 >     title("Figure 10. Effect of family income across age")
 
 . graph export "fig/chapter-fepol-income-me-by-age.png", replace width(1400)
-(file fig/chapter-fepol-income-me-by-age.png not found)
 file fig/chapter-fepol-income-me-by-age.png saved as PNG format
 
 ```

@@ -753,7 +753,6 @@ Variables that uniquely identify margins: age _equation
 . graph combine g_ordinal g_nominal, ycommon xsize(10) ysize(6) iscale(*1.2)
 
 . graph export "fig/plotting-party.png", replace width(1400)
-(file fig/plotting-party.png not found)
 file fig/plotting-party.png saved as PNG format
 
 ```

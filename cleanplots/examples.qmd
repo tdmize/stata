@@ -28,7 +28,6 @@ file fig/ex-hist-cleanplots.png saved as PNG format
 (bin=36, start=0, width=4.6666667)
 
 . graph export "fig/ex-hist-s2color.png", replace width(1400)
-(file fig/ex-hist-s2color.png not found)
 file fig/ex-hist-s2color.png saved as PNG format
 
 ```
@@ -61,7 +60,6 @@ file fig/ex-ologit-cleanplots.png saved as PNG format
 Variables that uniquely identify margins: orole
 
 . graph export "fig/ex-ologit-s2color.png", replace width(1400)
-(file fig/ex-ologit-s2color.png not found)
 file fig/ex-ologit-s2color.png saved as PNG format
 
 ```
@@ -92,7 +90,6 @@ file fig/ex-pred-cleanplots.png saved as PNG format
 Variables that uniquely identify margins: woman educ
 
 . graph export "fig/ex-pred-s2color.png", replace width(1400)
-(file fig/ex-pred-s2color.png not found)
 file fig/ex-pred-s2color.png saved as PNG format
 
 ```
@@ -120,7 +117,6 @@ file fig/ex-bar-cleanplots.png saved as PNG format
 . graph bar income, over(degree) over(woman) asyvars scheme(s2color)
 
 . graph export "fig/ex-bar-s2color.png", replace width(1400)
-(file fig/ex-bar-s2color.png not found)
 file fig/ex-bar-s2color.png saved as PNG format
 
 ```
@@ -162,7 +158,6 @@ file fig/ex-resid-cleanplots.png saved as PNG format
 (analytic weights assumed)
 
 . graph export "fig/ex-resid-s2color.png", replace width(1400)
-(file fig/ex-resid-s2color.png not found)
 file fig/ex-resid-s2color.png saved as PNG format
 
 ```
@@ -190,7 +185,6 @@ file fig/ex-lowess-cleanplots.png saved as PNG format
 . lowess jobimp phd, scheme(s2color)
 
 . graph export "fig/ex-lowess-s2color.png", replace width(1400)
-(file fig/ex-lowess-s2color.png not found)
 file fig/ex-lowess-s2color.png saved as PNG format
 
 ```
