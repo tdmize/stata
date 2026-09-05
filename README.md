@@ -1,8 +1,9 @@
 # Stata software documentation site
 
 Source for <https://tdmize.github.io/stata/> — the documentation pages for
-`mecompare`, `suest2`, `metest`, `meinequality`, `totalme`, and `balanceplot`.
-Each package
+`mecompare`, `suest2`, `metest`, `meinequality`, `totalme`, `balanceplot`,
+`sgmediation2`, `irt_me`, `irt_coef`, `lca_entropy`, `desctable`,
+`cleanplots`, and `usetdm`. Each package
 has its own sidebar and its own URL (`/stata/mecompare/`, `/stata/suest2/`, …),
 so each can be embedded on its own page of trentonmize.com.
 
@@ -29,6 +30,7 @@ stata/
 │   ├── examples/*.qmd
 │   └── fig/             graphs exported by <<dd_graph>> (if any)
 ├── suest2/  metest/  meinequality/  totalme/  balanceplot/    same layout
+├── sgmediation2/  irt_me/  irt_coef/  lca_entropy/  desctable/  cleanplots/  usetdm/
 ├── docs/                the rendered site; GitHub Pages serves this folder
 └── tools/preview_nostata.py   render without Stata, for layout checks
 ```
@@ -162,7 +164,11 @@ Sections can nest, so `mecompare` can grow into "Examples", "Options",
 ### Adding a package
 
 Make `<pkg>/_src/index.qmd`, add a sidebar block for it in `_quarto.yml`
-(copy an existing one), and add `<pkg>` to `all_pkgs` in `build.do`.
+(copy an existing one), add `<pkg>` to `all_pkgs` in `build.do` with a
+`_build_help` line for its help file (pass `hlp` as the last argument for an
+old-style `.hlp` file, as `sgmediation2` does), and add the package to
+`SITE_PAGES` in `tools/sthlp2qmd.py` so that `{help pkg}` links in other help
+files point at its page.
 
 ## Look and feel
 

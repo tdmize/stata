@@ -186,6 +186,139 @@ website:
         - text: "help balanceplot"
           href: balanceplot/help.qmd
 
+    # -------------------------------------------------- sgmediation2
+    - id: sgmediation2
+      title: "sgmediation2"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/sgmediation2
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: sgmediation2/index.qmd
+        - sgmediation2/help-examples.qmd
+        - text: "help sgmediation2"
+          href: sgmediation2/help.qmd
+
+    # -------------------------------------------------------- irt_me
+    - id: irt_me
+      title: "irt_me"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/irt_me
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: irt_me/index.qmd
+        - irt_me/help-examples.qmd
+        - text: "help irt_me"
+          href: irt_me/help.qmd
+
+    # ------------------------------------------------------ irt_coef
+    - id: irt_coef
+      title: "irt_coef"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/irt_coef
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: irt_coef/index.qmd
+        - irt_coef/help-examples.qmd
+        - text: "help irt_coef"
+          href: irt_coef/help.qmd
+
+    # --------------------------------------------------- lca_entropy
+    - id: lca_entropy
+      title: "lca_entropy"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/lca_entropy
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: lca_entropy/index.qmd
+        - lca_entropy/help-examples.qmd
+        - text: "help lca_entropy"
+          href: lca_entropy/help.qmd
+
+    # ----------------------------------------------------- desctable
+    - id: desctable
+      title: "desctable"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/desctable
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: desctable/index.qmd
+        - desctable/help-examples.qmd
+        - text: "help desctable"
+          href: desctable/help.qmd
+
+    # ---------------------------------------------------- cleanplots
+    - id: cleanplots
+      title: "cleanplots"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/cleanplots
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: cleanplots/index.qmd
+        - cleanplots/examples.qmd
+        - text: "help cleanplots"
+          href: cleanplots/help.qmd
+
+    # -------------------------------------------------------- usetdm
+    - id: usetdm
+      title: "usetdm"
+      style: docked
+      collapse-level: 2
+      tools:
+        - icon: house-door
+          text: "trentonmize.com"
+          href: https://www.trentonmize.com/software/usetdm
+        - icon: github
+          text: "GitHub"
+          href: https://github.com/tdmize
+      contents:
+        - text: "Overview"
+          href: usetdm/index.qmd
+        - usetdm/help-examples.qmd
+        - text: "help usetdm"
+          href: usetdm/help.qmd
+
 format:
   html:
     theme: [cosmo, theme.scss]

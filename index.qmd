@@ -1,6 +1,6 @@
 ---
 title: "Stata software"
-subtitle: "Commands for marginal effects, cross-model comparisons, and covariate balance"
+subtitle: "Commands for marginal effects, cross-model comparisons, mediation, IRT and LCA models, tables, and graphs"
 toc: false
 sidebar: false
 ---
@@ -18,7 +18,14 @@ of pages; installation instructions are on each overview page.
 | [**meinequality**](meinequality/index.html) | Summarizes how unequal the marginal effects of a categorical predictor are across its categories. |
 | [**totalme**](totalme/index.html) | Summarizes a predictor's effect across all outcome categories of a multiple-outcome model in a single Total Marginal Effect. |
 | [**balanceplot**](balanceplot/index.html) | Plots and tabulates standardized covariate imbalance across groups, for a continuous treatment, and before and after matching or weighting. |
+| [**sgmediation2**](sgmediation2/index.html) | Sobel-Goodman tests of statistical mediation in linear regression, with survey weights, multiply imputed data, and bootstrapping. |
+| [**irt_me**](irt_me/index.html) | Marginal effects of the latent variable on each item after item response theory models. |
+| [**irt_coef**](irt_coef/index.html) | y*-standardized coefficients for binary and ordinal item response theory models. |
+| [**lca_entropy**](lca_entropy/index.html) | Entropy fit statistic for latent class analysis models fit with `gsem`. |
+| [**desctable**](desctable/index.html) | Formatted descriptive statistics tables, exported to Excel, with continuous, binary, and nominal variables each treated appropriately. |
+| [**cleanplots**](cleanplots/index.html) | A graphics scheme that makes Stata graphs clean, colorblind friendly, and printable in black and white; ordinal palettes included. |
+| [**usetdm**](usetdm/index.html) | Loads the example datasets for classes, workshops, and replication files from the web. |
 :::
 
-Other software -- the `cleanplots` graph scheme, `irt_me`, and R packages -- is
-listed at [trentonmize.com/software](https://www.trentonmize.com/software).
+The R packages, including the R version of `cleanplots`, are listed at
+[trentonmize.com/software](https://www.trentonmize.com/software).

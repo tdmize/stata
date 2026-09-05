@@ -29,6 +29,13 @@ SITE_PAGES = {
     "meinequality": "meinequality/help.html",
     "totalme": "totalme/help.html",
     "balanceplot": "balanceplot/help.html",
+    "cleanplots": "cleanplots/help.html",
+    "desctable": "desctable/help.html",
+    "irt_coef": "irt_coef/help.html",
+    "irt_me": "irt_me/help.html",
+    "lca_entropy": "lca_entropy/help.html",
+    "sgmediation2": "sgmediation2/help.html",
+    "usetdm": "usetdm/help.html",
 }
 
 # Syntax placeholders written as bare directives, e.g. {varlist} {ifin} {weight}
@@ -146,6 +153,12 @@ def inline(nodes, this_page):
             out.append(code_span(a if a else inner))
         elif name in ("help", "helpb", "manhelp", "manhelpi"):
             out.append(help_link(arg, inner, this_page))
+        elif name == "browse":
+            a = (arg or "").strip()
+            if a.startswith('"') and a.endswith('"'):
+                a = a[1:-1]
+            label = inner.strip() if inner else a
+            out.append(f"[{label}]({a})" if a else label)
         elif name == "hline":
             out.append("--" if arg else "---")
         elif name == "space":
@@ -184,6 +197,7 @@ class Renderer:
         self.table = None      # rows: [kind, a, b]
         self.row = None        # open synopt row collecting description nodes
         self.bullet = False
+        self.section = ""      # current {title:...}, lower-cased
 
     def flush_code(self):
         if self.code:
@@ -200,6 +214,13 @@ class Renderer:
                     self.code.append(t[3:-1])
                 elif t.startswith("`") and t.endswith("`") and t.count("`") == 2 and len(t) > 4:
                     self.code.append(t[1:-1])
+                elif self.section.startswith("example") and re.match(r"^\*\*[^*]+\*$", t):
+                    # an {it:*comment} line in an Examples section: a code comment
+                    self.code.append("* " + t.strip("*").strip())
+                elif self.section.startswith("example") and not re.search(r"[`*\[]", t) \
+                        and not t.rstrip().endswith(":"):
+                    # a plain command line in an Examples section (no markup)
+                    self.code.append(t)
                 else:
                     self.flush_code()
                     self.out.append(("- " if self.bullet else "") + t)
@@ -214,12 +235,33 @@ class Renderer:
                 return
             b = inline(nodes, self.page).strip()
             b = re.sub(r"\s*\n\s*", " ", b)
+            if kind == "hdr?":
+                cells = [c.strip() for c in re.split(r"  +", b) if c.strip()]
+                if len(cells) >= 2 and all(c.startswith("**") for c in cells):
+                    self.table = [["hdrN", a] + [c.strip("*") for c in cells]]
+                else:                       # an ordinary bold definition term
+                    self.para = [("term", None, ["**" + a + "**"]), b]
+                return
+            if kind == "rowN":
+                cells = [c.strip() for c in re.split(r"  +", b)]
+                self.table.append(["rowN", a] + cells)
+                return
             self.table.append([kind, a, b])
 
     def flush_table(self):
         self.close_row()
         if self.table:
             self.flush_code()
+            if self.table[0][0] == "hdrN":          # multi-column table
+                hdr = self.table[0][1:]
+                n = len(hdr)
+                lines = ["| " + " | ".join(hdr) + " |", "|" + ":--|" * n]
+                for row in self.table[1:]:
+                    cells = (row[1:] + [""] * n)[:n]
+                    lines.append("| " + " | ".join(cells) + " |")
+                self.out.append("\n".join(lines))
+                self.table = None
+                return
             hdr = self.table[0] if self.table[0][0] == "hdr" else ["hdr", "", ""]
             lines = [f"| {hdr[1]} | {hdr[2]} |", "|:--|:--|"]
             for kind, a, b in self.table:
@@ -244,6 +286,12 @@ class Renderer:
     def text(self, s):
         if self.row is not None:
             self.row[2].append(s)
+            return
+        # a tab-indented continuation of a {p2col} term's description (as in
+        # a Title block) belongs to that description, not to a bullet
+        if self.para and isinstance(self.para[0], tuple) and self.para[0][0] == "term" \
+                and s.strip() != "" and ("\n\t" in s or s.startswith("\t")):
+            self.para.append(s.replace("\t", " "))
             return
         if s.strip() == "":
             if "\n\t" in s or s.startswith("\t"):
@@ -272,7 +320,9 @@ class Renderer:
             return
         if name == "title":
             self.flush_all()
-            self.out.append("## " + inline(ch, self.page).strip())
+            ttl = inline(ch, self.page).strip()
+            self.section = ttl.lower()
+            self.out.append("## " + ttl)
         elif name == "dlgtab":
             self.flush_all()
             self.out.append("### " + inline(ch, self.page).strip())
@@ -288,6 +338,12 @@ class Renderer:
                 self.row = ["skip", "", []]
             elif self.table is not None and self.table[0][1] == "Name":
                 self.row = ["row", term, []]
+            elif term.startswith("**") and term.endswith("**") and self.table is None:
+                # a bold term may head a multi-column table: decided in close_row
+                # once the rest of the line (the other column headers) is seen
+                self.row = ["hdr?", term.strip("*"), []]
+            elif self.table is not None and self.table[0][0] == "hdrN":
+                self.row = ["rowN", term, []]
             elif term:
                 self.para = [("term", None, [term])]
         elif name in PARA:
@@ -312,6 +368,8 @@ class Renderer:
                 self.table = [["hdr", "Option", "Description"]]
             self.row = ["row", inline(ch or [], self.page).strip(), []]
         elif name in NOOP:
+            if name == "p2colreset" and self.table is not None and self.table[0][0] == "hdrN":
+                self.flush_table()        # a multi-column table ends with its p2colreset
             if name in ("p2line", "synoptline"):
                 self.flush_para(); self.close_row()
                 if self.table is not None and len(self.table) > 1:
@@ -320,16 +378,41 @@ class Renderer:
             self.para.append(nd)
 
 
+def join_continuations(blocks):
+    """Paragraph blocks that end with /// are a command split over lines
+    (as in an Examples section); gather them into one code block."""
+    out = []
+    i = 0
+    while i < len(blocks):
+        b = blocks[i]
+        if b.rstrip().endswith("///") and not b.startswith("```"):
+            lines = []
+            while i < len(blocks):
+                t = blocks[i].strip()
+                if t.startswith("- "):
+                    t = "    " + t[2:]
+                lines.append(t)
+                i += 1
+                if not t.endswith("///"):
+                    break
+            out.append("```stata\n" + "\n".join(lines) + "\n```")
+        else:
+            out.append(b)
+            i += 1
+    return out
+
+
 def convert(text, this_page):
     blocks = Renderer(this_page).run(parse(text))
-    return "\n\n".join(b for b in blocks if b.strip())
+    blocks = join_continuations([b for b in blocks if b.strip()])
+    return "\n\n".join(blocks)
 
 
 # --------------------------------------------------------------- driver ----
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("sthlp")
+    ap.add_argument("sthlp", help="the .sthlp (or .hlp) file")
     ap.add_argument("out")
     ap.add_argument("--cmd", required=True, help="site section the page lives in (mecompare, suest2, ...)")
     ap.add_argument("--title", default=None)
@@ -338,7 +421,8 @@ def main():
 
     with open(args.sthlp, encoding="utf-8", errors="replace") as fh:
         text = fh.read()
-    name = os.path.basename(args.sthlp).replace(".sthlp", "")
+    fname = os.path.basename(args.sthlp)
+    name = os.path.splitext(fname)[0]
     md = convert(text, f"{args.cmd}/help.html")
     title = args.title or f"help {name}"
     sub = args.subtitle or "The installed help file, rendered for the web"
@@ -349,7 +433,7 @@ toc-depth: 3
 ---
 
 ::: {{.callout-note appearance="simple"}}
-This page is generated from `{name}.sthlp` by `build.do`, so it matches the
+This page is generated from `{fname}` by `build.do`, so it matches the
 installed version. In Stata, type `help {name}`.
 :::
 

@@ -48,20 +48,21 @@ local quarto "quarto"
 local python "python"
 
 * Packages documented on the site (folder names).
-local all_pkgs "mecompare suest2 metest meinequality totalme balanceplot"
+local all_pkgs "mecompare suest2 metest meinequality totalme balanceplot cleanplots desctable irt_coef irt_me lca_entropy sgmediation2 usetdm"
 
 * Render one installed help file as <section>/<page>.qmd  (the page is written
 * next to the generated pages, not under _src/, and is overwritten each build)
 capture program drop _build_help
 program define _build_help
-    args python name section page title
-    capture findfile `name'.sthlp
+    args python name section page title ext
+    if "`ext'" == "" local ext "sthlp"
+    capture findfile `name'.`ext'
     if _rc {
-        di as err "  `name'.sthlp not found on the adopath; `section'/`page'.qmd left as is"
+        di as err "  `name'.`ext' not found on the adopath; `section'/`page'.qmd left as is"
         exit
     }
     local src "`r(fn)'"
-    di as txt `"  sthlp2qmd `name'.sthlp  ->  `section'/`page'.qmd"'
+    di as txt `"  sthlp2qmd `name'.`ext'  ->  `section'/`page'.qmd"'
     capture erase "build_help.log"
     !`python' tools/sthlp2qmd.py "`src'" "`section'/`page'.qmd" --cmd `section' --title "`title'" > build_help.log 2>&1
     capture confirm file "build_help.log"
@@ -112,6 +113,12 @@ if `dyn' {
     * record which version of each command produces the output
     di as txt _n "{hline 72}" _n "build.do: commands on the adopath" _n "{hline 72}"
     foreach c of local all_pkgs {
+        if "`c'" == "cleanplots" {          // a scheme, not a command
+            capture findfile scheme-cleanplots.scheme
+            if _rc di as err "  scheme-cleanplots.scheme not found on the adopath"
+            else   di as txt "  scheme-cleanplots.scheme: `r(fn)'"
+            continue
+        }
         capture noisily which `c'
         if _rc di as err "  `c' not found on the adopath"
     }
@@ -168,6 +175,27 @@ if `dyn' {
         }
         else if "`p'" == "balanceplot" {
             _build_help "`python'" balanceplot balanceplot help "balanceplot help file"
+        }
+        else if "`p'" == "cleanplots" {
+            _build_help "`python'" cleanplots cleanplots help "cleanplots help file"
+        }
+        else if "`p'" == "desctable" {
+            _build_help "`python'" desctable desctable help "desctable help file"
+        }
+        else if "`p'" == "irt_coef" {
+            _build_help "`python'" irt_coef irt_coef help "irt_coef help file"
+        }
+        else if "`p'" == "irt_me" {
+            _build_help "`python'" irt_me irt_me help "irt_me help file"
+        }
+        else if "`p'" == "lca_entropy" {
+            _build_help "`python'" lca_entropy lca_entropy help "lca_entropy help file"
+        }
+        else if "`p'" == "sgmediation2" {
+            _build_help "`python'" sgmediation2 sgmediation2 help "sgmediation2 help file" hlp
+        }
+        else if "`p'" == "usetdm" {
+            _build_help "`python'" usetdm usetdm help "usetdm help file"
         }
 
         cd "`root'/`p'"

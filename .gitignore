@@ -21,3 +21,6 @@ Thumbs.db
 /build_help.log
 
 **/*.quarto_ipynb
+
+# desctable help examples write Excel tables next to the page
+/desctable/*.xlsx

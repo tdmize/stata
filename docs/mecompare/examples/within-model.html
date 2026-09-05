@@ -515,7 +515,7 @@ class                            |
 </section>
 <section id="alternative-a-two-standard-deviation-change" class="level2">
 <h2 class="anchored" data-anchor-id="alternative-a-two-standard-deviation-change">Alternative: a two-standard-deviation change</h2>
-<p><code>amount(2sd)</code> is the other common way to put a continuous variable on a footing comparable with a binary one. The two amounts summarize the effect of age differently. A two-standard-deviation change is centered on each observation’s own age (one SD below to one SD above) and then averaged over the sample, so it reflects where the observations are; the trimmed-range change is the same fixed change, from the 5th to the 95th percentile, for everyone. With a nonlinear effect the two can differ:</p>
+<p><code>amount(2sd)</code> is the other common way to put a continuous variable on a footing comparable with a binary one. A two-standard-deviation change is centered on each observation’s own age (one SD below to one SD above) and then averaged over the sample.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(polmod) amount(2sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction
@@ -536,7 +536,7 @@ Marginal effects (N_polmod=3608)
 age(5-95%)                       |                                       
                           polmod |     1      0.784      0.083      0.000</code></pre>
 </div>
-<p>Mize and Han (2025) suggest the trimmed range as the more robust choice: the 5th and 95th percentiles are always values observed in the data, whereas a two-standard-deviation change can reach past the observed range of a skewed variable. Either amount can be combined with <code>meinequality</code> in the single call above.</p>
+<p>Mize and Han (2025) suggest the trimmed range as the more robust choice. A 2 SD increase only matches a binary variable’s range if the binary variables in the model all have means close to 0.5. Either amount can be combined with <code>meinequality</code> in the single call above.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
