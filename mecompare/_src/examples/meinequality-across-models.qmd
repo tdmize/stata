@@ -1,0 +1,110 @@
+---
+title: "Comparing ME inequalities across models"
+subtitle: "Examples 4.3.b and 4.3.a of Mize and Han (2025): nested models, and separate samples"
+---
+<<dd_version: 2>>
+
+The ME inequality of Mize and Han (2025) summarizes the effect of a nominal
+predictor in one number: the average absolute difference in the outcome
+across its categories. The `meinequality` option of `mecompare` adds that
+summary to the table, and with two models in `models()` the summary is
+calculated for each model and the **Difference** row tests whether the
+inequality changed. The two most common uses are shown here: nested models
+(how much of an inequality is accounted for by mediators) and models fit to
+separate samples (has an inequality changed over time). Both examples also
+appear on the [`meinequality`](../../meinequality/index.html) site, where the
+same tests are run with the `meinequality` command.
+
+## Nested models: how much of a racial-ethnic inequality is accounted for by SES?
+
+How much of the racial-ethnic inequality in functional limitations is
+accounted for by education, wealth, and income? Fit the model with and
+without those variables, store both, and name them in `models()`. The models
+are combined with [`suest2`](../../suest2/index.html) so that the test of the
+difference accounts for the two models being estimated on the same data. The
+outcome is a count of limitations in instrumental activities of daily living
+from the Health and Retirement Study.
+
+```{.stata-run}
+<<dd_do>>
+use "https://tdmize.github.io/data/data/cda_hrs", clear
+drop if missing(iadl, race4cat, collegeB, wealth_w, income_w)
+
+quietly nbreg iadl i.race4cat, vce(robust)
+estimates store basemod
+
+quietly nbreg iadl i.race4cat i.collegeB c.wealth_w c.income_w, vce(robust)
+estimates store medmod
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.race4cat, models(basemod medmod) meinequality
+<</dd_do>>
+```
+
+The first block of the table is the ME inequality in each model and its
+**Difference**: the reduction in racial-ethnic inequality once education,
+wealth, and income are in the model, with a standard error and p-value. The
+blocks beneath it are the contrasts with the base category that the ME
+inequality summarizes, each with its own cross-model difference. Because
+every row is numbered, [`metest`](../../metest/index.html) can express the
+reduction as a proportion of the baseline inequality, with a standard error:
+
+```{.stata-run}
+<<dd_do>>
+metest (1 - 2) / 1
+<</dd_do>>
+```
+
+The same difference is what `meinequality race4cat, models(basemod medmod)`
+reports; `mecompare` adds the underlying contrasts and the row numbers for
+`metest`.
+
+## Separate samples: has the effect of religion changed over time?
+
+When the two models are fit to different samples -- different groups, or
+different time periods -- add the `groups` option. Here the question is
+whether religious-tradition differences in willingness to let a gay man speak
+in public were larger before 1980 than after 2010. Two logits are fit, one
+per period, and `groupnames()` labels the rows.
+
+```{.stata-run}
+<<dd_do>>
+use "https://tdmize.github.io/data/data/cda_gss", clear
+drop if missing(spkhomo, reltrad, age, woman)
+
+quietly logit spkhomo i.reltrad c.age i.woman if year < 1980, vce(robust)
+estimates store premod
+
+quietly logit spkhomo i.reltrad c.age i.woman if year >= 2010, vce(robust)
+estimates store postmod
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.reltrad, models(premod postmod) groups groupnames(Pre1980 Post2010) ///
+          meinequality(unweighted)
+<</dd_do>>
+```
+
+`groups` tells `mecompare` that each model's estimation sample is a
+different group, so each ME inequality is averaged over that period's own
+respondents, and the **Difference** row tests whether the inequality
+changed. It is significantly smaller after 2010 than before 1980: religious
+traditions have converged on this question.
+
+`unweighted` is used so that the comparison reflects the marginal effects
+alone. The default ME inequality weights each pairwise contrast by the share
+of the sample in the two categories being contrasted; with `groups`, each
+model uses the shares in *its own* sample, so the weighted difference would
+also pick up the change in the religious makeup of the GSS between the two
+periods. `meinequality(all)` reports both statistics.
+
+## Reference
+
+> Mize, Trenton D. and Bing Han. 2025. "Inequality and Total Effect Summary
+> Measures for Nominal and Ordinal Variables." *Sociological Science* 12:
+> 115--157.

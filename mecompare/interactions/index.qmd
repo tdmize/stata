@@ -27,6 +27,11 @@ reproduce the article's examples, section by section:
 - [Two continuous variables](continuous-by-continuous.html): political views ×
   survey year (Figures 15--17).
 
+The same methods, applied to the examples of the marginal effects chapter of
+Mize and Han (forthcoming) -- including a multi-category outcome and a
+three-way interaction -- are on the [Tests of
+interaction](../examples/chapter-interactions.html) page.
+
 ## The three ingredients
 
 **A nominal moderator: `by()`.** `by()` reports the marginal effect of a

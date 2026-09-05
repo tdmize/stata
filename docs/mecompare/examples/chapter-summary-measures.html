@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Interaction effects – Stata software — Trenton D. Mize</title>
+<title>MEMs, AMEs, MERs, and ideal types – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,8 +71,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/interactions/linear-model.html" rel="next">
-<link href="../../mecompare/examples/chapter-groups.html" rel="prev">
+<link href="../../mecompare/examples/chapter-interactions.html" rel="next">
+<link href="../../mecompare/examples/totalme-across-models.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -87,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-summary-measures.html">Mize &amp; Han (forthcoming)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-summary-measures.html">MEMs, AMEs, MERs, and ideal types</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -232,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/chapter-summary-measures.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/chapter-summary-measures.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">MEMs, AMEs, MERs, and ideal types</span></a>
   </div>
 </li>
@@ -263,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -311,10 +346,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-three-ingredients" id="toc-the-three-ingredients" class="nav-link active" data-scroll-target="#the-three-ingredients">The three ingredients</a></li>
-  <li><a href="#testing-the-second-difference" id="toc-testing-the-second-difference" class="nav-link" data-scroll-target="#testing-the-second-difference">Testing the second difference</a></li>
-  <li><a href="#plotting-the-marginal-effects" id="toc-plotting-the-marginal-effects" class="nav-link" data-scroll-target="#plotting-the-marginal-effects">Plotting the marginal effects</a></li>
-  <li><a href="#translating-the-2019-files" id="toc-translating-the-2019-files" class="nav-link" data-scroll-target="#translating-the-2019-files">Translating the 2019 files</a></li>
+  <li><a href="#marginal-effects-at-chosen-values-section-1" id="toc-marginal-effects-at-chosen-values-section-1" class="nav-link active" data-scroll-target="#marginal-effects-at-chosen-values-section-1">Marginal effects at chosen values (Section 1)</a>
+  <ul class="collapse">
+  <li><a href="#nonlinear-effects-in-a-linear-model" id="toc-nonlinear-effects-in-a-linear-model" class="nav-link" data-scroll-target="#nonlinear-effects-in-a-linear-model">Nonlinear effects in a linear model</a></li>
+  <li><a href="#categorical-models" id="toc-categorical-models" class="nav-link" data-scroll-target="#categorical-models">Categorical models</a></li>
+  </ul></li>
+  <li><a href="#summary-measures-section-2" id="toc-summary-measures-section-2" class="nav-link" data-scroll-target="#summary-measures-section-2">Summary measures (Section 2)</a>
+  <ul class="collapse">
+  <li><a href="#marginal-effect-at-the-mean-mem" id="toc-marginal-effect-at-the-mean-mem" class="nav-link" data-scroll-target="#marginal-effect-at-the-mean-mem">Marginal effect at the mean (MEM)</a></li>
+  <li><a href="#average-marginal-effect-ame" id="toc-average-marginal-effect-ame" class="nav-link" data-scroll-target="#average-marginal-effect-ame">Average marginal effect (AME)</a></li>
+  <li><a href="#marginal-effects-at-representative-values-mers" id="toc-marginal-effects-at-representative-values-mers" class="nav-link" data-scroll-target="#marginal-effects-at-representative-values-mers">Marginal effects at representative values (MERs)</a></li>
+  <li><a href="#ideal-types" id="toc-ideal-types" class="nav-link" data-scroll-target="#ideal-types">Ideal types</a></li>
+  </ul></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul>
 </nav>
@@ -326,10 +369,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Overview</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-summary-measures.html">Mize &amp; Han (forthcoming)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-summary-measures.html">MEMs, AMEs, MERs, and ideal types</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Interaction effects</h1>
-<p class="subtitle lead">Testing nonlinear interactions with mecompare: the approach of Mize (2019)</p>
+<h1 class="title">MEMs, AMEs, MERs, and ideal types</h1>
+<p class="subtitle lead">Sections 1–2 of Mize and Han (forthcoming): where, and how far, to change the focal variable</p>
 </div>
 
 
@@ -346,98 +389,198 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Mize (2019) shows that in nonlinear models – and in linear models with nonlinearities – the coefficient on a product term is not a test of interaction on the metric of interest. Interaction should instead be assessed in the natural metric of the outcome by (1) plotting the predictions, (2) computing the marginal effect of one variable at chosen levels of the other, and (3) testing whether those marginal effects differ: a <em>second difference</em>. It is also important to look at both sides of an interaction – the effect of X across levels of Z, and the effect of Z across levels of X.</p>
-<p>The 2019 replication files do all of this with <code>margins</code> followed by <code>mlincom</code>. <code>mecompare</code> now automates these tests much more simply and with a wider range of capabilities. Second-difference tests can be performed with a single call to <code>metest</code>. The pages in this section reproduce the article’s examples, section by section:</p>
-<ul>
-<li><a href="linear-model.html">Nonlinear effects in a linear model</a>: age, age², and gender (Table 2, Figures 1–2).</li>
-<li><a href="nominal-by-nominal.html">Two nominal variables</a>: gender × parenthood and gender × education (Tables 3–4, Figures 12–13).</li>
-<li><a href="nominal-by-continuous.html">A nominal and a continuous variable</a>: gender × social roles (Figure 14).</li>
-<li><a href="continuous-by-continuous.html">Two continuous variables</a>: political views × survey year (Figures 15–17).</li>
-</ul>
-<p>The same methods, applied to the examples of the marginal effects chapter of Mize and Han (forthcoming) – including a multi-category outcome and a three-way interaction – are on the <a href="../examples/chapter-interactions.html">Tests of interaction</a> page.</p>
-<section id="the-three-ingredients" class="level2">
-<h2 class="anchored" data-anchor-id="the-three-ingredients">The three ingredients</h2>
-<p><strong>A nominal moderator: <code>by()</code>.</strong> <code>by()</code> reports the marginal effect of a focal variable at each level of <code>by()</code>, e.g.&nbsp;<code>by(woman)</code> reports one marginal effect for each level of <code>woman</code>, computed as a counterfactual: the whole sample set to each level in turn, then averaged. This is what <code>margins woman, at(...)</code> followed by <code>mlincom</code> does in the 2019 files. (<code>over(woman)</code> instead uses only the observations in each group; see <code>help mecompare</code> for the distinction.)</p>
-<p><strong>A continuous moderator: <code>covariates(z=(numlist))</code>.</strong> E.g. <code>covariates(age=(25 55))</code> reports the marginal effect of the focal variable with everyone set to age 25, then to age 55, as numbered rows in one table. Any numlist works, so <code>covariates(age=(20(5)70))</code> gives the effect across the range of the moderator – the numbers behind the “marginal effect of X across Z” plots.</p>
-<p><strong>Where to evaluate a continuous moderator.</strong> When there is no substantive reason to pick particular values, a good default is the 10th, 50th, and 90th percentiles of the moderator: a low, a typical, and a high value that are all in the range of the data. <code>summarize z, detail</code> returns them as <code>r(p10)</code>, <code>r(p50)</code>, and <code>r(p90)</code>, so the pattern is <code>mecompare x, covariates(z=(`r(p10)' `r(p50)' `r(p90)'))</code> followed by <code>metest 1 = 2 = 3</code> for the joint test and <code>metest 3 - 1</code> for the change from the 10th to the 90th percentile. The pages with a continuous moderator each show it.</p>
-<p><strong>Where and how far the focal variable moves: <code>start()</code>, <code>amount()</code>, <code>uncentered</code>.</strong> <code>start(age=25) amount(5)</code> is the change from 25 to 30; <code>amount(5)</code> alone is a five-unit change from each observation’s own value; <code>amount(sd)</code> is a standard-deviation change and <code>amount(rate)</code> the instantaneous rate (the <code>dydx()</code> of <code>margins</code>). By default a change is centered on the starting value (half below, half above); <code>uncentered</code> makes it run upward from the start.</p>
+<p>A marginal effect is the difference between two predictions. Calculating one means deciding on three things: the amount of change in the focal variable, where the change starts, and where the other variables in the model are held. Mize and Han (forthcoming) walk through these choices and the standard summary measures they lead to – marginal effects at the mean (MEMs), average marginal effects (AMEs), marginal effects at representative values (MERs), and ideal types. In <code>mecompare</code> the same three decisions are <code>amount()</code> (with <code>centered</code>/<code>uncentered</code>), <code>start()</code>, and <code>covariates()</code>. This page repeats the chapter’s calculations on the pooled 1972–2021 GSS.</p>
+<section id="marginal-effects-at-chosen-values-section-1" class="level2">
+<h2 class="anchored" data-anchor-id="marginal-effects-at-chosen-values-section-1">Marginal effects at chosen values (Section 1)</h2>
+<p>The chapter starts with a linear regression of income on age and calculates the effect of one more year of age for a 30-year-old and for a 50-year-old. <code>start(age=(30 50))</code> puts everyone at each age in turn, and <code>uncentered</code> makes the one-unit change run from 30 to 31 (rather than 29.5 to 30.5, the centered default). With a linear effect the two marginal effects are identical and equal the coefficient on age:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(cda_gss.dta |  GSS 1972-2021 CDA - Categorical Data Analysis | date created 2023)
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> income c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> linmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(linmod) <span class="bn">start</span>(age=(30 50)) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_linmod=38993)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 1 (uncentered)             |                                       
+                           at 30 |     1    423.166     10.967      0.000
+                           at 50 |     2    423.166     10.967      0.000</code></pre>
+</div>
+<section id="nonlinear-effects-in-a-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="nonlinear-effects-in-a-linear-model">Nonlinear effects in a linear model</h3>
+<p>Adding age² and age³ makes the effect of age depend on age. The plot of predictions shows where: income rises steeply at younger ages, peaks around 50, and declines after that.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> income c.age##c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> cubmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins, <span class="fu">at</span>(age=(18(1)89))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>marginsplot, <span class="kw">recast</span>(<span class="kw">line</span>) recastci(rline) ciopts(lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="co">///</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">xlabel</span>(20(5)85) <span class="kw">ylabel</span>(0(10000)50000) <span class="bn">xtitle</span>(<span class="st">"Age of respondent"</span>) <span class="bn">ytitle</span>(<span class="st">"Income"</span>) <span class="co">///</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 2. Predicted income by age, cubic specification"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Variables that uniquely identify margins: age</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/chapter-income-age.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(file fig/chapter-income-age.png not found)
+file fig/chapter-income-age.png saved as PNG format</code></pre>
+</div>
+<p><img src="../fig/chapter-income-age.png" class="img-fluid" style="width:80.0%" alt="Predicted income across the range of age from a regression with age, age squared, and age cubed: rising to a peak near age 50 and declining after."></p>
+<p>The chapter compares a ten-year increase in age starting at 30 with one starting at 60. <code>amount(10)</code> sets the size of the change and <code>start(age=(30 60))</code> the two starting points; <code>uncentered</code> again makes the change run upward from the start (30 to 40, and 60 to 70). Because both effects are rows of one table, <a href="../../metest/index.html"><code>metest</code></a> can test whether they differ, which the chapter’s <code>margins</code> and <code>mlincom</code> calculations could not do directly:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(cubmod) <span class="bn">start</span>(age=(30 60)) amount(10) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_cubmod=38993)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 10 (uncentered)            |                                       
+                           at 30 |     1   9947.741    131.062      0.000
+                           at 60 |     2  -7209.963    383.977      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+             age_at30 - age_at60 | 17157.704    469.938      0.000 </code></pre>
+</div>
+<p>A ten-year increase in age is associated with roughly a $10,000 increase in income for 30-year-olds but a $7,000 decrease for 60-year-olds.</p>
 </section>
-<section id="testing-the-second-difference" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-second-difference">Testing the second difference</h2>
-<p>Every row of the <code>mecompare</code> table is numbered, and <code>metest</code> tests any combination of rows: <code>metest 1 - 2</code> is the second difference between the marginal effects in rows 1 and 2, <code>metest 1 = 2 = 3</code> is a joint test that the first three marginal effects in the table are equal, and <code>metest 2 - 1, add rowname("...")</code> accumulates results into one table. The rows are posted to <code>e(b)</code> and <code>e(V)</code> with their full covariance, so the tests are the Wald tests recommended in the article’s equation 6.</p>
+<section id="categorical-models" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-models">Categorical models</h3>
+<p>The same calculation in a logit model of employment status on age, for men. A logit is inherently nonlinear, so the marginal effects differ across ages even with only a linear term for age in the model. The chapter compares a ten-year increase starting at 20 with one starting at 60:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> employed c.age <span class="kw">if</span> woman == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> empmen</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmen) <span class="bn">start</span>(age=(20 60)) amount(10) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmen=30162)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 10 (uncentered)            |                                       
+                           at 20 |     1     -0.054      0.001      0.000
+                           at 60 |     2     -0.139      0.002      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+             age_at20 - age_at60 |     0.084      0.003      0.000 </code></pre>
+</div>
+<p>For someone starting at age 20, a ten-year increase in age is associated with a 0.05 lower probability of being employed; for someone starting at 60, with a 0.14 lower probability.</p>
 </section>
-<section id="plotting-the-marginal-effects" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-the-marginal-effects">Plotting the marginal effects</h2>
-<p><code>store(stub)</code> saves the table as stored estimates so that <code>esttab</code> can be used to make publication-ready tables and <code>coefplot</code> can be used to plot them. With <code>by()</code> or <code>covariates()</code> there is one coefficient per level, so a plot of the effect of gender across the range of age is <code>mecompare i.woman, covariates(age=(20(5)70)) store(gap)</code> followed by <code>coefplot gap_m1, vertical yline(0)</code>. Plots of <em>predictions</em> are not <code>mecompare</code>’s job; those stay with <code>margins</code> and <code>marginsplot</code>, exactly as in the article and the associated replication files.</p>
 </section>
-<section id="translating-the-2019-files" class="level2">
-<h2 class="anchored" data-anchor-id="translating-the-2019-files">Translating the 2019 files</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">In the replication files</th>
-<th style="text-align: left;">With <code>mecompare</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>margins woman, at(age=(25 30)) post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (3 - 1) - (4 - 2)</code></td>
-<td style="text-align: left;"><code>mecompare age, start(age=25) amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins woman, at(age=gen(age)) at(age=gen(age+5)) post</code> then the three <code>mlincom</code> lines</td>
-<td style="text-align: left;"><code>mecompare age, amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins, dydx(woman) at(age=(25 55)) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(25 55))</code> then <code>metest 2 - 1</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins, dydx(woman) at(age=(18(2)72))</code> then <code>marginsplot</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(18(2)72)) store(gap)</code> then <code>coefplot gap_m1, vertical</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins parrole#woman, post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (1 - 2) - (3 - 4)</code></td>
-<td style="text-align: left;"><code>mecompare i.parrole, by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins educ, dydx(woman) pwcompare(pve)</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, by(educ)</code> then <code>metest 1 = 2 = 3 = 4 = 5</code> and <code>metest 1 - 2</code>, …</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins woman, at(role=gen(role)) at(role=gen(role + 1)) post</code> then <code>mlincom</code></td>
-<td style="text-align: left;"><code>mecompare role, by(woman) uncentered</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins woman, dydx(role) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare role, by(woman) amount(rate)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>mchange year1976 conviewSS</code></td>
-<td style="text-align: left;"><code>mecompare year1976 conviewSS, amount(sd) uncentered</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins, dydx(conviewSS) at(year=(0 40)) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare conviewSS, covariates(year1976=(0 40)) amount(rate)</code> then <code>metest 2 - 1</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins, at(year1976=gen(year1976) conview=(-1 1)) at(year1976=gen(year1976 + 2) conview=(-1 1)) post</code> then <code>mlincom</code></td>
-<td style="text-align: left;"><code>mecompare year1976, covariates(conviewSS=(-1 1)) amount(2) uncentered</code> then <code>metest 1 - 2</code></td>
-</tr>
-</tbody>
-</table>
-<p>In each case the <code>models()</code> option names the stored model, or is omitted when the model is the one in memory.</p>
+<section id="summary-measures-section-2" class="level2">
+<h2 class="anchored" data-anchor-id="summary-measures-section-2">Summary measures (Section 2)</h2>
+<p>The rest of the chapter’s calculations use a logit of employment status on age, gender, years of education, and race-ethnicity, for all respondents.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> employed c.age i.woman c.edyrs i.race4, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> empmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="marginal-effect-at-the-mean-mem" class="level3">
+<h3 class="anchored" data-anchor-id="marginal-effect-at-the-mean-mem">Marginal effect at the mean (MEM)</h3>
+<p>A MEM holds every variable in the model at its sample mean: the focal variable starts at its mean (<code>start(atmeans)</code>) and the control variables are held at theirs (<code>covariates(atmeans)</code>, or simply <code>atmeans</code>). Here the change is one standard deviation of age, centered on the mean – half a standard deviation below to half above – which is <code>mecompare</code>’s default for any amount:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod) amount(<span class="fu">sd</span>) <span class="bn">start</span>(atmeans) covariates(atmeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod=68050)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + SD                         |                                       
+                          empmod |     1     -0.186      0.002      0.000</code></pre>
+</div>
+<p>For an average person, a standard deviation increase in age (about 18 years) is associated with a 0.19 lower probability of being employed.</p>
+</section>
+<section id="average-marginal-effect-ame" class="level3">
+<h3 class="anchored" data-anchor-id="average-marginal-effect-ame">Average marginal effect (AME)</h3>
+<p>An AME calculates the change for every observation, starting from its own values, and averages. It is the default: nothing needs to be specified beyond the amount of change. The chapter reports the AME of a one-year increase and of a standard-deviation increase:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod=68050)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 1                          |                                       
+                          empmod |     1     -0.009      0.000      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod=68050)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + SD                         |                                       
+                          empmod |     1     -0.153      0.001      0.000</code></pre>
+</div>
+<p>On average, an additional year of age is associated with a 0.01 lower probability of being employed, and a standard-deviation increase in age with a 0.15 lower probability. As the chapter notes, the AME and MEM rarely differ by more than a small amount; the preference for the AME is its cleaner interpretation.</p>
+</section>
+<section id="marginal-effects-at-representative-values-mers" class="level3">
+<h3 class="anchored" data-anchor-id="marginal-effects-at-representative-values-mers">Marginal effects at representative values (MERs)</h3>
+<p>A MER puts the focal variable at a value of substantive interest – the chapter’s example is 55, an ideal type of “middle age” – and calculates the change from there. <code>start(age=55)</code> sets everyone to 55, and <code>uncentered</code> runs the change upward from 55 (to 56 for a one-unit change, and to about 73 for a standard-deviation change). The other variables in the model stay at their observed values and the effect is averaged over the sample, as in the chapter’s replication code; add <code>atmeans</code> to hold them at their means instead, as in the chapter’s Equations 24–25.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod) <span class="bn">start</span>(age=55) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod=68050)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 1 (uncentered)             |                                       
+                          empmod |     1     -0.010      0.000      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod) <span class="bn">start</span>(age=55) amount(<span class="fu">sd</span>) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod=68050)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + SD (uncentered)            |                                       
+                          empmod |     1     -0.176      0.002      0.000</code></pre>
+</div>
+</section>
+<section id="ideal-types" class="level3">
+<h3 class="anchored" data-anchor-id="ideal-types">Ideal types</h3>
+<p>Ideal types extend the idea from one focal variable to a cluster of characteristics. The chapter adds parenthood and number of children to the model and defines two ideal types: a “middle-aged mother” (age 55, a woman, a parent, two children) and a “young single man” (age 25, a man, not a parent, no children). <code>covariates()</code> sets the characteristics of each ideal type, and <code>start(age=55) amount(5) uncentered</code> is the change from 55 to 60 for the first and <code>start(age=25)</code> the change from 25 to 30 for the second. Each <code>mecompare</code> call is one ideal type, so the question “is the effect of aging the same for each?” is answered by running both:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> employed c.age i.woman i.parent c.numchild c.edyrs i.race4, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> empmod2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod2) <span class="bn">start</span>(age=55) amount(5) uncentered <span class="co">///</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>          covariates(woman=1 parent=1 numchild=2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod2=67869)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 5 (uncentered)             |                                       
+                         empmod2 |     1     -0.054      0.001      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod2) <span class="bn">start</span>(age=25) amount(5) uncentered <span class="co">///</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>          covariates(woman=0 parent=0 numchild=0)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(employed)
+
+Marginal effects (N_empmod2=67869)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 5 (uncentered)             |                                       
+                         empmod2 |     1     -0.033      0.000      0.000</code></pre>
+</div>
+<p>Aging five years is predicted to reduce the probability of employment for both ideal types, by about 0.05 for middle-aged mothers and about 0.03 for young single men. The predicted probabilities <em>for</em> each ideal type (Equations 26–27 of the chapter) are predictions rather than marginal effects, and stay with <code>margins, at(age=55 woman=1 parent=1 numchild=2)</code>.</p>
+</section>
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
 <blockquote class="blockquote">
-<p>Mize, Trenton D. 2019. “Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.” <em>Sociological Science</em> 6: 81–117. <a href="https://doi.org/10.15195/v6.a4" class="uri">https://doi.org/10.15195/v6.a4</a></p>
+<p>Mize, Trenton D. and Bing Han. Forthcoming. “Marginal effects: flexible methods for interpretation across linear and nonlinear models.” In <em>Understanding Data Modeling and Data Analysis</em>, edited by David Weakliem. Edward Elgar Publishing.</p>
 </blockquote>
-<p>The article’s data and replication files are at <a href="https://www.trentonmize.com/research/mize_2019_SocSci">trentonmize.com/research</a>.</p>
 
 
 </section>
@@ -850,13 +993,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/examples/chapter-groups.html" class="pagination-link" aria-label="Group comparisons">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Group comparisons</span>
+      <a href="../../mecompare/examples/totalme-across-models.html" class="pagination-link" aria-label="Comparing Total MEs across models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Comparing Total MEs across models</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/interactions/linear-model.html" class="pagination-link" aria-label="Nonlinear effects in a linear model">
-        <span class="nav-page-text">Nonlinear effects in a linear model</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/examples/chapter-interactions.html" class="pagination-link" aria-label="Tests of interaction">
+        <span class="nav-page-text">Tests of interaction</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

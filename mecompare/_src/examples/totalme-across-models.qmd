@@ -1,0 +1,72 @@
+---
+title: "Comparing Total MEs across models"
+subtitle: "Example 5.2.e of Mize and Han (2025): mediation/attenuation with a multi-category outcome"
+---
+<<dd_version: 2>>
+
+With a nominal or ordinal outcome, each predictor has one marginal effect per
+outcome category, so a cross-model comparison of "the" effect of a predictor
+means comparing several effects at once. The Total ME of Mize and Han (2025)
+sums the absolute effects across the outcome categories (and halves the sum)
+to give one number: the total probability mass the predictor moves. The
+`totalme` option of `mecompare` adds that summary above the per-category
+effects, and with two models in `models()` the **Difference** row tests
+whether the Total ME changed.
+
+Here the question is whether the total effect of a college degree on
+self-rated health shrinks once family income is in the model. The outcome
+has five ordered categories and is fit with a multinomial logit on the
+2000--2021 GSS. Store the model without income and the model with it, and
+name both in `models()`; the models are combined with
+[`suest2`](../../suest2/index.html) so that the test of the difference
+accounts for the two models being estimated on the same data.
+
+```{.stata-run}
+<<dd_do>>
+use "https://tdmize.github.io/data/data/cda_gss", clear
+drop if missing(healthR, college, race4, age, woman, parent, married, faminc)
+drop if year < 2000 | year > 2021
+
+quietly mlogit healthR i.college i.race4 c.age i.woman i.parent i.married, vce(robust)
+estimates store basemod
+
+quietly mlogit healthR i.college i.race4 c.age i.woman i.parent i.married c.faminc, vce(robust)
+estimates store medmod
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.college, models(basemod medmod) totalme
+<</dd_do>>
+```
+
+The first block of the table is the Total ME of a college degree in each
+model and its **Difference**: the part of the total college effect that
+family income accounts for, with a standard error and p-value. The blocks
+beneath it are the marginal effects of college on each health category,
+each with its own cross-model difference, so the table shows both the
+summary and which categories the attenuation comes from. As on every
+`mecompare` table the rows are numbered, so
+[`metest`](../../metest/index.html) can express the attenuation as a
+proportion of the baseline Total ME:
+
+```{.stata-run}
+<<dd_do>>
+metest (1 - 2) / 1
+<</dd_do>>
+```
+
+The same difference is what `totalme college, models(basemod medmod)`
+reports; `mecompare` adds the per-category effects and the row numbers for
+`metest`. `totalme` works the same way for continuous predictors (with
+`amount()` setting the size of the change) and, for nominal predictors,
+reports a Total ME inequality; the
+[Options](../options.html#meinequality-and-totalme-summary-measures) page
+has an example of each.
+
+## Reference
+
+> Mize, Trenton D. and Bing Han. 2025. "Inequality and Total Effect Summary
+> Measures for Nominal and Ordinal Variables." *Sociological Science* 12:
+> 115--157.

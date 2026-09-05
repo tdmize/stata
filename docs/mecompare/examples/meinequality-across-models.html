@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Interaction effects – Stata software — Trenton D. Mize</title>
+<title>Comparing ME inequalities across models – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,8 +71,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/interactions/linear-model.html" rel="next">
-<link href="../../mecompare/examples/chapter-groups.html" rel="prev">
+<link href="../../mecompare/examples/totalme-across-models.html" rel="next">
+<link href="../../mecompare/examples/within-model.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -87,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Mize &amp; Han (2025)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/meinequality-across-models.html">Comparing ME inequalities across models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -209,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/meinequality-across-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/meinequality-across-models.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Comparing ME inequalities across models</span></a>
   </div>
 </li>
@@ -263,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -311,10 +346,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-three-ingredients" id="toc-the-three-ingredients" class="nav-link active" data-scroll-target="#the-three-ingredients">The three ingredients</a></li>
-  <li><a href="#testing-the-second-difference" id="toc-testing-the-second-difference" class="nav-link" data-scroll-target="#testing-the-second-difference">Testing the second difference</a></li>
-  <li><a href="#plotting-the-marginal-effects" id="toc-plotting-the-marginal-effects" class="nav-link" data-scroll-target="#plotting-the-marginal-effects">Plotting the marginal effects</a></li>
-  <li><a href="#translating-the-2019-files" id="toc-translating-the-2019-files" class="nav-link" data-scroll-target="#translating-the-2019-files">Translating the 2019 files</a></li>
+  <li><a href="#nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses" id="toc-nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses" class="nav-link active" data-scroll-target="#nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses">Nested models: how much of a racial-ethnic inequality is accounted for by SES?</a></li>
+  <li><a href="#separate-samples-has-the-effect-of-religion-changed-over-time" id="toc-separate-samples-has-the-effect-of-religion-changed-over-time" class="nav-link" data-scroll-target="#separate-samples-has-the-effect-of-religion-changed-over-time">Separate samples: has the effect of religion changed over time?</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul>
 </nav>
@@ -326,10 +359,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Interactions</a></li><li class="breadcrumb-item"><a href="../../mecompare/interactions/index.html">Overview</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Mize &amp; Han (2025)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/meinequality-across-models.html">Comparing ME inequalities across models</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Interaction effects</h1>
-<p class="subtitle lead">Testing nonlinear interactions with mecompare: the approach of Mize (2019)</p>
+<h1 class="title">Comparing ME inequalities across models</h1>
+<p class="subtitle lead">Examples 4.3.b and 4.3.a of Mize and Han (2025): nested models, and separate samples</p>
 </div>
 
 
@@ -346,98 +379,134 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Mize (2019) shows that in nonlinear models – and in linear models with nonlinearities – the coefficient on a product term is not a test of interaction on the metric of interest. Interaction should instead be assessed in the natural metric of the outcome by (1) plotting the predictions, (2) computing the marginal effect of one variable at chosen levels of the other, and (3) testing whether those marginal effects differ: a <em>second difference</em>. It is also important to look at both sides of an interaction – the effect of X across levels of Z, and the effect of Z across levels of X.</p>
-<p>The 2019 replication files do all of this with <code>margins</code> followed by <code>mlincom</code>. <code>mecompare</code> now automates these tests much more simply and with a wider range of capabilities. Second-difference tests can be performed with a single call to <code>metest</code>. The pages in this section reproduce the article’s examples, section by section:</p>
-<ul>
-<li><a href="linear-model.html">Nonlinear effects in a linear model</a>: age, age², and gender (Table 2, Figures 1–2).</li>
-<li><a href="nominal-by-nominal.html">Two nominal variables</a>: gender × parenthood and gender × education (Tables 3–4, Figures 12–13).</li>
-<li><a href="nominal-by-continuous.html">A nominal and a continuous variable</a>: gender × social roles (Figure 14).</li>
-<li><a href="continuous-by-continuous.html">Two continuous variables</a>: political views × survey year (Figures 15–17).</li>
-</ul>
-<p>The same methods, applied to the examples of the marginal effects chapter of Mize and Han (forthcoming) – including a multi-category outcome and a three-way interaction – are on the <a href="../examples/chapter-interactions.html">Tests of interaction</a> page.</p>
-<section id="the-three-ingredients" class="level2">
-<h2 class="anchored" data-anchor-id="the-three-ingredients">The three ingredients</h2>
-<p><strong>A nominal moderator: <code>by()</code>.</strong> <code>by()</code> reports the marginal effect of a focal variable at each level of <code>by()</code>, e.g.&nbsp;<code>by(woman)</code> reports one marginal effect for each level of <code>woman</code>, computed as a counterfactual: the whole sample set to each level in turn, then averaged. This is what <code>margins woman, at(...)</code> followed by <code>mlincom</code> does in the 2019 files. (<code>over(woman)</code> instead uses only the observations in each group; see <code>help mecompare</code> for the distinction.)</p>
-<p><strong>A continuous moderator: <code>covariates(z=(numlist))</code>.</strong> E.g. <code>covariates(age=(25 55))</code> reports the marginal effect of the focal variable with everyone set to age 25, then to age 55, as numbered rows in one table. Any numlist works, so <code>covariates(age=(20(5)70))</code> gives the effect across the range of the moderator – the numbers behind the “marginal effect of X across Z” plots.</p>
-<p><strong>Where to evaluate a continuous moderator.</strong> When there is no substantive reason to pick particular values, a good default is the 10th, 50th, and 90th percentiles of the moderator: a low, a typical, and a high value that are all in the range of the data. <code>summarize z, detail</code> returns them as <code>r(p10)</code>, <code>r(p50)</code>, and <code>r(p90)</code>, so the pattern is <code>mecompare x, covariates(z=(`r(p10)' `r(p50)' `r(p90)'))</code> followed by <code>metest 1 = 2 = 3</code> for the joint test and <code>metest 3 - 1</code> for the change from the 10th to the 90th percentile. The pages with a continuous moderator each show it.</p>
-<p><strong>Where and how far the focal variable moves: <code>start()</code>, <code>amount()</code>, <code>uncentered</code>.</strong> <code>start(age=25) amount(5)</code> is the change from 25 to 30; <code>amount(5)</code> alone is a five-unit change from each observation’s own value; <code>amount(sd)</code> is a standard-deviation change and <code>amount(rate)</code> the instantaneous rate (the <code>dydx()</code> of <code>margins</code>). By default a change is centered on the starting value (half below, half above); <code>uncentered</code> makes it run upward from the start.</p>
+<p>The ME inequality of Mize and Han (2025) summarizes the effect of a nominal predictor in one number: the average absolute difference in the outcome across its categories. The <code>meinequality</code> option of <code>mecompare</code> adds that summary to the table, and with two models in <code>models()</code> the summary is calculated for each model and the <strong>Difference</strong> row tests whether the inequality changed. The two most common uses are shown here: nested models (how much of an inequality is accounted for by mediators) and models fit to separate samples (has an inequality changed over time). Both examples also appear on the <a href="../../meinequality/index.html"><code>meinequality</code></a> site, where the same tests are run with the <code>meinequality</code> command.</p>
+<section id="nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses" class="level2">
+<h2 class="anchored" data-anchor-id="nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses">Nested models: how much of a racial-ethnic inequality is accounted for by SES?</h2>
+<p>How much of the racial-ethnic inequality in functional limitations is accounted for by education, wealth, and income? Fit the model with and without those variables, store both, and name them in <code>models()</code>. The models are combined with <a href="../../suest2/index.html"><code>suest2</code></a> so that the test of the difference accounts for the two models being estimated on the same data. The outcome is a count of limitations in instrumental activities of daily living from the Health and Retirement Study.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_hrs"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(cda_hrs.dta | Health &amp; Retirement Study 2020)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(iadl, race4cat, collegeB, wealth_w, income_w)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(114 observations deleted)
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> iadl i.race4cat, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> basemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> iadl i.race4cat i.collegeB c.wealth_w c.income_w, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> medmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare i.race4cat, models(basemod medmod) meinequality</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (basemod) is:
+     nbreg iadl i.race4cat
+Model 2 (medmod) is:
+     nbreg iadl i.race4cat i.collegeB c.wealth_w c.income_w
+
+
+Predicting: Predicted mean of iadl
+
+Marginal effects and cross-model differences (N_basemod=15609) (N_medmod=15609)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+race4cat                         |                                       
+               ME Inequality     |                                       
+                         basemod |     1      0.046      0.012      0.000
+                          medmod |     2      0.038      0.011      0.001
+                      Difference |     3      0.009      0.022      0.698
+     Non-Hispan - Non-Hispan     |                                       
+                         basemod |     4      0.053      0.018      0.004
+                          medmod |     5     -0.049      0.018      0.006
+                      Difference |     6      0.102      0.008      0.000
+       Hispanic - Non-Hispan     |                                       
+                         basemod |     7      0.074      0.022      0.001
+                          medmod |     8     -0.060      0.019      0.002
+                      Difference |     9      0.134      0.010      0.000
+          Other - Non-Hispan     |                                       
+                         basemod |    10      0.033      0.036      0.349
+                          medmod |    11     -0.010      0.034      0.776
+                      Difference |    12      0.043      0.011      0.000</code></pre>
+</div>
+<p>The first block of the table is the ME inequality in each model and its <strong>Difference</strong>: the reduction in racial-ethnic inequality once education, wealth, and income are in the model, with a standard error and p-value. The blocks beneath it are the contrasts with the base category that the ME inequality summarizes, each with its own cross-model difference. Because every row is numbered, <a href="../../metest/index.html"><code>metest</code></a> can express the reduction as a proportion of the baseline inequality, with a standard error:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+race4cat_MEineq                  |                                
+    (basemod - medmod) / basemod |     0.187      0.436      0.667 </code></pre>
+</div>
+<p>The same difference is what <code>meinequality race4cat, models(basemod medmod)</code> reports; <code>mecompare</code> adds the underlying contrasts and the row numbers for <code>metest</code>.</p>
 </section>
-<section id="testing-the-second-difference" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-second-difference">Testing the second difference</h2>
-<p>Every row of the <code>mecompare</code> table is numbered, and <code>metest</code> tests any combination of rows: <code>metest 1 - 2</code> is the second difference between the marginal effects in rows 1 and 2, <code>metest 1 = 2 = 3</code> is a joint test that the first three marginal effects in the table are equal, and <code>metest 2 - 1, add rowname("...")</code> accumulates results into one table. The rows are posted to <code>e(b)</code> and <code>e(V)</code> with their full covariance, so the tests are the Wald tests recommended in the article’s equation 6.</p>
-</section>
-<section id="plotting-the-marginal-effects" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-the-marginal-effects">Plotting the marginal effects</h2>
-<p><code>store(stub)</code> saves the table as stored estimates so that <code>esttab</code> can be used to make publication-ready tables and <code>coefplot</code> can be used to plot them. With <code>by()</code> or <code>covariates()</code> there is one coefficient per level, so a plot of the effect of gender across the range of age is <code>mecompare i.woman, covariates(age=(20(5)70)) store(gap)</code> followed by <code>coefplot gap_m1, vertical yline(0)</code>. Plots of <em>predictions</em> are not <code>mecompare</code>’s job; those stay with <code>margins</code> and <code>marginsplot</code>, exactly as in the article and the associated replication files.</p>
-</section>
-<section id="translating-the-2019-files" class="level2">
-<h2 class="anchored" data-anchor-id="translating-the-2019-files">Translating the 2019 files</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">In the replication files</th>
-<th style="text-align: left;">With <code>mecompare</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>margins woman, at(age=(25 30)) post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (3 - 1) - (4 - 2)</code></td>
-<td style="text-align: left;"><code>mecompare age, start(age=25) amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins woman, at(age=gen(age)) at(age=gen(age+5)) post</code> then the three <code>mlincom</code> lines</td>
-<td style="text-align: left;"><code>mecompare age, amount(5) uncentered by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins, dydx(woman) at(age=(25 55)) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(25 55))</code> then <code>metest 2 - 1</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins, dydx(woman) at(age=(18(2)72))</code> then <code>marginsplot</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, covariates(age=(18(2)72)) store(gap)</code> then <code>coefplot gap_m1, vertical</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins parrole#woman, post</code> then <code>mlincom 3 - 1</code>, <code>mlincom 4 - 2</code>, <code>mlincom (1 - 2) - (3 - 4)</code></td>
-<td style="text-align: left;"><code>mecompare i.parrole, by(woman)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins educ, dydx(woman) pwcompare(pve)</code></td>
-<td style="text-align: left;"><code>mecompare i.woman, by(educ)</code> then <code>metest 1 = 2 = 3 = 4 = 5</code> and <code>metest 1 - 2</code>, …</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins woman, at(role=gen(role)) at(role=gen(role + 1)) post</code> then <code>mlincom</code></td>
-<td style="text-align: left;"><code>mecompare role, by(woman) uncentered</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins woman, dydx(role) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare role, by(woman) amount(rate)</code> then <code>metest 1 - 2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>mchange year1976 conviewSS</code></td>
-<td style="text-align: left;"><code>mecompare year1976 conviewSS, amount(sd) uncentered</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>margins, dydx(conviewSS) at(year=(0 40)) post</code> then <code>mlincom 2 - 1</code></td>
-<td style="text-align: left;"><code>mecompare conviewSS, covariates(year1976=(0 40)) amount(rate)</code> then <code>metest 2 - 1</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>margins, at(year1976=gen(year1976) conview=(-1 1)) at(year1976=gen(year1976 + 2) conview=(-1 1)) post</code> then <code>mlincom</code></td>
-<td style="text-align: left;"><code>mecompare year1976, covariates(conviewSS=(-1 1)) amount(2) uncentered</code> then <code>metest 1 - 2</code></td>
-</tr>
-</tbody>
-</table>
-<p>In each case the <code>models()</code> option names the stored model, or is omitted when the model is the one in memory.</p>
+<section id="separate-samples-has-the-effect-of-religion-changed-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="separate-samples-has-the-effect-of-religion-changed-over-time">Separate samples: has the effect of religion changed over time?</h2>
+<p>When the two models are fit to different samples – different groups, or different time periods – add the <code>groups</code> option. Here the question is whether religious-tradition differences in willingness to let a gay man speak in public were larger before 1980 than after 2010. Two logits are fit, one per period, and <code>groupnames()</code> labels the rows.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(cda_gss.dta |  GSS 1972-2021 CDA - Categorical Data Analysis | date created 2023)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(spkhomo, reltrad, age, woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(30,806 observations deleted)
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> spkhomo i.reltrad c.age i.woman <span class="kw">if</span> <span class="fu">year</span> &lt; 1980, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> premod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> spkhomo i.reltrad c.age i.woman <span class="kw">if</span> <span class="fu">year</span> &gt;= 2010, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> postmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mecompare i.reltrad, models(premod postmod) groups groupnames(Pre1980 Post2010) <span class="co">///</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>          meinequality(unweighted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (premod) is:
+     logit spkhomo i.reltrad c.age i.woman
+Model 2 (postmod) is:
+     logit spkhomo i.reltrad c.age i.woman
+
+
+Predicting: Pr(spkhomo)
+
+Marginal effects and cross-model differences (N_Pre1980=5593) (N_Post2010=8226)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+reltrad                          |                                       
+              Unwgt ME Ineq.     |                                       
+                         Pre1980 |     1      0.156      0.011      0.000
+                        Post2010 |     2      0.072      0.007      0.000
+                      Difference |     3      0.083      0.013      0.000
+     Mainline P - Evangelica     |                                       
+                         Pre1980 |     4      0.212      0.017      0.000
+                        Post2010 |     5      0.118      0.011      0.000
+                      Difference |     6      0.094      0.021      0.000
+     Black Prot - Evangelica     |                                       
+                         Pre1980 |     7      0.075      0.026      0.004
+                        Post2010 |     8     -0.003      0.018      0.883
+                      Difference |     9      0.078      0.032      0.014
+       Catholic - Evangelica     |                                       
+                         Pre1980 |    10      0.205      0.018      0.000
+                        Post2010 |    11      0.094      0.011      0.000
+                      Difference |    12      0.111      0.021      0.000
+         Jewish - Evangelica     |                                       
+                         Pre1980 |    13      0.366      0.030      0.000
+                        Post2010 |    14      0.150      0.017      0.000
+                      Difference |    15      0.216      0.034      0.000
+     Other Fait - Evangelica     |                                       
+                         Pre1980 |    16      0.176      0.038      0.000
+                        Post2010 |    17      0.070      0.017      0.000
+                      Difference |    18      0.107      0.042      0.011
+     Nonaffilia - Evangelica     |                                       
+                         Pre1980 |    19      0.325      0.025      0.000
+                        Post2010 |    20      0.125      0.010      0.000
+                      Difference |    21      0.200      0.027      0.000</code></pre>
+</div>
+<p><code>groups</code> tells <code>mecompare</code> that each model’s estimation sample is a different group, so each ME inequality is averaged over that period’s own respondents, and the <strong>Difference</strong> row tests whether the inequality changed. It is significantly smaller after 2010 than before 1980: religious traditions have converged on this question.</p>
+<p><code>unweighted</code> is used so that the comparison reflects the marginal effects alone. The default ME inequality weights each pairwise contrast by the share of the sample in the two categories being contrasted; with <code>groups</code>, each model uses the shares in <em>its own</em> sample, so the weighted difference would also pick up the change in the religious makeup of the GSS between the two periods. <code>meinequality(all)</code> reports both statistics.</p>
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
 <blockquote class="blockquote">
-<p>Mize, Trenton D. 2019. “Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.” <em>Sociological Science</em> 6: 81–117. <a href="https://doi.org/10.15195/v6.a4" class="uri">https://doi.org/10.15195/v6.a4</a></p>
+<p>Mize, Trenton D. and Bing Han. 2025. “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” <em>Sociological Science</em> 12: 115–157.</p>
 </blockquote>
-<p>The article’s data and replication files are at <a href="https://www.trentonmize.com/research/mize_2019_SocSci">trentonmize.com/research</a>.</p>
 
 
 </section>
@@ -850,13 +919,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/examples/chapter-groups.html" class="pagination-link" aria-label="Group comparisons">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Group comparisons</span>
+      <a href="../../mecompare/examples/within-model.html" class="pagination-link" aria-label="Comparing effects across predictors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Comparing effects across predictors</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/interactions/linear-model.html" class="pagination-link" aria-label="Nonlinear effects in a linear model">
-        <span class="nav-page-text">Nonlinear effects in a linear model</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/examples/totalme-across-models.html" class="pagination-link" aria-label="Comparing Total MEs across models">
+        <span class="nav-page-text">Comparing Total MEs across models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

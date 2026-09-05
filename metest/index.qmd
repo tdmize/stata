@@ -35,9 +35,10 @@ net install mecompare, from("https://tdmize.github.io/data") replace
 - The [help file](help.html) is on the site, rendered from the installed
   version (`help metest` in Stata).
 - The `mecompare` pages use `metest` throughout, especially the
-  [within-model example](../mecompare/examples/within-model.html) and the
-  [interactions pages](../mecompare/interactions/index.html), where every
-  second difference is a `metest` line.
+  [effect sizes across predictors](../mecompare/examples/within-model.html)
+  example, where the tests are accumulated into one table with `add` and
+  `abs()`, and the [interactions pages](../mecompare/interactions/index.html),
+  where every second difference is a `metest` line.
 
 ## Basic use
 

@@ -27,7 +27,7 @@ website:
     - id: mecompare
       title: "mecompare"
       style: docked
-      collapse-level: 2
+      collapse-level: 3
       tools:
         - icon: house-door
           text: "trentonmize.com"
@@ -43,13 +43,24 @@ website:
         - mecompare/plotting.qmd
         - section: "Examples"
           contents:
-            - mecompare/examples/mediation.qmd
-            - mecompare/examples/nested-models.qmd
-            - mecompare/examples/alternative-predictors.qmd
-            - mecompare/examples/different-outcomes.qmd
-            - mecompare/examples/model-types.qmd
-            - mecompare/examples/groups.qmd
-            - mecompare/examples/within-model.qmd
+            - section: "Mize, Doan & Long (2019)"
+              contents:
+                - mecompare/examples/mediation.qmd
+                - mecompare/examples/nested-models.qmd
+                - mecompare/examples/alternative-predictors.qmd
+                - mecompare/examples/different-outcomes.qmd
+                - mecompare/examples/model-types.qmd
+                - mecompare/examples/groups.qmd
+            - section: "Mize & Han (2025)"
+              contents:
+                - mecompare/examples/within-model.qmd
+                - mecompare/examples/meinequality-across-models.qmd
+                - mecompare/examples/totalme-across-models.qmd
+            - section: "Mize & Han (forthcoming)"
+              contents:
+                - mecompare/examples/chapter-summary-measures.qmd
+                - mecompare/examples/chapter-interactions.qmd
+                - mecompare/examples/chapter-groups.qmd
         - section: "Interactions"
           contents:
             - text: "Overview"

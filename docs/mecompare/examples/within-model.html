@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Within a single model – Stata software — Trenton D. Mize</title>
+<title>Comparing effects across predictors – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/interactions/index.html" rel="next">
+<link href="../../mecompare/examples/meinequality-across-models.html" rel="next">
 <link href="../../mecompare/examples/groups.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Within a single model</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Mize &amp; Han (2025)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Comparing effects across predictors</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -180,6 +180,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Mize, Doan &amp; Long (2019)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
@@ -216,23 +225,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Separate samples or groups</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Mize &amp; Han (2025)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/examples/within-model.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Within a single model</span></a>
+ <span class="menu-text">Comparing effects across predictors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/examples/meinequality-across-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparing ME inequalities across models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/examples/totalme-across-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparing Total MEs across models</span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Interactions</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Mize &amp; Han (forthcoming)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/examples/chapter-summary-measures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MEMs, AMEs, MERs, and ideal types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/examples/chapter-interactions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tests of interaction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/examples/chapter-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Group comparisons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
@@ -279,7 +342,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
     </div>
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fit-and-store-the-model" id="toc-fit-and-store-the-model" class="nav-link active" data-scroll-target="#fit-and-store-the-model">1. Fit and store the model</a></li>
+  <li><a href="#one-call-for-every-predictor" id="toc-one-call-for-every-predictor" class="nav-link" data-scroll-target="#one-call-for-every-predictor">2. One call for every predictor</a></li>
+  <li><a href="#test-the-differences-in-effect-size" id="toc-test-the-differences-in-effect-size" class="nav-link" data-scroll-target="#test-the-differences-in-effect-size">3. Test the differences in effect size</a></li>
+  <li><a href="#alternative-a-two-standard-deviation-change" id="toc-alternative-a-two-standard-deviation-change" class="nav-link" data-scroll-target="#alternative-a-two-standard-deviation-change">Alternative: a two-standard-deviation change</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -288,10 +361,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../mecompare/examples/mediation.html">Examples</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Within a single model</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Mize &amp; Han (2025)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Comparing effects across predictors</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Within a single model</h1>
-<p class="subtitle lead">Example 7: comparing the effects of different variables</p>
+<h1 class="title">Comparing effects across predictors</h1>
+<p class="subtitle lead">Example 4.2 of Mize and Han (2025): effect sizes within a single model</p>
 </div>
 
 
@@ -308,48 +381,174 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>mecompare</code> can be used to calculate marginal effects within a single model, and compare those effects using <a href="../../metest/index.html"><code>metest</code></a>. Here: does a college degree or being married have the larger association with being very happy?</p>
+<p>What social factors most strongly pattern political views? Answering that question means comparing effect sizes across predictors within one model, which is complicated by predictors on different metrics (e.g., age versus income), predictors of different types (binary, nominal, continuous), and by nonlinearities in the effects of continuous predictors. Mize and Han (2025) suggest putting every predictor on the same footing: the effect of the <em>entire range</em> of the variable.</p>
+<ul>
+<li>For a <strong>binary</strong> predictor, the 0 versus 1 contrast already summarizes the whole of its effect.</li>
+<li>For a <strong>nominal</strong> predictor, the <em>ME inequality</em> – the average absolute difference in the outcome across its categories – summarizes its effect in one number (see <a href="../../meinequality/index.html"><code>meinequality</code></a>).</li>
+<li>For a <strong>continuous</strong> predictor, use the change across its <em>trimmed range</em>, from the 5th to the 95th percentile. Like the binary contrast and the ME inequality, this expresses the effect of the entire range of the variable, while protecting against outliers. A two-standard-deviation change (Gelman 2008) is an alternative that is sometimes recommended for comparing continuous with binary predictors; see the end of this page.</li>
+</ul>
+<p><code>mecompare</code> calculates all three kinds of effect in a single call, and <a href="../../metest/index.html"><code>metest</code></a> then tests any pair of effects against each other. The example uses the 2021 GSS: a linear regression of political views (1 = extremely liberal to 7 = extremely conservative) on age (with a squared term), gender, race-ethnicity, and social class.</p>
+<section id="fit-and-store-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="fit-and-store-the-model">1. Fit and store the model</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">year</span> &lt; 2000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(38,116 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> employed != 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(9,556 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(5,578 observations deleted)
-
-. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.race i.reltrad <span class="co">///</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              i.<span class="fu">year</span> c.age##c.age c.occprest, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> happymod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(cda_gss.dta |  GSS 1972-2021 CDA - Categorical Data Analysis | date created 2023)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2021</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(64,814 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(polviews, race4, woman, <span class="kw">class</span>, age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(424 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">clonevar</span> conpolviews = polviews</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> conpolviews c.age##c.age i.woman i.race4 i.<span class="kw">class</span>, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> polmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="one-call-for-every-predictor" class="level2">
+<h2 class="anchored" data-anchor-id="one-call-for-every-predictor">2. One call for every predictor</h2>
+<p><code>amount(trimrange)</code> applies to the continuous variables in the varlist (here, age); <code>meinequality</code> adds the ME inequality above the contrasts of each nominal variable (race-ethnicity and class). Binary variables need nothing extra.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare i.college i.married, models(happymod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Predicting: Pr(vhappy)
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare age woman race4 <span class="kw">class</span>, models(polmod) amount(trimrange) meinequality</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
 
-Marginal effects (N_happymod=9216)
+Marginal effects (N_polmod=3608)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-college                          |                                       
-         College  - No Col D     |                                       
-                        happymod |     1      0.033      0.012      0.004
+age(5-95%)                       |                                       
+                          polmod |     1      0.784      0.083      0.000
 ---------------------------------+---------------------------------------
-married                          |                                       
-          Married - Not Marr     |                                       
-                        happymod |     2      0.200      0.010      0.000</code></pre>
+woman                            |                                       
+                 Women - Men     |                                       
+                          polmod |     2     -0.175      0.051      0.001
+---------------------------------+---------------------------------------
+race4                            |                                       
+                   ME Inequality |     3      0.172      0.049      0.000
+               Black - White     |                                       
+                          polmod |     4     -0.331      0.078      0.000
+               Other - White     |                                       
+                          polmod |     5     -0.129      0.105      0.216
+            Hispanic - White     |                                       
+                          polmod |     6      0.011      0.078      0.886
+---------------------------------+---------------------------------------
+class                            |                                       
+                   ME Inequality |     7      0.273      0.063      0.000
+     working cl - lower clas     |                                       
+                          polmod |     8     -0.021      0.091      0.814
+     middle cla - lower clas     |                                       
+                          polmod |     9     -0.279      0.091      0.002
+     upper clas - lower clas     |                                       
+                          polmod |    10     -0.536      0.162      0.001</code></pre>
 </div>
-<p><code>metest</code> takes an expression referring to the row numbers from the <code>#</code> column in the <code>mecompare</code> output. The difference between the two marginal effects, with its standard error:</p>
+<p>Reading the table:</p>
+<ul>
+<li><strong>Row 1</strong> is the trimmed-range effect of age. Everyone in the sample is set to the 5th percentile of age, then to the 95th percentile, and the average difference in predicted political views is the marginal effect – the same counterfactual logic as the 0 versus 1 contrast of a binary variable. With the squared term in the model the effect of age is nonlinear, but the trimmed-range change still summarizes it with a single number.</li>
+<li><strong>Row 2</strong> is the gender gap: the contrast for a binary variable.</li>
+<li><strong>Rows 3 and 7</strong> are the ME inequalities for race-ethnicity and class: on average, how far apart the racial-ethnic groups (or the social classes) are in their political views. The rows beneath each are the contrasts with the base category that the ME inequality summarizes. Add <code>pwcompare</code> to see all pairwise contrasts, or <code>meinequality(all)</code> to also report the unweighted ME inequality; the <a href="../options.html#meinequality-and-totalme-summary-measures">Options</a> page shows both.</li>
+</ul>
+<p>The 5th and 95th percentiles that define the trimmed range of age are:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">centile</span> age, <span class="kw">centile</span>(5 95)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                                          Binom. interp.   
+    Variable |       Obs  Percentile    Centile        [95% conf. interval]
+-------------+-------------------------------------------------------------
+         age |     3,608          5          25              25          26
+             |                   95          79              79          80</code></pre>
+</div>
+</section>
+<section id="test-the-differences-in-effect-size" class="level2">
+<h2 class="anchored" data-anchor-id="test-the-differences-in-effect-size">3. Test the differences in effect size</h2>
+<p><code>metest</code> refers to the row numbers in the <code>#</code> column. To compare pure effect sizes and ignore direction, take the absolute value of a signed effect before testing it: the trimmed-range effect of age and the ME inequalities are positive here, but the gender gap is negative. <code>add</code> accumulates the tests into one table, and <code>rowname()</code> labels each row.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest, <span class="kw">clear</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>metest 1 - <span class="fu">abs</span>(2), add rowname(<span class="st">"age - woman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-               married - college |     0.167      0.016      0.000 </code></pre>
+                     age - woman |     0.609      0.098      0.000 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 3,      add rowname(<span class="st">"age - race4"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+                     age - woman |     0.609      0.098      0.000 
+                     age - race4 |     0.612      0.094      0.000 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 7,      add rowname(<span class="st">"age - class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+                     age - woman |     0.609      0.098      0.000 
+                     age - race4 |     0.612      0.094      0.000 
+                     age - class |     0.511      0.101      0.000 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>metest 3 - <span class="fu">abs</span>(2), add rowname(<span class="st">"race4 - woman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+                     age - woman |     0.609      0.098      0.000 
+                     age - race4 |     0.612      0.094      0.000 
+                     age - class |     0.511      0.101      0.000 
+                   race4 - woman |    -0.003      0.069      0.971 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>metest 3 - 7,      add rowname(<span class="st">"race4 - class"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+                     age - woman |     0.609      0.098      0.000 
+                     age - race4 |     0.612      0.094      0.000 
+                     age - class |     0.511      0.101      0.000 
+                   race4 - woman |    -0.003      0.069      0.971 
+                   race4 - class |    -0.101      0.081      0.212 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>metest 7 - <span class="fu">abs</span>(2), add rowname(<span class="st">"class - woman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+                     age - woman |     0.609      0.098      0.000 
+                     age - race4 |     0.612      0.094      0.000 
+                     age - class |     0.511      0.101      0.000 
+                   race4 - woman |    -0.003      0.069      0.971 
+                   race4 - class |    -0.101      0.081      0.212 
+                   class - woman |     0.098      0.077      0.202 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>metest, <span class="bn">title</span>(<span class="st">"Effect size comparison of predictors of political views"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Effect size comparison of predictors of political views
+
+                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+                     age - woman |     0.609      0.098      0.000 
+                     age - race4 |     0.612      0.094      0.000 
+                     age - class |     0.511      0.101      0.000 
+                   race4 - woman |    -0.003      0.069      0.971 
+                   race4 - class |    -0.101      0.081      0.212 
+                   class - woman |     0.098      0.077      0.202 </code></pre>
 </div>
-<p>Any linear or nonlinear combination of rows works the same way – for example a ratio, <code>metest 2 / 1</code>, or a test that several effects are equal, <code>metest 1 = 2</code>.</p>
+<p>Age has a larger effect on political views than does gender, race-ethnicity, or social class. The effects of gender, race-ethnicity, and class are similar in size, with no significant differences among them.</p>
+</section>
+<section id="alternative-a-two-standard-deviation-change" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-a-two-standard-deviation-change">Alternative: a two-standard-deviation change</h2>
+<p><code>amount(2sd)</code> is the other common way to put a continuous variable on a footing comparable with a binary one. The two amounts summarize the effect of age differently. A two-standard-deviation change is centered on each observation’s own age (one SD below to one SD above) and then averaged over the sample, so it reflects where the observations are; the trimmed-range change is the same fixed change, from the 5th to the 95th percentile, for everyone. With a nonlinear effect the two can differ:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(polmod) amount(2sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_polmod=3608)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age + 2SD                        |                                       
+                          polmod |     1      0.496      0.053      0.000</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(polmod) amount(trimrange)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Linear prediction
+
+Marginal effects (N_polmod=3608)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age(5-95%)                       |                                       
+                          polmod |     1      0.784      0.083      0.000</code></pre>
+</div>
+<p>Mize and Han (2025) suggest the trimmed range as the more robust choice: the 5th and 95th percentiles are always values observed in the data, whereas a two-standard-deviation change can reach past the observed range of a skewed variable. Either amount can be combined with <code>meinequality</code> in the single call above.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<blockquote class="blockquote">
+<p>Mize, Trenton D. and Bing Han. 2025. “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” <em>Sociological Science</em> 12: 115–157.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Gelman, Andrew. 2008. “Scaling Regression Inputs by Dividing by Two Standard Deviations.” <em>Statistics in Medicine</em> 27(15): 2865–2873.</p>
+</blockquote>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,8 +963,8 @@ married                          |
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/interactions/index.html" class="pagination-link" aria-label="Overview">
-        <span class="nav-page-text">Overview</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/examples/meinequality-across-models.html" class="pagination-link" aria-label="Comparing ME inequalities across models">
+        <span class="nav-page-text">Comparing ME inequalities across models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
