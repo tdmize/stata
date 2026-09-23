@@ -225,7 +225,7 @@ Marginal effects (N_polmod=3608)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + 2SD                        |                                       
+age + 2SD (centered)             |                                       
                           polmod |     1      0.496      0.053      0.000
 
 . mecompare age, models(polmod) amount(trimrange)

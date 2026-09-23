@@ -290,6 +290,10 @@ The [mecompare](../mecompare/help.html) command is a companion command to `suest
 
 <span id="authorship"></span>
 
+## Stata version
+
+`suest2` requires Stata 16 or later. A do-file that sets `version` must set version 16 or later; under an older version the command stops with a message.
+
 ## Authorship
 
 `suest2` is written by Trenton D Mize, Departments of Sociology & Statistics (by courtesy) and The Methodology Center, Purdue University. uestions can be sent to tmize@purdue.edu

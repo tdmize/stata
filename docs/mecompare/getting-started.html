@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>mecompare</code> can be used to calculate marginal effects within a single model and then, optionally, compare them. Or, you can fit two models, store them, and then call <code>mecompare</code> to calculate the marginal effects from each model and compare them. This page runs through one example with Stata’s <code>nlsw88</code> data and then explains how to read the table.</p>
+<p><code>mecompare</code> can be used to calculate marginal effects within a single model and then, optionally, compare them. Or, you can fit two or more models, store them, and then call <code>mecompare</code> to calculate the marginal effects from each model and compare them. This page runs through one example with Stata’s <code>nlsw88</code> data and then explains how to read the table.</p>
 <section id="fit-and-store-the-models" class="level2">
 <h2 class="anchored" data-anchor-id="fit-and-store-the-models">1. Fit and store the models</h2>
 <p>The question: does the association between having a college degree and union membership change once we account for wages and work experience? Fit the model without those variables, then the model with them, storing each with <code>estimates store</code>.</p>
@@ -399,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.collgrad c.age i.south i.smsa c.wage c.ttl_exp, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Most regression commands in Stata are supported by <code>mecompare</code>; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. Fitting the models with <code>vce(robust)</code> is recommended because with two models, the estimates are combined with <code>suest2</code> which uses <code>vce(robust)</code>.</p>
+<p>Most regression commands in Stata are supported by <code>mecompare</code>; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. Fitting the models with <code>vce(robust)</code> is recommended because with two or more models, the estimates are combined with <code>suest2</code> which uses <code>vce(robust)</code>.</p>
 </section>
 <section id="compare-the-marginal-effects" class="level2">
 <h2 class="anchored" data-anchor-id="compare-the-marginal-effects">2. Compare the marginal effects</h2>
@@ -451,7 +451,7 @@ Marginal effects and cross-model differences (N_base=1878) (N_full=1878)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                             base |     1      0.005      0.010      0.607
                             full |     2      0.004      0.010      0.676
                       Difference |     3      0.001      0.002      0.553</code></pre>
@@ -493,16 +493,16 @@ south                            |
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>models(name1 [name2])</code></td>
-<td>The stored estimates to compare. One model gives marginal effects for that model alone.</td>
+<td><code>models(name1 [name2 ...])</code></td>
+<td>The stored estimates to compare. One model gives marginal effects for that model alone; with three or more, every model’s effects are listed and <code>metest</code> tests the comparisons.</td>
 </tr>
 <tr class="even">
 <td><code>amount()</code></td>
-<td>Size of the change for a continuous variable: a number, <code>sd</code> or <code>2sd</code> (one or two standard deviations), or <code>rate</code> (the instantaneous rate of change).</td>
+<td>Size of the change for a continuous variable: a number, <code>sd</code> or <code>2sd</code> (one or two standard deviations), <code>trimrange</code> (5th to 95th percentile), <code>range</code> (minimum to maximum), or <code>rate</code> (the instantaneous rate of change).</td>
 </tr>
 <tr class="odd">
-<td><code>start()</code></td>
-<td>Where the change in a continuous variable begins: <code>start(varname=#)</code> or <code>start(atmeans)</code>.</td>
+<td><code>start()</code>, <code>end()</code></td>
+<td>Where the change in a continuous variable begins, <code>start(varname=#)</code> or <code>start(atmeans)</code>, and, with <code>end(varname=#)</code>, where it ends.</td>
 </tr>
 <tr class="even">
 <td><code>covariates(varname=# ...)</code>, <code>atmeans</code></td>

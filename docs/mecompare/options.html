@@ -347,18 +347,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#syntax" id="toc-syntax" class="nav-link active" data-scroll-target="#syntax">Syntax</a></li>
-  <li><a href="#models-one-model-two-models-or-none" id="toc-models-one-model-two-models-or-none" class="nav-link" data-scroll-target="#models-one-model-two-models-or-none"><code>models()</code> – one model, two models, or none</a></li>
+  <li><a href="#models-one-model-several-or-none" id="toc-models-one-model-several-or-none" class="nav-link" data-scroll-target="#models-one-model-several-or-none"><code>models()</code> – one model, several, or none</a></li>
   <li><a href="#supported-models" id="toc-supported-models" class="nav-link" data-scroll-target="#supported-models">Supported models</a>
   <ul class="collapse">
   <li><a href="#ordinary-single-level-models" id="toc-ordinary-single-level-models" class="nav-link" data-scroll-target="#ordinary-single-level-models">Ordinary single-level models</a></li>
   <li><a href="#panel-models" id="toc-panel-models" class="nav-link" data-scroll-target="#panel-models">Panel models</a></li>
   <li><a href="#multilevel-models" id="toc-multilevel-models" class="nav-link" data-scroll-target="#multilevel-models">Multilevel models</a></li>
-  <li><a href="#which-two-models-can-be-compared" id="toc-which-two-models-can-be-compared" class="nav-link" data-scroll-target="#which-two-models-can-be-compared">Which two models can be compared</a></li>
+  <li><a href="#which-models-can-be-compared" id="toc-which-models-can-be-compared" class="nav-link" data-scroll-target="#which-models-can-be-compared">Which models can be compared</a></li>
   <li><a href="#survey-multiply-imputed-and-weighted-models" id="toc-survey-multiply-imputed-and-weighted-models" class="nav-link" data-scroll-target="#survey-multiply-imputed-and-weighted-models">Survey, multiply imputed, and weighted models</a></li>
   </ul></li>
   <li><a href="#statistics-which-columns-to-show" id="toc-statistics-which-columns-to-show" class="nav-link" data-scroll-target="#statistics-which-columns-to-show"><code>statistics()</code> – which columns to show</a></li>
   <li><a href="#amount-centered-uncentered-the-size-of-a-continuous-change" id="toc-amount-centered-uncentered-the-size-of-a-continuous-change" class="nav-link" data-scroll-target="#amount-centered-uncentered-the-size-of-a-continuous-change"><code>amount()</code>, <code>centered</code>, <code>uncentered</code> – the size of a continuous change</a></li>
-  <li><a href="#start-where-the-change-begins" id="toc-start-where-the-change-begins" class="nav-link" data-scroll-target="#start-where-the-change-begins"><code>start()</code> – where the change begins</a></li>
+  <li><a href="#start-and-end-where-the-change-begins-and-ends" id="toc-start-and-end-where-the-change-begins-and-ends" class="nav-link" data-scroll-target="#start-and-end-where-the-change-begins-and-ends"><code>start()</code> and <code>end()</code> – where the change begins and ends</a></li>
   <li><a href="#covariates-and-atmeans-values-of-the-other-variables" id="toc-covariates-and-atmeans-values-of-the-other-variables" class="nav-link" data-scroll-target="#covariates-and-atmeans-values-of-the-other-variables"><code>covariates()</code> and <code>atmeans</code> – values of the other variables</a></li>
   <li><a href="#by-and-over-effects-within-levels-of-another-variable" id="toc-by-and-over-effects-within-levels-of-another-variable" class="nav-link" data-scroll-target="#by-and-over-effects-within-levels-of-another-variable"><code>by()</code> and <code>over()</code> – effects within levels of another variable</a></li>
   <li><a href="#pwcompare-all-pairwise-contrasts-of-a-nominal-variable" id="toc-pwcompare-all-pairwise-contrasts-of-a-nominal-variable" class="nav-link" data-scroll-target="#pwcompare-all-pairwise-contrasts-of-a-nominal-variable"><code>pwcompare</code> – all pairwise contrasts of a nominal variable</a></li>
@@ -419,10 +419,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare [<span class="kw">varlist</span>] [<span class="kw">if</span>] [<span class="kw">in</span>] [<span class="kw">weight</span>] [, models(name1 [name2]) options]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>With no <em>varlist</em>, marginal effects are computed for every variable in the model(s). Factor-variable notation (<code>i.</code>, <code>c.</code>) is required on the stored models.</p>
 </section>
-<section id="models-one-model-two-models-or-none" class="level2">
-<h2 class="anchored" data-anchor-id="models-one-model-two-models-or-none"><code>models()</code> – one model, two models, or none</h2>
-<p><code>models()</code> names the stored estimates. One name will calculate that model’s marginal effects. Two names will calculate each model’s marginal effects and automatically calculate the cross-model difference.</p>
-<p>If names are omitted, <code>mecompare</code> then uses the estimates in memory, which are either the single model just fit (labeled <code>m1</code> in the <code>mecompare</code> output) or, after <a href="../suest2/index.html"><code>suest2</code></a>, the two models of that system.</p>
+<section id="models-one-model-several-or-none" class="level2">
+<h2 class="anchored" data-anchor-id="models-one-model-several-or-none"><code>models()</code> – one model, several, or none</h2>
+<p><code>models()</code> names the stored estimates. One name will calculate that model’s marginal effects. Two names will calculate each model’s marginal effects and automatically calculate the cross-model difference. With three or more names the table lists every model’s marginal effects, one set of rows per model, and reports no differences: choose the comparisons you want and test them with <code>metest</code> (e.g.&nbsp;<code>metest 1 - 2</code>), as in <a href="../metest/many-models.html">tests across three or more models</a>.</p>
+<p>If names are omitted, <code>mecompare</code> then uses the estimates in memory, which are either the single model just fit (labeled <code>m1</code> in the <code>mecompare</code> output) or, after <a href="../suest2/index.html"><code>suest2</code></a>, the models of that system.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -443,7 +443,7 @@ married                          |
                               m2 |     2     -0.019      0.021      0.370
                       Difference |     3     -0.007      0.003      0.017
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     4      0.003      0.003      0.427
                               m2 |     5      0.003      0.003      0.410
                       Difference |     6     -0.000      0.000      0.847</code></pre>
@@ -460,7 +460,7 @@ married                          |
             Married - Single     |                                       
                               m2 |     1     -0.019      0.021      0.370
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m2 |     2      0.003      0.003      0.410</code></pre>
 </div>
 <p>With no varlist, marginal effects are calculated for every predictor:</p>
@@ -484,7 +484,7 @@ married                          |
                               m2 |     2     -0.019      0.021      0.370
                       Difference |     3     -0.007      0.003      0.017
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     4      0.003      0.003      0.427
                               m2 |     5      0.003      0.003      0.410
                       Difference |     6     -0.000      0.000      0.847
@@ -499,7 +499,7 @@ race                             |
                               m2 |    11      0.089      0.101      0.377
                       Difference |    12      0.012      0.015      0.444
 ---------------------------------+---------------------------------------
-hours + 1                        |                                       
+hours + 1 (centered)             |                                       
                               m1 |    13      0.002      0.001      0.067
                               m2 |    14      0.001      0.001      0.185
                       Difference |    15      0.000      0.000      0.009
@@ -510,12 +510,12 @@ collgrad                         |
                               m2 |    17      0.046      0.039      0.234
                       Difference |    18      0.056      0.032      0.085
 ---------------------------------+---------------------------------------
-wage + 1                         |                                       
+wage + 1 (centered)              |                                       
                               m1 |                                       
                               m2 |    19      0.013      0.002      0.000
                       Difference |                                       
 ---------------------------------+---------------------------------------
-grade + 1                        |                                       
+grade + 1 (centered)             |                                       
                               m1 |                                       
                               m2 |    20      0.001      0.007      0.830
                       Difference |                                       </code></pre>
@@ -523,7 +523,7 @@ grade + 1                        |
 </section>
 <section id="supported-models" class="level2">
 <h2 class="anchored" data-anchor-id="supported-models">Supported models</h2>
-<p><code>mecompare</code> accepts one or two models from the following families. The list follows the <a href="help.html#estimators">help file</a>; two models are combined with <a href="../suest2/index.html"><code>suest2</code></a>, whose own <a href="../suest2/usage.html#supported-estimators">list of estimators</a> is the same.</p>
+<p><code>mecompare</code> accepts one or more models from the following families. The list follows the <a href="help.html#estimators">help file</a>; two or more models are combined with <a href="../suest2/index.html"><code>suest2</code></a>, whose own <a href="../suest2/usage.html#supported-estimators">list of estimators</a> is the same.</p>
 <section id="ordinary-single-level-models" class="level3">
 <h3 class="anchored" data-anchor-id="ordinary-single-level-models">Ordinary single-level models</h3>
 <p><code>regress</code>; <code>logit</code> and <code>logistic</code>; <code>probit</code>; <code>poisson</code>; <code>nbreg</code>; <code>ologit</code>; <code>oprobit</code>; and <code>mlogit</code>.</p>
@@ -546,14 +546,15 @@ grade + 1                        |
 <h3 class="anchored" data-anchor-id="multilevel-models">Multilevel models</h3>
 <p><code>mixed, mle</code>; <code>melogit</code>; <code>meprobit</code>; <code>mecloglog</code>; <code>mepoisson</code>; <code>menbreg</code>; <code>meologit</code>; <code>meoprobit</code>; and <code>mestreg</code>, all parametric distributions.</p>
 <p><code>meglm</code> with the family-link pairs Gaussian-identity and Gamma-log.</p>
+<p>After <code>streg</code> and <code>mestreg</code> the marginal effects are changes in a predicted survival time – the median after <code>streg</code>, the mean after <code>mestreg</code> – and a note under the table says which; see <a href="help.html#survival">Survival models</a> in the help file.</p>
 </section>
-<section id="which-two-models-can-be-compared" class="level3">
-<h3 class="anchored" data-anchor-id="which-two-models-can-be-compared">Which two models can be compared</h3>
-<p>Two models are comparable when they return the same number of predictions. Same-family pairs (two logits, two <code>glm</code>s, two <code>mestreg</code>s) always qualify. Cross-family pairs qualify on the same rule: <code>logit</code> vs <code>regress</code>, <code>xtlogit</code> vs <code>mixed</code>, any pair of binary-, count-, or continuous-outcome models, and any pair of ordinal or nominal models with the same number of outcome categories (<code>ologit</code> vs <code>oprobit</code>, <code>mlogit</code> vs <code>ologit</code>). Each model contributes its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions. Models that return different numbers of predictions (a three-category <code>ologit</code> vs a <code>logit</code>) cannot be compared, and two multi-category outcomes must have the same number of categories with the same values.</p>
+<section id="which-models-can-be-compared" class="level3">
+<h3 class="anchored" data-anchor-id="which-models-can-be-compared">Which models can be compared</h3>
+<p>Models are comparable when they all return the same number of predictions. Same-family sets (two logits, three <code>glm</code>s, two <code>mestreg</code>s) always qualify. Cross-family sets qualify on the same rule: <code>logit</code> vs <code>regress</code>, <code>xtlogit</code> vs <code>mixed</code>, any pair of binary-, count-, or continuous-outcome models, and any pair of ordinal or nominal models with the same number of outcome categories (<code>ologit</code> vs <code>oprobit</code>, <code>mlogit</code> vs <code>ologit</code>). Each model contributes its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions. Models that return different numbers of predictions (a three-category <code>ologit</code> vs a <code>logit</code>) cannot be compared, and two multi-category outcomes must have the same number of categories with the same values.</p>
 </section>
 <section id="survey-multiply-imputed-and-weighted-models" class="level3">
 <h3 class="anchored" data-anchor-id="survey-multiply-imputed-and-weighted-models">Survey, multiply imputed, and weighted models</h3>
-<p>Models may be fit with the <code>svy:</code>, <code>mi estimate, post:</code>, or <code>mi estimate: svy:</code> prefixes, specified on the stored models rather than on <code>mecompare</code>; all models in a comparison must carry the same prefixes, and <code>mi estimate</code> requires the user-written <code>mimrgns</code> package. Weights can instead be applied on the stored models (<code>logit y x [pw=w]</code>, the same weight on both), and multilevel models need a stage weight as well. The <a href="help.html#svy_mi">help file</a> has the details.</p>
+<p>Models may be fit with the <code>svy:</code>, <code>mi estimate, post:</code>, or <code>mi estimate: svy:</code> prefixes, specified on the stored models rather than on <code>mecompare</code>; all models in a comparison must carry the same prefixes, and <code>mi estimate</code> requires the user-written <code>mimrgns</code> package. Weights can instead be applied on the stored models (<code>logit y x [pw=w]</code>, the same weight on every model), and multilevel models need a stage weight as well. The <a href="help.html#svy_mi">help file</a> has the details.</p>
 </section>
 </section>
 <section id="statistics-which-columns-to-show" class="level2">
@@ -579,7 +580,7 @@ married                          |
                               m2 |     2     -0.019      0.021     -0.061      0.023
                       Difference |     3     -0.007      0.003     -0.013     -0.001
 ---------------------------------+--------------------------------------------------
-age + 1                          |                                                  
+age + 1 (centered)               |                                                  
                               m1 |     4      0.003      0.003     -0.004      0.009
                               m2 |     5      0.003      0.003     -0.004      0.009
                       Difference |     6     -0.000      0.000     -0.001      0.001</code></pre>
@@ -587,7 +588,7 @@ age + 1                          |
 </section>
 <section id="amount-centered-uncentered-the-size-of-a-continuous-change" class="level2">
 <h2 class="anchored" data-anchor-id="amount-centered-uncentered-the-size-of-a-continuous-change"><code>amount()</code>, <code>centered</code>, <code>uncentered</code> – the size of a continuous change</h2>
-<p>For a continuous variable the default is a one-unit change, centered on the observed value (half a unit below to half a unit above). <code>amount()</code> takes a number, <code>sd</code>, <code>2sd</code>, <code>trimrange</code> (5th to 95th percentile), or <code>rate</code> (the instantaneous rate of change, <code>dydx</code> in <code>margins</code>). If a single value is listed in <code>amount()</code>, it is applied to all continuous variables. When multiple values are listed in <code>amount()</code>, they are applied in the order of the continuous variables in the <em>varlist</em>.</p>
+<p>For a continuous variable the default is a one-unit change, centered on the observed value (half a unit below to half a unit above). <code>amount()</code> takes a number, <code>sd</code>, <code>2sd</code>, <code>trimrange</code> (5th to 95th percentile), <code>range</code> (minimum to maximum), or <code>rate</code> (the instantaneous rate of change, <code>dydx</code> in <code>margins</code>). If a single value is listed in <code>amount()</code>, it is applied to all continuous variables. When multiple values are listed in <code>amount()</code>, they are applied in the order of the continuous variables in the <em>varlist</em>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mecompare age hours, models(m1 m2) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -602,12 +603,12 @@ Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                               m1 |     1      0.008      0.010      0.427
                               m2 |     2      0.008      0.010      0.410
                       Difference |     3     -0.000      0.001      0.847
 ---------------------------------+---------------------------------------
-hours + SD                       |                                       
+hours + SD (centered)            |                                       
                               m1 |     4      0.018      0.010      0.067
                               m2 |     5      0.014      0.010      0.185
                       Difference |     6      0.005      0.002      0.009</code></pre>
@@ -626,12 +627,12 @@ Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 10                         |                                       
+age + 10 (centered)              |                                       
                               m1 |     1      0.026      0.032      0.427
                               m2 |     2      0.027      0.032      0.410
                       Difference |     3     -0.001      0.005      0.847
 ---------------------------------+---------------------------------------
-hours + SD                       |                                       
+hours + SD (centered)            |                                       
                               m1 |     4      0.018      0.010      0.067
                               m2 |     5      0.014      0.010      0.185
                       Difference |     6      0.005      0.002      0.009</code></pre>
@@ -676,11 +677,11 @@ age + SD (uncentered)            |
                       Difference |     3     -0.000      0.001      0.847</code></pre>
 </div>
 </section>
-<section id="start-where-the-change-begins" class="level2">
-<h2 class="anchored" data-anchor-id="start-where-the-change-begins"><code>start()</code> – where the change begins</h2>
+<section id="start-and-end-where-the-change-begins-and-ends" class="level2">
+<h2 class="anchored" data-anchor-id="start-and-end-where-the-change-begins-and-ends"><code>start()</code> and <code>end()</code> – where the change begins and ends</h2>
 <p>By default each observation’s own value is the starting point. <code>start()</code> sets it: a value, <code>atmeans</code>, or a list of values for one variable, which gives one numbered row set per value so that <code>metest</code> can compare them.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="bn">start</span>(age=30) amount(10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="bn">start</span>(age=40) amount(5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -693,30 +694,52 @@ Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 10                         |                                       
-                              m1 |     1      0.024      0.028      0.394
-                              m2 |     2      0.025      0.028      0.374
-                      Difference |     3     -0.001      0.004      0.845</code></pre>
+age + 5 (centered)               |                                       
+                              m1 |     1      0.013      0.016      0.430
+                              m2 |     2      0.013      0.016      0.412
+                      Difference |     3     -0.000      0.002      0.847</code></pre>
 </div>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1) <span class="bn">start</span>(age=(30 40 50)) amount(10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1) <span class="bn">start</span>(age=(35 40 45)) amount(5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(union)
 
 Marginal effects (N_m1=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 10                         |                                       
-                           at 30 |     1      0.024      0.028      0.394
-                           at 40 |     2      0.026      0.033      0.430
-                           at 50 |     3      0.028      0.037      0.457</code></pre>
+age + 5 (centered)               |                                       
+                           at 35 |     1      0.012      0.015      0.413
+                           at 40 |     2      0.013      0.016      0.430
+                           at 45 |     3      0.013      0.017      0.444</code></pre>
+</div>
+<p><code>end()</code> sets where the change ends, with <code>start()</code>: <code>start(age=35) end(age=40)</code> is the change from 35 to 40 (<code>amount()</code> and centering do not apply to that variable). With a list in both, the values pair up: <code>start(age=(35 40)) end(age=(40 45))</code> gives one row for 35 to 40 and one for 40 to 45.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1) <span class="bn">start</span>(age=35) <span class="kw">end</span>(age=40)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(union)
+
+Marginal effects (N_m1=1875)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age 35 to 40                     |                                       
+                              m1 |     1      0.013      0.016      0.422</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1) <span class="bn">start</span>(age=(35 40)) <span class="kw">end</span>(age=(40 45))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(union)
+
+Marginal effects (N_m1=1875)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+age                              |                                       
+                        35 to 40 |     1      0.013      0.016      0.422
+                        40 to 45 |     2      0.013      0.017      0.437</code></pre>
 </div>
 </section>
 <section id="covariates-and-atmeans-values-of-the-other-variables" class="level2">
 <h2 class="anchored" data-anchor-id="covariates-and-atmeans-values-of-the-other-variables"><code>covariates()</code> and <code>atmeans</code> – values of the other variables</h2>
 <p>Covariates are the model’s other independent variables, not included in the <em>varlist</em>. By default they stay at their observed values and the effect is averaged over the sample. <code>covariates()</code> fixes them: <code>covariates(atmeans)</code> (or just <code>atmeans</code>) at their means, <code>covariates(married=1)</code> at a value, and a list for one covariate – <code>covariates(hours=(20 40 60))</code> – gives one row set per value, each a counterfactual with the whole sample set to that value.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m1 m2) atmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m1 m2) atmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -736,7 +759,7 @@ married                          |
                       Difference |     3     -0.007      0.003      0.019</code></pre>
 </div>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m2) covariates(hours=(20 40 60))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m2) covariates(hours=(20 40 60))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(union)
 
 Marginal effects (N_m2=1875)
@@ -748,7 +771,7 @@ married                          |
                         hours=20 |     1     -0.018      0.020      0.375
                         hours=40 |     2     -0.019      0.021      0.369
                         hours=60 |     3     -0.021      0.023      0.366</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>metest 1 = 2 = 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>metest 1 = 2 = 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Tests of equality
 
                                  |      chi2         df     pvalue 
@@ -760,7 +783,7 @@ married                          |
 <h2 class="anchored" data-anchor-id="by-and-over-effects-within-levels-of-another-variable"><code>by()</code> and <code>over()</code> – effects within levels of another variable</h2>
 <p><code>by(varlist)</code> reports the marginal effect at each level of a binary or nominal moderator, computed as a counterfactual (everyone set to that level, then averaged); <code>over(varlist)</code> computes it within each observed subgroup instead. Both can take more than one variable. For a continuous moderator, <code>covariates(z=(numlist))</code> plays the same role as <code>by()</code>. The <a href="interactions/index.html">interactions pages</a> show how to use these to simplify tests of interaction.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="kw">by</span>(collgrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="kw">by</span>(collgrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -773,7 +796,7 @@ Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                 m1 Not college~d |     1      0.002      0.003      0.427
                  m1 College grad |     2      0.003      0.004      0.428
                 m2 Not college~d |     3      0.003      0.003      0.410
@@ -782,7 +805,7 @@ age + 1                          |
          Difference College grad |     6      0.000      0.001      0.792</code></pre>
 </div>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="bn">over</span>(collgrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(m1 m2) <span class="bn">over</span>(collgrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -795,7 +818,7 @@ Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                 m1 Not college~d |     1      0.002      0.003      0.427
                  m1 College grad |     2      0.003      0.004      0.428
                 m2 Not college~d |     3      0.003      0.003      0.410
@@ -808,7 +831,7 @@ age + 1                          |
 <h2 class="anchored" data-anchor-id="pwcompare-all-pairwise-contrasts-of-a-nominal-variable"><code>pwcompare</code> – all pairwise contrasts of a nominal variable</h2>
 <p>For an <code>i.</code> variable the default rows contrast each level with the base level. <code>pwcompare</code> reports every pair.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mecompare i.race, models(m1 m2) pwcompare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mecompare i.race, models(m1 m2) pwcompare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -840,7 +863,7 @@ race                             |
 <h2 class="anchored" data-anchor-id="meinequality-and-totalme-summary-measures"><code>meinequality</code> and <code>totalme</code> – summary measures</h2>
 <p><code>meinequality</code> adds the marginal-effect inequality summary of <a href="../meinequality/index.html"><code>meinequality</code></a> above a nominal variable’s contrasts (<code>weighted</code>, the default, <code>unweighted</code>, or <code>all</code>). <code>totalme</code> adds the Total Marginal Effect of <a href="../totalme/index.html"><code>totalme</code></a> above every focal variable, most often used to summarize effects with multi-category outcome models like an ordinal or nominal model.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mecompare i.race, models(m1 m2) meinequality(<span class="ot">all</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mecompare i.race, models(m1 m2) meinequality(<span class="ot">all</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -872,16 +895,16 @@ race                             |
                       Difference |    12      0.012      0.015      0.444</code></pre>
 </div>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> hours_ord = <span class="fu">cut</span>(hours), <span class="fu">at</span>(0 30 40 50 81)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">ologit</span> hours_ord c.age i.married i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>mecompare age married race, totalme</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> hours_ord = <span class="fu">cut</span>(hours), <span class="fu">at</span>(0 30 40 50 81)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">ologit</span> hours_ord c.age i.married i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>mecompare age married race, totalme</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(hours_ord==0)
 
 Marginal effects (N_m1=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                         Total ME |     1      0.006      0.003      0.053
                   Outcome 0 - m1 |     2      0.003      0.002      0.055
                  Outcome 30 - m1 |     3      0.003      0.001      0.053
@@ -912,14 +935,14 @@ race                             |
 </section>
 <section id="groups-groupnames-groupme-groupsd-models-fit-to-separate-samples" class="level2">
 <h2 class="anchored" data-anchor-id="groups-groupnames-groupme-groupsd-models-fit-to-separate-samples"><code>groups</code>, <code>groupnames()</code>, <code>groupme</code>, <code>groupsd</code> – models fit to separate samples</h2>
-<p>The <code>groups</code> option tells <code>mecompare</code> that the two models were fit to non-overlapping samples, so each model’s marginal effects are averaged over its own sample and the <strong>Difference</strong> row compares the effects across the groups. <code>groupnames()</code> labels the rows; <code>groupme</code> adds the average difference in the outcome between the groups; <code>groupsd</code> uses each group’s own SD for <code>amount(sd)</code>; we generally do not recommend <code>groupsd</code>.</p>
+<p>The <code>groups</code> option tells <code>mecompare</code> that the models were fit to non-overlapping samples, so each model’s marginal effects are averaged over its own sample and the <strong>Difference</strong> row compares the effects across the groups (with three or more groups each group’s effects are listed and <code>metest</code> tests the differences). <code>groupnames()</code> labels the rows; <code>groupme</code> (two groups only) adds the average difference in the outcome between the groups; <code>groupsd</code> uses each group’s own SD for <code>amount(sd)</code>; we generally do not recommend <code>groupsd</code>.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> age hours i.collgrad <span class="kw">if</span> south == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> msouth</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> age hours i.collgrad <span class="kw">if</span> south == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mnonsouth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> age hours i.collgrad <span class="kw">if</span> south == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> msouth</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> age hours i.collgrad <span class="kw">if</span> south == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mnonsouth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mecompare age hours collgrad, models(msouth mnonsouth) groups groupnames(South NonSouth) groupme</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>mecompare age hours collgrad, models(msouth mnonsouth) groups groupnames(South NonSouth) groupme</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (msouth) is:
      logit union age hours i.collgrad
 Model 2 (mnonsouth) is:
@@ -932,12 +955,12 @@ Marginal effects and cross-model differences (N_South=797) (N_NonSouth=1078)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                            South |     1     -0.005      0.004      0.273
                         NonSouth |     2      0.007      0.005      0.137
                       Difference |     3     -0.011      0.006      0.066
 ---------------------------------+---------------------------------------
-hours + 1                        |                                       
+hours + 1 (centered)             |                                       
                            South |     4      0.002      0.001      0.092
                         NonSouth |     5      0.003      0.001      0.019
                       Difference |     6     -0.001      0.002      0.744
@@ -956,19 +979,19 @@ each model averaged over its own sample:
 </section>
 <section id="predict-which-prediction" class="level2">
 <h2 class="anchored" data-anchor-id="predict-which-prediction"><code>predict()</code> – which prediction</h2>
-<p>With one model any prediction that <code>margins</code> accepts after that command can be requested; with two models, any prediction returning one quantity per model. Multi-category models report every outcome by default, or one with <code>predict(pr outcome(#))</code>.</p>
+<p>With one model any prediction that <code>margins</code> accepts after that command can be requested; with two or more models, any prediction returning one quantity per model. Multi-category models report every outcome by default, or one with <code>predict(pr outcome(#))</code>.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> hours c.age i.collgrad i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> cnt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> hours c.age i.collgrad i.race, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> cnt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>mecompare age collgrad, models(cnt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>mecompare age collgrad, models(cnt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Predicted number of events
 
 Marginal effects (N_cnt=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                              cnt |     1     -0.046      0.077      0.545
 ---------------------------------+---------------------------------------
 collgrad                         |                                       
@@ -976,14 +999,14 @@ collgrad                         |
                              cnt |     2      2.495      0.569      0.000</code></pre>
 </div>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mecompare age collgrad, models(cnt) <span class="kw">predict</span>(pr(0))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>mecompare age collgrad, models(cnt) <span class="kw">predict</span>(pr(0))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(hours=0)
 
 Marginal effects (N_cnt=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                              cnt |     1      0.000      0.000      0.569
 ---------------------------------+---------------------------------------
 collgrad                         |                                       
@@ -995,7 +1018,7 @@ collgrad                         |
 <h2 class="anchored" data-anchor-id="marginsopt-anything-else-margins-should-be-told"><code>marginsopt()</code> – anything else margins should be told</h2>
 <p><code>marginsopt(string)</code> is passed to <code>margins</code> verbatim. We recommend using it only in combination with the <code>commands</code> and <code>details</code> options to double check that <code>margins</code> produced what you want. Its main use is <code>expression()</code> with one model, for example effects in percentage points:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m2) marginsopt(expression(100*<span class="kw">predict</span>(pr)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m2) marginsopt(expression(100*<span class="kw">predict</span>(pr)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: 100*predict(pr)
 
 Marginal effects (N_m2=1875)
@@ -1006,7 +1029,7 @@ married                          |
             Married - Single     |                                       
                               m2 |     1     -1.906      2.126      0.370
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m2 |     2      0.266      0.322      0.410</code></pre>
 </div>
 </section>
@@ -1014,7 +1037,7 @@ age + 1                          |
 <h2 class="anchored" data-anchor-id="display-options">Display options</h2>
 <p><code>decimals(#)</code> sets the decimal places (default 3), <code>mod1name()</code> and <code>mod2name()</code> label the model rows, <code>labwidth(#)</code> and <code>statwidth(#)</code> set the column widths, and <code>norownum</code> drops the <code>#</code> column.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m1 m2) decimals(4) mod1name(Base) mod2name(Full) norownum</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m1 m2) decimals(4) mod1name(Base) mod2name(Full) norownum</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -1033,7 +1056,7 @@ married                          |
                             Full |   -0.0191     0.0213     0.3700
                       Difference |   -0.0073     0.0031     0.0175
 ---------------------------------+--------------------------------
-age + 1                          |                                
+age + 1 (centered)               |                                
                             Base |    0.0026     0.0032     0.4274
                             Full |    0.0027     0.0032     0.4097
                       Difference |   -0.0001     0.0005     0.8467</code></pre>
@@ -1043,7 +1066,7 @@ age + 1                          |
 <h2 class="anchored" data-anchor-id="commands-and-details-seeing-what-was-run"><code>commands</code> and <code>details</code> – seeing what was run</h2>
 <p><code>commands</code> prints the <code>suest2</code> and <code>margins</code> commands <code>mecompare</code> used; <code>details</code> prints their output too.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m1 m2) commands</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married, models(m1 m2) commands</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -1079,7 +1102,7 @@ married                          |
 <h2 class="anchored" data-anchor-id="after-mecompare-metest-eb-ev">After mecompare: <code>metest</code>, <code>e(b)</code>, <code>e(V)</code></h2>
 <p>Every row of the table is posted to <code>e(b)</code> and <code>e(V)</code> in <code>#</code> order, so <a href="../metest/index.html"><code>metest</code></a>, <code>lincom</code>, <code>nlcom</code>, and <code>test</code> all work on them. <code>mecompare, coeflegend</code> lists the coefficient names.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>mecompare i.married age, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (m2) is:
@@ -1098,16 +1121,16 @@ married                          |
                               m2 |     2     -0.019      0.021      0.370
                       Difference |     3     -0.007      0.003      0.017
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     4      0.003      0.003      0.427
                               m2 |     5      0.003      0.003      0.410
                       Difference |     6     -0.000      0.000      0.847</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
 m1                               |                                
                    married - age |    -0.029      0.022      0.182 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>mecompare, coeflegend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>mecompare, coeflegend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>------------------------------------------------------------------------------
              | Coefficient  Legend
 -------------+----------------------------------------------------------------

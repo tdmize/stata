@@ -416,7 +416,7 @@ married                          |
                               m2 |     2     -0.019      0.021      0.367
                       Difference |     3     -0.006      0.003      0.036
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     4      0.002      0.003      0.547
                               m2 |     5      0.003      0.003      0.363
                       Difference |     6     -0.001      0.001      0.049
@@ -431,7 +431,7 @@ race                             |
                               m2 |    11      0.089      0.101      0.378
                       Difference |    12      0.012      0.015      0.432
 ---------------------------------+---------------------------------------
-hours + 1                        |                                       
+hours + 1 (centered)             |                                       
                               m1 |    13      0.002      0.001      0.132
                               m2 |    14      0.002      0.001      0.153
                       Difference |    15      0.000      0.000      0.724
@@ -442,7 +442,7 @@ collgrad                         |
                               m2 |    17      0.043      0.039      0.264
                       Difference |    18      0.056      0.032      0.083
 ---------------------------------+---------------------------------------
-ttl exp + 1                      |                                       
+ttl exp + 1 (centered)           |                                       
                               m1 |    19      0.003      0.002      0.223
                               m2 |    20     -0.001      0.002      0.558
                       Difference |    21      0.004      0.001      0.000</code></pre>
@@ -527,7 +527,7 @@ married                          |
             Married - Single     |                                       
                               m1 |     1     -0.025      0.022      0.238
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     2      0.002      0.003      0.547
 ---------------------------------+---------------------------------------
 race                             |                                       
@@ -536,14 +536,14 @@ race                             |
                Other - White     |                                       
                               m1 |     4      0.101      0.098      0.303
 ---------------------------------+---------------------------------------
-hours + 1                        |                                       
+hours + 1 (centered)             |                                       
                               m1 |     5      0.002      0.001      0.132
 ---------------------------------+---------------------------------------
 collgrad                         |                                       
          College  - Not coll     |                                       
                               m1 |     6      0.099      0.025      0.000
 ---------------------------------+---------------------------------------
-ttl exp + 1                      |                                       
+ttl exp + 1 (centered)           |                                       
                               m1 |     7      0.003      0.002      0.223</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>coefplot me1_m1, <span class="bn">xline</span>(0) <span class="bn">xtitle</span>(<span class="st">"Average marginal effect on Pr(union)"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/plotting-one-model.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -573,7 +573,7 @@ Marginal effects and cross-model differences (N_m1=1875) (N_m2=1875)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                      m1 hours=20 |     1      0.002      0.003      0.547
                      m1 hours=30 |     2      0.002      0.003      0.547
                      m1 hours=40 |     3      0.002      0.003      0.547

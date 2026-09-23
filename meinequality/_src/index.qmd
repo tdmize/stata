@@ -27,7 +27,8 @@ two models the difference in ME inequality across the models is tested, using
 net install meinequality, from("https://tdmize.github.io/data") replace
 ```
 
-`meinequality` requires the [`suest2`](../suest2/index.html) package.
+`meinequality` requires the [`suest2`](../suest2/index.html) package and
+Stata 16 or later.
 
 
 ## Where to start

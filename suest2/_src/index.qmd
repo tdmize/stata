@@ -29,6 +29,8 @@ it.
 net install suest2, from("https://tdmize.github.io/data") replace
 ```
 
+`suest2` requires Stata 16 or later.
+
 
 ## Where to start
 

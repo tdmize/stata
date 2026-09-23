@@ -101,7 +101,7 @@ Marginal effects and cross-model differences (N_m1=1878) (N_m2=1878)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     1      0.002      0.003      0.524
                               m2 |     2      0.002      0.003      0.480
                       Difference |     3     -0.000      0.001      0.689

@@ -379,13 +379,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre class="stata-output"><code>(36,143 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span> <span class="co">///</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.<span class="fu">r</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ace <span class="co">///</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              <span class="kw">if</span> <span class="fu">year</span> == 1986, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mod1986</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span> <span class="co">///</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.<span class="fu">r</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ace <span class="co">///</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              <span class="kw">if</span> <span class="fu">year</span> == 2016, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mod2016</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>

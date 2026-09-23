@@ -175,6 +175,10 @@ Two things to keep in mind away from `mecompare`. Omitted (`o.`) coefficients ar
 
 [mecompare](../mecompare/help.html), `nlcom`, `test`, `mlincom`
 
+## Stata version
+
+`metest` requires Stata 16 or later. A do-file that sets `version` must set version 16 or later; under an older version the command stops with a message.
+
 ## Authorship
 
 `metest` is written by Trenton D Mize (Departments of Sociology & Statistics [by courtesy] and the Methodology Center, Purdue University). Questions can be sent to tmize@purdue.edu. The ME-number mapping and the accumulating result table are adapted from Long and Freese's SPost13 `mlincom`.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>metest – Stata software — Trenton D. Mize</title>
+<title>Tests across three or more models – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,7 +71,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../metest/usage.html" rel="next">
+<link href="../metest/help.html" rel="next">
+<link href="../metest/usage.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -121,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../metest/index.html">Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../metest/many-models.html">Tests across three or more models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -148,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../metest/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../metest/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -160,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../metest/many-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../metest/many-models.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Tests across three or more models</span></a>
   </div>
 </li>
@@ -172,15 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
     </div>
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#where-to-start" id="toc-where-to-start" class="nav-link" data-scroll-target="#where-to-start">Where to start</a></li>
-  <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
-  </ul>
-</nav>
+    
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -191,8 +184,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">metest</h1>
-<p class="subtitle lead">Tests and contrasts of marginal effects</p>
+<h1 class="title">Tests across three or more models</h1>
+<p class="subtitle lead">Example 6.2 of Mize, Doan, and Long (2019), with all four models</p>
 </div>
 
 
@@ -209,68 +202,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>metest</code> tests linear and nonlinear combinations of the marginal effects reported by <a href="../mecompare/index.html"><code>mecompare</code></a> – or of any results posted by <code>margins, post</code>. Rows are referred to by the number in the <code>#</code> column of the <code>mecompare</code> table, so a difference between two effects is <code>metest 2 - 1</code>, a ratio is <code>metest 2 / 1</code>, and a test that several effects are equal is <code>metest 1 = 2 = 3</code>. To refer to an actual number for a mathematical expression, use a leading # – e.g.&nbsp;to divide the 5th marginal by 2 use <code>metest 5 / #2</code>.</p>
-<p>An expression without <code>=</code> goes to <code>nlcom</code>, so sums, differences, ratios, products, and functions such as <code>abs()</code>, <code>exp()</code>, <code>ln()</code>, and <code>min()</code> are all allowed; an expression with <code>=</code> goes to <code>test</code>, including chained equalities and several constraints at once. Results can be accumulated into one table with <code>add</code>.</p>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p><code>metest</code> is part of the <code>mecompare</code> package and is installed with it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install mecompare, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>metest</code> requires Stata 16 or later.</p>
-</section>
-<section id="where-to-start" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-start">Where to start</h2>
-<ul>
-<li><a href="usage.html">Usage and examples</a> runs every form of the command from the help file: single effects, differences, ratios and averages, scaling by a literal value, equality tests, accumulated tables, and use after commands other than <code>mecompare</code>.</li>
-<li><a href="many-models.html">Tests across three or more models</a> compares one effect across four nested models.</li>
-<li>The <a href="help.html">help file</a> is on the site, rendered from the installed version (<code>help metest</code> in Stata).</li>
-<li>The <code>mecompare</code> pages use <code>metest</code> throughout, especially the <a href="../mecompare/examples/within-model.html">effect sizes across predictors</a> example, where the tests are accumulated into one table with <code>add</code> and <code>abs()</code>, and the <a href="../mecompare/interactions/index.html">interactions pages</a>, where every second difference is a <code>metest</code> line.</li>
-</ul>
-</section>
-<section id="basic-use" class="level2">
-<h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
+<p>With three or more models, <code>mecompare</code> lists each model’s marginal effects and reports no differences; <code>metest</code> tests the comparisons you choose. The four nested logits of Example 6.2:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(<span class="kw">union</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(368 observations deleted)
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> https:<span class="co">//tdmize.github.io/data/data/gss_cme, clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">year</span> &lt; 2000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(38,116 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> employed != 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(9,556 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(5,578 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.collgrad i.south i.smsa c.age c.wage, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> <span class="fu">m</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m1</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.ag</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span>, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m2</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.a</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ge##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m3</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a> i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare i.collgrad i.south i.smsa, models(<span class="fu">m</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Predicting: Pr(union)
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mecompare college, models(m1 m2 m3 m4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (m1) is:
+     logit vhappy i.college
+Model 2 (m2) is:
+     logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
+Model 3 (m3) is:
+     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c
+&gt; .age
+Model 4 (m4) is:
+     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.ye
+&gt; ar c.age##c.age
 
-Marginal effects (N_m=1878)
+
+Predicting: Pr(vhappy)
+
+Marginal effects across models (N_m1=9216) (N_m2=9216) (N_m3=9216) (N_m4=9216)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-collgrad                         |                                       
-         College  - Not coll     |                                       
-                               m |     1      0.056      0.025      0.026
----------------------------------+---------------------------------------
-south                            |                                       
-            South - Not sout     |                                       
-                               m |     2     -0.114      0.020      0.000
----------------------------------+---------------------------------------
-smsa                             |                                       
-             SMSA - Not SMSA     |                                       
-                               m |     3      0.031      0.022      0.161</code></pre>
+college                          |                                       
+         College  - No Col D     |                                       
+                              m1 |     1      0.072      0.010      0.000
+                              m2 |     2      0.060      0.011      0.000
+                              m3 |     3      0.036      0.011      0.001
+                              m4 |     4      0.019      0.012      0.103</code></pre>
 </div>
-<p>Is the college gap in union membership the same size as the regional gap? And is the college gap larger than the city/non-city gap?</p>
+<p>Rows 1-4 are the effect of college in models 1-4. Whether the effect diminishes in each subsequent model:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>metest, <span class="kw">clear</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>metest 1 - 2, add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-                collgrad - south |     0.170      0.034      0.000 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metest 1 - 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+college                          |                                
+                         m1 - m2 |     0.012      0.004      0.003 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 3, add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-                 collgrad - smsa |     0.025      0.034      0.465 </code></pre>
+college                          |                                
+                         m1 - m2 |     0.012      0.004      0.003 
+                         m2 - m3 |     0.024      0.004      0.000 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>metest 3 - 4, add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+college                          |                                
+                         m1 - m2 |     0.012      0.004      0.003 
+                         m2 - m3 |     0.024      0.004      0.000 
+                         m3 - m4 |     0.017      0.004      0.000 </code></pre>
+</div>
+<p>And whether it is the same in all four models:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>metest 1 = 2 = 3 = 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Tests of equality
+
+                                 |      chi2         df     pvalue 
+---------------------------------+--------------------------------
+college                          |                                
+               m1 = m2 = m3 = m4 |    60.094      3.000      0.000 </code></pre>
 </div>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -680,10 +695,13 @@ smsa                             |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../metest/usage.html" class="pagination-link" aria-label="Usage and examples">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Usage and examples</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../metest/usage.html" class="pagination-link" aria-label="Usage and examples">
-        <span class="nav-page-text">Usage and examples</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../metest/help.html" class="pagination-link" aria-label="help metest">
+        <span class="nav-page-text">help metest</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

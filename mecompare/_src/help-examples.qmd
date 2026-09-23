@@ -42,6 +42,7 @@ mecompare age collgrad race hours, models(basemod medmod) amount(sd 10)
 ```{.stata-run}
 <<dd_do>>
 mecompare age hours, models(basemod medmod) amount(rate)
+mecompare age hours, models(basemod medmod) amount(range)
 <</dd_do>>
 ```
 
@@ -68,7 +69,9 @@ mecompare age race, models(basemod medmod) by(collgrad married)
 ```{.stata-run}
 <<dd_do>>
 mecompare age race, models(basemod medmod) atmeans
-mecompare age, models(basemod) start(age=(30 40 50))
+mecompare age, models(basemod) start(age=(35 40 45))
+mecompare age, models(basemod) start(age=35) end(age=40)
+mecompare age, models(basemod) start(age=(35 40)) end(age=(40 45))
 mecompare age race, models(basemod medmod) covariates(hours=(20 40 60))
 <</dd_do>>
 ```
@@ -137,7 +140,7 @@ mecompare age collgrad race, models(cntbase) predict(pr(0))
 <</dd_do>>
 ```
 
-With two models, any prediction returning one quantity per model:
+With two or more models, any prediction returning one quantity per model:
 
 ```{.stata-run}
 <<dd_do>>
@@ -153,5 +156,39 @@ mecompare age collgrad race, models(cntbase cntmed) predict(n)
 ```{.stata-run}
 <<dd_do>>
 mecompare age race, models(basemod) marginsopt(expression(100*predict(pr)))
+<</dd_do>>
+```
+
+## Four nested models and custom comparisons with metest
+
+```{.stata-run}
+<<dd_do>>
+use https://tdmize.github.io/data/data/gss_cme, clear
+drop if year < 2000
+drop if employed != 1
+drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+
+logit vhappy i.college, vce(robust)
+estimates store m1
+logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m2
+logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m3
+logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m4
+
+mecompare college, models(m1 m2 m3 m4)
+<</dd_do>>
+```
+
+Use `metest` to calculate the cross-model tests. Here, whether the effect
+diminishes in each subsequent model.
+
+```{.stata-run}
+<<dd_do>>
+metest, clear
+metest 1 - 2, add
+metest 2 - 3, add
+metest 3 - 4, add
 <</dd_do>>
 ```

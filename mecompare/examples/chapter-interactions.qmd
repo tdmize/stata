@@ -82,7 +82,7 @@ Marginal effects (N_agemod=36712)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                              Men |     1     -0.016      0.004      0.000
                            Women |     2     -0.045      0.003      0.000
 
@@ -629,7 +629,8 @@ ordered by the first `by()` variable and then the second.
 . use "https://tdmize.github.io/data/data/nli_gss", clear
 (GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)
 
-. drop if missing(sameokB, year1976, conviewSS, age, white, male, income, married, college, conserv)
+. drop if missing(sameokB, year1976, conviewSS, age, white, male, income, married, college, conser
+> v)
 (43,258 observations deleted)
 
 . 

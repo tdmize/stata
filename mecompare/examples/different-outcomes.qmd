@@ -18,14 +18,14 @@ predictor in the models.
 (57,404 observations deleted)
 
 . 
-. quietly nbreg mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robust
-> )
+. quietly nbreg mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robu
+> st)
 
 . estimates store mental
 
 . 
-. quietly nbreg physhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robust
-> )
+. quietly nbreg physhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robu
+> st)
 
 . estimates store physical
 
@@ -76,12 +76,12 @@ college                          |
                         physical |    11     -0.542      0.189      0.004
                       Difference |    12     -0.337      0.254      0.184
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                           mental |    13     -0.496      0.124      0.000
                         physical |    14      0.450      0.099      0.000
                       Difference |    15     -0.946      0.133      0.000
 ---------------------------------+---------------------------------------
-faminc + SD                      |                                       
+faminc + SD (centered)           |                                       
                           mental |    16     -0.476      0.135      0.000
                         physical |    17     -0.413      0.120      0.001
                       Difference |    18     -0.063      0.154      0.682

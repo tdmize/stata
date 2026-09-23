@@ -379,12 +379,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre class="stata-output"><code>(57,404 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.<span class="fu">year</span>, <span class="kw">vce</span>(<span class="kw">robust</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.<span class="fu">year</span>, <span class="kw">vce</span>(robu</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">st</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mental</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> physhlth i.woman i.married i.parent i.college c.age faminc i.race i.<span class="fu">year</span>, <span class="kw">vce</span>(<span class="kw">robust</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">nbreg</span> physhlth i.woman i.married i.parent i.college c.age faminc i.race i.<span class="fu">year</span>, <span class="kw">vce</span>(robu</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">st</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> physical</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For the count models the marginal effects are changes in the predicted rate (expected number of days). Continuous predictors are changed by one standard deviation:</p>
@@ -426,12 +426,12 @@ college                          |
                         physical |    11     -0.542      0.189      0.004
                       Difference |    12     -0.337      0.254      0.184
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                           mental |    13     -0.496      0.124      0.000
                         physical |    14      0.450      0.099      0.000
                       Difference |    15     -0.946      0.133      0.000
 ---------------------------------+---------------------------------------
-faminc + SD                      |                                       
+faminc + SD (centered)           |                                       
                           mental |    16     -0.476      0.135      0.000
                         physical |    17     -0.413      0.120      0.001
                       Difference |    18     -0.063      0.154      0.682

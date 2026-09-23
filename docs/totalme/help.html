@@ -232,6 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments">Comments</a></li>
+  <li><a href="#stata-version" id="toc-stata-version" class="nav-link" data-scroll-target="#stata-version">Stata version</a></li>
   <li><a href="#authorship" id="toc-authorship" class="nav-link" data-scroll-target="#authorship">Authorship</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -371,6 +372,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;"><strong>#</strong></td>
 <td style="text-align: left;">A change of <em>#</em>, which can be any amount. E.g., A 10 unit increase can be specified with <code>amount(10)</code></td>
 </tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2sd</strong></td>
+<td style="text-align: left;">A two standard deviation change (Gelman 2008), useful for comparing continuous effects to categorical effects; centered by default, from [x - SD] to [x + SD]. <strong>twosd</strong> is a synonym</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>trimrange</strong></td>
+<td style="text-align: left;">A change across the trimmed range of the variable, from its 5th to its 95th percentile in the estimation sample (Mize and Han 2025); <code>start()</code> and centering do not apply</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>range</strong></td>
+<td style="text-align: left;">A change across the full observed range of the variable, from its minimum to its maximum in the estimation sample; <code>start()</code> and centering do not apply</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>rate</strong></td>
+<td style="text-align: left;">An instantaneous rate of change, i.e.&nbsp;the derivative, approximated with a small centered change; <strong>slope</strong> and <strong>dydx</strong> are synonyms. Centering does not apply</td>
+</tr>
 </tbody>
 </table>
 <p><strong><code>centered</code></strong> Changes for continuous independent variables are <strong>centered</strong> by default: computed from half the amount below to half the amount above, e.g.&nbsp;[mean - SD/2] to [mean + SD/2]. The default.</p>
@@ -399,11 +416,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="subpopulation-estimation-options">Subpopulation estimation options</h3>
 <p><strong><code>by(varname)</code></strong> estimates total ME for each level of the specified binary or nominal variable, using the full sample. This is equivalent to the <code>margins</code> option at( ). For each level, the estimation is based on the entire sample with the subpopulation variable counterfactually set to that level. The subpopulation variable must be binary or nominal and must also be included as a covariate in the model.</p>
 <p><strong><code>over(varname)</code></strong> estimates total ME separately for each level of the specified binary or nominal variable, using only the subsample of observations that have that specific value. This option uses the <code>over()</code> option from the <code>margins</code> command to compute marginal effects within each group-specific subsample; see [margins] over option.</p>
+<p>Neither option may name one of the focal variables: <code>totalme</code> does not estimate the total ME of a variable within levels of that same variable and exits with an error; <a href="../mecompare/help.html">mecompare</a> handles that case.</p>
+<p>With either option the table also holds a <strong>Diff.</strong> row for each pair of levels of the <code>by()</code> or <code>over()</code> variable – the total ME at the first level minus the total ME at the second, with its standard error and test, which is the test of whether the effect differs across the groups (a test of interaction). With two models the Diff. rows are given for model 1, model 2, and the cross-model difference. Rows are labelled <strong>Diff.</strong> when the variable has two levels and <strong>Diff.1</strong>, <strong>Diff.2</strong>, … when it has more, one per pair; the level each row subtracts is printed under the table. All quantities come from one <code>margins</code> call, so the tests use the joint covariance of the levels.</p>
 <p><span id="sampleweights"></span></p>
 </section>
 <section id="sample-weights-and-multiple-imputation-estimation-options" class="level3">
 <h3 class="anchored" data-anchor-id="sample-weights-and-multiple-imputation-estimation-options">Sample weights and multiple imputation estimation options</h3>
-<p><strong><code>mi and svy</code></strong> Models fit with the <code>mi</code>, <code>svy</code>, and <code>mi estimate: svy:</code> prefixes are supported. Specify the prefixes on the models themselves, not with <code>totalme</code>; with two models both must use the same prefixes. Under <code>mi</code>, fit with <code>mi estimate:</code> or <code>mi estimate, post:</code> – both are accepted here and return the same pooled statistic – and store with <code>estimates store</code>; declare a survey design with <code>mi svyset</code> rather than <code>svyset</code>. The user-written <em>mimrgns</em> is used for the marginal effects and must be installed separately.</p>
+<p><strong><code>mi and svy</code></strong> Models fit with the <code>mi</code>, <code>svy</code>, and <code>mi estimate: svy:</code> prefixes are supported. Specify the prefixes on the models themselves, not with <code>totalme</code>; with two models both must use the same prefixes. Under <code>mi</code>, fit with <code>mi estimate:</code> or <code>mi estimate, post:</code> – with one model both are accepted and return the same pooled statistic; with two models, fit both with <code>mi estimate, post:</code> – and store with <code>estimates store</code>; declare a survey design with <code>mi svyset</code> rather than <code>svyset</code>. The user-written <em>mimrgns</em> is used for the marginal effects and must be installed separately.</p>
 <p><em>Multilevel models need a stage weight.</em> For the multilevel (<code>me</code>…) families, a weight alone is not enough: the model must carry a higher-level weight too, as in <code>melogit y x [pw=w2] || group:, pweight(w1)</code>. A model fit with a weight but no <code>pweight()</code> has no design to build from and is refused. The better alternative is the <code>svy:</code> prefix, which carries the whole design from <code>svyset</code> and is the recommended way to specify one.</p>
 <p><strong><code>[weight]</code></strong> When possible, using <code>svyset</code> and the <code>svy:</code> prefix is the preferred way to specify weights. However, you can instead specify the weight on the <strong>stored models</strong> – e.g.&nbsp;<code>logit y x [pw=w]</code> – or fit them with <code>svy:</code>. With two models, both must carry the same weight.</p>
 <p><span id="options"></span></p>
@@ -424,7 +443,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="saved-estimates-and-matrices">Saved estimates and matrices</h3>
 <p><code>totalme</code> uses <code>margins</code> to estimate the marginal effects which make up the Total ME. In the two-model case the stored estimates are <em>combined</em> by <code>suest2</code>. These results are stored and can be restored after <code>totalme</code> (see <code>estimates restore</code>). The combined-system results are stored as <em>totalme_suest2</em>. The <code>margins</code> results which contain the predictions that are the constituent pieces of the marginal effects <code>totalme</code> calculates are stored as <em>totalme_margins</em>.</p>
 <p>The command saves estimation results that can be retrieved using <code>return list</code>, including scalars for each estimated inequality score and a matrix containing all results.</p>
-<p>The scalars follow one naming scheme whether one or two models are given. In each name <em>#</em> is the variable’s number within its type (the first continuous/binary variable is 1, the first nominal variable is 1). With <code>by()</code> or <code>over()</code>, <code>_</code><em>level</em> is appended to every name, including the cross-model differences.</p>
+<p>The scalars follow one naming scheme whether one or two models are given. In each name <em>#</em> is the variable’s number within its type (the first continuous/binary variable is 1, the first nominal variable is 1). With <code>by()</code> or <code>over()</code>, <code>_</code><em>level</em> is appended to every name, including the cross-model differences, and the Diff. rows append <code>_d</code><em>level1</em><code>_</code><em>level2</em> instead (e.g.&nbsp;<code>r(tmcm11_d0_1)</code> is the total ME of the first continuous/binary variable at level 0 minus that at level 1).</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -481,6 +500,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;"><code>r(tmuwd</code><em>#</em><code>)</code></td>
 <td style="text-align: left;">cross-model difference</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;"><em>Other</em></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>r(n_mods)</code></td>
+<td style="text-align: left;">number of models</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>r(n_vars)</code></td>
+<td style="text-align: left;">number of variables</td>
+</tr>
 </tbody>
 </table>
 <p>With one model only the <code>m1</code> names are returned. <code>totalme</code> saves the displayed table to the matrix <code>r(table)</code>, one row per displayed quantity by six columns: estimate, standard error, <em>z</em>, <em>p</em>, and the two confidence limits. This replaces the <code>r(table)</code> any preceding estimation command left behind.</p>
@@ -501,35 +532,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Continuous and Binary IVs</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>totalme         age woman</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>totalme         age woman, amount(<span class="fu">sd</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>totalme         age woman, <span class="bn">start</span>(age=20) amount(10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>totalme         age woman, amount(2sd)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>totalme         age woman, amount(trimrange)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>totalme         age woman, amount(<span class="kw">range</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>totalme         age woman, amount(rate)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>totalme         age woman, <span class="bn">start</span>(age=20) amount(10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Nominal IV (ME inequalities calculated)</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>totalme         race4</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>totalme         race4, unweighted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Total MEs by group, with the Diff. row testing whether they differ</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>totalme         age woman, <span class="kw">by</span>(race4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Compare across two models on same sample</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span>      healthR i.college <span class="kw">if</span> faminc &lt; ., <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   basemod</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span>      healthR i.college c.faminc, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   medmod</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>totalme         college, models(basemod medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span>      healthR i.college <span class="kw">if</span> faminc &lt; ., <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   basemod</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span>      healthR i.college c.faminc, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   medmod</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>totalme         college, models(basemod medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Compare across distinct samples/groups for two models</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ologit</span>      <span class="kw">class</span> i.college <span class="kw">if</span> woman == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   menmod</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ologit</span>      <span class="kw">class</span> i.college <span class="kw">if</span> woman == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   wommod</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>totalme         college, models(menmod wommod) <span class="fu">group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ologit</span>      <span class="kw">class</span> i.college <span class="kw">if</span> woman == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   menmod</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ologit</span>      <span class="kw">class</span> i.college <span class="kw">if</span> woman == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">est</span> <span class="kw">store</span>   wommod</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>totalme         college, models(menmod wommod) <span class="fu">group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Bootstrap example</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">capture</span> <span class="kw">program</span> <span class="kw">drop</span> boot_tot</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">program</span> <span class="kw">define</span> boot_tot, rclass</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span> healthR i.race4 c.age i.woman, base(1)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>totalme race4</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span> <span class="fu">scalar</span> w_tot = <span class="fu">r</span>(tmwm11)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">bootstrap</span> w_tot=<span class="fu">r</span>(w_tot), reps(1000): boot_tot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">capture</span> <span class="kw">program</span> <span class="kw">drop</span> boot_tot</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">program</span> <span class="kw">define</span> boot_tot, rclass</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mlogit</span> healthR i.race4 c.age i.woman, base(1)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>totalme race4</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span> <span class="fu">scalar</span> w_tot = <span class="fu">r</span>(tmwm11)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">bootstrap</span> w_tot=<span class="fu">r</span>(w_tot), reps(1000): boot_tot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="comments" class="level2">
 <h2 class="anchored" data-anchor-id="comments">Comments</h2>
 <p><code>totalme</code> implements the methods described in Mize and Han’s 2025 article “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables”.</p>
 <p>In the two-model case <code>totalme</code>, uses seemingly unrelated estimation to combine the model estimates. See <code>suest</code> and Weesie (1999) for details on the method.</p>
+</section>
+<section id="stata-version" class="level2">
+<h2 class="anchored" data-anchor-id="stata-version">Stata version</h2>
+<p><code>totalme</code> requires Stata 16 or later. A do-file that sets <code>version</code> must set version 16 or later; under an older version the command stops with a message.</p>
 </section>
 <section id="authorship" class="level2">
 <h2 class="anchored" data-anchor-id="authorship">Authorship</h2>
@@ -537,6 +578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Gelman, Andrew. 2008. Scaling regression inputs by dividing by two standard deviations. <em>Statistics in Medicine</em>. 27(15):2865-2873.</p>
 <p>Mize, Trenton D. and Bing Han. 2025. Inequality and total effect summary measures for nominal and ordinal variables. <em>Sociological Science</em>.</p>
 <p>Weesie, Jeroen. 1999. sg121: Seemingly Unrelated Estimation and the Cluster-Adjusted Sandwich Estimator. <em>Stata Technical Bulletin</em>. 52:34-47.</p>
 

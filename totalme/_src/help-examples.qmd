@@ -23,6 +23,10 @@ Continuous and binary independent variables:
 <<dd_do>>
 totalme age woman
 totalme age woman, amount(sd)
+totalme age woman, amount(2sd)
+totalme age woman, amount(trimrange)
+totalme age woman, amount(range)
+totalme age woman, amount(rate)
 totalme age woman, start(age=20) amount(10)
 <</dd_do>>
 ```
@@ -34,6 +38,14 @@ outcome):
 <<dd_do>>
 totalme race4
 totalme race4, unweighted
+<</dd_do>>
+```
+
+Total MEs by group, with the **Diff.** row testing whether they differ:
+
+```{.stata-run}
+<<dd_do>>
+totalme age woman, by(race4)
 <</dd_do>>
 ```
 

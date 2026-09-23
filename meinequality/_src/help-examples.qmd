@@ -33,6 +33,17 @@ meinequality race, models(basemod medmod)
 <</dd_do>>
 ```
 
+## ME inequality by group
+
+In the second model, with the **Diff.** row testing whether it differs
+between the groups:
+
+```{.stata-run}
+<<dd_do>>
+meinequality race, models(medmod) by(married)
+<</dd_do>>
+```
+
 ## Compare across distinct samples/groups for two models
 
 ```{.stata-run}

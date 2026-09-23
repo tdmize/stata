@@ -105,12 +105,75 @@ age                      |
 woman                    |                                               
             Women vs Men |      0.017       0.004       4.576       0.000 
 
+. totalme age woman, amount(2sd)
+Model (totalme_mod1) is:
+     mlogit healthR i.race4 c.age i.woman
+Continuous/Binary IV(s): 
+     age woman
+
+Total ME Estimates (N = 51084)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+        + 2SD (centered) |      0.180       0.003      52.408       0.000 
+-------------------------+-----------------------------------------------
+woman                    |                                               
+            Women vs Men |      0.017       0.004       4.576       0.000 
+
+. totalme age woman, amount(trimrange)
+Model (totalme_mod1) is:
+     mlogit healthR i.race4 c.age i.woman
+Continuous/Binary IV(s): 
+     age woman
+
+Total ME Estimates (N = 51084)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+               p5 to p95 |      0.303       0.006      49.217       0.000 
+-------------------------+-----------------------------------------------
+woman                    |                                               
+            Women vs Men |      0.017       0.004       4.576       0.000 
+
+. totalme age woman, amount(range)
+Model (totalme_mod1) is:
+     mlogit healthR i.race4 c.age i.woman
+Continuous/Binary IV(s): 
+     age woman
+
+Total ME Estimates (N = 51084)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+              min to max |      0.399       0.008      49.827       0.000 
+-------------------------+-----------------------------------------------
+woman                    |                                               
+            Women vs Men |      0.017       0.004       4.576       0.000 
+
+. totalme age woman, amount(rate)
+Model (totalme_mod1) is:
+     mlogit healthR i.race4 c.age i.woman
+Continuous/Binary IV(s): 
+     age woman
+
+Total ME Estimates (N = 51084)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+                    d/dx |      0.005       0.000      51.474       0.000 
+-------------------------+-----------------------------------------------
+woman                    |                                               
+            Women vs Men |      0.017       0.004       4.576       0.000 
+
 . totalme age woman, start(age=20) amount(10)
 Model (totalme_mod1) is:
      mlogit healthR i.race4 c.age i.woman
 Continuous/Binary IV(s): 
      age woman
-1
 
 Total ME Estimates (N = 51084)
 
@@ -153,6 +216,88 @@ Total ME Estimates (N = 51084)
 -------------------------+-----------------------------------------------
 race4                    |                                               
     Unwgt total ME Ineq. |      0.070       0.005      13.385       0.000 
+
+```
+
+Total MEs by group, with the **Diff.** row testing whether they differ:
+
+```{.stata-run}
+. totalme age woman, by(race4)
+Model (totalme_mod1) is:
+     mlogit healthR i.race4 c.age i.woman
+Continuous/Binary IV(s): 
+     age woman
+
+Total ME Estimates (N = 51084)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age(White)               |                                               
+          + 1 (centered) |      0.005       0.000      51.672       0.000 
+-------------------------+-----------------------------------------------
+age(Black)               |                                               
+          + 1 (centered) |      0.006       0.000      46.289       0.000 
+-------------------------+-----------------------------------------------
+age(Other)               |                                               
+          + 1 (centered) |      0.006       0.000      29.994       0.000 
+-------------------------+-----------------------------------------------
+age(Hispanic)            |                                               
+          + 1 (centered) |      0.006       0.000      36.752       0.000 
+-------------------------+-----------------------------------------------
+age Diff.1               |                                               
+          + 1 (centered) |     -0.001       0.000     -15.379       0.000 
+-------------------------+-----------------------------------------------
+age Diff.2               |                                               
+          + 1 (centered) |     -0.001       0.000      -4.417       0.000 
+-------------------------+-----------------------------------------------
+age Diff.3               |                                               
+          + 1 (centered) |     -0.001       0.000      -8.282       0.000 
+-------------------------+-----------------------------------------------
+age Diff.4               |                                               
+          + 1 (centered) |      0.000       0.000       2.904       0.004 
+-------------------------+-----------------------------------------------
+age Diff.5               |                                               
+          + 1 (centered) |      0.000       0.000       1.863       0.062 
+-------------------------+-----------------------------------------------
+age Diff.6               |                                               
+          + 1 (centered) |     -0.000       0.000      -1.363       0.173 
+-------------------------+-----------------------------------------------
+woman(White)             |                                               
+            Women vs Men |      0.017       0.004       4.000       0.000 
+-------------------------+-----------------------------------------------
+woman(Black)             |                                               
+            Women vs Men |      0.020       0.004       4.457       0.000 
+-------------------------+-----------------------------------------------
+woman(Other)             |                                               
+            Women vs Men |      0.018       0.004       4.483       0.000 
+-------------------------+-----------------------------------------------
+woman(Hispanic)          |                                               
+            Women vs Men |      0.019       0.005       4.242       0.000 
+-------------------------+-----------------------------------------------
+woman Diff.1             |                                               
+            Women vs Men |     -0.003       0.005      -0.627       0.531 
+-------------------------+-----------------------------------------------
+woman Diff.2             |                                               
+            Women vs Men |     -0.002       0.005      -0.363       0.717 
+-------------------------+-----------------------------------------------
+woman Diff.3             |                                               
+            Women vs Men |     -0.003       0.005      -0.496       0.620 
+-------------------------+-----------------------------------------------
+woman Diff.4             |                                               
+            Women vs Men |      0.001       0.001       2.292       0.022 
+-------------------------+-----------------------------------------------
+woman Diff.5             |                                               
+            Women vs Men |      0.001       0.001       1.035       0.300 
+-------------------------+-----------------------------------------------
+woman Diff.6             |                                               
+            Women vs Men |     -0.001       0.001      -1.000       0.317 
+
+Diff.1 = White - Black
+Diff.2 = White - Other
+Diff.3 = White - Hispanic
+Diff.4 = Black - Other
+Diff.5 = Black - Hispanic
+Diff.6 = Other - Hispanic
 
 ```
 
@@ -252,11 +397,9 @@ Total ME Estimates (N_basemod = 46288 , N_medmod = 46288)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-college,College Deg~e ~  |                                               
+college                  |                                               
        Model 1 (basemod) |      0.161       0.004      41.362       0.000 
-college,College Deg~e ~  |                                               
         Model 2 (medmod) |      0.112       0.006      20.305       0.000 
-college,College Deg~e ~  |                                               
        Cross-Model Diff. |      0.049       0.006       8.667       0.000 
 
 ```
@@ -334,11 +477,9 @@ Total ME Estimates (N_menmod = 28840 , N_wommod = 36258)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-college,College Deg~e ~  |                                               
+college                  |                                               
         Model 1 (menmod) |      0.410       0.005      74.771       0.000 
-college,College Deg~e ~  |                                               
         Model 2 (wommod) |      0.306       0.005      56.239       0.000 
-college,College Deg~e ~  |                                               
        Cross-Model Diff. |      0.104       0.008      13.507       0.000 
 
 ```

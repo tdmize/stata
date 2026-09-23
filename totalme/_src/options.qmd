@@ -42,13 +42,16 @@ totalme collgrad age, models(basemod medmod)
 ## `amount()`, `centered`, `uncentered` -- the size of a continuous change
 
 For a continuous variable the default is a one-unit change, centered on the
-observed value. `amount()` takes a number or `sd`; one value applies to all
-continuous variables, several apply in order. `uncentered` makes the change
+observed value. `amount()` takes a number, `sd`, `2sd`, `trimrange` (5th to
+95th percentile), `range` (minimum to maximum), or `rate` (the instantaneous
+rate of change); one value applies to all continuous variables, several apply
+in order. `uncentered` makes the change
 run upward from the observed value.
 
 ```{.stata-run}
 <<dd_do>>
 totalme age, models(medmod) amount(sd)
+totalme age, models(medmod) amount(trimrange)
 totalme age, models(medmod) amount(10) uncentered
 <</dd_do>>
 ```
@@ -57,7 +60,7 @@ totalme age, models(medmod) amount(10) uncentered
 
 ```{.stata-run}
 <<dd_do>>
-totalme age, models(medmod) start(age=35) amount(10)
+totalme age, models(medmod) start(age=40) amount(5)
 <</dd_do>>
 ```
 
@@ -74,7 +77,8 @@ totalme collgrad, models(medmod) atmeans
 For a nominal variable the per-outcome quantity is the ME inequality of
 [`meinequality`](../meinequality/index.html), so the Total ME is a Total ME
 inequality, weighted by category shares by default. `unweighted` gives every
-pairwise comparison the same weight; `all` reports both.
+pairwise comparison the same weight; `all` reports both. For a continuous or
+binary variable these options are ignored and the variable keeps its one row.
 
 ```{.stata-run}
 <<dd_do>>
@@ -103,6 +107,12 @@ totalme collgrad, models(nonsouth south) groups groupnames(NonSouth South)
 covariate as a counterfactual (the whole sample set to that level);
 `over(varname)` computes it within each observed subgroup. The variable must
 be in the model with the `i.` prefix.
+
+With either option the table also holds a **Diff.** row for each pair of
+levels -- the Total ME at the first level minus that at the second, with its
+standard error and test, which is the test of whether the effect differs
+across the groups (a test of interaction). Neither option may name one of
+the focal variables; [`mecompare`](../mecompare/index.html) handles that case.
 
 ```{.stata-run}
 <<dd_do>>
@@ -137,6 +147,11 @@ on `totalme`; with two models both must carry the same. Multilevel models
 need a higher-level weight as well or, better, the `svy:` prefix. See the
 [help file](help.html#sampleweights).
 
+Under `mi`, one model may be fit with plain `mi estimate:` or with
+`mi estimate, post:`, which return the same pooled statistic; to compare two
+models, fit both with `mi estimate, post:`. `mi estimate` requires the
+user-written `mimrgns` package.
+
 ## Saved results
 
 `totalme` is r-class. For a continuous or binary variable, `r(tmcm1#)`,
@@ -144,7 +159,8 @@ need a higher-level weight as well or, better, the `svy:` prefix. See the
 difference for the *#*th such variable in *varlist*; for a nominal variable
 `r(tmwm1#)`, `r(tmwm2#)`, `r(tmwd#)` hold the weighted Total ME inequality and
 `r(tmuwm1#)`, `r(tmuwm2#)`, `r(tmuwd#)` the unweighted. With `by()` or
-`over()`, `_level` is appended. `r(table)` holds the displayed table and
+`over()`, `_level` is appended, and the **Diff.** rows append `_d`*level1*`_`*level2*
+(e.g. `r(tmcm11_d0_1)`). `r(table)` holds the displayed table and
 `r(se_missing)` counts quantities whose standard error could not be computed.
 The `margins` results are stored as `totalme_margins` and, with two models,
 the combined system as `totalme_suest2`.

@@ -524,7 +524,7 @@ Marginal effects (N_polmod=3608)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 2SD                        |                                       
+age + 2SD (centered)             |                                       
                           polmod |     1      0.496      0.053      0.000</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(polmod) amount(trimrange)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction

@@ -138,6 +138,29 @@ race ME Ineq.            |
 
 ```
 
+## ME inequality by group
+
+In the second model, with the **Diff.** row testing whether it differs
+between the groups:
+
+```{.stata-run}
+. meinequality race, models(medmod) by(married)
+Model (medmod) is:
+     logit union i.race c.age i.married, vce(robust)
+
+ME Inequality Estimates (N = 1878)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+ME Inequality            |                                               
+            race(Single) |      0.085       0.052       1.629       0.103 
+           race(Married) |      0.079       0.049       1.593       0.111 
+              race Diff. |      0.006       0.005       1.304       0.192 
+
+Diff. = Single - Married
+
+```
+
 ## Compare across distinct samples/groups for two models
 
 ```{.stata-run}

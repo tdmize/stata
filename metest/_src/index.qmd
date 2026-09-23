@@ -26,6 +26,8 @@ with `add`.
 net install mecompare, from("https://tdmize.github.io/data") replace
 ```
 
+`metest` requires Stata 16 or later.
+
 
 ## Where to start
 
@@ -33,6 +35,8 @@ net install mecompare, from("https://tdmize.github.io/data") replace
   help file: single effects, differences, ratios and averages, scaling by a
   literal value, equality tests, accumulated tables, and use after commands other
   than `mecompare`.
+- [Tests across three or more models](many-models.html) compares one effect
+  across four nested models.
 - The [help file](help.html) is on the site, rendered from the installed
   version (`help metest` in Stata).
 - The `mecompare` pages use `metest` throughout, especially the

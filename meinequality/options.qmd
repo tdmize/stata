@@ -33,7 +33,8 @@ Each variable in *varlist* must have been entered in the model(s) with the
 A weighted ME inequality (the default) weights each pairwise comparison by
 the share of the sample in the two levels compared, corrected so the weights
 sum to one: *w~ab~ = (p~a~ + p~b~)/(L - 1)*. `unweighted` gives every pair the
-same weight, *1 / [L(L-1)/2]*. `all` reports both. The proportions are taken
+same weight, *1 / [L(L-1)/2]*. `all` reports both; for a binary variable the
+two are equal and only the weighted one is shown. The proportions are taken
 over the model's estimation sample.
 
 ```{.stata-run}
@@ -184,6 +185,13 @@ covariate as a counterfactual (the whole sample set to that level);
 `over(varname)` computes it within each observed subgroup. The variable must be
 in the model with the `i.` prefix.
 
+With either option the table also holds a **Diff.** row for each pair of
+levels -- the ME inequality at the first level minus that at the second, with
+its standard error and test, which is the test of whether the inequality
+differs across the groups (a test of interaction); with a multi-category
+outcome there is one per outcome. Neither option may name one of
+the focal variables; [`mecompare`](../mecompare/index.html) handles that case.
+
 ```{.stata-run}
 . meinequality race, models(medmod) by(collgrad)
 Model (medmod) is:
@@ -196,6 +204,9 @@ ME Inequality Estimates (N = 1878)
 ME Inequality            |                                               
      race(Not college~d) |      0.079       0.027       2.896       0.004 
       race(College grad) |      0.089       0.031       2.915       0.004 
+              race Diff. |     -0.010       0.006      -1.834       0.067 
+
+Diff. = Not college grad - College grad
 
 . meinequality race, models(medmod) over(collgrad)
 Model (medmod) is:
@@ -208,6 +219,9 @@ ME Inequality Estimates (N = 1878)
 ME Inequality            |                                               
      race(Not college~d) |      0.076       0.026       2.884       0.004 
       race(College grad) |      0.094       0.032       2.963       0.003 
+              race Diff. |     -0.018       0.007      -2.718       0.007 
+
+Diff. = Not college grad - College grad
 
 ```
 
@@ -258,7 +272,8 @@ race ME Ineq.            |
 ## Display options: `ci`, `level()`, `decimals()`, `labwidth()`, `title()`
 
 ```{.stata-run}
-. meinequality race, models(basemod medmod) ci level(90) decimals(4) title("ME inequality of race")
+. meinequality race, models(basemod medmod) ci level(90) decimals(4) title("ME inequality of race"
+> )
 
 
 Model 1 (basemod) is:
@@ -314,13 +329,19 @@ models need a higher-level weight as well (`melogit y x [pw=w2] || group:,
 pweight(w1)`) or, better, the `svy:` prefix. See the
 [help file](help.html#sampleweights).
 
+Under `mi`, one model may be fit with plain `mi estimate:` or with
+`mi estimate, post:`, which return the same pooled statistic; to compare two
+models, fit both with `mi estimate, post:`. `mi estimate` requires the
+user-written `mimrgns` package.
+
 ## Saved results
 
 `meinequality` is r-class. `r(wem1#)`, `r(wem2#)`, and `r(wed#)` hold the
 weighted ME inequality for model 1, model 2, and their difference for the
 *#*th variable in *varlist*; `r(uwem1#)`, `r(uwem2#)`, `r(uwed#)` the
 unweighted versions; with a multi-category outcome `_o#` is appended for the
-outcome, and with `by()` or `over()` `_level`. `r(table)` holds the displayed
+outcome, and with `by()` or `over()` `_level`, with the **Diff.** rows
+appending `_d`*level1*`_`*level2* instead (e.g. `r(wem11_d0_1)`). `r(table)` holds the displayed
 table (estimate, SE, *z*, *p*, and the two confidence limits) and
 `r(se_missing)` counts quantities whose standard error could not be computed.
 The `margins` results are stored as `meineq_margins` and, with two models, the

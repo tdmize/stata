@@ -371,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>One of the most common cross-model questions is whether an effect changes when controls are added, such as in tests of mediation/attenuation. Here the effect of a college degree on the probability of being very happy is compared between a bivariate logit and a logit with a full set of controls. Because the outcome is binary, the marginal effect is a discrete change in the predicted probability, and comparing it across models is not subject to the rescaling problem that makes comparing logit coefficients across models misleading.</p>
+<p>One of the most common cross-model questions is whether an effect changes when controls are added, such as in tests of mediation/attenuation. Here the effect of a college degree on the probability of being very happy is compared across four nested logits: the bivariate model, then a full set of controls, then wages, then occupational prestige. Because the outcome is binary, the marginal effect is a discrete change in the predicted probability, and comparing it across models is not subject to the rescaling problem that makes comparing logit coefficients across models misleading.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
@@ -384,33 +384,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 . </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mod1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv <span class="co">///</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              i.reltrad i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mod2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv <span class="co">///</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>              i.reltrad i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman <span class="co">///</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>              i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare i.college, models(mod1 mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (mod1) is:
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mecompare college, models(m1 m2 m3 m4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (m1) is:
      logit vhappy i.college
-Model 2 (mod2) is:
+Model 2 (m2) is:
      logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
+Model 3 (m3) is:
+     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c
+&gt; .age
+Model 4 (m4) is:
+     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.ye
+&gt; ar c.age##c.age
 
 
 Predicting: Pr(vhappy)
 
-Marginal effects and cross-model differences (N_mod1=9216) (N_mod2=9216)
+Marginal effects across models (N_m1=9216) (N_m2=9216) (N_m3=9216) (N_m4=9216)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
 college                          |                                       
          College  - No Col D     |                                       
-                            mod1 |     1      0.072      0.010      0.000
-                            mod2 |     2      0.060      0.011      0.000
+                              m1 |     1      0.072      0.010      0.000
+                              m2 |     2      0.060      0.011      0.000
+                              m3 |     3      0.036      0.011      0.001
+                              m4 |     4      0.019      0.012      0.103</code></pre>
+</div>
+<p>Use <a href="../../metest/index.html"><code>metest</code></a> to calculate the cross-model tests. Here, whether the effect diminishes in each subsequent model.</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>metest, <span class="kw">clear</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>metest 1 - 2, add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+college                          |                                
+                         m1 - m2 |     0.012      0.004      0.003 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 3, add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+college                          |                                
+                         m1 - m2 |     0.012      0.004      0.003 
+                         m2 - m3 |     0.024      0.004      0.000 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>metest 3 - 4, add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+college                          |                                
+                         m1 - m2 |     0.012      0.004      0.003 
+                         m2 - m3 |     0.024      0.004      0.000 
+                         m3 - m4 |     0.017      0.004      0.000 </code></pre>
+</div>
+<p>With two models, the <strong>Difference</strong> row is printed directly:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mecompare college, models(m1 m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (m1) is:
+     logit vhappy i.college
+Model 2 (m2) is:
+     logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
+
+
+Predicting: Pr(vhappy)
+
+Marginal effects and cross-model differences (N_m1=9216) (N_m2=9216)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+college                          |                                       
+         College  - No Col D     |                                       
+                              m1 |     1      0.072      0.010      0.000
+                              m2 |     2      0.060      0.011      0.000
                       Difference |     3      0.012      0.004      0.003</code></pre>
 </div>
-<p>The <strong>Difference</strong> row tests whether the effect of college is smaller once the controls are included. More than two nested models can be compared by running <code>mecompare</code> for each pair of interest.</p>
 
 
 

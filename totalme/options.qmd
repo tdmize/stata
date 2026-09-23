@@ -70,20 +70,14 @@ Total ME Estimates (N_basemod = 2237 , N_medmod = 2237)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-collgrad,College grad ~l |                                               
+collgrad                 |                                               
        Model 1 (basemod) |      0.248       0.021      11.572       0.000 
-collgrad,College grad ~l |                                               
         Model 2 (medmod) |      0.264       0.023      11.527       0.000 
-collgrad,College grad ~l |                                               
        Cross-Model Diff. |     -0.016       0.008      -2.049       0.040 
 -------------------------+-----------------------------------------------
-age, + 1 (centered)      |                                               
+age + 1 (centered)       |                                               
        Model 1 (basemod) |      0.005       0.003       1.831       0.067 
--------------------------+-----------------------------------------------
-age, + 1 (centered)      |                                               
         Model 2 (medmod) |      0.007       0.003       2.267       0.023 
--------------------------+-----------------------------------------------
-age, + 1 (centered)      |                                               
        Cross-Model Diff. |     -0.001       0.001      -1.152       0.249 
 
 ```
@@ -91,8 +85,10 @@ age, + 1 (centered)      |
 ## `amount()`, `centered`, `uncentered` -- the size of a continuous change
 
 For a continuous variable the default is a one-unit change, centered on the
-observed value. `amount()` takes a number or `sd`; one value applies to all
-continuous variables, several apply in order. `uncentered` makes the change
+observed value. `amount()` takes a number, `sd`, `2sd`, `trimrange` (5th to
+95th percentile), `range` (minimum to maximum), or `rate` (the instantaneous
+rate of change); one value applies to all continuous variables, several apply
+in order. `uncentered` makes the change
 run upward from the observed value.
 
 ```{.stata-run}
@@ -108,6 +104,19 @@ Total ME Estimates (N = 2237)
 -------------------------+-----------------------------------------------
 age                      |                                               
          + SD (centered) |      0.020       0.009       2.268       0.023 
+
+. totalme age, models(medmod) amount(trimrange)
+Model (medmod) is:
+     mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
+Continuous/Binary IV(s): 
+     age
+
+Total ME Estimates (N = 2237)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+               p5 to p95 |      0.058       0.026       2.280       0.023 
 
 . totalme age, models(medmod) amount(10) uncentered
 Model (medmod) is:
@@ -127,19 +136,18 @@ age                      |
 ## `start()` -- where the change begins
 
 ```{.stata-run}
-. totalme age, models(medmod) start(age=35) amount(10)
+. totalme age, models(medmod) start(age=40) amount(5)
 Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Continuous/Binary IV(s): 
      age
-1
 
 Total ME Estimates (N = 2237)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
 age                      |                                               
-start (35) + 10 (cente~) |      0.069       0.032       2.140       0.032 
+start (40) + 5 (center~) |      0.032       0.014       2.297       0.022 
 
 ```
 
@@ -166,7 +174,8 @@ College grad vs Not co~d |      0.281       0.025      11.105       0.000
 For a nominal variable the per-outcome quantity is the ME inequality of
 [`meinequality`](../meinequality/index.html), so the Total ME is a Total ME
 inequality, weighted by category shares by default. `unweighted` gives every
-pairwise comparison the same weight; `all` reports both.
+pairwise comparison the same weight; `all` reports both. For a continuous or
+binary variable these options are ignored and the variable keeps its one row.
 
 ```{.stata-run}
 . totalme race, models(medmod)
@@ -237,11 +246,9 @@ Total ME Estimates (N_nonsouth = 1300 , N_south = 937)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-collgrad,College grad ~l |                                               
+collgrad                 |                                               
       Model 1 (NonSouth) |      0.277       0.028       9.886       0.000 
-collgrad,College grad ~l |                                               
          Model 2 (South) |      0.228       0.036       6.292       0.000 
-collgrad,College grad ~l |                                               
        Cross-Model Diff. |      0.049       0.046       1.079       0.281 
 
 ```
@@ -252,6 +259,12 @@ collgrad,College grad ~l |
 covariate as a counterfactual (the whole sample set to that level);
 `over(varname)` computes it within each observed subgroup. The variable must
 be in the model with the `i.` prefix.
+
+With either option the table also holds a **Diff.** row for each pair of
+levels -- the Total ME at the first level minus that at the second, with its
+standard error and test, which is the test of whether the effect differs
+across the groups (a test of interaction). Neither option may name one of
+the focal variables; [`mecompare`](../mecompare/index.html) handles that case.
 
 ```{.stata-run}
 . totalme collgrad, models(medmod) by(south)
@@ -269,6 +282,11 @@ College grad vs Not co~d |      0.272       0.024      11.451       0.000
 -------------------------+-----------------------------------------------
 collgrad(South)          |                                               
 College grad vs Not co~d |      0.254       0.023      11.130       0.000 
+-------------------------+-----------------------------------------------
+collgrad Diff.           |                                               
+College grad vs Not co~d |      0.018       0.009       2.002       0.045 
+
+Diff. = Not south - South
 
 . totalme collgrad, models(medmod) over(south)
 Model (medmod) is:
@@ -285,13 +303,19 @@ College grad vs Not co~d |      0.275       0.024      11.261       0.000
 -------------------------+-----------------------------------------------
 collgrad(South)          |                                               
 College grad vs Not co~d |      0.248       0.022      11.398       0.000 
+-------------------------+-----------------------------------------------
+collgrad Diff.           |                                               
+College grad vs Not co~d |      0.027       0.009       2.892       0.004 
+
+Diff. = Not south - South
 
 ```
 
 ## Display options: `ci`, `level()`, `decimals()`, `labwidth()`, `title()`
 
 ```{.stata-run}
-. totalme collgrad age, models(basemod medmod) ci decimals(4) title("Total MEs on occupation group")
+. totalme collgrad age, models(basemod medmod) ci decimals(4) title("Total MEs on occupation group
+> ")
 
 
 Model 1 (basemod) is:
@@ -305,20 +329,14 @@ Total MEs on occupation group (N_basemod = 2237 , N_medmod = 2237)
 
                          |   Estimate   Std. err.           z       P>|z|      95% LL      95% UL 
 -------------------------+-----------------------------------------------------------------------
-collgrad,College grad ~l |                                                                       
+collgrad                 |                                                                       
        Model 1 (basemod) |     0.2478      0.0214     11.5722      0.0000      0.2058      0.2897 
-collgrad,College grad ~l |                                                                       
         Model 2 (medmod) |     0.2638      0.0229     11.5272      0.0000      0.2189      0.3087 
-collgrad,College grad ~l |                                                                       
        Cross-Model Diff. |    -0.0160      0.0078     -2.0490      0.0405     -0.0314     -0.0007 
 -------------------------+-----------------------------------------------------------------------
-age, + 1 (centered)      |                                                                       
+age + 1 (centered)       |                                                                       
        Model 1 (basemod) |     0.0054      0.0029      1.8307      0.0671     -0.0004      0.0111 
--------------------------+-----------------------------------------------------------------------
-age, + 1 (centered)      |                                                                       
         Model 2 (medmod) |     0.0065      0.0029      2.2673      0.0234      0.0009      0.0121 
--------------------------+-----------------------------------------------------------------------
-age, + 1 (centered)      |                                                                       
        Cross-Model Diff. |    -0.0011      0.0010     -1.1524      0.2492     -0.0031      0.0008 
 
 ```
@@ -347,11 +365,9 @@ Total ME Estimates (N_basemod = 2237 , N_medmod = 2237)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-collgrad,College grad ~l |                                               
+collgrad                 |                                               
        Model 1 (basemod) |      0.248       0.021      11.572       0.000 
-collgrad,College grad ~l |                                               
         Model 2 (medmod) |      0.264       0.023      11.527       0.000 
-collgrad,College grad ~l |                                               
        Cross-Model Diff. |     -0.016       0.008      -2.049       0.040 
 
 ```
@@ -363,6 +379,11 @@ on `totalme`; with two models both must carry the same. Multilevel models
 need a higher-level weight as well or, better, the `svy:` prefix. See the
 [help file](help.html#sampleweights).
 
+Under `mi`, one model may be fit with plain `mi estimate:` or with
+`mi estimate, post:`, which return the same pooled statistic; to compare two
+models, fit both with `mi estimate, post:`. `mi estimate` requires the
+user-written `mimrgns` package.
+
 ## Saved results
 
 `totalme` is r-class. For a continuous or binary variable, `r(tmcm1#)`,
@@ -370,7 +391,8 @@ need a higher-level weight as well or, better, the `svy:` prefix. See the
 difference for the *#*th such variable in *varlist*; for a nominal variable
 `r(tmwm1#)`, `r(tmwm2#)`, `r(tmwd#)` hold the weighted Total ME inequality and
 `r(tmuwm1#)`, `r(tmuwm2#)`, `r(tmuwd#)` the unweighted. With `by()` or
-`over()`, `_level` is appended. `r(table)` holds the displayed table and
+`over()`, `_level` is appended, and the **Diff.** rows append `_d`*level1*`_`*level2*
+(e.g. `r(tmcm11_d0_1)`). `r(table)` holds the displayed table and
 `r(se_missing)` counts quantities whose standard error could not be computed.
 The `margins` results are stored as `totalme_margins` and, with two models,
 the combined system as `totalme_suest2`.
@@ -392,11 +414,9 @@ Total ME Estimates (N_basemod = 2237 , N_medmod = 2237)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-collgrad,College grad ~l |                                               
+collgrad                 |                                               
        Model 1 (basemod) |      0.248       0.021      11.572       0.000 
-collgrad,College grad ~l |                                               
         Model 2 (medmod) |      0.264       0.023      11.527       0.000 
-collgrad,College grad ~l |                                               
        Cross-Model Diff. |     -0.016       0.008      -2.049       0.040 
 -------------------------+-----------------------------------------------
 race total ME Ineq.      |                                               

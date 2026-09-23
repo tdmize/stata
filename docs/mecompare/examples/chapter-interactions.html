@@ -429,7 +429,7 @@ Marginal effects (N_agemod=36712)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                              Men |     1     -0.016      0.004      0.000
                            Women |     2     -0.045      0.003      0.000</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -806,7 +806,8 @@ faminc(rate)                     |
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/nli_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(sameokB, year1976, conviewSS, age, <span class="bn">white</span>, male, income, married, college, conserv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(sameokB, year1976, conviewSS, age, <span class="bn">white</span>, male, income, married, college, conser</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>v)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(43,258 observations deleted)
 
 . </code></pre>

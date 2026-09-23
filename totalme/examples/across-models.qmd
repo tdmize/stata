@@ -210,11 +210,9 @@ Total ME Estimates (N_basemod = 19292 , N_medmod = 19292)
 
                          |   Estimate   Std. err.           z       P>|z| 
 -------------------------+-----------------------------------------------
-college,College Deg~e ~  |                                               
+college                  |                                               
        Model 1 (basemod) |      0.159       0.006      26.338       0.000 
-college,College Deg~e ~  |                                               
         Model 2 (medmod) |      0.118       0.007      17.514       0.000 
-college,College Deg~e ~  |                                               
        Cross-Model Diff. |      0.041       0.003      15.006       0.000 
 
 ```

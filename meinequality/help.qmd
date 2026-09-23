@@ -119,7 +119,7 @@ The proportions are taken over the model's estimation sample. When two models ar
 
 **`unweighted`** gives all groups equal weight in the calculation by ignoring the relative frequency of each level of the nominal variable in the sample.
 
-**`all`** reports both the `weighted` and `unweighted` inequality measures.
+**`all`** reports both the `weighted` and `unweighted` inequality measures. For a binary variable the two are equal, and only the weighted one is shown.
 
 <span id="covariates"></span>
 
@@ -149,11 +149,15 @@ With `groups`, a weighted ME inequality weights each model by the level proporti
 
 **`over(varname)`** estimates ME inequality separately for each level of the specified binary or nominal variable, using only the subsample of observations that have that specific value. This option uses the `over()` option from the `margins` command to compute marginal effects within each group-specific subsample; see [margins] over option.
 
+Neither option may name one of the focal variables: `meinequality` does not estimate the ME inequality of a variable within levels of that same variable and exits with an error; [mecompare](../mecompare/help.html) handles that case.
+
+With either option the table also holds a **Diff.** row for each pair of levels of the `by()` or `over()` variable -- the ME inequality at the first level minus that at the second, with its standard error and test, which is the test of whether the inequality differs across the groups (a test of interaction). With a multi-category outcome there is one Diff. row per outcome; with two models the Diff. rows are given for model 1, model 2, and the cross-model difference. Rows are labelled **Diff.** when the variable has two levels and **Diff.1**, **Diff.2**, ... when it has more, one per pair; the level each row subtracts is printed under the table. All quantities come from one `margins` call, so the tests use the joint covariance of the levels.
+
 <span id="sampleweights"></span>
 
 ### Sample weights and multiple imputation estimation options
 
-**`mi and svy`** Models fit with `mi`, `svy`, and `mi estimate: svy:` prefixes are supported. Specify the prefixes on the models themselves, not with `meinequality`; with two models both must use the same prefixes. Under `mi`, fit with `mi estimate:` or `mi estimate, post:` -- both are accepted here and return the same pooled statistic -- and store with `estimates store`; declare a survey design with `mi svyset` rather than `svyset`. The user-written *mimrgns* is used for the marginal effects and must be installed separately.
+**`mi and svy`** Models fit with `mi`, `svy`, and `mi estimate: svy:` prefixes are supported. Specify the prefixes on the models themselves, not with `meinequality`; with two models both must use the same prefixes. Under `mi`, fit with `mi estimate:` or `mi estimate, post:` -- with one model both are accepted and return the same pooled statistic; with two models, fit both with `mi estimate, post:` -- and store with `estimates store`; declare a survey design with `mi svyset` rather than `svyset`. The user-written *mimrgns* is used for the marginal effects and must be installed separately.
 
 *Multilevel models need a stage weight.* For the multilevel (`me`...) families, a weight alone is not enough: the model must carry a higher-level weight too, as in `melogit y x [pw=w2] || group:, pweight(w1)`. A model fit with a weight but no `pweight()` has no design to build from and is refused. The better alternative is the `svy:` prefix, which carries the whole design from `svyset` and is the recommended way to specify one.
 
@@ -189,7 +193,7 @@ The command saves estimation results that can be retrieved using `return list`, 
 
 When the outcome has more than two categories the scalars carry an outcome suffix: `r(wem1`*#*`_o`*#*`)` is the weighted statistic for model 1, variable *#*, outcome *#*. The unsuffixed names are used when the outcome is binary or continuous.
 
-In the scalar names below, *#* is the variable's number within the *varlist* (the first nominal variable is 1). With a multi-category outcome the outcome is appended as `_o`*#* -- one scalar per outcome, matching the rows displayed -- and with a binary outcome nothing is appended, since there is only one. `by()` and `over()` then append `_`*level*. With one model only the `m1` names are returned.
+In the scalar names below, *#* is the variable's number within the *varlist* (the first nominal variable is 1). With a multi-category outcome the outcome is appended as `_o`*#* -- one scalar per outcome, matching the rows displayed -- and with a binary outcome nothing is appended, since there is only one. `by()` and `over()` then append `_`*level*, and their Diff. rows append `_d`*level1*`_`*level2* instead (e.g. `r(wem11_d0_1)` is the weighted ME inequality of the first variable at level 0 minus that at level 1). With one model only the `m1` names are returned.
 
 | scalar | Description |
 |:--|:--|
@@ -241,6 +245,12 @@ est store 		medmod
 meinequality 	race, models(basemod medmod)
 ```
 
+**ME inequality by group in the second model, with the Diff. row testing whether it differs**
+
+```stata
+meinequality 	race, models(medmod) by(married)
+```
+
 **Compare across distinct samples/groups for two models**
 
 ```stata
@@ -281,6 +291,10 @@ bootstrap w_mei=r(w_mei), reps(1000): boot_mei
 `meinequality` implements the methods described in Mize and Han's 2025 article "Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables".
 
 `meinequality` uses seemingly unrelated estimation to combine the model estimates in the two model case. See `suest` and Weesie (1999) for details on the method.
+
+## Stata version
+
+`meinequality` requires Stata 16 or later. A do-file that sets `version` must set version 16 or later; under an older version the command stops with a message.
 
 ## Authorship
 

@@ -4,7 +4,7 @@ subtitle: "One comparison, start to finish"
 ---
 
 `mecompare` can be used to calculate marginal effects within a single model and 
-then, optionally, compare them. Or, you can fit two models, store them, and then 
+then, optionally, compare them. Or, you can fit two or more models, store them, and then 
 call `mecompare` to calculate the marginal effects from each model and compare 
 them. This page runs through one example with Stata's `nlsw88` data and then
 explains how to read the table.
@@ -38,7 +38,7 @@ without those variables, then the model with them, storing each with
 Most regression commands in Stata are supported by `mecompare`; the full
 list is under [Supported models](options.html#supported-models) on the
 Options page. Fitting the models with `vce(robust)` is recommended because
-with two models, the estimates are combined with `suest2` which uses
+with two or more models, the estimates are combined with `suest2` which uses
 `vce(robust)`.
 
 ## 2. Compare the marginal effects
@@ -109,7 +109,7 @@ Marginal effects and cross-model differences (N_base=1878) (N_full=1878)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                             base |     1      0.005      0.010      0.607
                             full |     2      0.004      0.010      0.676
                       Difference |     3      0.001      0.002      0.553
@@ -154,9 +154,9 @@ that come up most often.
 
 | Option | Purpose |
 |---|---|
-| `models(name1 [name2])` | The stored estimates to compare. One model gives marginal effects for that model alone. |
-| `amount()` | Size of the change for a continuous variable: a number, `sd` or `2sd` (one or two standard deviations), or `rate` (the instantaneous rate of change). |
-| `start()` | Where the change in a continuous variable begins: `start(varname=#)` or `start(atmeans)`. |
+| `models(name1 [name2 ...])` | The stored estimates to compare. One model gives marginal effects for that model alone; with three or more, every model's effects are listed and `metest` tests the comparisons. |
+| `amount()` | Size of the change for a continuous variable: a number, `sd` or `2sd` (one or two standard deviations), `trimrange` (5th to 95th percentile), `range` (minimum to maximum), or `rate` (the instantaneous rate of change). |
+| `start()`, `end()` | Where the change in a continuous variable begins, `start(varname=#)` or `start(atmeans)`, and, with `end(varname=#)`, where it ends. |
 | `covariates(varname=# ...)`, `atmeans` | Hold other variables at specified values or at their means (the default averages over the observed values). |
 | `by(varlist)` | Marginal effects within each level of another variable, in one table, so that they can be compared with `metest`. |
 | `over(varlist)` | Marginal effects within subsamples defined by another variable. |

@@ -46,20 +46,20 @@ their means:
 
 
 Model 1 (ordinal) is:
-     ologit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.re
-> gion4 i.year
+     ologit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.
+> region4 i.year
 Model 2 (nominal) is:
-     mlogit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.re
-> gion4 i.year
+     mlogit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.
+> region4 i.year
 
 
-Predicting: Pr(partyid5==0) (ordinal), Pr(partyid5==1) (nominal)
+Predicting: Pr(partyid5==0)
 
 Marginal effects and cross-model differences (N_ordinal=8179) (N_nominal=8179)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + 10                         |                                       
+age + 10 (centered)              |                                       
             Strong Dem - ordinal |     1      0.021      0.004      0.000
             Strong Dem - nominal |     2      0.029      0.003      0.000
          Strong Dem - Difference |     3     -0.008      0.003      0.011

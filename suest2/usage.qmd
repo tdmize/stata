@@ -162,7 +162,7 @@ Marginal effects and cross-model differences (N_m1=1878) (N_m2=1878)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     1      0.002      0.003      0.603
                               m2 |     2      0.001      0.003      0.669
                       Difference |     3      0.000      0.001      0.579
@@ -334,3 +334,56 @@ xtreg y x mean_x i.d, re
 The coefficient on `x` is the within-person ("fixed effect") estimate and the
 coefficient on `mean_x` the between-person estimate. The same recipe applies
 to any supported panel or multilevel family.
+
+## More than two models
+
+`suest2` combines any number of stored models. Here are the four nested logits of
+Example 6.2 of Mize, Doan, and Long (2019), in one system:
+
+```{.stata-run}
+. use https://tdmize.github.io/data/data/gss_cme, clear
+(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)
+
+. drop if year < 2000
+(38,116 observations deleted)
+
+. drop if employed != 1
+(9,556 observations deleted)
+
+. drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+(5,578 observations deleted)
+
+. 
+. quietly logit vhappy i.college, vce(robust)
+
+. estimates store m1
+
+. quietly logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.ag
+> e, vce(robust)
+
+. estimates store m2
+
+. quietly logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.a
+> ge##c.age, vce(robust)
+
+. estimates store m3
+
+. quietly logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad
+>  i.year c.age##c.age, vce(robust)
+
+. estimates store m4
+
+. 
+. quietly suest2 m1 m2 m3 m4
+
+. test [m1_vhappy]1.college = [m2_vhappy]1.college
+
+ ( 1)  [m1_vhappy]1.college - [m2_vhappy]1.college = 0
+
+           chi2(  1) =    3.84
+         Prob > chi2 =    0.0499
+
+```
+
+The marginal-effects version is `mecompare college, models(m1 m2 m3 m4)`
+followed by [`metest`](../metest/many-models.html).

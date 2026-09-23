@@ -109,6 +109,7 @@ website:
         - text: "Overview"
           href: metest/index.qmd
         - metest/usage.qmd
+        - metest/many-models.qmd
         - text: "help metest"
           href: metest/help.qmd
 

@@ -27,7 +27,8 @@ tested, using [`suest2`](../suest2/index.html) to combine the estimates.
 net install totalme, from("https://tdmize.github.io/data") replace
 ```
 
-`totalme` requires the [`suest2`](../suest2/index.html) package.
+`totalme` requires the [`suest2`](../suest2/index.html) package and
+Stata 16 or later.
 
 
 ## Where to start

@@ -176,7 +176,7 @@ Marginal effects (N_empmod=68050)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                           empmod |     1     -0.186      0.002      0.000
 
 ```
@@ -201,7 +201,7 @@ Marginal effects (N_empmod=68050)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                           empmod |     1     -0.009      0.000      0.000
 
 . mecompare age, models(empmod) amount(sd)
@@ -213,7 +213,7 @@ Marginal effects (N_empmod=68050)
 
                                  |  ME #   Estimate  Robust SE      P>|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                           empmod |     1     -0.153      0.001      0.000
 
 ```

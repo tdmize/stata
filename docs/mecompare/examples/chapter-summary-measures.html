@@ -490,7 +490,7 @@ Marginal effects (N_empmod=68050)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                           empmod |     1     -0.186      0.002      0.000</code></pre>
 </div>
 <p>For an average person, a standard deviation increase in age (about 18 years) is associated with a 0.19 lower probability of being employed.</p>
@@ -506,7 +506,7 @@ Marginal effects (N_empmod=68050)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                           empmod |     1     -0.009      0.000      0.000</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(employed)
@@ -515,7 +515,7 @@ Marginal effects (N_empmod=68050)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + SD                         |                                       
+age + SD (centered)              |                                       
                           empmod |     1     -0.153      0.001      0.000</code></pre>
 </div>
 <p>On average, an additional year of age is associated with a 0.01 lower probability of being employed, and a standard-deviation increase in age with a 0.15 lower probability. As the chapter notes, the AME and MEM rarely differ by more than a small amount; the preference for the AME is its cleaner interpretation.</p>

@@ -36,6 +36,7 @@ net install mecompare, from("https://tdmize.github.io/data") replace
 same way (`net install suest2, from("https://tdmize.github.io/data") replace`),
 and it ships with [`metest`](../metest/index.html), which automates
 non-standard tests of contrasts between rows of the `mecompare` table.
+`mecompare` requires Stata 16 or later.
 
 
 ## Where to start

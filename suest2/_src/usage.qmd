@@ -214,3 +214,32 @@ xtreg y x mean_x i.d, re
 The coefficient on `x` is the within-person ("fixed effect") estimate and the
 coefficient on `mean_x` the between-person estimate. The same recipe applies
 to any supported panel or multilevel family.
+
+## More than two models
+
+`suest2` combines any number of stored models. Here are the four nested logits of
+Example 6.2 of Mize, Doan, and Long (2019), in one system:
+
+```{.stata-run}
+<<dd_do>>
+use https://tdmize.github.io/data/data/gss_cme, clear
+drop if year < 2000
+drop if employed != 1
+drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+
+quietly logit vhappy i.college, vce(robust)
+estimates store m1
+quietly logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m2
+quietly logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m3
+quietly logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m4
+
+quietly suest2 m1 m2 m3 m4
+test [m1_vhappy]1.college = [m2_vhappy]1.college
+<</dd_do>>
+```
+
+The marginal-effects version is `mecompare college, models(m1 m2 m3 m4)`
+followed by [`metest`](../metest/many-models.html).

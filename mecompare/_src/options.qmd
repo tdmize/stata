@@ -33,15 +33,19 @@ With no *varlist*, marginal effects are computed for every variable in the
 model(s). Factor-variable notation (`i.`, `c.`) is required on the stored
 models.
 
-## `models()` -- one model, two models, or none
+## `models()` -- one model, several, or none
 
 `models()` names the stored estimates. One name will calculate that model's 
 marginal effects. Two names will calculate each model's marginal effects and 
-automatically calculate the cross-model difference. 
+automatically calculate the cross-model difference. With three or more names
+the table lists every model's marginal effects, one set of rows per model,
+and reports no differences: choose the comparisons you want and test them
+with `metest` (e.g. `metest 1 - 2`), as in
+[tests across three or more models](../metest/many-models.html).
 
 If names are omitted, `mecompare` then uses the estimates in memory, which 
 are either the single model just fit (labeled `m1` in the `mecompare` output) 
-or, after [`suest2`](../suest2/index.html), the two models of that system.
+or, after [`suest2`](../suest2/index.html), the models of that system.
 
 ```{.stata-run}
 <<dd_do>>
@@ -65,8 +69,8 @@ mecompare, models(m1 m2)
 
 ## Supported models
 
-`mecompare` accepts one or two models from the following families. The list
-follows the [help file](help.html#estimators); two models are combined with
+`mecompare` accepts one or more models from the following families. The list
+follows the [help file](help.html#estimators); two or more models are combined with
 [`suest2`](../suest2/index.html), whose own
 [list of estimators](../suest2/usage.html#supported-estimators) is the same.
 
@@ -116,11 +120,16 @@ problems, especially for categorical outcomes; the help file's section on
 
 `meglm` with the family-link pairs Gaussian-identity and Gamma-log.
 
-### Which two models can be compared
+After `streg` and `mestreg` the marginal effects are changes in a predicted
+survival time -- the median after `streg`, the mean after `mestreg` -- and a
+note under the table says which; see [Survival models](help.html#survival)
+in the help file.
 
-Two models are comparable when they return the same number of predictions.
-Same-family pairs (two logits, two `glm`s, two `mestreg`s) always qualify.
-Cross-family pairs qualify on the same rule: `logit` vs `regress`, `xtlogit`
+### Which models can be compared
+
+Models are comparable when they all return the same number of predictions.
+Same-family sets (two logits, three `glm`s, two `mestreg`s) always qualify.
+Cross-family sets qualify on the same rule: `logit` vs `regress`, `xtlogit`
 vs `mixed`, any pair of binary-, count-, or continuous-outcome models, and
 any pair of ordinal or nominal models with the same number of outcome
 categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`). Each model
@@ -138,7 +147,7 @@ Models may be fit with the `svy:`, `mi estimate, post:`, or
 `mecompare`; all models in a comparison must carry the same prefixes, and
 `mi estimate` requires the user-written `mimrgns` package. Weights can
 instead be applied on the stored models (`logit y x [pw=w]`, the same weight
-on both), and multilevel models need a stage weight as well. The
+on every model), and multilevel models need a stage weight as well. The
 [help file](help.html#svy_mi) has the details.
 
 ## `statistics()` -- which columns to show
@@ -157,8 +166,8 @@ mecompare i.married age, models(m1 m2) statistics(est se ll ul)
 
 For a continuous variable the default is a one-unit change, centered on the
 observed value (half a unit below to half a unit above). `amount()` takes a
-number, `sd`, `2sd`, `trimrange` (5th to 95th percentile), or `rate` (the
-instantaneous rate of change, `dydx` in `margins`). If a single value is listed 
+number, `sd`, `2sd`, `trimrange` (5th to 95th percentile), `range` (minimum
+to maximum), or `rate` (the instantaneous rate of change, `dydx` in `margins`). If a single value is listed 
 in `amount()`, it is applied to all continuous variables. When multiple values 
 are listed in `amount()`, they are applied in the order of the continuous 
 variables in the *varlist*.
@@ -193,7 +202,7 @@ mecompare age, models(m1 m2) amount(sd) uncentered
 <</dd_do>>
 ```
 
-## `start()` -- where the change begins
+## `start()` and `end()` -- where the change begins and ends
 
 By default each observation's own value is the starting point. `start()`
 sets it: a value, `atmeans`, or a list of values for one variable, which
@@ -201,13 +210,25 @@ gives one numbered row set per value so that `metest` can compare them.
 
 ```{.stata-run}
 <<dd_do>>
-mecompare age, models(m1 m2) start(age=30) amount(10)
+mecompare age, models(m1 m2) start(age=40) amount(5)
 <</dd_do>>
 ```
 
 ```{.stata-run}
 <<dd_do>>
-mecompare age, models(m1) start(age=(30 40 50)) amount(10)
+mecompare age, models(m1) start(age=(35 40 45)) amount(5)
+<</dd_do>>
+```
+
+`end()` sets where the change ends, with `start()`: `start(age=35) end(age=40)`
+is the change from 35 to 40 (`amount()` and centering do not apply to that
+variable). With a list in both, the values pair up: `start(age=(35 40))
+end(age=(40 45))` gives one row for 35 to 40 and one for 40 to 45.
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1) start(age=35) end(age=40)
+mecompare age, models(m1) start(age=(35 40)) end(age=(40 45))
 <</dd_do>>
 ```
 
@@ -292,11 +313,12 @@ mecompare age married race, totalme
 
 ## `groups`, `groupnames()`, `groupme`, `groupsd` -- models fit to separate samples
 
-The `groups` option tells `mecompare` that the two models were fit to 
+The `groups` option tells `mecompare` that the models were fit to 
 non-overlapping samples, so each
 model's marginal effects are averaged over its own sample and the
-**Difference** row compares the effects across the groups. `groupnames()` labels the rows;
-`groupme` adds the average difference in the outcome between the groups;
+**Difference** row compares the effects across the groups (with three or more
+groups each group's effects are listed and `metest` tests the differences).
+`groupnames()` labels the rows; `groupme` (two groups only) adds the average difference in the outcome between the groups;
 `groupsd` uses each group's own SD for `amount(sd)`; we generally do not 
 recommend `groupsd`.
 
@@ -314,7 +336,7 @@ mecompare age hours collgrad, models(msouth mnonsouth) groups groupnames(South N
 ## `predict()` -- which prediction
 
 With one model any prediction that `margins` accepts after that command can be
-requested; with two models, any prediction returning one quantity per model.
+requested; with two or more models, any prediction returning one quantity per model.
 Multi-category models report every outcome by default, or one with
 `predict(pr outcome(#))`.
 

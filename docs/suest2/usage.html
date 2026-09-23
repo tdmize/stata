@@ -195,6 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#multilevel-models" id="toc-multilevel-models" class="nav-link" data-scroll-target="#multilevel-models">Multilevel models</a></li>
   </ul></li>
   <li><a href="#fixed-effects-and-correlated-random-effects" id="toc-fixed-effects-and-correlated-random-effects" class="nav-link" data-scroll-target="#fixed-effects-and-correlated-random-effects">Fixed effects and correlated random effects</a></li>
+  <li><a href="#more-than-two-models" id="toc-more-than-two-models" class="nav-link" data-scroll-target="#more-than-two-models">More than two models</a></li>
   </ul>
 </nav>
 </nav>
@@ -336,7 +337,7 @@ Marginal effects and cross-model differences (N_m1=1878) (N_m2=1878)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 1                          |                                       
+age + 1 (centered)               |                                       
                               m1 |     1      0.002      0.003      0.603
                               m2 |     2      0.001      0.003      0.669
                       Difference |     3      0.000      0.001      0.579</code></pre>
@@ -478,6 +479,41 @@ collgrad#c.age |
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bysort</span> id: <span class="kw">egen</span> mean_x = <span class="kw">mean</span>(x)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> <span class="fu">y</span> x mean_x i.<span class="kw">d</span>, re</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The coefficient on <code>x</code> is the within-person (“fixed effect”) estimate and the coefficient on <code>mean_x</code> the between-person estimate. The same recipe applies to any supported panel or multilevel family.</p>
+</section>
+<section id="more-than-two-models" class="level2">
+<h2 class="anchored" data-anchor-id="more-than-two-models">More than two models</h2>
+<p><code>suest2</code> combines any number of stored models. Here are the four nested logits of Example 6.2 of Mize, Doan, and Long (2019), in one system:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> https:<span class="co">//tdmize.github.io/data/data/gss_cme, clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">year</span> &lt; 2000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(38,116 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> employed != 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(9,556 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(5,578 observations deleted)
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m1</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.ag</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span>, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m2</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.a</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>ge##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m3</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a> i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> suest2 m1 m2 m3 m4</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">test</span> [m1_vhappy]1.college = [m2_vhappy]1.college</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code> ( 1)  [m1_vhappy]1.college - [m2_vhappy]1.college = 0
+
+           chi2(  1) =    3.84
+         Prob &gt; chi2 =    0.0499</code></pre>
+</div>
+<p>The marginal-effects version is <code>mecompare college, models(m1 m2 m3 m4)</code> followed by <a href="../metest/many-models.html"><code>metest</code></a>.</p>
 
 
 </section>

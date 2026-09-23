@@ -11,7 +11,7 @@ installed version. In Stata, type `help mecompare`.
 
 ## Title
 
-**`mecompare` --** `mecompare` (**M**arginal **E**ffects **Compar[e]**ison) calculates marginal effects from one or two models for easy comparisons of effects within and across models. When two models are specified, `mecompare` uses seemingly unrelated estimation to combine the model estimates, and provides tests of the equality of marginal effects across models.
+**`mecompare` --** `mecompare` (**M**arginal **E**ffects **Compar[e]**ison) calculates marginal effects from one or more models for easy comparisons of effects within and across models. When two or more models are specified, `mecompare` uses seemingly unrelated estimation to combine the model estimates; with two models it also provides tests of the equality of marginal effects across the models.
 
 ## General syntax
 
@@ -21,9 +21,9 @@ installed version. In Stata, type `help mecompare`.
 
 ## Overview
 
-`mecompare` calculates marginal effects from one or two models. When two models are specified, `mecompare` combines the model estimates using seemingly unrelated estimation via the [suest2](../suest2/help.html) command and then calculates marginal effects for each model, as well as the cross-model comparisons of the marginal effects.
+`mecompare` calculates marginal effects from one or more models. When two or more models are specified, `mecompare` combines the model estimates using seemingly unrelated estimation via the [suest2](../suest2/help.html) command and then calculates marginal effects for each model. With two models it also reports the cross-model difference in each marginal effect; with three or more models it lists every model's marginal effects and leaves the comparisons to [metest](../metest/help.html), which can test any of them.
 
-Factor syntax should have been used on the stored model estimates to ensure `mecompare` calculates the correct statistics (i.e., binary and nominal variables must be entered into the variable list with the **i.** prefix; continuous predictor variables with the **c.** prefix). Factor syntax is allowed but not required for the `mecompare` command itself: each variable is treated as the stored models specified it. See `fvvarlist` for details on factor syntax. If you do not specify a variable list, marginal effects are calculated for all variables across the model(s).
+Factor syntax should have been used on the stored model estimates to ensure `mecompare` calculates the correct statistics (i.e., binary and nominal variables must be entered into the variable list with the **i.** prefix; continuous predictor variables with the **c.** prefix). Factor syntax is allowed but not required for the `mecompare` command itself: each variable is treated as the stored models specified it, and a prefix that contradicts the stored models (for example **c.** on a variable the models entered with **i.**, or a different base level) is refused with an error. See `fvvarlist` for details on factor syntax. If you do not specify a variable list, marginal effects are calculated for all variables across the model(s).
 
 By default, marginal effects for a nominal independent variable are shown in reference to a base category. To specify a reference category other than the default first category you can use the ib#. syntax on the stored models passed to `mecompare`. See `fvvarlist` for details on specifying base levels with factor syntax. Alternatively, the `pwcompare` option will calculate all pairwise contrasts; the `meinequality` option will calculate a single summary marginal effect inequality statistic.
 
@@ -41,7 +41,7 @@ For additional tests of the marginal effects beyond those given by default, use 
 
 - [Amount of change to compute for continuous variables](help.html#amount)
 
-- [Setting starting values of variables in varlist](help.html#start)
+- [Setting starting and ending values of variables in varlist](help.html#start)
 
 - [Setting values of covariates](help.html#covariates)
 
@@ -56,6 +56,8 @@ For additional tests of the marginal effects beyond those given by default, use 
 - [Specifying the prediction](help.html#predictopt)
 
 - [Model combinations that can be compared](help.html#model_combos)
+
+- [Survival models](help.html#survival)
 
 - [svy and mi est support](help.html#svy_mi)
 
@@ -75,7 +77,7 @@ For additional tests of the marginal effects beyond those given by default, use 
 
 ## Supported estimators
 
-`mecompare` accepts one or two models from the following families.
+`mecompare` accepts one or more models from the following families.
 
 ### Ordinary single-level models
 
@@ -125,11 +127,11 @@ See [Models that can be compared](help.html#model_combos) below for the cross-fa
 
 ### Specifying the models
 
-**`models(list)`** names the stored model estimates to use. `mecompare` is limited to one or two models; with two models, each model must have been estimated and saved using `estimates store` before running `mecompare`.
+**`models(list)`** names the stored model estimates to use: one or more models that were saved using `estimates store` before running `mecompare`. With two models the table reports each model's marginal effects and, beneath them, the cross-model Difference in each. With three or more models the table lists every model's marginal effects, one set of rows per model, and reports no differences: choose the comparisons you want and test them with [metest](../metest/help.html) (e.g. `metest 1 - 2`). A focal variable absent from one of the models gets a blank row for that model.
 
 `models( )` may be omitted, in which case the estimates are taken from e():
 
-o If [suest2](../suest2/help.html) was just run, the two models of that system are used, and the results are identical to naming them in `models( )`.
+o If [suest2](../suest2/help.html) was just run, the models of that system are used, and the results are identical to naming them in `models( )`.
 
 o Otherwise the single model in e() is used, and it is labelled `m1` in the table. It does not need to have been stored.
 
@@ -162,6 +164,7 @@ o Otherwise the single model in e() is used, and it is labelled `m1` in the tabl
 | **#** | A change of *#*, which can be any amount. E.g. A 10 unit increase can be specified with `amount(10)` |
 | **twosd** | A two standard deviation change (Gelman 2008), useful for comparing continuous effects to categorical effects. **2sd** is a synonym |
 | **trimrange** | A change across the trimmed range of the variable, from its 5th to its 95th percentile. Suggested by Mize and Han (2025) as a more robust alternative to 2sd for comparing effects across variables. |
+| **range** | A change across the full observed range of the variable, from its minimum to its maximum |
 | **rate** | An instantaneous rate of change, i.e. the derivative, approximated with a small centered change; **slope** and **dydx** are synonyms |
 
 **`centered`** Changes for continuous independent variables are **centered** by default: computed from half the amount below to half the amount above, e.g., [mean - SD/2] to [mean + SD/2]. The default if no option is specified.
@@ -170,17 +173,21 @@ o Otherwise the single model in e() is used, and it is labelled `m1` in the tabl
 
 <span id="start"></span>
 
-### Setting starting values of variables in varlist
+### Setting starting and ending values of variables in varlist
 
 **`start(list)`** By default, the observed values of the focal independent variables specified in the *varlist* are used as the starting points for calculating the marginal effects (i.e. the margins default of *asobserved* is used; see `margins`). The means of the focal independent variables can instead be used for all observations by specifying `start(atmeans)`. Other starting values can be specified within the `start( )` option, e.g. start(age=20). Multiple focal independent variables can be listed in `start( )`, e.g. start(age=20 income=100).
 
 One continuous focal variable may be given a *numlist* of starting values, e.g. `start(age=(20 30 60))`: the marginal effect is reported once per value, in rows labelled *at 20*, *at 30*, *at 60*, numbered so that `metest` can compare them.
 
+<span id="end"></span>
+
+**`end(list)`** sets where the change of a focal variable ends, e.g. `start(age=35) end(age=40)` for the change from age 35 to age 40. `end()` is used with `start()`: every variable in `end()` must also be in `start()`, and for that variable `amount()`, `centered` and `uncentered` do not apply. With a *numlist* in both, e.g. `start(age=(35 40)) end(age=(40 45))`, the values pair up: one row for the change from 35 to 40 and one for the change from 40 to 45.
+
 <span id="covariates"></span>
 
 ### Setting values of covariates
 
-**`covariates(list)`** Covariates are other independent variables in the model other than the focal independent variables the marginal effects are calculated for. By default, covariates are held at their observed values (i.e. the margins default of *asobserved* is used; see `margins`). The covariates can instead be held at their sample means by specifying `covariates(atmeans)`, or simply `atmeans`. Other covariate values can be specified within the `covariates( )` option, e.g. `covariates(woman=1)` would calculate all marginal effects holding the value of woman at 1. Multiple covariates can be listed in `covariates( )`, e.g. covariates(woman=1 polviews=5).
+**`covariates(list)`** Covariates are other independent variables in the model other than the focal independent variables the marginal effects are calculated for. By default, covariates are held at their observed values (i.e. the margins default of *asobserved* is used; see `margins`). The covariates can instead be held at their sample means by specifying `covariates(atmeans)`, or simply `atmeans`. Other covariate values can be specified within the `covariates( )` option, e.g. `covariates(woman=1)` would calculate all marginal effects holding the value of woman at 1. Multiple covariates can be listed in `covariates( )`, e.g. covariates(woman=1 polviews=5). A focal independent variable may not be named in `covariates( )`; a continuous focal variable takes its starting value from `start( )`.
 
 One covariate may be given a *numlist* of values, e.g. `covariates(age=(25 44 72))`: every marginal effect is reported once per value, in rows labelled *age=25*, *age=44*, *age=72*, numbered so that `metest` can test whether the effect differs across them. Each value is a counterfactual in the sense of `by()`: the whole sample is set to that value and the effect is averaged over the sample.
 
@@ -195,6 +202,8 @@ One covariate may be given a *numlist* of values, e.g. `covariates(age=(25 44 72
 The difference between the two is a subpopulation-versus-counterfactual distinction. `over()` describes the effect *as it is* in each observed group; `by()` describes the effect that *would* obtain if the entire sample were placed at each level. The two can differ due to nonlinearities, distributional differences, and/or interactive effects. See Mize and Han (2026). For most applications, `by()` is recommended. For a *continuous* moderator, `covariates(varname=(numlist))` does what `by()` does at the listed values; see [covariates()](help.html#covariates).
 
 For the `by()` or `over()` options, each variable must be a binary or nominal variable entered with a factor prefix in the model(s) (`i.` or `ib#.`). Both may name multiple variables. The two may not be specified together, and neither may be combined with `groups`.
+
+A variable may be both a focal variable and a `by()` variable, e.g. `mecompare woman age, by(woman)`: the rows for *age* are reported at each level of *woman* as usual, while the `by()` level cannot apply to the marginal effect of *woman* itself, so its own rows repeat the same effect at each level (a note says so). With `over()`, a focal variable's own rows are its effect within each of its observed groups: for a binary *x*, `mecompare x, models(reduced full) over(x)` reports the effect of *x* computed over the observations with *x* = 0 (the *x* = 0 rows) and over those with *x* = 1 (the *x* = 1 rows).
 
 <span id="nominal"></span>
 
@@ -224,11 +233,11 @@ With `groups`, each model's contrasts are weighted by its own sample's shares; s
 
 ### Group options
 
-**`groups`** specifies that the two models in `models( )` were fit on distinct (non-overlapping) samples -- for example, one model per group -- and that `mecompare` should compare marginal effects across the two groups. Each model's estimation sample defines its group; the two samples must not overlap.
+**`groups`** specifies that the models in `models( )` were fit on distinct (non-overlapping) samples -- one model per group -- and that `mecompare` should compare marginal effects across the groups. Each model's estimation sample defines its group; the samples must not overlap. With two groups the cross-group differences are reported; with three or more, each group's marginal effects are listed and [metest](../metest/help.html) tests the differences.
 
-**`groupnames(name1 name2)`** labels the two groups in the output (*name1* for the first model, *name2* for the second); by default the groups are labeled by their model names. Requires the `groups` option. Each name is truncated to 10 characters.
+**`groupnames(name1 name2 ...)`** labels the groups in the output, in the order of `models( )`; by default the groups are labeled by their model names. Requires the `groups` option. Each name is truncated to 10 characters.
 
-**`groupme`** reports the average conditional difference in the outcome across the two groups, shown beneath the table. With a multi-category outcome one difference is reported for each outcome category, labeled Pr(category). Requires the `groups` option.
+**`groupme`** reports the average conditional difference in the outcome across the two groups, shown beneath the table. With a multi-category outcome one difference is reported for each outcome category, labeled Pr(category). Requires the `groups` option and exactly two models.
 
 **`groupsd`** with `groups` and `amount(sd)`, each +SD change is calculated using that group's own standard deviation rather than the pooled SD used by default. Not recommended for most applications: effects can differ only because the groups' SDs differ.
 
@@ -242,7 +251,7 @@ With `groups`, each model's contrasts are weighted by its own sample's shares; s
 
 **`decimals(#)`** changes the number of decimal places reported in the table. The default is 3. Any integer between 0 - 7 is allowed.
 
-**`mod1name(string)`** and `mod2name(string)` name the rows in the table corresponding to the marginal effects for model 1 and model 2. The default is the name of the stored estimates given in `models( )`, or the group when the `groups` option is used. Names over 10 characters will be truncated in the output.
+**`mod1name(string)`** and `mod2name(string)` name the rows in the table corresponding to the marginal effects for the first and second models in `models( )`. The default is the name of the stored estimates given in `models( )`, or the group when the `groups` option is used. Names over 10 characters will be truncated in the output. Any further models are labeled by their stored names (or by `groupnames()` under `groups`).
 
 **`labwidth(#)`** changes the width of the leftmost column of the table that provides the labels for the variables and associated marginal effects. The default is 32. Any integer from 20 to 32 is allowed.
 
@@ -250,11 +259,11 @@ With `groups`, each model's contrasts are weighted by its own sample's shares; s
 
 **`norownum`** removes the column from the table with a number designation for each estimate in the table.
 
-**`store(stub)`** saves the calculated marginal effects as separate stored estimates so they can be plotted with `coefplot` or tabulated with `esttab`, `estimates table`, or `etable`. With two models, three estimates are saved -- *stub*`_`*model1*, *stub*`_`*model2*, and *stub*`_diff` (the cross-model differences) -- where *model1* and *model2* are the names given in `models( )`. With one model, a single estimate *stub*`_`*model1* is saved. Each stored estimate is keyed by variable, so `coefplot` and `esttab` arrange results by variable automatically. With `by()` or `over()`, each stored estimate carries one coefficient per cell (e.g. `age_collgrad_0` and `age_collgrad_1`). See [Plotting and tabulating results](help.html#plotting) for examples.
+**`store(stub)`** saves the calculated marginal effects as separate stored estimates so they can be plotted with `coefplot` or tabulated with `esttab`, `estimates table`, or `etable`. With two models, three estimates are saved -- *stub*`_`*model1*, *stub*`_`*model2*, and *stub*`_diff` (the cross-model differences) -- where *model1* and *model2* are the names given in `models( )`. With three or more models, one estimate per model is saved (*stub*`_`*model1*, *stub*`_`*model2*, ...) and no *stub*`_diff`. With one model, a single estimate *stub*`_`*model1* is saved. Each stored estimate is keyed by variable, so `coefplot` and `esttab` arrange results by variable automatically. With `by()` or `over()`, each stored estimate carries one coefficient per cell (e.g. `age_collgrad_0` and `age_collgrad_1`). See [Plotting and tabulating results](help.html#plotting) for examples.
 
-**`commands`** displays the commands used for the `margins` estimates and, if two models are used, the `suest2` command.
+**`commands`** displays the commands used for the `margins` estimates and, if two or more models are used, the `suest2` command.
 
-**`details`** displays the output of the `margins` estimates and, if two models are used, the `suest2` output.
+**`details`** displays the output of the `margins` estimates and, if two or more models are used, the `suest2` output.
 
 <span id="predictopt"></span>
 
@@ -262,7 +271,7 @@ With `groups`, each model's contrasts are weighted by its own sample's shares; s
 
 With a **single** model any prediction `margins` accepts after that command may be given. For multi-category models, the default reports a prediction per outcome; a single outcome may be selected, as in `predict(pr outcome(2))`.
 
-With **two** models, a non-default prediction can be requested if it returns a single quantity per model.
+With **two or more** models, a non-default prediction can be requested if it returns a single quantity per model.
 
 **Mixed-effects and panel models.** When no `predict()` is given each model contributes its own `margins` default. For the `me` family and for `mixed`, that default **averages over the random effects** rather than holding them at zero, and that is the recommended quantity. Random intercepts, random slopes, unstructured covariance and multi-level fits are supported.
 
@@ -270,9 +279,15 @@ With **two** models, a non-default prediction can be requested if it returns a s
 
 ### Models that can be compared
 
-Two models are comparable when they return the **same number of predictions**. Same-family pairs (e.g., two logits, two glms, two mestregs) always qualify. Cross-family pairs qualify on the same rule: `logit` vs `regress`, `xtlogit` vs `mixed`, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`, and so on). Each model contributes its own default prediction, or the one given in `predict()`, so a cross-family comparison contrasts, e.g., logit's predicted probabilities with regress's linear predictions. Models that return different numbers of predictions (e.g. a 3-category `ologit` vs a `logit`) cannot be compared.
+Models are comparable when they all return the **same number of predictions**. Same-family sets (e.g., two logits, three glms, two mestregs) always qualify. Cross-family sets qualify on the same rule: `logit` vs `regress`, `xtlogit` vs `mixed`, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`, and so on). Each model contributes its own default prediction, or the one given in `predict()`, so a cross-family comparison contrasts, e.g., logit's predicted probabilities with regress's linear predictions. Models that return different numbers of predictions (e.g. a 3-category `ologit` vs a `logit`) cannot be compared.
 
-When both models have a multi-category outcome, the outcome categories are matched *in order*, so the two dependent variables must have the same number of categories *and the same values*. `mecompare` errors if they differ (e.g. one outcome coded 0/1/2 and the other 1/2/3). If the values agree but the value labels differ, the comparison proceeds and the table is labeled with the first model's labels.
+When the models have a multi-category outcome, the outcome categories are matched *in order*, so the dependent variables must have the same number of categories *and the same values*. `mecompare` errors if they differ (e.g. one outcome coded 0/1/2 and another 1/2/3). If the values agree but the value labels differ, the comparison proceeds and the table is labeled with the first model's labels.
+
+<span id="survival"></span>
+
+### Survival models
+
+For the parametric survival models (`streg` and `mestreg`) the marginal effects are changes in a predicted survival time, and the default prediction of `margins` differs by command: after `streg` it is the predicted *median* survival time; after `mestreg` it is the predicted *mean* survival time (integrating over the random effects). `mecompare` uses those defaults unless `predict()` asks for another prediction (e.g. `predict(mean time)` after `streg`), and prints a note under the table saying which quantity the rows are on. Predicted survival times are model-based extrapolations: when spells are censored they can run well past the observed follow-up, and the mean and the median differ. Jones and Metzger (2019) and Metzger and Jones (2022) recommend interpreting duration models through survival (or transition) probabilities at chosen times instead; `mecompare` does not compute those.
 
 <span id="svy_mi"></span>
 
@@ -294,7 +309,7 @@ The two prefixes may also be combined: models fit with `mi estimate: svy:` are s
 
 ### Weights
 
-When possible, use `svyset` and `svy:` to specify weights. However, weights can instead be applied on the **stored models** -- e.g. `logit y x [pw=w]`. With two models, both must carry the same weight.
+When possible, use `svyset` and `svy:` to specify weights. However, weights can instead be applied on the **stored models** -- e.g. `logit y x [pw=w]`. With two or more models, all must carry the same weight.
 
 *Multilevel models need a stage weight.* For the `me` families and `mixed`, the model must carry a higher-level weight too, as in `melogit y x [pw=w2] || group:, pweight(w1)`. The `svy:` prefix, which carries the whole design from `svyset`, is the recommended way to specify one.
 
@@ -316,19 +331,20 @@ Every estimate shown in the table is posted to `e(b)` and `e(V)`, in the same or
 
 `metest 1 = 2 = 3` a joint test that all three are equal
 
-The estimates are ordinary `e(b)`/`e(V)` results, so `lincom`, `nlcom`, `test` and `mlincom` can also be used directly. Type `mecompare, coeflegend` to list the coefficient names.
+With three or more models no cross-model differences are shown in the table, so this is where they are tested: with `models(m1 m2 m3)` the rows for a variable are its effect in `m1`, `m2`, and `m3` in turn, so `metest 1 - 2` is the `m1` vs `m2` difference and `metest 1 = 2 = 3` tests that all three are equal.
+
+The estimates are ordinary `e(b)`/`e(V)` results, so `lincom`, `nlcom` and `test` can also be used directly. Type `mecompare, coeflegend` to list the coefficient names.
 
 ```stata
 lincom _b[collegemental] - _b[college:physical]
 test _b[collegemental] = _b[age:mental]
-mlincom 11 - 10
 ```
 
 <span id="matrices"></span>
 
 ### Saved estimates and matrices
 
-With two models, `mecompare` combines the stored estimates into a single system using [suest2](../suest2/help.html). It then uses `margins` to calculate the marginal effects. These results are stored and can be restored after `mecompare` has been run. See `estimates restore`. The combined model estimates are stored as *mec_suest2*. The `margins` estimates which contain the constituent pieces that are used to calculate the marginal effects are stored as *mec_margins*.
+With two or more models, `mecompare` combines the stored estimates into a single system using [suest2](../suest2/help.html). It then uses `margins` to calculate the marginal effects. These results are stored and can be restored after `mecompare` has been run. See `estimates restore`. The combined model estimates are stored as *mec_suest2*. The `margins` estimates which contain the constituent pieces that are used to calculate the marginal effects are stored as *mec_margins*.
 
 `mecompare` saves the current table of estimates to the matrix `_mecompare`. The matrix has columns corresponding to the displayed results. Rows that only contain labels (no statistics) have values of **.z**
 
@@ -349,7 +365,7 @@ The following are stored in e():
 | Option | Description |
 |:--|:--|
 | `e(N)` | number of observations in the marginal-effects sample; equal to the number of observations marked by `e(sample)` |
-| `e(n_mods)` | number of models compared (1 or 2) |
+| `e(n_mods)` | number of models compared |
 | `e(n_vars)` | number of focal variables (all model predictors when no *varlist* is given) |
 | `e(V_complete)` | 1 if every estimate and its covariances were recovered; 0 otherwise |
 | `e(k_failed)` | number of quantities that could not be computed (posted as 0 with a warning) |
@@ -358,7 +374,7 @@ The following are stored in e():
 | `e(properties)` | `b V` |
 | `e(predict_label)` | the prediction the effects were computed from, as shown on the `Predicting:` line |
 | `e(predict1_label)` |  |
-| `e(predict2_label)` | posted only when the two models use different predictions |
+| `e(predict2_label)` | , ..., one per model; posted only when the models use different predictions |
 | `e(marginsopt)` | the string given in `marginsopt()`, when used |
 | `e(b)` | marginal effects (and, with two models, cross-model differences) |
 | `e(V)` | variance-covariance matrix of the estimates. In the rare case that a quantity cannot be computed, its estimate is posted as 0 and its row and column of `e(V)` are zeroed, with a warning; `e(V_complete)` reports whether this happened |
@@ -455,6 +471,7 @@ mecompare age collgrad race hours, models(basemod medmod) amount(sd 10)
 
 ```stata
 mecompare age hours, models(basemod medmod) amount(rate)
+mecompare age hours, models(basemod medmod) amount(range)
 ```
 
 *Labeling the models:*
@@ -475,7 +492,9 @@ mecompare age race, models(basemod medmod) by(collgrad married)
 
 ```stata
 mecompare age race, models(basemod medmod) atmeans
-mecompare age, models(basemod) start(age=(30 40 50))
+mecompare age, models(basemod) start(age=(35 40 45))
+mecompare age, models(basemod) start(age=35) end(age=40)
+mecompare age, models(basemod) start(age=(35 40)) end(age=(40 45))
 mecompare age race, models(basemod medmod) covariates(hours=(20 40 60))
 ```
 
@@ -526,7 +545,7 @@ mecompare age collgrad race, models(cntbase) predict(ir)
 mecompare age collgrad race, models(cntbase) predict(pr(0))
 ```
 
-*With two models, any prediction returning one quantity per model:*
+*With two or more models, any prediction returning one quantity per model:*
 
 ```stata
 nbreg hours c.age i.collgrad i.race i.married, vce(robust)
@@ -540,6 +559,32 @@ mecompare age collgrad race, models(cntbase cntmed) predict(n)
 mecompare age race, models(basemod) marginsopt(expression(100*predict(pr)))
 ```
 
+*Four nested models and custom comparisons with metest*
+
+```stata
+use https://tdmize.github.io/data/data/gss_cme, clear
+drop if year < 2000
+drop if employed != 1
+drop if missing(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)
+logit vhappy i.college, vce(robust)
+estimates store m1
+logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m2
+logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m3
+logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(robust)
+estimates store m4
+mecompare college, models(m1 m2 m3 m4)
+```
+
+*Use metest to calculate the cross-model tests. Here, whether the effect diminishes in each subsequent model.*
+
+```stata
+metest 1 - 2, add
+metest 2 - 3, add
+metest 3 - 4, add
+```
+
 ## Comments
 
 `mecompare` implements the methods described in Mize, Doan, and Long's 2019 article "A General Framework for Comparing Predictions and Marginal Effects Across Models".
@@ -547,6 +592,10 @@ mecompare age race, models(basemod) marginsopt(expression(100*predict(pr)))
 `mecompare` uses seemingly unrelated estimation via the [suest2](../suest2/help.html) command to combine the model estimates. See `suest` and Weesie (1999) for details on the method.
 
 Many of the features of `mecompare` intentionally mimic and borrow from Long and Freese's (2014) SPost13 command `mchange`.
+
+## Stata version
+
+`mecompare` requires Stata 16 or later. A do-file that sets `version` must set version 16 or later; under an older version the command stops with a message.
 
 ## Authorship
 
@@ -563,5 +612,9 @@ Mize, T. D., & Han, B. (2026). Marginal effects: flexible methods for interpreta
 Long, J. Scott and Jeremy Freese. 2014. *Regression Models for Categorical Dependent Variables Using Stata.* Third Edition. Stata Press.
 
 Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. *Statistics in medicine*, 27(15). 2865-2873.
+
+Jones, Benjamin T., and Shawna K. Metzger. 2019. Different Words, Same Song: Advice for Substantively Interpreting Duration Models. *PS: Political Science & Politics*. 52(4):691-695.
+
+Metzger, Shawna K., and Benjamin T. Jones. 2022. Getting Time Right: Using Cox Models and Probabilities to Interpret Binary Panel Data. *Political Analysis*. 30:151-166.
 
 Weesie, Jeroen. 1999. sg121: Seemingly Unrelated Estimation and the Cluster-Adjusted Sandwich Estimator. *Stata Technical Bulletin*. 52:34-47.
