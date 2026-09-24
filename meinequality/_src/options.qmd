@@ -185,9 +185,8 @@ return list
 
 ## Bootstrap standard errors
 
-Standard errors come from the delta method via `nlcom`. When a model has
-convergence trouble or the standard errors are otherwise unavailable, wrap the
-command in a small program and use `bootstrap`:
+When the standard errors are unavailable, e.g. after convergence trouble, wrap
+the command in a small program and use `bootstrap`:
 
 ```stata
 capture program drop boot_mei

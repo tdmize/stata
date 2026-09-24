@@ -26,9 +26,8 @@ estimates store regwages
 
 ## Start with the predictions (Figure 1)
 
-The recommendation in the article is to plot the predictions first and let the
-plot guide the tests. That is `margins` and `marginsplot`; `mecompare` can then 
-be used subsequently for quantifying effects and testing them.
+The article recommends plotting the predictions first, with `margins` and
+`marginsplot`, and letting the plot guide the tests.
 
 ```{.stata-run}
 <<dd_do>>
@@ -52,10 +51,9 @@ does both.
 
 The first row of Table 2 is the effect of aging from 25 to 30. `start(age=25)`
 puts everyone at 25, `amount(5) uncentered` moves them to 30, and `by(woman)`
-calculates these effects for both men and for women. The rows of `mecompare` are 
-always numbered to automate subsequent tests with `metest` which refers to these 
-row numbers. The second difference -- whether the effect of aging is the same 
-for men and women -- is simply `metest 1 - 2`.
+calculates these effects for both men and for women. The second difference --
+whether the effect of aging is the same for men and women -- is `metest 1 -
+2`.
 
 ```{.stata-run}
 <<dd_do>>

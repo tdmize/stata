@@ -12,10 +12,10 @@ before running `suest2`.
 
 ## The workflow
 
-Fit each model, store it, combine, then do the post-estimation you want on
-the combined system. For most applications, fit the models with `vce(robust)`
-or `vce(cluster varname)`, so that the `suest2` standard errors match the
-individual models' exactly.
+Fit each model, store it, combine, then do the post-estimation you want on the
+combined system. We recommend fitting the models with `vce(robust)` or
+`vce(cluster varname)` so that the `suest2` results match the individual model
+results exactly.
 
 ```{.stata-run}
 . sysuse nlsw88, clear
@@ -75,10 +75,9 @@ collgrad#c.age |
 
 ## What the combined results contain
 
-The combined results are ordinary `e()` results: `e(b)` holds both models'
-coefficients, one equation per model (named *model_depvar*, as in official
-`suest`), and `e(V)` holds their joint covariance matrix including the
-cross-model blocks. Any command that works on `e(b)` and `e(V)` works here.
+`e(b)` holds every model's coefficients, one equation per model (named
+*model_depvar*), and `e(V)` their joint covariance matrix. Any command that
+works on `e(b)` and `e(V)` works here.
 
 ```{.stata-run}
 . test [m1_union]1.collgrad = [m2_union]1.collgrad
@@ -100,16 +99,12 @@ cross-model blocks. Any command that works on `e(b)` and `e(V)` works here.
 
 ```
 
-`suest2` also stores what it did: `e(suest2_nmodels)`, the model names
-`e(suest2_model#)`, each model's command `e(suest2_cmd#)`, and the route
-flags `e(suest2_pweight)` and `e(suest2_svy)`; the full list is in the
-[help file](help.html#stored).
+The other stored results are listed in the [help file](help.html#stored).
 
 ## margins after suest2
 
-A bare `margins` evaluates the default response for every constituent model.
-To work with one model, name it in `predict()` with `model()`, together with
-the prediction statistic:
+A bare `margins` gives predictions from every model. To use one model, name it
+in `predict()` with `model()`:
 
 ```{.stata-run}
 . margins, dydx(age) predict(model(m1) pr)
@@ -132,18 +127,15 @@ m2           |
 
 ```
 
-`at()`, `over()`, `post`, and the other standard `margins` options work when
-the constituent command supports the requested prediction, and inference uses
-the complete joint covariance matrix. For multi-category models an outcome
-is selected the same way, e.g. `predict(model(o1) pr outcome(3))`; for
-multilevel models, `predict(model(me1) mu fixedonly)`. The
-[Predictions and graphs](plotting.html) page puts this to work with
-`marginsplot` and `coefplot`, including a difference between two models'
-predictions in one `margins` call via `expression()`.
+The other `margins` options, e.g. `at()`, `over()`, and `post`, work as usual.
+For multi-category models add the outcome, e.g. `predict(model(o1) pr
+outcome(3))`; for multilevel models, e.g. `predict(model(me1) mu fixedonly)`.
+The [Predictions and graphs](plotting.html) page shows `marginsplot` and
+`coefplot` after `suest2`.
 
-Because the joint covariance is there, `margins, post` followed by `lincom`
-or [`metest`](../metest/index.html) tests a marginal effect across the two
-models -- which is what [`mecompare`](../mecompare/index.html) automates:
+`margins, post` followed by `lincom` or [`metest`](../metest/index.html) tests
+a marginal effect across the two models, which is what
+[`mecompare`](../mecompare/index.html) automates:
 
 ```{.stata-run}
 . mecompare age
@@ -243,18 +235,16 @@ combined. The weights must agree on observations shared by the estimation
 samples. Request system clustering with `cluster()` on `suest2`.
 
 **Multiple imputation.** Fit and store each model with `mi estimate, post:`,
-then pass the stored names to `suest2`. It re-estimates the constituents
-jointly within each imputation and pools the system with Rubin's rules; the MI
-data and all variables used must remain unchanged. Use `mimrgns` or
-`mecompare` for post-estimation; ordinary `predict` and `margins` are not
-available after MI pooling. The supported families are listed in the
-[help file](help.html#weights).
+then pass the stored names to `suest2`. It combines the models within each
+imputation and pools the results with Rubin's rules; the MI data must not
+change in between. Use `mimrgns` or `mecompare` for post-estimation; ordinary
+`predict` and `margins` are not available after MI pooling. The supported
+families are listed in the [help file](help.html#weights).
 
 ## Supported estimators
 
-The lists below follow the [help file](help.html#estimators). Store the
-models with `estimates store` and pass their names to `suest2`; the notes at
-the end of each group give the rules that group must follow.
+The lists follow the [help file](help.html#estimators); the notes at the end
+of each group give its rules.
 
 ### Ordinary single-level models
 
@@ -262,8 +252,8 @@ the end of each group give the rules that group must follow.
 `poisson`; `nbreg`; `zip`; and `zinb` with either inflation link.
 
 `glm`; `cloglog`; `tobit`; `intreg`; maximum-likelihood `heckman`; and
-parametric `streg`. Active-system `glm` prediction supports the identity,
-log, logit, probit, cloglog, and loglog links.
+parametric `streg`. `glm` predictions support the identity, log, logit,
+probit, cloglog, and loglog links.
 
 `gologit2`, including proportional-odds, partial proportional-odds,
 unrestricted, alternative-link, and `autofit()` results.
@@ -292,10 +282,9 @@ pa.
 
 `xtcloglog` with estimators re and pa.
 
-Panel systems are unweighted and ordinarily require a common panel
-identifier. Store conventional constituent results and request robust or
-higher-level clustered covariance with `suest2`. Correlated random effects
-models are specified as described in the next section.
+Panel models must be unweighted and share a panel identifier. Fit them with
+conventional standard errors and request robust or clustered ones on `suest2`.
+Correlated random effects models are described below.
 
 ### Multilevel models
 
@@ -310,13 +299,10 @@ Gamma-log, ordinal-logit, and ordinal-probit.
 distributions, including the applicable proportional-hazards and
 accelerated-failure-time forms.
 
-Supported multilevel families may be combined in one system, and every model
-must use the same highest-level grouping variable. A mixed system may also
-include an ordinary `ologit` or `oprobit` model beside an `xtologit`,
-`xtoprobit`, `meologit`, or `meoprobit` one; the ordinary model must be
-stored unprefixed, unweighted, and with conventional (non-robust) standard
-errors, and it inherits the system's cluster variable from its multilevel
-partner.
+Multilevel models may be combined, and every model must use the same
+highest-level grouping variable. An ordinary `ologit` or `oprobit` can be
+combined with an `xtologit`, `xtoprobit`, `meologit`, or `meoprobit`; fit it
+unweighted, without a prefix, and with conventional standard errors.
 
 ## Fixed effects and correlated random effects
 
@@ -358,18 +344,18 @@ Example 6.2 of Mize, Doan, and Long (2019), in one system:
 
 . estimates store m1
 
-. quietly logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.ag
-> e, vce(robust)
+. quietly logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age,
+>  vce(robust)
 
 . estimates store m2
 
-. quietly logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.a
-> ge##c.age, vce(robust)
+. quietly logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age
+> ##c.age, vce(robust)
 
 . estimates store m3
 
-. quietly logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad
->  i.year c.age##c.age, vce(robust)
+. quietly logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i
+> .year c.age##c.age, vce(robust)
 
 . estimates store m4
 

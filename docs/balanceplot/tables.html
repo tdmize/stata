@@ -411,7 +411,7 @@ matrices:
 </section>
 <section id="stored-results-for-esttab-store" class="level2">
 <h2 class="anchored" data-anchor-id="stored-results-for-esttab-store">Stored results for esttab: store()</h2>
-<p><code>store(stub)</code> posts the results as estimation results, which is the form <code>esttab</code> and <code>estout</code> (Jann) read. For a two-group comparison the names are <em>stub</em><code>_mean_g#</code> for each group and <em>stub</em><code>_imbalance</code>; the imbalance set carries standard errors, so <code>esttab</code> reports significance for it. <code>replace</code> overwrites results stored earlier under the same names.</p>
+<p><code>store(stub)</code> saves the results as stored estimates for <code>esttab</code> and <code>estout</code> (Jann). For a two-group comparison the names are <em>stub</em><code>_mean_g#</code> for each group and <em>stub</em><code>_imbalance</code>; the imbalance set carries standard errors, so <code>esttab</code> reports significance for it. <code>replace</code> overwrites results stored earlier under the same names.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>balanceplot wage age i.married i.race tenure, <span class="fu">group</span>(<span class="kw">union</span>) <span class="kw">store</span>(bp, <span class="kw">replace</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 10 observations were excluded due to missing data on

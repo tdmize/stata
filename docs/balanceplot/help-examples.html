@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>These are the examples at the end of <code>help balanceplot</code>, run in order with their printed output and the graph each one draws. Each example adds one option to the one before it; the sentence above each call says what the new option does. The <a href="options.html">Options</a>, <a href="continuous-treatment.html">Continuous treatments</a>, and <a href="matching.html">Matching and teffects</a> pages explain the options in more detail. The session starts with <code>estimates clear</code> so that the <code>store()</code> examples, which do not use <code>replace</code>, have nothing to collide with.</p>
+<p>The examples at the end of <code>help balanceplot</code>, run in order with their output and graphs. The <a href="options.html">Options</a>, <a href="continuous-treatment.html">Continuous treatments</a>, and <a href="matching.html">Matching and teffects</a> pages explain the options in more detail.</p>
 <section id="comparing-groups" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-groups">Comparing groups</h2>
 <p>The default: <code>group(union)</code> compares union with nonunion workers on every covariate, as standardized mean differences with 95% confidence intervals.</p>
@@ -309,7 +309,7 @@ N used in balance calculations
 <pre class="stata-output"><code>file fig/helpex-cohensh-noci.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/helpex-cohensh-noci.png" class="img-fluid" style="width:85.0%" alt="Balance plot with Cohen's h for the factor covariates and no confidence intervals."></p>
-<p><code>sort</code> orders the covariates from the most negative to the most positive imbalance instead of the order of the varlist; the variable headings are dropped because the categories of a nominal variable need no longer sit together.</p>
+<p><code>sort</code> orders the covariates from the most negative to the most positive imbalance instead of the order of the varlist; the variable headings are dropped as the nominal categories are no longer together on the graph.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>balanceplot wage age i.married i.race tenure, <span class="fu">group</span>(<span class="kw">union</span>) <span class="kw">sort</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 10 observations were excluded due to missing data on
@@ -366,7 +366,7 @@ N used in balance calculations
 </section>
 <section id="tables" class="level2">
 <h2 class="anchored" data-anchor-id="tables">Tables</h2>
-<p><code>table</code> prints a compact table – the two group means, the standardized imbalance, and its p-value – alongside the graph, which is the default one shown above. The same numbers are returned in <code>r(table1)</code> whether or not a table is printed.</p>
+<p><code>table</code> prints a compact table – the two group means, the standardized imbalance, and its p-value – alongside the graph. The same numbers are returned in <code>r(table1)</code> whether or not a table is printed.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>balanceplot wage age i.married i.race tenure, <span class="fu">group</span>(<span class="kw">union</span>) <span class="kw">table</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 10 observations were excluded due to missing data on
@@ -535,7 +535,7 @@ N used in balance calculations
 </section>
 <section id="store-results-for-esttab" class="level2">
 <h2 class="anchored" data-anchor-id="store-results-for-esttab">Store results for esttab</h2>
-<p><code>store(bp)</code> posts the group means and the imbalances as estimation results (<code>bp_mean_g0</code>, <code>bp_mean_g1</code>, <code>bp_imbalance</code>) so that <code>esttab</code> can lay them out as three aligned columns; the graph is the default one.</p>
+<p><code>store(bp)</code> posts the group means and the imbalances as estimation results (<code>bp_mean_g0</code>, <code>bp_mean_g1</code>, <code>bp_imbalance</code>) so that <code>esttab</code> can lay them out as three columns.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>balanceplot wage age i.married i.race tenure, <span class="fu">group</span>(<span class="kw">union</span>) <span class="kw">store</span>(bp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 10 observations were excluded due to missing data on
@@ -580,7 +580,7 @@ Observations                 1408             460            1868
 Standard errors in parentheses
 * p&lt;0.05, ** p&lt;0.01, *** p&lt;0.001</code></pre>
 </div>
-<p>With three groups, <code>store(br)</code> posts one mean result per group and one imbalance result per nonbase comparison (<code>br_imb_g2</code>, <code>br_imb_g3</code>); the graph is the three-group plot above.</p>
+<p>With three groups, <code>store(br)</code> posts one mean result per group and one imbalance result per nonbase comparison (<code>br_imb_g2</code>, <code>br_imb_g3</code>).</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>balanceplot wage age i.married tenure, <span class="fu">group</span>(race) <span class="kw">store</span>(br)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 15 observations were excluded due to missing data on
@@ -698,7 +698,7 @@ Race                     |                        |                        |
 <pre class="stata-output"><code>file fig/helpex-contreat-fadens.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/helpex-contreat-fadens.png" class="img-fluid" style="width:85.0%" alt="Sorted correlation balance plot with nonsignificant correlations faded."></p>
-<p><code>store(ct)</code> posts the correlations as the estimation result <code>ct_correlation</code> for <code>esttab</code>; the graph is the default <code>contreat()</code> plot above.</p>
+<p><code>store(ct)</code> posts the correlations as the estimation result <code>ct_correlation</code> for <code>esttab</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>balanceplot age i.<span class="kw">union</span> i.race tenure, contreat(wage) <span class="kw">store</span>(<span class="kw">ct</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 378 observations were excluded due to missing data on
@@ -778,7 +778,7 @@ matchweight(_weight) applies to the base group only; all nonbase groups have wei
 <pre class="stata-output"><code>file fig/helpex-matchweight.png saved as PNG format</code></pre>
 </div>
 <p><img src="fig/helpex-matchweight.png" class="img-fluid" style="width:85.0%" alt="Balance plot showing unweighted and matching-weighted imbalance for each covariate, before and after propensity-score matching."></p>
-<p>With <code>matchweight()</code>, <code>store(bm)</code> posts two complete sets of results, the unweighted set with the prefix <code>bm_unw_</code> and the weighted set with <code>bm_w_</code>, so each can be passed to <code>esttab</code> on its own; the graph is the one above.</p>
+<p>With <code>matchweight()</code>, <code>store(bm)</code> posts two complete sets of results, the unweighted set with the prefix <code>bm_unw_</code> and the weighted set with <code>bm_w_</code>, so each can be passed to <code>esttab</code> on its own.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>balanceplot age tenure grade, <span class="fu">group</span>(<span class="kw">union</span>) matchweight(_weight) <span class="kw">store</span>(bm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 12 observations were excluded due to missing data on

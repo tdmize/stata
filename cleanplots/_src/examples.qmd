@@ -5,12 +5,11 @@ subtitle: "Six common graphs in cleanplots and in Stata's classic s2color scheme
 <<dd_version: 2>>
 
 Each example below draws the same graph twice: once with `scheme(cleanplots)`
-and once with `scheme(s2color)`, Stata's long-standing default scheme
-(Stata 18 introduced `stcolor` as the new default; `s2color` is used here
-because the contrast is clearer). Nothing else about the commands changes.
-The graphs are drawn with the data from [`usetdm`](../usetdm/index.html),
-so every example can be run as shown. With `set scheme cleanplots, perm` in
-place, the `scheme()` option is not needed.
+and once with `scheme(s2color)`, Stata's long-standing default scheme (Stata
+18's default is `stcolor`). Nothing else about the commands changes. The
+graphs are drawn with the data from [`usetdm`](../usetdm/index.html), so every
+example can be run as shown. With `set scheme cleanplots, perm` in place, the
+`scheme()` option is not needed.
 
 ## Histogram
 

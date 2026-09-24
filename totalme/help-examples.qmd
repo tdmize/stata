@@ -486,7 +486,7 @@ college                  |
 
 ## Bootstrap example
 
-Shown rather than run; 1,000 replications of an `mlogit` take a while.
+Shown, not run.
 
 ```stata
 capture program drop boot_tot

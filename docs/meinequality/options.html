@@ -535,7 +535,7 @@ matrices:
 </section>
 <section id="bootstrap-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="bootstrap-standard-errors">Bootstrap standard errors</h2>
-<p>Standard errors come from the delta method via <code>nlcom</code>. When a model has convergence trouble or the standard errors are otherwise unavailable, wrap the command in a small program and use <code>bootstrap</code>:</p>
+<p>When the standard errors are unavailable, e.g.&nbsp;after convergence trouble, wrap the command in a small program and use <code>bootstrap</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">capture</span> <span class="kw">program</span> <span class="kw">drop</span> boot_mei</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="kw">program</span> <span class="kw">define</span> boot_mei, rclass</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">reg</span> wage i.race c.age i.married</span>

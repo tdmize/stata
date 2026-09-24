@@ -385,10 +385,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The ME inequality of Mize and Han (2025) summarizes the effect of a nominal predictor in one number: the average absolute difference in the outcome across its categories. The <code>meinequality</code> option of <code>mecompare</code> adds that summary to the table, and with two models in <code>models()</code> the summary is calculated for each model and the <strong>Difference</strong> row tests whether the inequality changed. The two most common uses are shown here: nested models (how much of an inequality is accounted for by mediators) and models fit to separate samples (has an inequality changed over time). Both examples also appear on the <a href="../../meinequality/index.html"><code>meinequality</code></a> site, where the same tests are run with the <code>meinequality</code> command.</p>
+<p>The ME inequality of Mize and Han (2025) summarizes the effect of a nominal predictor in one number: the average absolute difference in the outcome across its categories. The <code>meinequality</code> option of <code>mecompare</code> adds it to the table; with two models, the <strong>Difference</strong> row tests whether the inequality changed. This page shows nested models and models fit to separate samples. The same examples, run with the <code>meinequality</code> command, are on the <a href="../../meinequality/index.html"><code>meinequality</code></a> pages.</p>
 <section id="nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses" class="level2">
 <h2 class="anchored" data-anchor-id="nested-models-how-much-of-a-racial-ethnic-inequality-is-accounted-for-by-ses">Nested models: how much of a racial-ethnic inequality is accounted for by SES?</h2>
-<p>How much of the racial-ethnic inequality in functional limitations is accounted for by education, wealth, and income? Fit the model with and without those variables, store both, and name them in <code>models()</code>. The models are combined with <a href="../../suest2/index.html"><code>suest2</code></a> so that the test of the difference accounts for the two models being estimated on the same data. The outcome is a count of limitations in instrumental activities of daily living from the Health and Retirement Study.</p>
+<p>How much of the racial-ethnic inequality in functional limitations is accounted for by education, wealth, and income? The outcome is a count of limitations in instrumental activities of daily living from the Health and Retirement Study. Fit the model with and without those variables, store both, and name them in <code>models()</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_hrs"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(cda_hrs.dta | Health &amp; Retirement Study 2020)</code></pre>
@@ -434,7 +434,7 @@ race4cat                         |
                           medmod |    11     -0.010      0.034      0.776
                       Difference |    12      0.043      0.011      0.000</code></pre>
 </div>
-<p>The first block of the table is the ME inequality in each model and its <strong>Difference</strong>: the reduction in racial-ethnic inequality once education, wealth, and income are in the model, with a standard error and p-value. The blocks beneath it are the contrasts with the base category that the ME inequality summarizes, each with its own cross-model difference. Because every row is numbered, <a href="../../metest/index.html"><code>metest</code></a> can express the reduction as a proportion of the baseline inequality, with a standard error:</p>
+<p>The first block is the ME inequality in each model and the <strong>Difference</strong>: the reduction in racial-ethnic inequality once education, wealth, and income are in the model. The blocks beneath it are the contrasts with the base category. <a href="../../metest/index.html"><code>metest</code></a> gives the reduction as a proportion of the baseline inequality:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
@@ -442,7 +442,7 @@ race4cat                         |
 race4cat_MEineq                  |                                
     (basemod - medmod) / basemod |     0.187      0.436      0.667 </code></pre>
 </div>
-<p>The same difference is what <code>meinequality race4cat, models(basemod medmod)</code> reports; <code>mecompare</code> adds the underlying contrasts and the row numbers for <code>metest</code>.</p>
+<p><code>meinequality race4cat, models(basemod medmod)</code> gives the same difference.</p>
 </section>
 <section id="separate-samples-has-the-effect-of-religion-changed-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="separate-samples-has-the-effect-of-religion-changed-over-time">Separate samples: has the effect of religion changed over time?</h2>
@@ -505,8 +505,8 @@ reltrad                          |
                         Post2010 |    20      0.125      0.010      0.000
                       Difference |    21      0.200      0.027      0.000</code></pre>
 </div>
-<p><code>groups</code> tells <code>mecompare</code> that each model’s estimation sample is a different group, so each ME inequality is averaged over that period’s own respondents, and the <strong>Difference</strong> row tests whether the inequality changed. It is significantly smaller after 2010 than before 1980: religious traditions have converged on this question.</p>
-<p><code>unweighted</code> is used so that the comparison reflects the marginal effects alone. The default ME inequality weights each pairwise contrast by the share of the sample in the two categories being contrasted; with <code>groups</code>, each model uses the shares in <em>its own</em> sample, so the weighted difference would also pick up the change in the religious makeup of the GSS between the two periods. <code>meinequality(all)</code> reports both statistics.</p>
+<p>The <strong>Difference</strong> row tests whether the inequality changed. It is significantly smaller after 2010 than before 1980: religious traditions have converged on this question.</p>
+<p><code>unweighted</code> compares the marginal effects alone; the default weighted version would also reflect the change in the religious makeup of the GSS between the two periods. <code>meinequality(all)</code> reports both.</p>
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>

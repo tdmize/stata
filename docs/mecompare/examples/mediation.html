@@ -377,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Marginal effects can summarize the effect of a curvilinear relationship in a single number which can facilitate tests of that relationship. For example, to see if a nonlinear relationship is attenuated across models. Here, we compare an effect across a model with and without a proposed mediator. Here income is entered with a squared term in a linear regression of depressive symptoms; the second model adds job satisfaction as a mediator.</p>
+<p>Marginal effects can summarize a curvilinear relationship in a single number, which makes it easy to test, e.g., whether a nonlinear effect is attenuated across models. Here, we compare the effect of income, entered with a squared term in a linear regression of depressive symptoms, across a model with and without job satisfaction as a proposed mediator.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/ah4_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(ah4_cme.dta | Add Health Wave 4 | 2018-07-10)</code></pre>
@@ -411,7 +411,7 @@ income + SD (centered)           |
                           medmod |     2     -0.797      0.096      0.000
                       Difference |     3     -0.184      0.027      0.000</code></pre>
 </div>
-<p>The <strong>Difference</strong> row is the test of whether the income effect is attenuated after adding job satisfaction to the model. And, the cross-model covariances have been accounted for via <code>suest2</code> so we have accurate standard errors for the cross-model test. The proportion of the effect that is mediated is a contrast between rows, so <a href="../../metest/index.html"><code>metest</code></a> can report it with a standard error:</p>
+<p>The <strong>Difference</strong> row is the test of whether the income effect is attenuated after adding job satisfaction to the model. <a href="../../metest/index.html"><code>metest</code></a> can be used to calculate the proportion of the effect that is mediated, with its standard error:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 

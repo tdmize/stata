@@ -405,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="average-effects-of-each-variable" class="level2">
 <h2 class="anchored" data-anchor-id="average-effects-of-each-variable">Average effects of each variable</h2>
-<p>Before looking at the interaction, the average effect of a standard-deviation increase in each variable (the <code>mchange</code> line of the replication file):</p>
+<p>Before looking at the interaction, the average effect of a standard-deviation increase in each variable:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976 conviewSS, models(samemod) amount(<span class="fu">sd</span>) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(sameokB)
@@ -425,7 +425,7 @@ conviewSS + SD (uncentered)      |
 <section id="ideal-types-figure-15" class="level2">
 <h2 class="anchored" data-anchor-id="ideal-types-figure-15">Ideal types (Figure 15)</h2>
 <p>The first way to present the interaction is to pick “ideal types” on one variable – here one standard deviation below and above the mean of political views, labeled liberal and conservative – and plot the predictions across the other.</p>
-<p><code>mecompare</code> leaves its own table as the active estimates, so the model is restored first.</p>
+<p><code>mecompare</code> replaces the estimates in memory, so restore the model first.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">restore</span> samemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(results samemod are active now)</code></pre>
@@ -459,7 +459,7 @@ year1976(rate)                   |
 ---------------------------------+--------------------------------
  year1976_con~1 - year1976_con~1 |     0.006      0.001      0.000 </code></pre>
 </div>
-<p>One standard deviation above and below the mean are conventional ideal types, but a good default for any continuous moderator is its 10th, 50th, and 90th percentiles: a low, a typical, and a high value that are all in the range of the data. <code>summarize, detail</code> returns them (rounded here to two decimals so the row labels stay readable), and they go straight into <code>covariates()</code>. The joint test is the test of interaction on this side, and any pair can be tested as before:</p>
+<p>One standard deviation above and below the mean are conventional ideal types, but a good default for any continuous moderator is its 10th, 50th, and 90th percentiles: a low, a typical, and a high value that are all in the range of the data. <code>summarize, detail</code> returns them, and they go straight into <code>covariates()</code>. The joint test is the test of interaction on this side, and any pair can be tested as before:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> conviewSS, <span class="kw">detail</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> p10 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(p10)</span>
@@ -592,7 +592,7 @@ year1976 + 2 (uncentered)        |
 ---------------------------------+--------------------------------
  year1976_con~1 - year1976_con~1 |     0.011      0.002      0.000 </code></pre>
 </div>
-<p>Everyone has become more accepting, liberals significantly more so than conservatives per two-year interval. Across the range of political views, from two standard deviations below the mean to two above, in steps of one half so that the line is smooth. Only the whole-number points are labeled; the half points get an empty label:</p>
+<p>Everyone has become more accepting, liberals significantly more so than conservatives per two-year interval. Across the range of political views, from two standard deviations below the mean to two above, in steps of one half:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976, models(samemod) covariates(conviewSS=(-2(0.5)2)) amount(2) uncentered <span class="kw">store</span>(tm</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -631,7 +631,7 @@ year1976 + 2 (uncentered)        |
 </section>
 <section id="predictions-over-both-variables-figure-18" class="level2">
 <h2 class="anchored" data-anchor-id="predictions-over-both-variables-figure-18">Predictions over both variables (Figure 18)</h2>
-<p>The article’s final presentation shows the predictions at every combination of the two variables as a contour plot. This is <code>margins</code> and <code>twoway contour</code> rather than a marginal-effects calculation, but it is often the clearest single picture of a continuous-by-continuous interaction. <code>margins</code> evaluates the predictions on a grid of both variables and saves them to a dataset with <code>saving()</code>; <code>nose</code> skips the standard errors, which the plot does not use. The saved dataset holds the predictions in <code>_margin</code> and the grid values in <code>_at1</code> and <code>_at2</code>, in the order the variables enter the model.</p>
+<p>The article’s final figure shows the predictions at every combination of the two variables as a contour plot, made with <code>margins</code> and <code>twoway contour</code>. <code>margins, saving()</code> saves the predictions on a grid of both variables (<code>nose</code> skips the standard errors); the saved dataset holds the predictions in <code>_margin</code> and the grid values in <code>_at1</code> and <code>_at2</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">restore</span> samemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(results samemod are active now)</code></pre>

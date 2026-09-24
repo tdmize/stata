@@ -87,8 +87,7 @@ estimates store alcedmod
 
 The ten predicted probabilities as a dot plot, education on the axis and one
 marker per gender. As for Figure 12, the predictions for each gender are
-posted and stored separately so that `coefplot` labels the levels of
-education and lines the two genders up:
+stored separately for `coefplot`:
 
 ```{.stata-run}
 <<dd_do>>

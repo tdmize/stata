@@ -163,8 +163,7 @@ age                              |
 
 ## A ratio and an average
 
-These need `nlcom`, so they are not available in `lincom` or `mlincom`. Note
-the `#` on the divisor of the average, which makes it the number two rather
+Note the `#` on the divisor of the average, which makes it the number two rather
 than ME 2.
 
 ```{.stata-run}
@@ -231,8 +230,7 @@ Tests of equality
 
 ## Building up a table
 
-Estimates and equality tests are shown as two tables, since they report
-different statistics, but the rows are numbered continuously across both.
+Estimates and equality tests are shown in separate tables.
 
 ```{.stata-run}
 . metest, clear
@@ -339,11 +337,9 @@ an equality test, `r(chi2)` (or `r(F)`), `r(df)`, and `r(pvalue)`.
 
 ## Use after other commands
 
-Nothing in `metest` is specific to `mecompare`. After any e-class command a
-bare number refers to the *n*th non-omitted coefficient of `e(b)`, in the order
-`matrix list e(b)` reports them, and coefficient names work as usual. This
-makes `metest` usable wherever `mlincom` is, with the addition of
-multiplication, division, nonlinear functions, and equality tests.
+`metest` also works after other estimation commands: a number refers to the
+*n*th coefficient in `e(b)`, in the order of `matrix list e(b)`, and
+coefficient names work as usual.
 
 ```{.stata-run}
 . sysuse nlsw88, clear
@@ -407,9 +403,74 @@ Tests of equality
 
 ```
 
-Two things to keep in mind away from `mecompare`. Omitted (`o.`) coefficients
-are skipped when numbering, so a number may not match the position in the
-displayed regression table; check with `matrix list e(b)`. And after some
-commands `test` reports *F* rather than chi-squared; the two cannot be stacked
-in one accumulated table, so run `metest, clear` when switching between models
-of the two kinds.
+After `margins, post`, a number refers to a row of the `margins` table. E.g.,
+a risk ratio -- the ratio of two predicted probabilities, averaging over
+observed values -- in the Health and Retirement Study 2020:
+
+```{.stata-run}
+. use "https://tdmize.github.io/data/data/cda_hrs", clear
+(cda_hrs.dta | Health & Retirement Study 2020)
+
+. drop if missing(cogB, marstatB, college, woman, age)
+(761 observations deleted)
+
+. 
+. logit cogB i.college i.marstatB i.woman c.age, or
+
+Iteration 0:  Log likelihood = -2466.5782  
+Iteration 1:  Log likelihood = -2311.9677  
+Iteration 2:  Log likelihood = -2282.8575  
+Iteration 3:  Log likelihood = -2282.3938  
+Iteration 4:  Log likelihood = -2282.3924  
+Iteration 5:  Log likelihood = -2282.3924  
+
+Logistic regression                                     Number of obs = 14,962
+                                                        LR chi2(4)    = 368.37
+                                                        Prob > chi2   = 0.0000
+Log likelihood = -2282.3924                             Pseudo R2     = 0.0747
+
+---------------------------------------------------------------------------------------
+                 cogB | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
+----------------------+----------------------------------------------------------------
+             collegeB |
+bachelor's or higher  |      0.233      0.037   -9.269   0.000        0.171       0.317
+                      |
+             marstatB |
+   currently married  |      0.556      0.051   -6.401   0.000        0.465       0.666
+                      |
+                woman |
+               woman  |      0.802      0.073   -2.428   0.015        0.671       0.958
+                  age |      1.049      0.004   12.085   0.000        1.041       1.057
+                _cons |      0.003      0.001  -19.128   0.000        0.001       0.005
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. 
+. margins college, post
+
+Predictive margins                                      Number of obs = 14,962
+Model VCE: OIM
+
+Expression: Pr(cogB), predict()
+
+---------------------------------------------------------------------------------------
+                      |            Delta-method
+                      |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+----------------------+----------------------------------------------------------------
+             collegeB |
+       no bachelor's  |      0.048      0.002   23.986   0.000        0.044       0.052
+bachelor's or higher  |      0.012      0.002    6.758   0.000        0.008       0.015
+---------------------------------------------------------------------------------------
+
+. metest 1 / 2
+
+                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+       0bn_collegeB / 1_collegeB |     4.065      0.626      0.000 
+
+```
+
+Omitted (`o.`) coefficients are skipped when numbering, so check the numbers
+with `matrix list e(b)`. After some commands `test` reports *F* rather than
+chi-squared; run `metest, clear` before accumulating results from a model of
+the other kind.

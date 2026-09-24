@@ -434,7 +434,7 @@ N used in balance calculations
 </section>
 <section id="ordering-and-sign-sort-and-absolute" class="level2">
 <h2 class="anchored" data-anchor-id="ordering-and-sign-sort-and-absolute">Ordering and sign: sort and absolute</h2>
-<p>By default covariates appear in the order of <em>varlist</em>, with the categories of a nominal covariate kept together under a heading. <code>sort</code> orders them from the most negative to the most positive imbalance (and drops the headings, since categories may no longer be adjacent). <code>absolute</code> plots the magnitude of each imbalance; combined with <code>sort</code>, the covariates run from the most to the least balanced. <code>abs</code> is the shortest abbreviation.</p>
+<p>By default covariates appear in the order of <em>varlist</em>, with the categories of a nominal covariate kept together under a heading. <code>sort</code> orders them from the most negative to the most positive imbalance (and drops the headings). <code>absolute</code> plots the magnitude of each imbalance; combined with <code>sort</code>, the covariates run from the most to the least balanced. <code>abs</code> is the shortest abbreviation.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>balanceplot wage age i.married i.race tenure, <span class="fu">group</span>(<span class="kw">union</span>) <span class="kw">sort</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>NOTE: 10 observations were excluded due to missing data on

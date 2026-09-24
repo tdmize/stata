@@ -388,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><code>mecompare</code> posts its table to <code>e(b)</code> and <code>e(V)</code>, and the <code>store(stub)</code> option additionally saves the marginal effects as separate stored estimates – <code>stub_model1</code>, <code>stub_model2</code>, and <code>stub_diff</code> – each keyed by variable. That is the form <code>coefplot</code> (Jann) and <code>esttab</code> (Jann’s <code>estout</code>) expect, so plots and tables of marginal effects take one line each. Install the two packages once with <code>ssc install coefplot</code> and <code>ssc install estout</code>.</p>
+<p>The <code>store(stub)</code> option saves the marginal effects as stored estimates – one for each model and one for the differences – so that <code>coefplot</code> and <code>esttab</code> (Jann) can plot and table them. Install both once with <code>ssc install coefplot</code> and <code>ssc install estout</code>.</p>
 <section id="fit-store-compare" class="level2">
 <h2 class="anchored" data-anchor-id="fit-store-compare">Fit, store, compare</h2>
 <div class="stata-run">

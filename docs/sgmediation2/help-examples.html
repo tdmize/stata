@@ -608,7 +608,7 @@ Proportion of total effect that is mediated:       0.140
 Ratio of indirect to direct effect:                0.163
 Ratio of total to direct effect:                   1.163</code></pre>
 </div>
-<p>Use bootstrapping to obtain standard errors and confidence intervals. The help file uses 1,000 replications, which is generally recommended; the page uses 100 so that it builds quickly.</p>
+<p>Use bootstrapping to obtain standard errors and confidence intervals. 1,000 replications are recommended for serious use; 100 are used here for illustration.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bootstrap</span> <span class="fu">r</span>(ind_eff) <span class="fu">r</span>(dir_eff) <span class="fu">r</span>(tot_eff), reps(100) <span class="dv">seed</span>(2026): <span class="co">///</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    sgmediation2 health, iv(edyrs) mv(income) cv(i.race i.woman age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

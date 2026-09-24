@@ -5,7 +5,7 @@ subtitle: "Example 6.2 of Mize, Doan, and Long (2019), with all four models"
 <<dd_version: 2>>
 
 With three or more models, `mecompare` lists each model's marginal effects
-and reports no differences; `metest` tests the comparisons you choose. The
+and reports no differences; `metest` can be used to test the comparisons you choose. The
 four nested logits of Example 6.2:
 
 ```{.stata-run}

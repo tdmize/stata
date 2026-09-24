@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><code>totalme</code> (Total Marginal Effect) is a companion package to Mize and Han’s 2025 <em>Sociological Science</em> article, “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” In a model with several outcome categories – a multinomial or ordered logit or probit, or a generalized ordered logit – a predictor has one marginal effect per category, and no single one of them says how much the predictor matters. <code>totalme</code> summarizes them in a single <strong>Total marginal effect</strong>: the sum of the absolute values of the marginal effects across all outcome categories, divided by two, which is the total amount of probability the predictor moves between the categories.</p>
-<p><code>totalme</code> handles any kind of independent variable. For a continuous or binary variable the Total ME is built from its marginal effect on each outcome. For a nominal variable it is built from the ME inequality of <a href="../meinequality/index.html"><code>meinequality</code></a> on each outcome, giving a <strong>Total ME inequality</strong> (weighted or unweighted). It works for one model or for two; with two models the difference in Total ME across the models is tested, using <a href="../suest2/index.html"><code>suest2</code></a> to combine the estimates.</p>
+<p><code>totalme</code> handles any kind of independent variable. For a continuous or binary variable the Total ME is built from its marginal effect on each outcome. For a nominal variable it is built from the ME inequality of <a href="../meinequality/index.html"><code>meinequality</code></a> on each outcome, giving a <strong>Total ME inequality</strong> (weighted or unweighted). It works for one model or for two; with two models the difference in Total ME across the models is tested.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install totalme, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><a href="options.html">Options</a> goes through every option with an example of each.</li>
 <li>The <strong>Examples</strong> in the sidebar reproduce the examples from Mize and Han (2025): Total MEs for a single model, comparisons across models, and Total ME inequalities for nominal predictors.</li>
-<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples in full, and the <a href="help.html">help file</a> is on the site, rendered from the installed version (<code>help totalme</code> in Stata).</li>
+<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples, and the <a href="help.html">help file</a> is on the site.</li>
 <li>The same summary is available as the <code>totalme</code> option of <a href="../mecompare/index.html"><code>mecompare</code></a>, which places it above the per-outcome marginal effects it summarizes.</li>
 </ul>
 </section>

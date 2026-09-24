@@ -405,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.collgrad c.age i.south i.smsa c.wage c.ttl_exp, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Most regression commands in Stata are supported by <code>mecompare</code>; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. Fitting the models with <code>vce(robust)</code> is recommended because with two or more models, the estimates are combined with <code>suest2</code> which uses <code>vce(robust)</code>.</p>
+<p>Most regression commands in Stata are supported; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. With two or more models, we recommend fitting the models with <code>vce(robust)</code> as <code>suest2</code> is used to combine the models’ estimates and it uses robust variance estimation. This ensures results from <code>mecompare</code> match results from the individual models exactly.</p>
 </section>
 <section id="compare-the-marginal-effects" class="level2">
 <h2 class="anchored" data-anchor-id="compare-the-marginal-effects">2. Compare the marginal effects</h2>
@@ -436,7 +436,7 @@ collgrad                         |
 <p>Each block of the table is one marginal effect. For a binary or factor variable the effect is the discrete change in the predicted probability between its levels; for a continuous variable, the default is a change for a one-unit increase (other amounts are set with <code>amount()</code>). Within a block:</p>
 <ul>
 <li>the first rows give the marginal effect in each model, in the order the models were listed in <code>models()</code>;</li>
-<li>the <strong>Difference</strong> row is the effect in the first model minus the effect in the second, with a standard error and p-value that account for the fact that both effects were estimated from the same data.</li>
+<li>the <strong>Difference</strong> row is the effect in the first model minus the effect in the second, with its standard error and p-value.</li>
 </ul>
 <p>The <code>#</code> column numbers the rows so that you can refer to them in <a href="../metest/index.html"><code>metest</code></a> for any other contrast.</p>
 </section>
@@ -548,8 +548,6 @@ south                            |
 </tr>
 </tbody>
 </table>
-<!-- CHECK against the current help file before publishing: option names,
-     the default amount(), and the wording for covariates()/atmeans. -->
 
 
 </section>

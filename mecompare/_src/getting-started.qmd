@@ -30,11 +30,12 @@ estimates store full
 <</dd_do>>
 ```
 
-Most regression commands in Stata are supported by `mecompare`; the full
-list is under [Supported models](options.html#supported-models) on the
-Options page. Fitting the models with `vce(robust)` is recommended because
-with two or more models, the estimates are combined with `suest2` which uses
-`vce(robust)`.
+Most regression commands in Stata are supported; the full list is under
+[Supported models](options.html#supported-models) on the Options page. With
+two or more models, we recommend fitting the models with `vce(robust)` as
+`suest2` is used to combine the models' estimates and it uses robust variance
+estimation. This ensures results from `mecompare` match results from the
+individual models exactly.
 
 ## 2. Compare the marginal effects
 
@@ -56,8 +57,7 @@ levels; for a continuous variable, the default is a change for a one-unit increa
 - the first rows give the marginal effect in each model, in the order the
   models were listed in `models()`;
 - the **Difference** row is the effect in the first model minus the effect in
-  the second, with a standard error and p-value that account for the fact
-  that both effects were estimated from the same data.
+  the second, with its standard error and p-value.
 
 The `#` column numbers the rows so that you can refer to them in
 [`metest`](../metest/index.html) for any other contrast.
@@ -106,5 +106,3 @@ that come up most often.
 | `totalme`, `meinequality` | Add the Total Marginal Effect and/or the marginal-effect inequality summary for the compared effects. |
 | `store(stub)` | Store the results so that they can be graphed with `coefplot` or tabled with `esttab`. |
 
-<!-- CHECK against the current help file before publishing: option names,
-     the default amount(), and the wording for covariates()/atmeans. -->

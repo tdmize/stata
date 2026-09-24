@@ -50,8 +50,8 @@ roles the gender gap is significant.
 
 The average effect of one additional role, for men and for women, and the
 second difference. `uncentered` makes the change run from each person's
-observed count to one more, as in the article; the default would center the
-one-unit change on the observed value.
+observed count to one more. For most applications, we recommend using the
+default centered change.
 
 ```{.stata-run}
 . mecompare role, models(depmod) by(woman) uncentered
@@ -77,8 +77,7 @@ role + 1 (uncentered)            |
 
 Each additional role lowers the probability of high depressive symptoms by
 about three percentage points for both men and women; the second difference
-is not significant. The instantaneous rate of change for the same effect, the
-`dydx()` of `margins`, can be calculated with `mecompare` using `amount(rate)`:
+is not significant. The instantaneous rate of change uses `amount(rate)`:
 
 ```{.stata-run}
 . mecompare role, models(depmod) by(woman) amount(rate)

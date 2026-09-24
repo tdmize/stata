@@ -434,7 +434,7 @@ age + 1 (uncentered)             |
 <pre class="stata-output"><code>file fig/chapter-income-age.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/chapter-income-age.png" class="img-fluid" style="width:80.0%" alt="Predicted income across the range of age from a regression with age, age squared, and age cubed: rising to a peak near age 50 and declining after."></p>
-<p>The chapter compares a ten-year increase in age starting at 30 with one starting at 60. <code>amount(10)</code> sets the size of the change and <code>start(age=(30 60))</code> the two starting points; <code>uncentered</code> again makes the change run upward from the start (30 to 40, and 60 to 70). Because both effects are rows of one table, <a href="../../metest/index.html"><code>metest</code></a> can test whether they differ, which the chapter’s <code>margins</code> and <code>mlincom</code> calculations could not do directly:</p>
+<p>The chapter compares a ten-year increase in age starting at 30 with one starting at 60. <code>amount(10)</code> sets the size of the change and <code>start(age=(30 60))</code> the two starting points; <code>uncentered</code> again makes the change run upward from the start (30 to 40, and 60 to 70). Because both effects are rows of one table, <a href="../../metest/index.html"><code>metest</code></a> can test whether they differ:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(cubmod) <span class="bn">start</span>(age=(30 60)) amount(10) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction
@@ -524,11 +524,11 @@ Marginal effects (N_empmod=68050)
 age + SD (centered)              |                                       
                           empmod |     1     -0.153      0.001      0.000</code></pre>
 </div>
-<p>On average, an additional year of age is associated with a 0.01 lower probability of being employed, and a standard-deviation increase in age with a 0.15 lower probability. As the chapter notes, the AME and MEM rarely differ by more than a small amount; the preference for the AME is its cleaner interpretation.</p>
+<p>On average, an additional year of age is associated with a 0.01 lower probability of being employed, and a standard-deviation increase in age with a 0.15 lower probability. As the chapter notes, the AME and MEM rarely differ by much; we prefer the AME for its cleaner interpretation.</p>
 </section>
 <section id="marginal-effects-at-representative-values-mers" class="level3">
 <h3 class="anchored" data-anchor-id="marginal-effects-at-representative-values-mers">Marginal effects at representative values (MERs)</h3>
-<p>A MER puts the focal variable at a value of substantive interest – the chapter’s example is 55, an ideal type of “middle age” – and calculates the change from there. <code>start(age=55)</code> sets everyone to 55, and <code>uncentered</code> runs the change upward from 55 (to 56 for a one-unit change, and to about 73 for a standard-deviation change). The other variables in the model stay at their observed values and the effect is averaged over the sample, as in the chapter’s replication code; add <code>atmeans</code> to hold them at their means instead, as in the chapter’s Equations 24–25.</p>
+<p>A MER puts the focal variable at a value of substantive interest – the chapter’s example is 55, an ideal type of “middle age” – and calculates the change from there. <code>start(age=55)</code> sets everyone to 55, and <code>uncentered</code> runs the change upward from 55 (to 56 for a one-unit change, and to about 73 for a standard-deviation change). The other variables stay at their observed values; add <code>atmeans</code> to hold them at their means instead (the chapter’s Equations 24–25).</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(empmod) <span class="bn">start</span>(age=55) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(employed)
@@ -578,7 +578,7 @@ Marginal effects (N_empmod2=67869)
 age + 5 (uncentered)             |                                       
                          empmod2 |     1     -0.033      0.000      0.000</code></pre>
 </div>
-<p>Aging five years is predicted to reduce the probability of employment for both ideal types, by about 0.05 for middle-aged mothers and about 0.03 for young single men. The predicted probabilities <em>for</em> each ideal type (Equations 26–27 of the chapter) are predictions rather than marginal effects, and stay with <code>margins, at(age=55 woman=1 parent=1 numchild=2)</code>.</p>
+<p>Aging five years is predicted to reduce the probability of employment for both ideal types, by about 0.05 for middle-aged mothers and about 0.03 for young single men. The predicted probabilities for each ideal type (the chapter’s Equations 26–27) are predictions, not marginal effects; use <code>margins, at(age=55 woman=1 parent=1 numchild=2)</code>.</p>
 </section>
 </section>
 <section id="reference" class="level2">

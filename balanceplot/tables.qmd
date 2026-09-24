@@ -213,11 +213,11 @@ r(table1)[7,4]
 
 ## Stored results for esttab: store()
 
-`store(stub)` posts the results as estimation results, which is the form
-`esttab` and `estout` (Jann) read. For a two-group comparison the names are
-*stub*`_mean_g#` for each group and *stub*`_imbalance`; the imbalance set
-carries standard errors, so `esttab` reports significance for it. `replace`
-overwrites results stored earlier under the same names.
+`store(stub)` saves the results as stored estimates for `esttab` and `estout`
+(Jann). For a two-group comparison the names are *stub*`_mean_g#` for each
+group and *stub*`_imbalance`; the imbalance set carries standard errors, so
+`esttab` reports significance for it. `replace` overwrites results stored
+earlier under the same names.
 
 ```{.stata-run}
 . balanceplot wage age i.married i.race tenure, group(union) store(bp, replace)

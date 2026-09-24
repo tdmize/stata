@@ -115,8 +115,7 @@ NOTE: SD's are based on all 9751 observations pooled across both groups.
 ```
 
 Each block is one marginal effect: the effect for men, the effect for women,
-and the **Difference** (men minus women, the order of `models()`), with a
-standard error that accounts for the cross-model covariance. Both married
+and the **Difference** (men minus women, the order of `models()`). Both married
 men and married women report being happier than their unmarried
 counterparts, and college degrees and conservatism have similar positive
 effects for both genders. The one significant gender difference is the

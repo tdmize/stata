@@ -329,8 +329,7 @@ Ratio of total to direct effect:                   1.163
 The indirect, direct, and total effects are returned in `r(ind_eff)`,
 `r(dir_eff)`, and `r(tot_eff)`, so Stata's `bootstrap` prefix can be used
 to obtain bootstrapped standard errors and confidence intervals for them.
-The example uses 100 replications so that the page builds quickly; in
-practice 1,000 replications are generally recommended.
+The example uses 100 replications; in practice 1,000 are recommended.
 
 ```{.stata-run}
 . bootstrap r(ind_eff) r(dir_eff) r(tot_eff), reps(100) seed(2026): ///

@@ -4,12 +4,10 @@ subtitle: "store() with coefplot and esttab"
 ---
 <<dd_version: 2>>
 
-`mecompare` posts its table to `e(b)` and `e(V)`, and the `store(stub)`
-option additionally saves the marginal effects as separate stored estimates --
-`stub_model1`, `stub_model2`, and `stub_diff` -- each keyed by variable. That is
-the form `coefplot` (Jann) and `esttab` (Jann's `estout`) expect, so plots and
-tables of marginal effects take one line each. Install the two packages once
-with `ssc install coefplot` and `ssc install estout`.
+The `store(stub)` option saves the marginal effects as stored estimates -- one
+for each model and one for the differences -- so that `coefplot` and `esttab`
+(Jann) can plot and table them. Install both once with `ssc install coefplot`
+and `ssc install estout`.
 
 ## Fit, store, compare
 

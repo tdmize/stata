@@ -3,14 +3,10 @@ title: "Examples from the help file"
 subtitle: "The examples in help balanceplot, run in full"
 ---
 
-These are the examples at the end of `help balanceplot`, run in order with
-their printed output and the graph each one draws. Each example adds one
-option to the one before it; the sentence above each call says what the new
-option does. The [Options](options.html),
-[Continuous treatments](continuous-treatment.html), and
-[Matching and teffects](matching.html) pages explain the options in more
-detail. The session starts with `estimates clear` so that the `store()`
-examples, which do not use `replace`, have nothing to collide with.
+The examples at the end of `help balanceplot`, run in order with their output
+and graphs. The [Options](options.html), [Continuous
+treatments](continuous-treatment.html), and [Matching and
+teffects](matching.html) pages explain the options in more detail.
 
 ## Comparing groups
 
@@ -126,8 +122,7 @@ file fig/helpex-cohensh-noci.png saved as PNG format
 
 `sort` orders the covariates from the most negative to the most positive
 imbalance instead of the order of the varlist; the variable headings are
-dropped because the categories of a nominal variable need no longer sit
-together.
+dropped as the nominal categories are no longer together on the graph.
 
 ```{.stata-run}
 . balanceplot wage age i.married i.race tenure, group(union) sort
@@ -208,9 +203,8 @@ file fig/helpex-threshold.png saved as PNG format
 ## Tables
 
 `table` prints a compact table -- the two group means, the standardized
-imbalance, and its p-value -- alongside the graph, which is the default one
-shown above. The same numbers are returned in `r(table1)`
-whether or not a table is printed.
+imbalance, and its p-value -- alongside the graph. The same numbers are
+returned in `r(table1)` whether or not a table is printed.
 
 ```{.stata-run}
 . balanceplot wage age i.married i.race tenure, group(union) table
@@ -408,8 +402,8 @@ file fig/helpex-groups.png saved as PNG format
 ## Store results for esttab
 
 `store(bp)` posts the group means and the imbalances as estimation results
-(`bp_mean_g0`, `bp_mean_g1`, `bp_imbalance`) so that `esttab` can lay them
-out as three aligned columns; the graph is the default one.
+(`bp_mean_g0`, `bp_mean_g1`, `bp_imbalance`) so that `esttab` can lay them out
+as three columns.
 
 ```{.stata-run}
 . balanceplot wage age i.married i.race tenure, group(union) store(bp)
@@ -462,8 +456,7 @@ Standard errors in parentheses
 ```
 
 With three groups, `store(br)` posts one mean result per group and one
-imbalance result per nonbase comparison (`br_imb_g2`, `br_imb_g3`); the
-graph is the three-group plot above.
+imbalance result per nonbase comparison (`br_imb_g2`, `br_imb_g3`).
 
 ```{.stata-run}
 . balanceplot wage age i.married tenure, group(race) store(br)
@@ -625,8 +618,7 @@ file fig/helpex-contreat-fadens.png saved as PNG format
 ![](fig/helpex-contreat-fadens.png){width=85% fig-alt="Sorted correlation balance plot with nonsignificant correlations faded."}
 
 `store(ct)` posts the correlations as the estimation result
-`ct_correlation` for `esttab`; the graph is the default `contreat()` plot
-above.
+`ct_correlation` for `esttab`.
 
 ```{.stata-run}
 . balanceplot age i.union i.race tenure, contreat(wage) store(ct)
@@ -728,7 +720,7 @@ file fig/helpex-matchweight.png saved as PNG format
 
 With `matchweight()`, `store(bm)` posts two complete sets of results, the
 unweighted set with the prefix `bm_unw_` and the weighted set with `bm_w_`,
-so each can be passed to `esttab` on its own; the graph is the one above.
+so each can be passed to `esttab` on its own.
 
 ```{.stata-run}
 . balanceplot age tenure grade, group(union) matchweight(_weight) store(bm)

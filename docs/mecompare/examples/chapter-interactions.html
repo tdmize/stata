@@ -426,7 +426,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="summary-first-differences-and-the-second-difference" class="level3">
 <h3 class="anchored" data-anchor-id="summary-first-differences-and-the-second-difference">Summary first differences and the second difference</h3>
-<p>The chapter’s Equations 30–31 are the MEM of a standard-deviation change in age for men and for women: everyone at the mean age, the change centered on it, and the control variables at their means. <code>by(woman)</code> reports the effect at each level of gender as a counterfactual (the whole sample set to men, then to women), <code>start(atmeans) covariates(atmeans)</code> makes it a MEM, and <code>amount(sd)</code> sets the change. The second difference – is the effect of age the same for men and women – is <code>metest 2 - 1</code>.</p>
+<p>The chapter’s Equations 30–31 are the MEM of a standard-deviation change in age for men and for women. <code>by(woman)</code> gives the effect for each gender (the whole sample set to men, then to women), <code>start(atmeans) covariates(atmeans)</code> makes it a MEM, and <code>amount(sd)</code> sets the change. The second difference – is the effect of age the same for men and women? – is <code>metest 2 - 1</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(agemod) amount(<span class="fu">sd</span>) <span class="bn">start</span>(atmeans) covariates(atmeans) <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(fepolB)
@@ -634,7 +634,7 @@ college                          |
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> fepolB c.age##c.age##c.faminc, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> incmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The chapter’s first approach picks ideal types of one continuous variable – the 10th and 90th percentiles of income, low and high – and plots the predictions across the range of the other (Figure 8). The percentiles are rounded to two decimals before they go into <code>at()</code> and <code>covariates()</code>.</p>
+<p>The chapter’s first approach picks ideal types of one continuous variable – the 10th and 90th percentiles of income, low and high – and plots the predictions across the range of the other (Figure 8).</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> faminc <span class="kw">if</span> <span class="fu">e</span>(<span class="kw">sample</span>), <span class="kw">detail</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> p10 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(p10)</span>
@@ -868,7 +868,7 @@ year1976(rate)                   |
 3rd diff                         |                                
                    White - Black |     0.005      0.001      0.000 </code></pre>
 </div>
-<p>As the chapter cautions, three-way interactions need large samples and a strong theoretical motivation; the mechanics, however, are the same <code>mecompare</code> call and <code>metest</code> lines as for a two-way interaction.</p>
+<p>As the chapter cautions, three-way interactions need large samples and strong theoretical motivation. The <code>mecompare</code> and <code>metest</code> steps are the same as for a two-way interaction.</p>
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>

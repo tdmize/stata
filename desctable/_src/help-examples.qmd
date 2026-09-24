@@ -6,8 +6,7 @@ subtitle: "The examples in help desctable, run in full"
 
 The examples at the end of `help desctable`, run in order. Each call writes
 an Excel file named by `filename()`; the tables for the first, second, and
-fifth examples are shown on the [overview](index.html) page. The sentence
-above each call says what its options do.
+fifth examples are shown on the [overview](index.html) page.
 
 The default table: means (proportions for the binary and nominal
 variables) and standard deviations.

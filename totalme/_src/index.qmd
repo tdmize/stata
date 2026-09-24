@@ -14,13 +14,12 @@ them in a single **Total marginal effect**: the sum of the absolute values of
 the marginal effects across all outcome categories, divided by two, which is
 the total amount of probability the predictor moves between the categories.
 
-`totalme` handles any kind of independent variable. For a continuous or
-binary variable the Total ME is built from its marginal effect on each
-outcome. For a nominal variable it is built from the ME inequality of
-[`meinequality`](../meinequality/index.html) on each outcome, giving a
-**Total ME inequality** (weighted or unweighted). It works for one model or
-for two; with two models the difference in Total ME across the models is
-tested, using [`suest2`](../suest2/index.html) to combine the estimates.
+`totalme` handles any kind of independent variable. For a continuous or binary
+variable the Total ME is built from its marginal effect on each outcome. For a
+nominal variable it is built from the ME inequality of
+[`meinequality`](../meinequality/index.html) on each outcome, giving a **Total
+ME inequality** (weighted or unweighted). It works for one model or for two;
+with two models the difference in Total ME across the models is tested.
 
 ## Installation
 
@@ -31,7 +30,6 @@ net install totalme, from("https://tdmize.github.io/data") replace
 `totalme` requires the [`suest2`](../suest2/index.html) package and
 Stata 16 or later.
 
-
 ## Where to start
 
 - [Options](options.html) goes through every option with an example of each.
@@ -39,8 +37,7 @@ Stata 16 or later.
   (2025): Total MEs for a single model, comparisons across models, and Total
   ME inequalities for nominal predictors.
 - [Examples from the help file](help-examples.html) runs the help file's
-  examples in full, and the [help file](help.html) is on the site, rendered
-  from the installed version (`help totalme` in Stata).
+  examples, and the [help file](help.html) is on the site.
 - The same summary is available as the `totalme` option of
   [`mecompare`](../mecompare/index.html), which places it above the
   per-outcome marginal effects it summarizes.

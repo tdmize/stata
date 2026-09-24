@@ -72,7 +72,7 @@ meinequality race
 ## Bootstrap example
 
 Wrap the model and the command in an r-class program and hand it to
-`bootstrap`. (Shown rather than run: 1,000 replications take a while.)
+`bootstrap`. (Shown, not run.)
 
 ```stata
 capture program drop boot_mei

@@ -248,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><code>meinequality</code> (Marginal Effects Inequality) is a companion package to Mize and Han’s 2025 <em>Sociological Science</em> article, “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” A nominal independent variable with <em>L</em> categories has <em>L(L-1)/2</em> pairwise marginal effects – one for every pair of categories. <code>meinequality</code> summarizes them in a single <strong>ME inequality</strong> statistic: the average absolute pairwise difference in predictions across the categories, with a standard error. It answers “how much does the outcome differ across the levels of this variable, overall?” and it can be compared across predictors, across models, and across groups.</p>
-<p>The command calculates <strong>weighted</strong> ME inequality (the default), which accounts for the relative size of each category in the sample, and/or <strong>unweighted</strong> ME inequality, which gives every pairwise comparison the same weight. It works after most regression models, for one model or for two; with two models the difference in ME inequality across the models is tested, using <a href="../suest2/index.html"><code>suest2</code></a> to combine the estimates.</p>
+<p>The command calculates <strong>weighted</strong> ME inequality (the default), which accounts for the relative size of each category in the sample, and/or <strong>unweighted</strong> ME inequality, which gives every pairwise comparison the same weight. It works after most regression models, for one model or for two; with two models the difference in ME inequality across the models is tested.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>net install meinequality, from(<span class="st">"https://tdmize.github.io/data"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><a href="options.html">Options</a> goes through every option with an example of each.</li>
 <li>The <strong>Examples</strong> in the sidebar reproduce the examples from Mize and Han (2025): inequality as a summary measure, inequality in categorical models, and comparisons of ME inequality across models and across groups.</li>
-<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples in full, and the <a href="help.html">help file</a> is on the site, rendered from the installed version (<code>help meinequality</code> in Stata).</li>
+<li><a href="help-examples.html">Examples from the help file</a> runs the help file’s examples, and the <a href="help.html">help file</a> is on the site.</li>
 <li>The same summary is available as the <code>meinequality</code> option of <a href="../mecompare/index.html"><code>mecompare</code></a>, which places it above the pairwise contrasts it summarizes.</li>
 </ul>
 </section>

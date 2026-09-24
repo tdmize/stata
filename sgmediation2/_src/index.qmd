@@ -167,8 +167,7 @@ sgmediation2 health, iv(edyrs) mv(income) cv(i.race i.woman age) vce(cluster occ
 The indirect, direct, and total effects are returned in `r(ind_eff)`,
 `r(dir_eff)`, and `r(tot_eff)`, so Stata's `bootstrap` prefix can be used
 to obtain bootstrapped standard errors and confidence intervals for them.
-The example uses 100 replications so that the page builds quickly; in
-practice 1,000 replications are generally recommended.
+The example uses 100 replications; in practice 1,000 are recommended.
 
 ```{.stata-run}
 <<dd_do>>

@@ -39,7 +39,6 @@ mecompare age, models(ordinal nominal) start(age=20) amount(10) covariates(atmea
 <</dd_do>>
 ```
 
-Each outcome category gets its own block of the table. Where the **Difference**
-rows are large relative to their standard errors, the ordinal model's
-proportional-odds assumption is changing the substantive conclusion for that
-category.
+Each outcome category gets its own block. A significant **Difference** means
+the ordinal model's proportional-odds assumption changes the conclusion for
+that category.

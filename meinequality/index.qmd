@@ -17,8 +17,7 @@ The command calculates **weighted** ME inequality (the default), which
 accounts for the relative size of each category in the sample, and/or
 **unweighted** ME inequality, which gives every pairwise comparison the same
 weight. It works after most regression models, for one model or for two; with
-two models the difference in ME inequality across the models is tested, using
-[`suest2`](../suest2/index.html) to combine the estimates.
+two models the difference in ME inequality across the models is tested.
 
 ## Installation
 
@@ -29,7 +28,6 @@ net install meinequality, from("https://tdmize.github.io/data") replace
 `meinequality` requires the [`suest2`](../suest2/index.html) package and
 Stata 16 or later.
 
-
 ## Where to start
 
 - [Options](options.html) goes through every option with an example of each.
@@ -37,8 +35,7 @@ Stata 16 or later.
   (2025): inequality as a summary measure, inequality in categorical
   models, and comparisons of ME inequality across models and across groups.
 - [Examples from the help file](help-examples.html) runs the help file's
-  examples in full, and the [help file](help.html) is on the site, rendered
-  from the installed version (`help meinequality` in Stata).
+  examples, and the [help file](help.html) is on the site.
 - The same summary is available as the `meinequality` option of
   [`mecompare`](../mecompare/index.html), which places it above the pairwise
   contrasts it summarizes.

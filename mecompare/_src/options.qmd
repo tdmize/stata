@@ -4,11 +4,9 @@ subtitle: "Every mecompare option, with an example of each"
 ---
 <<dd_version: 2>>
 
-This page goes through the options of `mecompare` in the order of the help
-file, running each one on Stata's `nlsw88` data so that the effect of the
-option is visible in the output. The [help file](help.html) has the full
-statement of each option; the [Getting started](getting-started.html) page
-explains how to read the table.
+This page runs each option of `mecompare` on Stata's `nlsw88` data, in the
+order of the [help file](help.html). The [Getting
+started](getting-started.html) page explains how to read the table.
 
 ```{.stata-run}
 <<dd_do>>
@@ -69,10 +67,8 @@ mecompare, models(m1 m2)
 
 ## Supported models
 
-`mecompare` accepts one or more models from the following families. The list
-follows the [help file](help.html#estimators); two or more models are combined with
-[`suest2`](../suest2/index.html), whose own
-[list of estimators](../suest2/usage.html#supported-estimators) is the same.
+`mecompare` accepts one or more models from the following families (see also
+the [help file](help.html#estimators)).
 
 ### Ordinary single-level models
 
@@ -99,8 +95,8 @@ the `re` estimator instead, as described in the
 [help file](help.html#cre).
 
 `xtlogit` with estimators re, fe, and pa. `xtprobit` with estimators re and
-pa. `xtcloglog` with estimators re and pa; the re estimator combines when
-fit with `intpoints(24)` or more.
+pa. `xtcloglog` with estimators re and pa; the re estimator requires
+`intpoints(24)` or more.
 
 `xtologit` and `xtoprobit`.
 
@@ -127,18 +123,11 @@ in the help file.
 
 ### Which models can be compared
 
-Models are comparable when they all return the same number of predictions.
-Same-family sets (two logits, three `glm`s, two `mestreg`s) always qualify.
-Cross-family sets qualify on the same rule: `logit` vs `regress`, `xtlogit`
-vs `mixed`, any pair of binary-, count-, or continuous-outcome models, and
-any pair of ordinal or nominal models with the same number of outcome
-categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`). Each model
-contributes its own default prediction, or the one given in `predict()`, so
-a `logit` vs `regress` comparison contrasts predicted probabilities with
-linear predictions. Models that return different numbers of predictions (a
-three-category `ologit` vs a `logit`) cannot be compared, and two
-multi-category outcomes must have the same number of categories with the
-same values.
+Models can be compared when they all return the same number of predictions:
+e.g., two logits, a `logit` and a `regress`, or an `ologit` and an `mlogit`
+with the same outcome categories. Each model uses its own default prediction,
+or the one given in `predict()`, so a `logit` vs `regress` comparison
+contrasts predicted probabilities with linear predictions.
 
 ### Survey, multiply imputed, and weighted models
 

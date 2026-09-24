@@ -4,23 +4,21 @@ subtitle: "Seemingly unrelated estimation for most models in Stata, with margins
 ---
 
 `suest2` combines models that were estimated separately into one set of
-results, including cross-model covariances which are necessary for tests
-across models. After `suest2`, coefficients, predictions, and marginal effects
-from different models can be tested against each other with
-[`mecompare`](../mecompare/index.html) or with `test`, `lincom`,
-`nlcom`, or `margins`. [`mecompare`](../mecompare/index.html) is written
-specifically to automate a range of cross-model comparisons of effects.
+results, including the cross-model covariances needed for tests across models.
+After `suest2`, coefficients, predictions, and marginal effects from different
+models can be tested against each other with `test`, `lincom`, `nlcom`,
+`margins`, or [`mecompare`](../mecompare/index.html), which automates
+cross-model comparisons of effects.
 
 `suest2` extends Stata's `suest` to panel, multilevel, weighted, survey,
-multiply-imputed, generalized ordered, and instrumental-variable models, and
-it lets `predict` and `margins` select a constituent model from the combined
-system, so that most any post-estimation work -- predictions, marginal
-effects, graphs of either -- can be done within and across models.
+multiply-imputed, generalized ordered, and instrumental-variable models.
+`predict`, `margins`, and `mecompare` can select one or multiple models of the
+combined system, so predictions, marginal effects, and graphs can be made
+within and across models.
 
-`suest2` is used by [`mecompare`](../mecompare/index.html), [`meinequality`](../meinequality/index.html),
-and [`totalme`](../totalme/index.html) to combine model estimates before
-those commands' post-estimation calculations, and those three packages require
-it.
+[`mecompare`](../mecompare/index.html),
+[`meinequality`](../meinequality/index.html), and
+[`totalme`](../totalme/index.html) use `suest2` and require it.
 
 ## Installation
 
@@ -29,7 +27,6 @@ net install suest2, from("https://tdmize.github.io/data") replace
 ```
 
 `suest2` requires Stata 16 or later.
-
 
 ## Where to start
 
@@ -43,8 +40,7 @@ net install suest2, from("https://tdmize.github.io/data") replace
   from binary, ordinal, and multinomial models.
 - [Examples from the help file](help-examples.html): single-level, panel,
   multilevel, and instrumental-variable systems, run in full.
-- The [help file](help.html), rendered from the installed version
-  (`help suest2` in Stata).
+- The [help file](help.html).
 
 ## Basic use
 

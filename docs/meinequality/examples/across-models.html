@@ -237,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>How much of the racial-ethnic inequality in an outcome is accounted for by education and wealth? Fit the model with and without those variables, store both, and name them in <code>models()</code>: <code>meinequality</code> reports the ME inequality from each model and tests the difference, combining the two models with <a href="../../suest2/index.html"><code>suest2</code></a> so that the test accounts for the models being estimated on the same data. The example uses a count of functional limitations from the Health and Retirement Study.</p>
+<p>How much of the racial-ethnic inequality in an outcome is accounted for by education and wealth? Fit the model with and without those variables, store both, and name them in <code>models()</code>: <code>meinequality</code> reports the ME inequality from each model and tests the difference. The example uses a count of functional limitations from the Health and Retirement Study.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_hrs"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(cda_hrs.dta | Health &amp; Retirement Study 2020)</code></pre>
@@ -350,10 +350,7 @@ race4cat ME Ineq.        |
         Model 2 (medmod) |      0.038       0.011       3.353       0.001 
        Cross-Model Diff. |      0.009       0.022       0.389       0.698 </code></pre>
 </div>
-<p>With two models, specify the names of the stored models in the <code>models()</code> option. The <strong>Difference</strong> row is the reduction in racial-ethnic inequality once education, wealth, and income are in the model, with its standard error and p-value: the part of the inequality those variables account for.</p>
-<!-- NOTE: the trentonmize.com version of this example used nagiSS, race,
-     college, hatota and hitot; the 2026 cda_hrs release renamed these to
-     iadl, race4cat, collegeB, wealth_w, income_w. -->
+<p>The <strong>Difference</strong> row is the reduction in racial-ethnic inequality once education, wealth, and income are in the model, with its standard error and p-value: the part of the inequality those variables account for.</p>
 
 
 

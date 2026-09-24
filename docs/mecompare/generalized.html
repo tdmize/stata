@@ -403,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="co-change-variables-at-chosen-values" class="level2">
 <h2 class="anchored" data-anchor-id="co-change-variables-at-chosen-values">Co-change variables at chosen values</h2>
-<p><code>start()</code> and <code>end()</code> set the values the co-change variables change from and to. Here wages and occupational prestige change from their average among those without a college degree to their average among college graduates. The averages are rounded to two decimals before they go into <code>start()</code> and <code>end()</code>.</p>
+<p><code>start()</code> and <code>end()</code> set the values the co-change variables change from and to. Here wages and occupational prestige change from their average among those without a college degree to their average among college graduates.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> wages <span class="kw">if</span> college == 0 &amp; <span class="fu">e</span>(<span class="kw">sample</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> w0 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(<span class="kw">mean</span>)</span>
@@ -432,7 +432,7 @@ college with co-change           |
 
 NOTE: college with co-change: college 0 to 1; wages 13.60 to 24.88; occprest 40.51 to 54.68.</code></pre>
 </div>
-<p>Row 1 is the usual marginal effect of a college degree, with wages and occupational prestige held at their observed values; it is the same estimate as model m4 in the <a href="examples/nested-models.html">Example 6.2</a> table. Row 2 is the effect of a college degree when wages and occupational prestige also change; the note under the table lists each change. Use <code>metest</code> to test the difference between the two:</p>
+<p>Row 1 is the usual marginal effect of a college degree, with wages and occupational prestige held at their observed values. Row 2 is the effect of a college degree when wages and occupational prestige also change; the note under the table lists each change. Use <code>metest</code> to test the difference between the two:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 

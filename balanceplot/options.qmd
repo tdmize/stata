@@ -280,12 +280,12 @@ file fig/options-threshold.png saved as PNG format
 
 ## Ordering and sign: sort and absolute
 
-By default covariates appear in the order of *varlist*, with the categories
-of a nominal covariate kept together under a heading. `sort` orders them from
-the most negative to the most positive imbalance (and drops the headings,
-since categories may no longer be adjacent). `absolute` plots the magnitude
-of each imbalance; combined with `sort`, the covariates run from the most to
-the least balanced. `abs` is the shortest abbreviation.
+By default covariates appear in the order of *varlist*, with the categories of
+a nominal covariate kept together under a heading. `sort` orders them from the
+most negative to the most positive imbalance (and drops the headings).
+`absolute` plots the magnitude of each imbalance; combined with `sort`, the
+covariates run from the most to the least balanced. `abs` is the shortest
+abbreviation.
 
 ```{.stata-run}
 . balanceplot wage age i.married i.race tenure, group(union) sort

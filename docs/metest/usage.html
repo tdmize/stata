@@ -346,7 +346,7 @@ age                              |
 </section>
 <section id="a-ratio-and-an-average" class="level2">
 <h2 class="anchored" data-anchor-id="a-ratio-and-an-average">A ratio and an average</h2>
-<p>These need <code>nlcom</code>, so they are not available in <code>lincom</code> or <code>mlincom</code>. Note the <code>#</code> on the divisor of the average, which makes it the number two rather than ME 2.</p>
+<p>Note the <code>#</code> on the divisor of the average, which makes it the number two rather than ME 2.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>metest 1 / 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
@@ -398,7 +398,7 @@ age                              |
 </section>
 <section id="building-up-a-table" class="level2">
 <h2 class="anchored" data-anchor-id="building-up-a-table">Building up a table</h2>
-<p>Estimates and equality tests are shown as two tables, since they report different statistics, but the rows are numbered continuously across both.</p>
+<p>Estimates and equality tests are shown in separate tables.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>metest, <span class="kw">clear</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>metest 1 - 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -533,7 +533,7 @@ age          |
 </section>
 <section id="use-after-other-commands" class="level2">
 <h2 class="anchored" data-anchor-id="use-after-other-commands">Use after other commands</h2>
-<p>Nothing in <code>metest</code> is specific to <code>mecompare</code>. After any e-class command a bare number refers to the <em>n</em>th non-omitted coefficient of <code>e(b)</code>, in the order <code>matrix list e(b)</code> reports them, and coefficient names work as usual. This makes <code>metest</code> usable wherever <code>mlincom</code> is, with the addition of multiplication, division, nonlinear functions, and equality tests.</p>
+<p><code>metest</code> also works after other estimation commands: a number refers to the <em>n</em>th coefficient in <code>e(b)</code>, in the order of <code>matrix list e(b)</code>, and coefficient names work as usual.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
@@ -580,7 +580,64 @@ age          |
 ---------------------------------+--------------------------------
                         age * 10 |    -1.011      0.370      0.006 </code></pre>
 </div>
-<p>Two things to keep in mind away from <code>mecompare</code>. Omitted (<code>o.</code>) coefficients are skipped when numbering, so a number may not match the position in the displayed regression table; check with <code>matrix list e(b)</code>. And after some commands <code>test</code> reports <em>F</em> rather than chi-squared; the two cannot be stacked in one accumulated table, so run <code>metest, clear</code> when switching between models of the two kinds.</p>
+<p>After <code>margins, post</code>, a number refers to a row of the <code>margins</code> table. E.g., a risk ratio – the ratio of two predicted probabilities, averaging over observed values – in the Health and Retirement Study 2020:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_hrs"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(cda_hrs.dta | Health &amp; Retirement Study 2020)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(cogB, marstatB, college, woman, age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(761 observations deleted)
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> cogB i.college i.marstatB i.woman c.age, <span class="kw">or</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Iteration 0:  Log likelihood = -2466.5782  
+Iteration 1:  Log likelihood = -2311.9677  
+Iteration 2:  Log likelihood = -2282.8575  
+Iteration 3:  Log likelihood = -2282.3938  
+Iteration 4:  Log likelihood = -2282.3924  
+Iteration 5:  Log likelihood = -2282.3924  
+
+Logistic regression                                     Number of obs = 14,962
+                                                        LR chi2(4)    = 368.37
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -2282.3924                             Pseudo R2     = 0.0747
+
+---------------------------------------------------------------------------------------
+                 cogB | Odds ratio   Std. err.      z    P&gt;|z|     [95% conf. interval]
+----------------------+----------------------------------------------------------------
+             collegeB |
+bachelor's or higher  |      0.233      0.037   -9.269   0.000        0.171       0.317
+                      |
+             marstatB |
+   currently married  |      0.556      0.051   -6.401   0.000        0.465       0.666
+                      |
+                woman |
+               woman  |      0.802      0.073   -2.428   0.015        0.671       0.958
+                  age |      1.049      0.004   12.085   0.000        1.041       1.057
+                _cons |      0.003      0.001  -19.128   0.000        0.001       0.005
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>margins college, <span class="kw">post</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predictive margins                                      Number of obs = 14,962
+Model VCE: OIM
+
+Expression: Pr(cogB), predict()
+
+---------------------------------------------------------------------------------------
+                      |            Delta-method
+                      |     Margin   std. err.      z    P&gt;|z|     [95% conf. interval]
+----------------------+----------------------------------------------------------------
+             collegeB |
+       no bachelor's  |      0.048      0.002   23.986   0.000        0.044       0.052
+bachelor's or higher  |      0.012      0.002    6.758   0.000        0.008       0.015
+---------------------------------------------------------------------------------------</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>metest 1 / 2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>                                 |  estimate         se     pvalue 
+---------------------------------+--------------------------------
+       0bn_collegeB / 1_collegeB |     4.065      0.626      0.000 </code></pre>
+</div>
+<p>Omitted (<code>o.</code>) coefficients are skipped when numbering, so check the numbers with <code>matrix list e(b)</code>. After some commands <code>test</code> reports <em>F</em> rather than chi-squared; run <code>metest, clear</code> before accumulating results from a model of the other kind.</p>
 
 
 </section>

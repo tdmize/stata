@@ -387,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>What social factors most strongly pattern political views? Answering that question means comparing effect sizes across predictors within one model, which is complicated by predictors on different metrics (e.g., age versus income), predictors of different types (binary, nominal, continuous), and by nonlinearities in the effects of continuous predictors. Mize and Han (2025) suggest putting every predictor on the same footing: the effect of the <em>entire range</em> of the variable.</p>
+<p>What social factors most strongly pattern political views? Comparing effect sizes across predictors is complicated when they are on different metrics (e.g., age versus income), are of different types (binary, nominal, continuous), or have nonlinear effects. Mize and Han (2025) suggest putting every predictor on the same footing: the effect of the <em>entire range</em> of the variable.</p>
 <ul>
 <li>For a <strong>binary</strong> predictor, the 0 versus 1 contrast already summarizes the whole of its effect.</li>
 <li>For a <strong>nominal</strong> predictor, the <em>ME inequality</em> – the average absolute difference in the outcome across its categories – summarizes its effect in one number (see <a href="../../meinequality/index.html"><code>meinequality</code></a>).</li>
@@ -447,7 +447,7 @@ class                            |
 </div>
 <p>Reading the table:</p>
 <ul>
-<li><strong>Row 1</strong> is the trimmed-range effect of age. Everyone in the sample is set to the 5th percentile of age, then to the 95th percentile, and the average difference in predicted political views is the marginal effect – the same counterfactual logic as the 0 versus 1 contrast of a binary variable. With the squared term in the model the effect of age is nonlinear, but the trimmed-range change still summarizes it with a single number.</li>
+<li><strong>Row 1</strong> is the trimmed-range effect of age: everyone is set to the 5th percentile of age, then to the 95th, and the average difference in predicted political views is the marginal effect. The effect of age is nonlinear, but this summarizes it in a single number.</li>
 <li><strong>Row 2</strong> is the gender gap: the contrast for a binary variable.</li>
 <li><strong>Rows 3 and 7</strong> are the ME inequalities for race-ethnicity and class: on average, how far apart the racial-ethnic groups (or the social classes) are in their political views. The rows beneath each are the contrasts with the base category that the ME inequality summarizes. Add <code>pwcompare</code> to see all pairwise contrasts, or <code>meinequality(all)</code> to also report the unweighted ME inequality; the <a href="../options.html#meinequality-and-totalme-summary-measures">Options</a> page shows both.</li>
 </ul>
@@ -463,7 +463,7 @@ class                            |
 </section>
 <section id="test-the-differences-in-effect-size" class="level2">
 <h2 class="anchored" data-anchor-id="test-the-differences-in-effect-size">3. Test the differences in effect size</h2>
-<p><code>metest</code> refers to the row numbers in the <code>#</code> column. To compare pure effect sizes and ignore direction, take the absolute value of a signed effect before testing it: the trimmed-range effect of age and the ME inequalities are positive here, but the gender gap is negative. <code>add</code> accumulates the tests into one table, and <code>rowname()</code> labels each row.</p>
+<p>To compare effect sizes and ignore direction, use the absolute value of a signed effect; here the gender gap is negative. <code>add</code> collects the tests in one table, and <code>rowname()</code> labels each row.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest, <span class="kw">clear</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>metest 1 - <span class="fu">abs</span>(2), add rowname(<span class="st">"age - woman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -521,7 +521,7 @@ class                            |
 </section>
 <section id="alternative-a-two-standard-deviation-change" class="level2">
 <h2 class="anchored" data-anchor-id="alternative-a-two-standard-deviation-change">Alternative: a two-standard-deviation change</h2>
-<p><code>amount(2sd)</code> is the other common way to put a continuous variable on a footing comparable with a binary one. The two amounts summarize the effect of age differently. A two-standard-deviation change is centered on each observation’s own age (one SD below to one SD above) and then averaged over the sample, so it reflects where the observations are; the trimmed-range change is the same fixed change, from the 5th to the 95th percentile, for everyone. With a nonlinear effect the two can differ:</p>
+<p><code>amount(2sd)</code> is the other common way to make a continuous variable comparable with a binary one. A two-standard-deviation change is centered on each observation’s own age (one SD below to one SD above); the trimmed-range change is the same change, from the 5th to the 95th percentile, for everyone. With a nonlinear effect the two can differ:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(polmod) amount(2sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction
@@ -542,7 +542,7 @@ Marginal effects (N_polmod=3608)
 age(5-95%)                       |                                       
                           polmod |     1      0.784      0.083      0.000</code></pre>
 </div>
-<p>Mize and Han (2025) suggest the trimmed range as the more robust choice: the 5th and 95th percentiles are always values observed in the data, whereas a two-standard-deviation change can reach past the observed range of a skewed variable. Either amount can be combined with <code>meinequality</code> in the single call above.</p>
+<p>Mize and Han (2025) suggest the trimmed range as the more robust choice: it always reflects most of the range of the continuous variable’s effect, as a binary variable’s 0 to 1 effect always reflects its full range.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>

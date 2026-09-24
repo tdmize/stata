@@ -35,9 +35,7 @@ estimates store m4
 
 `start()` and `end()` set the values the co-change variables change from and
 to. Here wages and occupational prestige change from their average among
-those without a college degree to their average among college graduates. The
-averages are rounded to two decimals before they go into `start()` and
-`end()`.
+those without a college degree to their average among college graduates.
 
 ```{.stata-run}
 <<dd_do>>
@@ -56,8 +54,7 @@ mecompare i.college, models(m4) cochange(wages occprest) ///
 ```
 
 Row 1 is the usual marginal effect of a college degree, with wages and
-occupational prestige held at their observed values; it is the same estimate
-as model m4 in the [Example 6.2](examples/nested-models.html) table. Row 2 is
+occupational prestige held at their observed values. Row 2 is
 the effect of a college degree when wages and occupational prestige also
 change; the note under the table lists each change. Use `metest` to test the
 difference between the two:

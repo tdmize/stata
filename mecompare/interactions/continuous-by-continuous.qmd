@@ -32,7 +32,7 @@ conservative); year is coded as years since 1976.
 ## Average effects of each variable
 
 Before looking at the interaction, the average effect of a standard-deviation
-increase in each variable (the `mchange` line of the replication file):
+increase in each variable:
 
 ```{.stata-run}
 . mecompare year1976 conviewSS, models(samemod) amount(sd) uncentered
@@ -62,8 +62,7 @@ variable -- here one standard deviation below and above the mean of political
 views, labeled liberal and conservative -- and plot the predictions across the
 other.
 
-`mecompare` leaves its own table as the active estimates, so the model is
-restored first.
+`mecompare` replaces the estimates in memory, so restore the model first.
 
 ```{.stata-run}
 . estimates restore samemod
@@ -116,8 +115,7 @@ year1976(rate)                   |
 One standard deviation above and below the mean are conventional ideal types,
 but a good default for any continuous moderator is its 10th, 50th, and 90th
 percentiles: a low, a typical, and a high value that are all in the range of
-the data. `summarize, detail` returns them (rounded here to two decimals so
-the row labels stay readable), and they go straight into `covariates()`. The
+the data. `summarize, detail` returns them, and they go straight into `covariates()`. The
 joint test is the test of interaction on this side, and any pair can be
 tested as before:
 
@@ -303,9 +301,7 @@ year1976 + 2 (uncentered)        |
 
 Everyone has become more accepting, liberals significantly more so than
 conservatives per two-year interval. Across the range of political views, from
-two standard deviations below the mean to two above, in steps of one half so
-that the line is smooth. Only the whole-number points are labeled; the half
-points get an empty label:
+two standard deviations below the mean to two above, in steps of one half:
 
 ```{.stata-run}
 . mecompare year1976, models(samemod) covariates(conviewSS=(-2(0.5)2)) amount(2) uncentered store(tm
@@ -350,14 +346,11 @@ file fig/nli-sameok-time-by-views.png saved as PNG format
 
 ## Predictions over both variables (Figure 18)
 
-The article's final presentation shows the predictions at every combination of
-the two variables as a contour plot. This is `margins` and `twoway contour`
-rather than a marginal-effects calculation, but it is often the clearest single
-picture of a continuous-by-continuous interaction. `margins` evaluates the
-predictions on a grid of both variables and saves them to a dataset with
-`saving()`; `nose` skips the standard errors, which the plot does not use.
-The saved dataset holds the predictions in `_margin` and the grid values in
-`_at1` and `_at2`, in the order the variables enter the model.
+The article's final figure shows the predictions at every combination of the
+two variables as a contour plot, made with `margins` and `twoway contour`.
+`margins, saving()` saves the predictions on a grid of both variables (`nose`
+skips the standard errors); the saved dataset holds the predictions in
+`_margin` and the grid values in `_at1` and `_at2`.
 
 ```{.stata-run}
 . estimates restore samemod

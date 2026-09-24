@@ -2,183 +2,183 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tdmize.github.io/stata/usetdm/index.html</loc>
-    <lastmod>2026-09-05T20:10:08.950Z</lastmod>
+    <lastmod>2026-09-24T21:33:35.002Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/usetdm/help-examples.html</loc>
-    <lastmod>2026-09-05T20:10:08.438Z</lastmod>
+    <lastmod>2026-09-24T21:33:34.474Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/index.html</loc>
-    <lastmod>2026-09-24T03:44:20.534Z</lastmod>
+    <lastmod>2026-09-24T21:31:33.251Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/help-examples.html</loc>
-    <lastmod>2026-09-24T03:44:20.230Z</lastmod>
+    <lastmod>2026-09-24T21:31:32.980Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/examples/inequalities.html</loc>
-    <lastmod>2026-09-24T03:44:56.433Z</lastmod>
+    <lastmod>2026-09-24T21:32:02.092Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/suest2/usage.html</loc>
-    <lastmod>2026-09-23T20:15:25.426Z</lastmod>
+    <lastmod>2026-09-24T21:30:00.833Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/suest2/index.html</loc>
-    <lastmod>2026-09-23T20:13:44.926Z</lastmod>
+    <lastmod>2026-09-24T21:28:10.556Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/suest2/help-examples.html</loc>
-    <lastmod>2026-09-23T20:13:44.202Z</lastmod>
+    <lastmod>2026-09-24T21:28:09.872Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/sgmediation2/help.html</loc>
-    <lastmod>2026-09-05T20:09:59.191Z</lastmod>
+    <lastmod>2026-09-24T21:33:25.868Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/metest/usage.html</loc>
-    <lastmod>2026-09-23T20:13:38.845Z</lastmod>
+    <lastmod>2026-09-24T21:30:05.198Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/metest/index.html</loc>
-    <lastmod>2026-09-23T20:13:35.675Z</lastmod>
+    <lastmod>2026-09-24T21:30:01.587Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/options.html</loc>
-    <lastmod>2026-09-24T03:45:15.281Z</lastmod>
+    <lastmod>2026-09-24T21:30:16.133Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/help.html</loc>
-    <lastmod>2026-09-24T03:44:59.774Z</lastmod>
+    <lastmod>2026-09-24T21:30:05.636Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/examples/summary-measure.html</loc>
-    <lastmod>2026-09-24T03:45:23.248Z</lastmod>
+    <lastmod>2026-09-24T21:30:23.221Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/examples/across-models.html</loc>
-    <lastmod>2026-09-24T03:45:21.413Z</lastmod>
+    <lastmod>2026-09-24T21:30:21.221Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/plotting.html</loc>
-    <lastmod>2026-09-24T03:41:15.427Z</lastmod>
+    <lastmod>2026-09-24T21:26:01.620Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/interactions/nominal-by-nominal.html</loc>
-    <lastmod>2026-09-24T03:43:01.521Z</lastmod>
+    <lastmod>2026-09-24T21:28:03.879Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/interactions/linear-model.html</loc>
-    <lastmod>2026-09-24T03:42:52.260Z</lastmod>
+    <lastmod>2026-09-24T21:27:55.919Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/interactions/continuous-by-continuous.html</loc>
-    <lastmod>2026-09-24T03:42:46.444Z</lastmod>
+    <lastmod>2026-09-24T21:27:50.805Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/help.html</loc>
-    <lastmod>2026-09-24T03:40:31.968Z</lastmod>
+    <lastmod>2026-09-24T21:25:09.004Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/getting-started.html</loc>
-    <lastmod>2026-09-24T03:40:34.230Z</lastmod>
+    <lastmod>2026-09-24T21:25:13.034Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/within-model.html</loc>
-    <lastmod>2026-09-24T03:42:25.708Z</lastmod>
+    <lastmod>2026-09-24T21:27:29.837Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/nested-models.html</loc>
-    <lastmod>2026-09-24T03:42:14.681Z</lastmod>
+    <lastmod>2026-09-24T21:27:17.697Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/meinequality-across-models.html</loc>
-    <lastmod>2026-09-24T03:42:04.121Z</lastmod>
+    <lastmod>2026-09-24T21:26:59.823Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/groups.html</loc>
-    <lastmod>2026-09-24T03:41:57.743Z</lastmod>
+    <lastmod>2026-09-24T21:26:53.118Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/chapter-summary-measures.html</loc>
-    <lastmod>2026-09-24T03:41:50.778Z</lastmod>
+    <lastmod>2026-09-24T21:26:45.722Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/chapter-groups.html</loc>
-    <lastmod>2026-09-24T03:41:22.551Z</lastmod>
+    <lastmod>2026-09-24T21:26:10.613Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/lca_entropy/index.html</loc>
-    <lastmod>2026-09-05T20:09:58.743Z</lastmod>
+    <lastmod>2026-09-24T21:33:25.449Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/lca_entropy/help-examples.html</loc>
-    <lastmod>2026-09-05T20:09:55.565Z</lastmod>
+    <lastmod>2026-09-24T21:33:23.675Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/irt_me/help.html</loc>
-    <lastmod>2026-09-05T20:09:48.001Z</lastmod>
+    <lastmod>2026-09-24T21:33:16.765Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/irt_coef/index.html</loc>
-    <lastmod>2026-09-05T20:09:47.550Z</lastmod>
+    <lastmod>2026-09-24T21:33:16.288Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/irt_coef/help-examples.html</loc>
-    <lastmod>2026-09-05T20:09:41.263Z</lastmod>
+    <lastmod>2026-09-24T21:33:11.306Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/desctable/index.html</loc>
-    <lastmod>2026-09-05T20:09:39.673Z</lastmod>
+    <lastmod>2026-09-24T21:33:09.617Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/desctable/help-examples.html</loc>
-    <lastmod>2026-09-05T20:09:36.733Z</lastmod>
+    <lastmod>2026-09-24T21:33:06.850Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/cleanplots/help.html</loc>
-    <lastmod>2026-09-05T20:09:05.478Z</lastmod>
+    <lastmod>2026-09-24T21:32:37.956Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/tables.html</loc>
-    <lastmod>2026-09-05T20:09:05.025Z</lastmod>
+    <lastmod>2026-09-24T21:32:37.505Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/matching.html</loc>
-    <lastmod>2026-09-05T20:08:51.506Z</lastmod>
+    <lastmod>2026-09-24T21:32:27.034Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/help.html</loc>
-    <lastmod>2026-09-05T20:08:25.878Z</lastmod>
+    <lastmod>2026-09-24T21:32:05.113Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/continuous-treatment.html</loc>
-    <lastmod>2026-09-05T20:08:30.971Z</lastmod>
+    <lastmod>2026-09-24T21:32:09.458Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/help-examples.html</loc>
-    <lastmod>2026-09-05T20:08:46.963Z</lastmod>
+    <lastmod>2026-09-24T21:32:23.054Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/index.html</loc>
-    <lastmod>2026-09-05T20:08:47.644Z</lastmod>
+    <lastmod>2026-09-24T21:32:23.657Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/balanceplot/options.html</loc>
-    <lastmod>2026-09-05T20:09:01.518Z</lastmod>
+    <lastmod>2026-09-24T21:32:34.899Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/cleanplots/examples.html</loc>
-    <lastmod>2026-09-05T20:09:22.495Z</lastmod>
+    <lastmod>2026-09-24T21:32:54.173Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/cleanplots/index.html</loc>
-    <lastmod>2026-09-05T20:09:30.598Z</lastmod>
+    <lastmod>2026-09-24T21:33:01.262Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/desctable/help.html</loc>
-    <lastmod>2026-09-05T20:09:31.041Z</lastmod>
+    <lastmod>2026-09-24T21:33:01.682Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/index.html</loc>
@@ -186,126 +186,126 @@
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/irt_coef/help.html</loc>
-    <lastmod>2026-09-05T20:09:40.146Z</lastmod>
+    <lastmod>2026-09-24T21:33:10.075Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/irt_me/help-examples.html</loc>
-    <lastmod>2026-09-05T20:09:49.462Z</lastmod>
+    <lastmod>2026-09-24T21:33:18.096Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/irt_me/index.html</loc>
-    <lastmod>2026-09-05T20:09:54.539Z</lastmod>
+    <lastmod>2026-09-24T21:33:22.536Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/lca_entropy/help.html</loc>
-    <lastmod>2026-09-05T20:09:55.001Z</lastmod>
+    <lastmod>2026-09-24T21:33:22.968Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/alternative-predictors.html</loc>
-    <lastmod>2026-09-24T03:41:16.670Z</lastmod>
+    <lastmod>2026-09-24T21:26:03.350Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/chapter-interactions.html</loc>
-    <lastmod>2026-09-24T03:41:44.699Z</lastmod>
+    <lastmod>2026-09-24T21:26:39.973Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/different-outcomes.html</loc>
-    <lastmod>2026-09-24T03:41:55.146Z</lastmod>
+    <lastmod>2026-09-24T21:26:50.906Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/mediation.html</loc>
-    <lastmod>2026-09-24T03:41:58.620Z</lastmod>
+    <lastmod>2026-09-24T21:26:54.172Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/model-types.html</loc>
-    <lastmod>2026-09-24T03:42:11.984Z</lastmod>
+    <lastmod>2026-09-24T21:27:14.625Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/examples/totalme-across-models.html</loc>
-    <lastmod>2026-09-24T03:42:24.116Z</lastmod>
+    <lastmod>2026-09-24T21:27:27.744Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/generalized.html</loc>
-    <lastmod>2026-09-24T03:40:33.161Z</lastmod>
+    <lastmod>2026-09-24T21:25:11.682Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/help-examples.html</loc>
-    <lastmod>2026-09-24T03:40:56.185Z</lastmod>
+    <lastmod>2026-09-24T21:25:36.611Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/index.html</loc>
-    <lastmod>2026-09-24T03:40:56.215Z</lastmod>
+    <lastmod>2026-09-24T21:25:36.643Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/interactions/index.html</loc>
-    <lastmod>2026-09-24T03:42:46.468Z</lastmod>
+    <lastmod>2026-09-24T21:27:50.820Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/interactions/nominal-by-continuous.html</loc>
-    <lastmod>2026-09-24T03:42:56.296Z</lastmod>
+    <lastmod>2026-09-24T21:27:59.662Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/mecompare/options.html</loc>
-    <lastmod>2026-09-24T03:41:09.116Z</lastmod>
+    <lastmod>2026-09-24T21:25:51.196Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/examples/across-groups.html</loc>
-    <lastmod>2026-09-24T03:45:18.521Z</lastmod>
+    <lastmod>2026-09-24T21:30:19.307Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/examples/categorical-models.html</loc>
-    <lastmod>2026-09-24T03:45:22.484Z</lastmod>
+    <lastmod>2026-09-24T21:30:22.117Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/help-examples.html</loc>
-    <lastmod>2026-09-24T03:45:10.689Z</lastmod>
+    <lastmod>2026-09-24T21:30:12.349Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/meinequality/index.html</loc>
-    <lastmod>2026-09-24T03:45:10.863Z</lastmod>
+    <lastmod>2026-09-24T21:30:12.476Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/metest/help.html</loc>
-    <lastmod>2026-09-23T20:13:35.273Z</lastmod>
+    <lastmod>2026-09-24T21:30:01.278Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/metest/many-models.html</loc>
-    <lastmod>2026-09-23T20:13:38.018Z</lastmod>
+    <lastmod>2026-09-24T21:30:03.678Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/sgmediation2/help-examples.html</loc>
-    <lastmod>2026-09-05T20:10:03.360Z</lastmod>
+    <lastmod>2026-09-24T21:33:29.586Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/sgmediation2/index.html</loc>
-    <lastmod>2026-09-05T20:10:06.931Z</lastmod>
+    <lastmod>2026-09-24T21:33:32.838Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/suest2/help.html</loc>
-    <lastmod>2026-09-23T20:13:39.288Z</lastmod>
+    <lastmod>2026-09-24T21:28:04.302Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/suest2/plotting.html</loc>
-    <lastmod>2026-09-23T20:15:23.158Z</lastmod>
+    <lastmod>2026-09-24T21:29:58.776Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/examples/across-models.html</loc>
-    <lastmod>2026-09-24T03:44:52.803Z</lastmod>
+    <lastmod>2026-09-24T21:31:58.666Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/examples/single-model.html</loc>
-    <lastmod>2026-09-24T03:44:59.334Z</lastmod>
+    <lastmod>2026-09-24T21:32:04.687Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/help.html</loc>
-    <lastmod>2026-09-24T03:43:01.964Z</lastmod>
+    <lastmod>2026-09-24T21:30:23.676Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/totalme/options.html</loc>
-    <lastmod>2026-09-24T03:44:43.562Z</lastmod>
+    <lastmod>2026-09-24T21:31:50.289Z</lastmod>
   </url>
   <url>
     <loc>https://tdmize.github.io/stata/usetdm/help.html</loc>
-    <lastmod>2026-09-05T20:10:07.387Z</lastmod>
+    <lastmod>2026-09-24T21:33:33.296Z</lastmod>
   </url>
 </urlset>

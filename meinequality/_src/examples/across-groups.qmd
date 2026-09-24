@@ -25,9 +25,7 @@ meinequality reltrad, models(premod postmod) groups unweighted
 ```
 
 The ME inequality estimate is significantly larger in the first model
-(pre-1980) than in the second (post-2010): religious traditions have
-converged on this question. `unweighted` is used so that the comparison
-reflects the marginal effects alone; with `groups`, a weighted statistic
-weights each model by the composition of *its own* sample, so it would also
-pick up the change in the religious makeup of the GSS between the two
-periods.
+(pre-1980) than in the second (post-2010): religious traditions have converged
+on this question. `unweighted` compares the marginal effects alone; the
+default weighted version would also reflect the change in the religious makeup
+of the GSS between the two periods.

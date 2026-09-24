@@ -474,7 +474,7 @@ woman                            |
 </div>
 <section id="the-predictions-figure-13" class="level3">
 <h3 class="anchored" data-anchor-id="the-predictions-figure-13">The predictions (Figure 13)</h3>
-<p>The ten predicted probabilities as a dot plot, education on the axis and one marker per gender. As for Figure 12, the predictions for each gender are posted and stored separately so that <code>coefplot</code> labels the levels of education and lines the two genders up:</p>
+<p>The ten predicted probabilities as a dot plot, education on the axis and one marker per gender. As for Figure 12, the predictions for each gender are stored separately for <code>coefplot</code>:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins educ, <span class="fu">at</span>(woman=0) <span class="kw">post</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> Men</span>

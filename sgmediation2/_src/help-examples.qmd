@@ -41,9 +41,9 @@ sgmediation2 health, iv(edyrs) mv(income) cv(i.race i.woman age) vce(cluster occ
 <</dd_do>>
 ```
 
-Use bootstrapping to obtain standard errors and confidence intervals. The
-help file uses 1,000 replications, which is generally recommended; the
-page uses 100 so that it builds quickly.
+Use bootstrapping to obtain standard errors and confidence intervals. 1,000
+replications are recommended for serious use; 100 are used here for
+illustration.
 
 ```{.stata-run}
 <<dd_do>>

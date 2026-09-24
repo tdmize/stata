@@ -408,7 +408,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This page goes through the options of <code>mecompare</code> in the order of the help file, running each one on Stata’s <code>nlsw88</code> data so that the effect of the option is visible in the output. The <a href="help.html">help file</a> has the full statement of each option; the <a href="getting-started.html">Getting started</a> page explains how to read the table.</p>
+<p>This page runs each option of <code>mecompare</code> on Stata’s <code>nlsw88</code> data, in the order of the <a href="help.html">help file</a>. The <a href="getting-started.html">Getting started</a> page explains how to read the table.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
@@ -531,7 +531,7 @@ grade + 1 (centered)             |
 </section>
 <section id="supported-models" class="level2">
 <h2 class="anchored" data-anchor-id="supported-models">Supported models</h2>
-<p><code>mecompare</code> accepts one or more models from the following families. The list follows the <a href="help.html#estimators">help file</a>; two or more models are combined with <a href="../suest2/index.html"><code>suest2</code></a>, whose own <a href="../suest2/usage.html#supported-estimators">list of estimators</a> is the same.</p>
+<p><code>mecompare</code> accepts one or more models from the following families (see also the <a href="help.html#estimators">help file</a>).</p>
 <section id="ordinary-single-level-models" class="level3">
 <h3 class="anchored" data-anchor-id="ordinary-single-level-models">Ordinary single-level models</h3>
 <p><code>regress</code>; <code>logit</code> and <code>logistic</code>; <code>probit</code>; <code>poisson</code>; <code>nbreg</code>; <code>ologit</code>; <code>oprobit</code>; and <code>mlogit</code>.</p>
@@ -544,7 +544,7 @@ grade + 1 (centered)             |
 <section id="panel-models" class="level3">
 <h3 class="anchored" data-anchor-id="panel-models">Panel models</h3>
 <p><code>xtreg</code> with estimators mle, fe, be, re, and pa. <code>xtreg, cre</code> is not supported; the correlated random effects (Mundlak) specification is fit with the <code>re</code> estimator instead, as described in the <a href="help.html#cre">help file</a>.</p>
-<p><code>xtlogit</code> with estimators re, fe, and pa. <code>xtprobit</code> with estimators re and pa. <code>xtcloglog</code> with estimators re and pa; the re estimator combines when fit with <code>intpoints(24)</code> or more.</p>
+<p><code>xtlogit</code> with estimators re, fe, and pa. <code>xtprobit</code> with estimators re and pa. <code>xtcloglog</code> with estimators re and pa; the re estimator requires <code>intpoints(24)</code> or more.</p>
 <p><code>xtologit</code> and <code>xtoprobit</code>.</p>
 <p><code>xtmlogit</code> with estimators re and fe.</p>
 <p><code>xtpoisson</code> with estimators re (normal or gamma random effects), fe, and pa. <code>xtnbreg</code> with estimators re and pa; <code>xtnbreg, fe</code> is not supported.</p>
@@ -558,7 +558,7 @@ grade + 1 (centered)             |
 </section>
 <section id="which-models-can-be-compared" class="level3">
 <h3 class="anchored" data-anchor-id="which-models-can-be-compared">Which models can be compared</h3>
-<p>Models are comparable when they all return the same number of predictions. Same-family sets (two logits, three <code>glm</code>s, two <code>mestreg</code>s) always qualify. Cross-family sets qualify on the same rule: <code>logit</code> vs <code>regress</code>, <code>xtlogit</code> vs <code>mixed</code>, any pair of binary-, count-, or continuous-outcome models, and any pair of ordinal or nominal models with the same number of outcome categories (<code>ologit</code> vs <code>oprobit</code>, <code>mlogit</code> vs <code>ologit</code>). Each model contributes its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions. Models that return different numbers of predictions (a three-category <code>ologit</code> vs a <code>logit</code>) cannot be compared, and two multi-category outcomes must have the same number of categories with the same values.</p>
+<p>Models can be compared when they all return the same number of predictions: e.g., two logits, a <code>logit</code> and a <code>regress</code>, or an <code>ologit</code> and an <code>mlogit</code> with the same outcome categories. Each model uses its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions.</p>
 </section>
 <section id="survey-multiply-imputed-and-weighted-models" class="level3">
 <h3 class="anchored" data-anchor-id="survey-multiply-imputed-and-weighted-models">Survey, multiply imputed, and weighted models</h3>

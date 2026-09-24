@@ -28,8 +28,7 @@ ssc install psmatch2
 net install balanceplot, from("https://tdmize.github.io/data") replace
 ```
 
-`help balanceplot` documents the syntax and options; the same help file is on
-this site as [help balanceplot](help.html).
+The [help file](help.html) is also on this site.
 
 ## Citation
 
@@ -106,8 +105,7 @@ variables and `c.` variables are treated as continuous.
 - [Matching and teffects](matching.html): `matchweight()` after `psmatch2`
   and `tebalance` after `teffects`.
 - [Examples from the help file](help-examples.html) runs the help file's
-  examples in full, and the [help file](help.html) is on the site, rendered
-  from the installed version.
+  examples, and the [help file](help.html) is on the site.
 
 ## A first example
 

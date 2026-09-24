@@ -6,10 +6,8 @@ subtitle: "Example 4.3.b of Mize and Han (2025): tests of mediation/attenuation"
 How much of the racial-ethnic inequality in an outcome is accounted for by
 education and wealth? Fit the model with and without those variables, store
 both, and name them in `models()`: `meinequality` reports the ME inequality
-from each model and tests the difference, combining the two models with
-[`suest2`](../../suest2/index.html) so that the test accounts for the models
-being estimated on the same data. The example uses a count of functional
-limitations from the Health and Retirement Study.
+from each model and tests the difference. The example uses a count of
+functional limitations from the Health and Retirement Study.
 
 ```{.stata-run}
 . use "https://tdmize.github.io/data/data/cda_hrs", clear
@@ -134,11 +132,7 @@ race4cat ME Ineq.        |
 
 ```
 
-With two models, specify the names of the stored models in the `models()`
-option. The **Difference** row is the reduction in racial-ethnic inequality
+The **Difference** row is the reduction in racial-ethnic inequality
 once education, wealth, and income are in the model, with its standard error
 and p-value: the part of the inequality those variables account for.
 
-<!-- NOTE: the trentonmize.com version of this example used nagiSS, race,
-     college, hatota and hitot; the 2026 cda_hrs release renamed these to
-     iadl, race4cat, collegeB, wealth_w, income_w. -->

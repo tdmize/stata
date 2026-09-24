@@ -169,6 +169,16 @@ regress wage age ttl_exp grade
 
 `metest _b[age] * #10` by name, scaled by ten
 
+After margins, post, a number refers to a row of the `margins` table. E.g., a risk ratio -- the ratio of two predicted probabilities, averaging over observed values -- in the Health and Retirement Study 2020:
+
+```stata
+use https://tdmize.github.io/data/data/cda_hrs, clear
+drop if missing(cogB, marstatB, college, woman, age)
+logit cogB i.college i.marstatB i.woman c.age, or
+margins college, post
+metest 1 / 2
+```
+
 Two things to keep in mind away from `mecompare`. Omitted (`o.`) coefficients are skipped when numbering, so a number may not match the position in the displayed regression table -- check with `matrix list e(b)`. And after some commands `test` reports *F* rather than *chi2*; the two cannot be stacked in one accumulated table, so run `metest, clear` when switching between models of the two kinds.
 
 ## Also see

@@ -42,9 +42,7 @@ wages, occupational prestige, and controls.
 
 `start()` and `end()` set the values the co-change variables change from and
 to. Here wages and occupational prestige change from their average among
-those without a college degree to their average among college graduates. The
-averages are rounded to two decimals before they go into `start()` and
-`end()`.
+those without a college degree to their average among college graduates.
 
 ```{.stata-run}
 . quietly summarize wages if college == 0 & e(sample)
@@ -87,8 +85,7 @@ NOTE: college with co-change: college 0 to 1; wages 13.60 to 24.88; occprest 40.
 ```
 
 Row 1 is the usual marginal effect of a college degree, with wages and
-occupational prestige held at their observed values; it is the same estimate
-as model m4 in the [Example 6.2](examples/nested-models.html) table. Row 2 is
+occupational prestige held at their observed values. Row 2 is
 the effect of a college degree when wages and occupational prestige also
 change; the note under the table lists each change. Use `metest` to test the
 difference between the two:

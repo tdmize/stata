@@ -139,12 +139,12 @@ graph export "fig/options-threshold.png", replace width(1400)
 
 ## Ordering and sign: sort and absolute
 
-By default covariates appear in the order of *varlist*, with the categories
-of a nominal covariate kept together under a heading. `sort` orders them from
-the most negative to the most positive imbalance (and drops the headings,
-since categories may no longer be adjacent). `absolute` plots the magnitude
-of each imbalance; combined with `sort`, the covariates run from the most to
-the least balanced. `abs` is the shortest abbreviation.
+By default covariates appear in the order of *varlist*, with the categories of
+a nominal covariate kept together under a heading. `sort` orders them from the
+most negative to the most positive imbalance (and drops the headings).
+`absolute` plots the magnitude of each imbalance; combined with `sort`, the
+covariates run from the most to the least balanced. `abs` is the shortest
+abbreviation.
 
 ```{.stata-run}
 <<dd_do>>

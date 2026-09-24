@@ -81,9 +81,8 @@ The [Examples](examples.html) page shows six common graphs drawn with
 The ten main colors are used, in order, for markers, lines, and confidence
 intervals. Beyond the first few, distinct marker symbols and line patterns
 carry most of the work of telling groups apart, since color alone reliably
-distinguishes about four or five groups. The palette shown with its RGB
-and hex codes (this and the following palette figures are drawn with Ben
-Jann's `colorpalette` command):
+distinguishes about four or five groups. The palette, with its RGB and hex
+codes (drawn with Ben Jann's `colorpalette` command):
 
 ```{.stata-run}
 <<dd_do>>

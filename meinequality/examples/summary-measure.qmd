@@ -60,10 +60,8 @@ ME Inequality            |
 
 Racial-ethnic groups' wages differ by close to $5 per hour, on average. The
 default statistic is weighted: each pairwise comparison counts in proportion
-to the share of the sample in the two groups compared, so the summary describes
-the inequality experienced across the sample as it is composed. The unweighted
-version gives every pairwise comparison the same weight, whatever the size of
-the groups:
+to the share of the sample in the two groups compared. The unweighted version
+gives every comparison the same weight:
 
 ```{.stata-run}
 . meinequality race4, unweighted

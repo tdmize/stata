@@ -6,9 +6,8 @@ subtitle: "Example 5.2.e of Mize and Han (2025): mediation/attenuation"
 
 Does the total effect of a college degree on self-rated health shrink once
 family income is in the model? Store the model without income and the model
-with it, and name both in `models()`: `totalme` reports the Total ME from
-each model and tests the difference, combining the models with
-[`suest2`](../../suest2/index.html).
+with it, and name both in `models()`: `totalme` reports the Total ME from each
+model and tests the difference.
 
 ```{.stata-run}
 <<dd_do>>
@@ -27,5 +26,4 @@ totalme college, models(basemod medmod)
 ```
 
 The **Difference** row is the part of the total college effect that family
-income accounts for, with a standard error that reflects the two models being
-estimated on the same data.
+income accounts for, with its standard error.

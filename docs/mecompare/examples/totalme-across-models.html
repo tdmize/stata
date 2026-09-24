@@ -383,8 +383,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>With a nominal or ordinal outcome, each predictor has one marginal effect per outcome category, so a cross-model comparison of “the” effect of a predictor means comparing several effects at once. The Total ME of Mize and Han (2025) sums the absolute effects across the outcome categories (and halves the sum) to give one number: the total probability mass the predictor moves. The <code>totalme</code> option of <code>mecompare</code> adds that summary above the per-category effects, and with two models in <code>models()</code> the <strong>Difference</strong> row tests whether the Total ME changed.</p>
-<p>Here the question is whether the total effect of a college degree on self-rated health shrinks once family income is in the model. The outcome has five ordered categories and is fit with a multinomial logit on the 2000–2021 GSS. Store the model without income and the model with it, and name both in <code>models()</code>; the models are combined with <a href="../../suest2/index.html"><code>suest2</code></a> so that the test of the difference accounts for the two models being estimated on the same data.</p>
+<p>With a nominal or ordinal outcome, each predictor has one marginal effect per outcome category. The Total ME of Mize and Han (2025) summarizes them in one number: the sum of the absolute effects, divided by two. The <code>totalme</code> option of <code>mecompare</code> adds it above the per-category effects; with two models, the <strong>Difference</strong> row tests whether the Total ME changed.</p>
+<p>Here the question is whether the total effect of a college degree on self-rated health shrinks once family income is in the model. The outcome has five ordered categories and is fit with a multinomial logit on the 2000–2021 GSS. Store the model without income and the model with it, and name both in <code>models()</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(cda_gss.dta |  GSS 1972-2021 CDA - Categorical Data Analysis | date created 2023)</code></pre>
@@ -433,7 +433,7 @@ college                          |
               Excellent - medmod |    14      0.097      0.008      0.000
           Excellent - Difference |    15      0.038      0.003      0.000</code></pre>
 </div>
-<p>The first block of the table is the Total ME of a college degree in each model and its <strong>Difference</strong>: the part of the total college effect that family income accounts for, with a standard error and p-value. The blocks beneath it are the marginal effects of college on each health category, each with its own cross-model difference, so the table shows both the summary and which categories the attenuation comes from. As on every <code>mecompare</code> table the rows are numbered, so <a href="../../metest/index.html"><code>metest</code></a> can express the attenuation as a proportion of the baseline Total ME:</p>
+<p>The first block is the Total ME of a college degree in each model and the <strong>Difference</strong>: the part of the college effect that family income accounts for. The blocks beneath it are the effects of college on each health category, which show where the attenuation comes from. <a href="../../metest/index.html"><code>metest</code></a> gives the attenuation as a proportion of the baseline Total ME:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
@@ -441,7 +441,7 @@ college                          |
 college_TotME                    |                                
     (basemod - medmod) / basemod |     0.260      0.020      0.000 </code></pre>
 </div>
-<p>The same difference is what <code>totalme college, models(basemod medmod)</code> reports; <code>mecompare</code> adds the per-category effects and the row numbers for <code>metest</code>. <code>totalme</code> works the same way for continuous predictors (with <code>amount()</code> setting the size of the change) and, for nominal predictors, reports a Total ME inequality; the <a href="../options.html#meinequality-and-totalme-summary-measures">Options</a> page has an example of each.</p>
+<p><code>totalme college, models(basemod medmod)</code> gives the same difference. The <code>totalme</code> option also works for continuous predictors (with <code>amount()</code>) and for nominal predictors (a Total ME inequality); the <a href="../options.html#meinequality-and-totalme-summary-measures">Options</a> page has an example of each.</p>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
 <blockquote class="blockquote">

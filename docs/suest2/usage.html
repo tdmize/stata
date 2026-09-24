@@ -230,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>model#name</em> are stored estimates. Store each model with <code>estimates store</code> before running <code>suest2</code>.</p>
 <section id="the-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="the-workflow">The workflow</h2>
-<p>Fit each model, store it, combine, then do the post-estimation you want on the combined system. For most applications, fit the models with <code>vce(robust)</code> or <code>vce(cluster varname)</code>, so that the <code>suest2</code> standard errors match the individual models’ exactly.</p>
+<p>Fit each model, store it, combine, then do the post-estimation you want on the combined system. We recommend fitting the models with <code>vce(robust)</code> or <code>vce(cluster varname)</code> so that the <code>suest2</code> results match the individual model results exactly.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sysuse</span> nlsw88, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>(NLSW, 1988 extract)</code></pre>
@@ -282,7 +282,7 @@ collgrad#c.age |
 </section>
 <section id="what-the-combined-results-contain" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-combined-results-contain">What the combined results contain</h2>
-<p>The combined results are ordinary <code>e()</code> results: <code>e(b)</code> holds both models’ coefficients, one equation per model (named <em>model_depvar</em>, as in official <code>suest</code>), and <code>e(V)</code> holds their joint covariance matrix including the cross-model blocks. Any command that works on <code>e(b)</code> and <code>e(V)</code> works here.</p>
+<p><code>e(b)</code> holds every model’s coefficients, one equation per model (named <em>model_depvar</em>), and <code>e(V)</code> their joint covariance matrix. Any command that works on <code>e(b)</code> and <code>e(V)</code> works here.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">test</span> [m1_union]1.collgrad = [m2_union]1.collgrad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code> ( 1)  [m1_union]1.collgrad - [m2_union]1.collgrad = 0
@@ -298,11 +298,11 @@ collgrad#c.age |
        _nl_1 |     -0.274      0.443   -0.620   0.536       -1.142       0.594
 ------------------------------------------------------------------------------</code></pre>
 </div>
-<p><code>suest2</code> also stores what it did: <code>e(suest2_nmodels)</code>, the model names <code>e(suest2_model#)</code>, each model’s command <code>e(suest2_cmd#)</code>, and the route flags <code>e(suest2_pweight)</code> and <code>e(suest2_svy)</code>; the full list is in the <a href="help.html#stored">help file</a>.</p>
+<p>The other stored results are listed in the <a href="help.html#stored">help file</a>.</p>
 </section>
 <section id="margins-after-suest2" class="level2">
 <h2 class="anchored" data-anchor-id="margins-after-suest2">margins after suest2</h2>
-<p>A bare <code>margins</code> evaluates the default response for every constituent model. To work with one model, name it in <code>predict()</code> with <code>model()</code>, together with the prediction statistic:</p>
+<p>A bare <code>margins</code> gives predictions from every model. To use one model, name it in <code>predict()</code> with <code>model()</code>:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>margins, <span class="kw">dydx</span>(age) <span class="kw">predict</span>(<span class="kw">model</span>(m1) pr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>------------------------------------------------------------------------------
@@ -321,8 +321,8 @@ m2           |
          age |      0.001      0.003    0.428   0.669       -0.005       0.008
 ------------------------------------------------------------------------------</code></pre>
 </div>
-<p><code>at()</code>, <code>over()</code>, <code>post</code>, and the other standard <code>margins</code> options work when the constituent command supports the requested prediction, and inference uses the complete joint covariance matrix. For multi-category models an outcome is selected the same way, e.g.&nbsp;<code>predict(model(o1) pr outcome(3))</code>; for multilevel models, <code>predict(model(me1) mu fixedonly)</code>. The <a href="plotting.html">Predictions and graphs</a> page puts this to work with <code>marginsplot</code> and <code>coefplot</code>, including a difference between two models’ predictions in one <code>margins</code> call via <code>expression()</code>.</p>
-<p>Because the joint covariance is there, <code>margins, post</code> followed by <code>lincom</code> or <a href="../metest/index.html"><code>metest</code></a> tests a marginal effect across the two models – which is what <a href="../mecompare/index.html"><code>mecompare</code></a> automates:</p>
+<p>The other <code>margins</code> options, e.g.&nbsp;<code>at()</code>, <code>over()</code>, and <code>post</code>, work as usual. For multi-category models add the outcome, e.g.&nbsp;<code>predict(model(o1) pr outcome(3))</code>; for multilevel models, e.g.&nbsp;<code>predict(model(me1) mu fixedonly)</code>. The <a href="plotting.html">Predictions and graphs</a> page shows <code>marginsplot</code> and <code>coefplot</code> after <code>suest2</code>.</p>
+<p><code>margins, post</code> followed by <code>lincom</code> or <a href="../metest/index.html"><code>metest</code></a> tests a marginal effect across the two models, which is what <a href="../mecompare/index.html"><code>mecompare</code></a> automates:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mecompare age</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (m1) is:
@@ -442,15 +442,15 @@ collgrad#c.age |
 <h2 class="anchored" data-anchor-id="weights-survey-data-and-multiple-imputation">Weights, survey data, and multiple imputation</h2>
 <p><strong>Survey data.</strong> For weighted analyses and complex samples, <code>svyset</code> the data and fit each model with the <code>svy:</code> prefix, then pass the stored names to <code>suest2</code> without a prefix. The design comes from <code>svyset</code>; do not specify <code>cluster()</code>, <code>vce()</code>, or <code>robust</code> on <code>suest2</code>. All models must use the same subpopulation specification, and replicate-weight VCEs are not supported.</p>
 <p><strong>Pweights.</strong> Pweighted systems support <code>regress</code>, <code>logit</code>/<code>logistic</code>, <code>probit</code>, <code>poisson</code>, <code>nbreg</code>, <code>ologit</code>, <code>oprobit</code>, and <code>mlogit</code>, which may be combined. The weights must agree on observations shared by the estimation samples. Request system clustering with <code>cluster()</code> on <code>suest2</code>.</p>
-<p><strong>Multiple imputation.</strong> Fit and store each model with <code>mi estimate, post:</code>, then pass the stored names to <code>suest2</code>. It re-estimates the constituents jointly within each imputation and pools the system with Rubin’s rules; the MI data and all variables used must remain unchanged. Use <code>mimrgns</code> or <code>mecompare</code> for post-estimation; ordinary <code>predict</code> and <code>margins</code> are not available after MI pooling. The supported families are listed in the <a href="help.html#weights">help file</a>.</p>
+<p><strong>Multiple imputation.</strong> Fit and store each model with <code>mi estimate, post:</code>, then pass the stored names to <code>suest2</code>. It combines the models within each imputation and pools the results with Rubin’s rules; the MI data must not change in between. Use <code>mimrgns</code> or <code>mecompare</code> for post-estimation; ordinary <code>predict</code> and <code>margins</code> are not available after MI pooling. The supported families are listed in the <a href="help.html#weights">help file</a>.</p>
 </section>
 <section id="supported-estimators" class="level2">
 <h2 class="anchored" data-anchor-id="supported-estimators">Supported estimators</h2>
-<p>The lists below follow the <a href="help.html#estimators">help file</a>. Store the models with <code>estimates store</code> and pass their names to <code>suest2</code>; the notes at the end of each group give the rules that group must follow.</p>
+<p>The lists follow the <a href="help.html#estimators">help file</a>; the notes at the end of each group give its rules.</p>
 <section id="ordinary-single-level-models" class="level3">
 <h3 class="anchored" data-anchor-id="ordinary-single-level-models">Ordinary single-level models</h3>
 <p><code>regress</code>; <code>logit</code> and <code>logistic</code>; <code>probit</code>; <code>ologit</code>; <code>oprobit</code>; <code>mlogit</code>; <code>poisson</code>; <code>nbreg</code>; <code>zip</code>; and <code>zinb</code> with either inflation link.</p>
-<p><code>glm</code>; <code>cloglog</code>; <code>tobit</code>; <code>intreg</code>; maximum-likelihood <code>heckman</code>; and parametric <code>streg</code>. Active-system <code>glm</code> prediction supports the identity, log, logit, probit, cloglog, and loglog links.</p>
+<p><code>glm</code>; <code>cloglog</code>; <code>tobit</code>; <code>intreg</code>; maximum-likelihood <code>heckman</code>; and parametric <code>streg</code>. <code>glm</code> predictions support the identity, log, logit, probit, cloglog, and loglog links.</p>
 <p><code>gologit2</code>, including proportional-odds, partial proportional-odds, unrestricted, alternative-link, and <code>autofit()</code> results.</p>
 <p><code>ivregress 2sls</code>. <code>fracreg</code> with estimators logit and probit. Every model in an instrumental-variables system must use the same estimation mode: either unweighted conventional estimates, or linearized <code>svy: ivregress 2sls</code> estimates under one active survey design.</p>
 <p><code>betareg</code> with links logit, probit, cloglog, and loglog. <code>truncreg</code>. <code>hetprobit</code>. <code>biprobit</code>. <code>ivprobit</code>. <code>ivtobit</code>.</p>
@@ -463,14 +463,14 @@ collgrad#c.age |
 <p><code>xtmlogit</code> with estimators re and fe.</p>
 <p><code>xtpoisson</code> with estimators re, fe, and pa. <code>xtnbreg</code> with estimators re and pa.</p>
 <p><code>xtcloglog</code> with estimators re and pa.</p>
-<p>Panel systems are unweighted and ordinarily require a common panel identifier. Store conventional constituent results and request robust or higher-level clustered covariance with <code>suest2</code>. Correlated random effects models are specified as described in the next section.</p>
+<p>Panel models must be unweighted and share a panel identifier. Fit them with conventional standard errors and request robust or clustered ones on <code>suest2</code>. Correlated random effects models are described below.</p>
 </section>
 <section id="multilevel-models" class="level3">
 <h3 class="anchored" data-anchor-id="multilevel-models">Multilevel models</h3>
 <p><code>mixed, mle</code>; <code>melogit</code>; <code>meprobit</code>; <code>mecloglog</code>; <code>mepoisson</code>; <code>menbreg</code>; <code>meologit</code>; <code>meoprobit</code>; and <code>mestreg</code>.</p>
 <p><code>meglm</code> with the family-link pairs Gaussian-identity, Bernoulli-logit, Bernoulli-probit, Bernoulli-cloglog, Poisson-log, negative-binomial-log, Gamma-log, ordinal-logit, and ordinal-probit.</p>
 <p><code>mestreg</code> with the exponential, Weibull, lognormal, loglogistic, and gamma distributions, including the applicable proportional-hazards and accelerated-failure-time forms.</p>
-<p>Supported multilevel families may be combined in one system, and every model must use the same highest-level grouping variable. A mixed system may also include an ordinary <code>ologit</code> or <code>oprobit</code> model beside an <code>xtologit</code>, <code>xtoprobit</code>, <code>meologit</code>, or <code>meoprobit</code> one; the ordinary model must be stored unprefixed, unweighted, and with conventional (non-robust) standard errors, and it inherits the system’s cluster variable from its multilevel partner.</p>
+<p>Multilevel models may be combined, and every model must use the same highest-level grouping variable. An ordinary <code>ologit</code> or <code>oprobit</code> can be combined with an <code>xtologit</code>, <code>xtoprobit</code>, <code>meologit</code>, or <code>meoprobit</code>; fit it unweighted, without a prefix, and with conventional standard errors.</p>
 </section>
 </section>
 <section id="fixed-effects-and-correlated-random-effects" class="level2">
@@ -496,14 +496,14 @@ collgrad#c.age |
 . </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m1</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.ag</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span>, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.age,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m2</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.a</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>ge##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m3</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a> i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> suest2 m1 m2 m3 m4</span>

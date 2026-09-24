@@ -13,11 +13,8 @@ and (3) testing whether those marginal effects differ: a *second difference*.
 It is also important to look at both sides of an interaction -- the effect of X
 across levels of Z, and the effect of Z across levels of X.
 
-The 2019 replication files do all of this with `margins` followed by
-`mlincom`. `mecompare` now automates these tests much more simply and with 
-a wider range of capabilities. Second-difference tests can be performed with 
-a single call to `metest`. The pages in this section
-reproduce the article's examples, section by section:
+`mecompare` automates these steps, and each second difference is one `metest`
+call. The pages in this section reproduce the article's examples:
 
 - [Nonlinear effects in a linear model](linear-model.html): age, age², and
   gender (Table 2, Figures 1--2).
@@ -39,8 +36,7 @@ interaction](../examples/chapter-interactions.html) page.
 focal variable at each level of `by()`, e.g. `by(woman)` reports one marginal 
 effect for each level of `woman`, computed as a counterfactual: the 
 whole sample set to each level in turn, then averaged.
-This is what `margins woman, at(...)` followed by `mlincom` does in the 2019
-files. (`over(woman)` instead uses only the observations in each group; see
+(`over(woman)` instead uses only the observations in each group; see
 `help mecompare` for the distinction.)
 
 **A continuous moderator: `covariates(z=(numlist))`.** E.g. `covariates(age=(25 55))`
@@ -73,20 +69,16 @@ Every row of the `mecompare` table is numbered, and `metest` tests any
 combination of rows: `metest 1 - 2` is the second difference between the marginal 
 effects in rows 1 and 2, `metest 1 = 2 = 3` is a joint test that the first three 
 marginal effects in the table are equal, and
-`metest 2 - 1, add rowname("...")` accumulates results into one table. The
-rows are posted to `e(b)` and `e(V)` with their full covariance, so the tests
-are the Wald tests recommended in the article's equation 6.
+`metest 2 - 1, add rowname("...")` accumulates results into one table.
 
 ## Plotting the marginal effects
 
-`store(stub)` saves the table as stored estimates so that `esttab` can be 
-used to make publication-ready tables and `coefplot` can be used to plot them.
-With `by()` or `covariates()` there is one coefficient per level, so a plot of
-the effect of gender across the range of age is
-`mecompare i.woman, covariates(age=(20(5)70)) store(gap)` followed by
-`coefplot gap_m1, vertical yline(0)`. Plots of *predictions* are not
-`mecompare`'s job; those stay with `margins` and `marginsplot`, exactly as in
-the article and the associated replication files.
+`store(stub)` saves the table as stored estimates so that `esttab` can be used
+to make publication-ready tables and `coefplot` can be used to plot them. With
+`by()` or `covariates()` there is one coefficient per level, so a plot of the
+effect of gender across the range of age is `mecompare i.woman,
+covariates(age=(20(5)70)) store(gap)` followed by `coefplot gap_m1, vertical
+yline(0)`. Plots of predictions are made with `margins` and `marginsplot`.
 
 ## Translating the 2019 files
 

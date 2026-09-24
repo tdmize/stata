@@ -56,12 +56,10 @@ graph export "fig/chapter-income-age.png", replace width(1400)
 ![](../fig/chapter-income-age.png){width=80% fig-alt="Predicted income across the range of age from a regression with age, age squared, and age cubed: rising to a peak near age 50 and declining after."}
 
 The chapter compares a ten-year increase in age starting at 30 with one
-starting at 60. `amount(10)` sets the size of the change and
-`start(age=(30 60))` the two starting points; `uncentered` again makes the
-change run upward from the start (30 to 40, and 60 to 70). Because both
-effects are rows of one table, [`metest`](../../metest/index.html) can test
-whether they differ, which the chapter's `margins` and `mlincom` calculations
-could not do directly:
+starting at 60. `amount(10)` sets the size of the change and `start(age=(30
+60))` the two starting points; `uncentered` again makes the change run upward
+from the start (30 to 40, and 60 to 70). Because both effects are rows of one
+table, [`metest`](../../metest/index.html) can test whether they differ:
 
 ```{.stata-run}
 <<dd_do>>
@@ -139,21 +137,19 @@ mecompare age, models(empmod) amount(sd)
 ```
 
 On average, an additional year of age is associated with a 0.01 lower
-probability of being employed, and a standard-deviation increase in age with
-a 0.15 lower probability. As the chapter notes, the AME and MEM rarely differ
-by more than a small amount; the preference for the AME is its cleaner
-interpretation.
+probability of being employed, and a standard-deviation increase in age with a
+0.15 lower probability. As the chapter notes, the AME and MEM rarely differ by
+much; we prefer the AME for its cleaner interpretation.
 
 ### Marginal effects at representative values (MERs)
 
 A MER puts the focal variable at a value of substantive interest -- the
-chapter's example is 55, an ideal type of "middle age" -- and calculates
-the change from there. `start(age=55)` sets everyone to 55, and `uncentered`
-runs the change upward from 55 (to 56 for a one-unit change, and to about
-73 for a standard-deviation change). The other variables in the model stay
-at their observed values and the effect is averaged over the sample, as in
-the chapter's replication code; add `atmeans` to hold them at their means
-instead, as in the chapter's Equations 24--25.
+chapter's example is 55, an ideal type of "middle age" -- and calculates the
+change from there. `start(age=55)` sets everyone to 55, and `uncentered` runs
+the change upward from 55 (to 56 for a one-unit change, and to about 73 for a
+standard-deviation change). The other variables stay at their observed values;
+add `atmeans` to hold them at their means instead (the chapter's Equations
+24--25).
 
 ```{.stata-run}
 <<dd_do>>
@@ -186,11 +182,11 @@ mecompare age, models(empmod2) start(age=25) amount(5) uncentered ///
 <</dd_do>>
 ```
 
-Aging five years is predicted to reduce the probability of employment for
-both ideal types, by about 0.05 for middle-aged mothers and about 0.03 for
-young single men. The predicted probabilities *for* each ideal type
-(Equations 26--27 of the chapter) are predictions rather than marginal
-effects, and stay with `margins, at(age=55 woman=1 parent=1 numchild=2)`.
+Aging five years is predicted to reduce the probability of employment for both
+ideal types, by about 0.05 for middle-aged mothers and about 0.03 for young
+single men. The predicted probabilities for each ideal type (the chapter's
+Equations 26--27) are predictions, not marginal effects; use `margins,
+at(age=55 woman=1 parent=1 numchild=2)`.
 
 ## Reference
 

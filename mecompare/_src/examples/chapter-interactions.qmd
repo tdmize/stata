@@ -58,12 +58,10 @@ the effect at ages 20, 30, and 60 as well as on average.
 ### Summary first differences and the second difference
 
 The chapter's Equations 30--31 are the MEM of a standard-deviation change in
-age for men and for women: everyone at the mean age, the change centered on
-it, and the control variables at their means. `by(woman)` reports the
-effect at each level of gender as a counterfactual (the whole sample set to
-men, then to women), `start(atmeans) covariates(atmeans)` makes it a MEM,
-and `amount(sd)` sets the change. The second difference -- is the effect of
-age the same for men and women -- is `metest 2 - 1`.
+age for men and for women. `by(woman)` gives the effect for each gender (the
+whole sample set to men, then to women), `start(atmeans) covariates(atmeans)`
+makes it a MEM, and `amount(sd)` sets the change. The second difference -- is
+the effect of age the same for men and women? -- is `metest 2 - 1`.
 
 ```{.stata-run}
 <<dd_do>>
@@ -218,8 +216,7 @@ estimates store incmod
 
 The chapter's first approach picks ideal types of one continuous variable --
 the 10th and 90th percentiles of income, low and high -- and plots the
-predictions across the range of the other (Figure 8). The percentiles are
-rounded to two decimals before they go into `at()` and `covariates()`.
+predictions across the range of the other (Figure 8).
 
 ```{.stata-run}
 <<dd_do>>
@@ -371,9 +368,9 @@ metest, title("Marginal effects of time: second and third differences")
 <</dd_do>>
 ```
 
-As the chapter cautions, three-way interactions need large samples and a
-strong theoretical motivation; the mechanics, however, are the same
-`mecompare` call and `metest` lines as for a two-way interaction.
+As the chapter cautions, three-way interactions need large samples and strong
+theoretical motivation. The `mecompare` and `metest` steps are the same as for
+a two-way interaction.
 
 ## Reference
 

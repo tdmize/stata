@@ -405,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="start-with-the-predictions-figure-1" class="level2">
 <h2 class="anchored" data-anchor-id="start-with-the-predictions-figure-1">Start with the predictions (Figure 1)</h2>
-<p>The recommendation in the article is to plot the predictions first and let the plot guide the tests. That is <code>margins</code> and <code>marginsplot</code>; <code>mecompare</code> can then be used subsequently for quantifying effects and testing them.</p>
+<p>The article recommends plotting the predictions first, with <code>margins</code> and <code>marginsplot</code>, and letting the plot guide the tests.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> margins woman, <span class="fu">at</span>(age=(18(2)72))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>marginsplot, recastci(rline) ciopts(lpattern(<span class="kw">dash</span>) <span class="kw">color</span>(*.4)) <span class="co">///</span></span>
@@ -421,7 +421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-effect-of-age-for-men-and-women-table-2" class="level2">
 <h2 class="anchored" data-anchor-id="the-effect-of-age-for-men-and-women-table-2">The effect of age for men and women (Table 2)</h2>
-<p>The first row of Table 2 is the effect of aging from 25 to 30. <code>start(age=25)</code> puts everyone at 25, <code>amount(5) uncentered</code> moves them to 30, and <code>by(woman)</code> calculates these effects for both men and for women. The rows of <code>mecompare</code> are always numbered to automate subsequent tests with <code>metest</code> which refers to these row numbers. The second difference – whether the effect of aging is the same for men and women – is simply <code>metest 1 - 2</code>.</p>
+<p>The first row of Table 2 is the effect of aging from 25 to 30. <code>start(age=25)</code> puts everyone at 25, <code>amount(5) uncentered</code> moves them to 30, and <code>by(woman)</code> calculates these effects for both men and for women. The second difference – whether the effect of aging is the same for men and women – is <code>metest 1 - 2</code>.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(regwages) <span class="bn">start</span>(age=25) amount(5) uncentered <span class="kw">by</span>(woman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Linear prediction

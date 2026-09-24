@@ -55,8 +55,7 @@ metest _b[age:m1] - _b[age:m2]
 
 ## A ratio and an average
 
-These need `nlcom`, so they are not available in `lincom` or `mlincom`. Note
-the `#` on the divisor of the average, which makes it the number two rather
+Note the `#` on the divisor of the average, which makes it the number two rather
 than ME 2.
 
 ```{.stata-run}
@@ -88,8 +87,7 @@ metest (1 = 2) (4 = 5)
 
 ## Building up a table
 
-Estimates and equality tests are shown as two tables, since they report
-different statistics, but the rows are numbered continuously across both.
+Estimates and equality tests are shown in separate tables.
 
 ```{.stata-run}
 <<dd_do>>
@@ -141,11 +139,9 @@ an equality test, `r(chi2)` (or `r(F)`), `r(df)`, and `r(pvalue)`.
 
 ## Use after other commands
 
-Nothing in `metest` is specific to `mecompare`. After any e-class command a
-bare number refers to the *n*th non-omitted coefficient of `e(b)`, in the order
-`matrix list e(b)` reports them, and coefficient names work as usual. This
-makes `metest` usable wherever `mlincom` is, with the addition of
-multiplication, division, nonlinear functions, and equality tests.
+`metest` also works after other estimation commands: a number refers to the
+*n*th coefficient in `e(b)`, in the order of `matrix list e(b)`, and
+coefficient names work as usual.
 
 ```{.stata-run}
 <<dd_do>>
@@ -160,9 +156,23 @@ metest _b[age] * #10
 <</dd_do>>
 ```
 
-Two things to keep in mind away from `mecompare`. Omitted (`o.`) coefficients
-are skipped when numbering, so a number may not match the position in the
-displayed regression table; check with `matrix list e(b)`. And after some
-commands `test` reports *F* rather than chi-squared; the two cannot be stacked
-in one accumulated table, so run `metest, clear` when switching between models
-of the two kinds.
+After `margins, post`, a number refers to a row of the `margins` table. E.g.,
+a risk ratio -- the ratio of two predicted probabilities, averaging over
+observed values -- in the Health and Retirement Study 2020:
+
+```{.stata-run}
+<<dd_do>>
+use "https://tdmize.github.io/data/data/cda_hrs", clear
+drop if missing(cogB, marstatB, college, woman, age)
+
+logit cogB i.college i.marstatB i.woman c.age, or
+
+margins college, post
+metest 1 / 2
+<</dd_do>>
+```
+
+Omitted (`o.`) coefficients are skipped when numbering, so check the numbers
+with `matrix list e(b)`. After some commands `test` reports *F* rather than
+chi-squared; run `metest, clear` before accumulating results from a model of
+the other kind.

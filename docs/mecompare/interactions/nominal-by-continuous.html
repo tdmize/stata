@@ -415,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-effect-of-social-roles-for-men-and-women" class="level2">
 <h2 class="anchored" data-anchor-id="the-effect-of-social-roles-for-men-and-women">The effect of social roles for men and women</h2>
-<p>The average effect of one additional role, for men and for women, and the second difference. <code>uncentered</code> makes the change run from each person’s observed count to one more, as in the article; the default would center the one-unit change on the observed value.</p>
+<p>The average effect of one additional role, for men and for women, and the second difference. <code>uncentered</code> makes the change run from each person’s observed count to one more. For most applications, we recommend using the default centered change.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mecompare role, models(depmod) <span class="kw">by</span>(woman) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(depB)
@@ -432,7 +432,7 @@ role + 1 (uncentered)            |
 ---------------------------------+--------------------------------
      role_woman_0 - role_woman_1 |    -0.002      0.008      0.758 </code></pre>
 </div>
-<p>Each additional role lowers the probability of high depressive symptoms by about three percentage points for both men and women; the second difference is not significant. The instantaneous rate of change for the same effect, the <code>dydx()</code> of <code>margins</code>, can be calculated with <code>mecompare</code> using <code>amount(rate)</code>:</p>
+<p>Each additional role lowers the probability of high depressive symptoms by about three percentage points for both men and women; the second difference is not significant. The instantaneous rate of change uses <code>amount(rate)</code>:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare role, models(depmod) <span class="kw">by</span>(woman) amount(rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(depB)
