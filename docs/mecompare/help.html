@@ -170,6 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -555,7 +561,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="amount-of-change-and-related-options-for-continuous-independent-variables" class="level3">
 <h3 class="anchored" data-anchor-id="amount-of-change-and-related-options-for-continuous-independent-variables">Amount of change and related options for continuous independent variables</h3>
-<p><strong><code>amount(list)</code></strong> specifies the amount of change to be computed for the continuous independent variables. If only one value is specified in <code>amount( )</code>, this amount of change is applied to all of the continuous independent variables. To specify different amounts for each continuous independent variable, amounts in <em>list</em> are applied in the order of the continuous independent variables. E.g. In a <em>varlist</em> of <em>c.age i.woman c.income i.race c.polviews</em> there are three continuous variables, of which changes of (1) age + sd, (2) income + 5, and (3) polviews + one can be specified with <code>amount(sd 5 one)</code></p>
+<p><strong><code>amount(list)</code></strong> specifies the amount of change to be computed for the continuous independent variables. If only one value is specified in <code>amount( )</code>, this amount of change is applied to all of the continuous independent variables. To specify different amounts for each continuous independent variable, amounts in <em>list</em> are applied in the order of the continuous independent variables. E.g. In a <em>varlist</em> of <em>c.age i.woman c.income i.race c.polviews</em> there are three continuous variables, of which changes of (1) age + sd, (2) income + 5, and (3) polviews + one can be specified with <code>amount(sd 5 one)</code>. Multiple amounts for one variable can be specified in parentheses, with each effect reported in its own rows. E.g., <code>amount((one sd rate))</code> would apply all three to every continuous variable. Whereas <code>amount((one sd) 5)</code> gives the first continuous variable in <em>varlist</em> two amounts (one and sd) and the second continuous variable one amount (5). A list in parentheses cannot be combined with a value list in <code>start()</code> or with <code>end()</code>.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -593,6 +599,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">A change across the full observed range of the variable, from its minimum to its maximum</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;"><strong>p</strong><em>#</em><strong>-p</strong><em>#</em></td>
+<td style="text-align: left;">A change from one percentile of the variable to another, e.g.&nbsp;<strong>p10-p90</strong> for its 10th to its 90th percentile; <strong>trimrange</strong> is <strong>p5-p95</strong></td>
+</tr>
+<tr class="even">
 <td style="text-align: left;"><strong>rate</strong></td>
 <td style="text-align: left;">An instantaneous rate of change, i.e.&nbsp;the derivative, approximated with a small centered change; <strong>slope</strong> and <strong>dydx</strong> are synonyms</td>
 </tr>
@@ -608,6 +618,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>One continuous focal variable may be given a <em>numlist</em> of starting values, e.g.&nbsp;<code>start(age=(20 30 60))</code>: the marginal effect is reported once per value, in rows labelled <em>at 20</em>, <em>at 30</em>, <em>at 60</em>, numbered so that <code>metest</code> can compare them.</p>
 <p><span id="end"></span></p>
 <p><strong><code>end(list)</code></strong> sets where the change of a focal variable ends, e.g.&nbsp;<code>start(age=35) end(age=40)</code> for the change from age 35 to age 40. <code>end()</code> is used with <code>start()</code>: every variable in <code>end()</code> must also be in <code>start()</code>, and for that variable <code>amount()</code>, <code>centered</code> and <code>uncentered</code> do not apply. With a <em>numlist</em> in both, e.g.&nbsp;<code>start(age=(35 40)) end(age=(40 45))</code>, the values pair up: one row for the change from 35 to 40 and one for the change from 40 to 45.</p>
+<p><span id="cochange"></span></p>
+<p><strong><code>cochange(varlist)</code></strong> specifies variables that change along with the focal variable instead of being held constant, e.g.&nbsp;mediators. The table then reports two marginal effects of the focal variable: the usual one, and one labeled <em>with co-change</em> in which the co-change variables change too. <code>metest</code> can be used to test the difference between the two. Only one focal variable may be given in the <em>varlist</em>. <code>start()</code> and <code>end()</code> set the values the co-change variables change from and to; without them, co-change variables change as focal variables do (see <code>amount()</code>). E.g., <code>mecompare i.college, cochange(income) start(income=40) end(income=60)</code> reports the effect of college, and the effect of college when income also changes from 40 to 60.</p>
+<p>A nominal focal or co-change variable with three or more categories needs the two levels it changes between in <code>start()</code> and <code>end()</code>, e.g.&nbsp;<code>start(race=1) end(race=2)</code>. <code>cochange()</code> cannot be combined with a <em>numlist</em> of values in <code>start()</code> or <code>end()</code>, multiple amounts for one variable in <code>amount()</code>, <code>amount(rate)</code>, <code>groupsd</code>, <code>pwcompare</code>, or <code>mcompare()</code>.</p>
 <p><span id="covariates"></span></p>
 </section>
 <section id="setting-values-of-covariates" class="level3">
@@ -629,6 +642,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="summary-measures-for-nominal-and-ordinal-variables" class="level2">
 <h2 class="anchored" data-anchor-id="summary-measures-for-nominal-and-ordinal-variables">Summary measures for nominal and ordinal variables</h2>
 <p><strong><code>pwcompare</code></strong> for focal variables specified as nominal (i.), the <code>pwcompare</code> option reports <em>all</em> pairwise contrasts between levels instead of the default of each non-base level versus the base level. Continuous and binary focal variables are unaffected.</p>
+<p><strong><code>mcompare(method)</code></strong> adjusts the p-values (and confidence intervals, when shown) of the contrasts of nominal focal variables for multiple comparisons; <em>method</em> is <code>bonferroni</code> or <code>sidak</code>. A variable’s contrasts within one model form a set, and its Difference rows form a set of their own. The estimates, e(b) and e(V) do not change.</p>
 <p><strong><code>meinequality</code>[<code>(</code><em>type</em><code>)</code>]</strong> for focal variables specified as nominal (i.), the <code>meinequality</code> option reports a <em>marginal effect inequality</em> summary statistic immediately above that variable’s contrasts. The ME inequality captures how much the outcome differs across the levels of the focal variable overall, as a weighted average of the absolute pairwise level contrasts (see Mize and Han 2025). <em>type</em> selects the weighting:</p>
 <p><code>weighted</code> (the default) weights each pairwise contrast by the share of the sample in the two levels being contrasted.</p>
 <p><code>unweighted</code> gives the simple mean of the absolute pairwise contrasts, ignoring the sizes of the levels.</p>
@@ -641,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span id="groups"></span></p>
 <section id="group-options" class="level3">
 <h3 class="anchored" data-anchor-id="group-options">Group options</h3>
-<p><strong><code>groups</code></strong> specifies that the models in <code>models( )</code> were fit on distinct (non-overlapping) samples – one model per group – and that <code>mecompare</code> should compare marginal effects across the groups. Each model’s estimation sample defines its group; the samples must not overlap. With two groups the cross-group differences are reported; with three or more, each group’s marginal effects are listed and <a href="../metest/help.html">metest</a> tests the differences.</p>
+<p><strong><code>groups</code></strong> specifies that the models in <code>models( )</code> were fit on distinct (non-overlapping) samples – one model per group – and that <code>mecompare</code> should compare marginal effects across the groups. Each model’s estimation sample defines its group; the samples must not overlap. With two groups the cross-group differences are reported; with three or more, each group’s marginal effects are listed and <a href="../metest/help.html">metest</a> can be used to test the differences. <code>group(varname)</code>, the syntax of earlier versions, is also accepted; <em>varname</em> must take one value in each model’s sample and a different value in each model.</p>
 <p><strong><code>groupnames(name1 name2 ...)</code></strong> labels the groups in the output, in the order of <code>models( )</code>; by default the groups are labeled by their model names. Requires the <code>groups</code> option. Each name is truncated to 10 characters.</p>
 <p><strong><code>groupme</code></strong> reports the average conditional difference in the outcome across the two groups, shown beneath the table. With a multi-category outcome one difference is reported for each outcome category, labeled Pr(category). Requires the <code>groups</code> option and exactly two models.</p>
 <p><strong><code>groupsd</code></strong> with <code>groups</code> and <code>amount(sd)</code>, each +SD change is calculated using that group’s own standard deviation rather than the pooled SD used by default. Not recommended for most applications: effects can differ only because the groups’ SDs differ.</p>

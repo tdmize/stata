@@ -23,8 +23,8 @@ their products, using employed respondents from the pooled GSS.
 (0 observations deleted)
 
 . 
-. quietly regress wages c.age##c.age##i.woman i.parent c.year i.race i.college i.parttime, vce(rob
-> ust)
+. quietly regress wages c.age##c.age##i.woman i.parent c.year i.race i.college i.parttime, vce(robus
+> t)
 
 . estimates store regwages
 

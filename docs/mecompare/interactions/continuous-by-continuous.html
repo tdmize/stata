@@ -171,6 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -504,8 +510,8 @@ conviewSS(rate)                  |
 <p>Political views matter more in 2016 than in 1976: the effect is negative in both years and significantly larger in magnitude in the later one. The same test at the 10th, 50th, and 90th percentiles of survey year:</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> year1976, <span class="kw">detail</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mecompare conviewSS, models(samemod) covariates(year1976=(<span class="ot">`r(p10)'</span> <span class="ot">`r(p50)'</span> <span class="ot">`r(p90)'</span>)) amount(ra</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">te</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mecompare conviewSS, models(samemod) covariates(year1976=(<span class="ot">`r(p10)'</span> <span class="ot">`r(p50)'</span> <span class="ot">`r(p90)'</span>)) amount(rate</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(sameokB)
 
 Marginal effects (N_samemod=19337)
@@ -561,9 +567,8 @@ conviewSS(rate)                  |
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(-0.25(0.05)0.05) <span class="bn">xtitle</span>(<span class="st">"GSS survey year"</span>) <span class="co">///</span></span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">"AME of conservative political views"</span>) <span class="co">///</span></span>
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 16. AME of political views by survey year"</span>) <span class="co">///</span></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Negative effects indicate conservatives are less supportive of same-sex relationships"</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-views-by-year.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">note</span>(<span class="st">"Negative effects indicate conservatives are less supportive of same-sex relationships"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-views-by-year.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>file fig/nli-sameok-views-by-year.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/nli-sameok-views-by-year.png" class="img-fluid" style="width:80.0%" alt="The marginal effect of conservative political views on acceptance, by survey year, with confidence intervals."></p>
@@ -589,8 +594,8 @@ year1976 + 2 (uncentered)        |
 </div>
 <p>Everyone has become more accepting, liberals significantly more so than conservatives per two-year interval. Across the range of political views, from two standard deviations below the mean to two above, in steps of one half so that the line is smooth. Only the whole-number points are labeled; the half points get an empty label:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976, models(samemod) covariates(conviewSS=(-2(0.5)2)) amount(2) uncentered <span class="kw">store</span>(</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>tm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mecompare year1976, models(samemod) covariates(conviewSS=(-2(0.5)2)) amount(2) uncentered <span class="kw">store</span>(tm</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Predicting: Pr(sameokB)
 
 Marginal effects (N_samemod=19337)
@@ -642,12 +647,11 @@ year1976 + 2 (uncentered)        |
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">twoway</span> (contour pr_sameok conviewSS year1976, ccuts(0(0.05)1) <span class="co">///</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>        scolor(<span class="kw">red</span>) ecolor(<span class="bn">purple</span>) crule(hue)), <span class="co">///</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">xlabel</span>(0 <span class="st">"1976"</span> 8 <span class="st">"1984"</span> 16 <span class="st">"1992"</span> 24 <span class="st">"2000"</span> 32 <span class="st">"2008"</span> 40 <span class="st">"2016"</span>) <span class="co">///</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(-2 <span class="st">"Very liberal"</span> -1 <span class="st">"Liberal"</span> 0 <span class="st">"Moderate"</span> 1 <span class="st">"Conservative"</span> 2 <span class="st">"Very conservative"</span>) /</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    zlabel(0(0.1)1) ztitle(<span class="st">"Pr(Same-sex relationships OK)"</span>) <span class="co">///</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">""</span>) <span class="bn">ytitle</span>(<span class="st">""</span>) <span class="bn">xsize</span>(7) <span class="bn">ysize</span>(4) <span class="co">///</span></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 18. Pr(same-sex OK) across political views and year"</span>)</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-contour.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(-2 <span class="st">"Very liberal"</span> -1 <span class="st">"Liberal"</span> 0 <span class="st">"Moderate"</span> 1 <span class="st">"Conservative"</span> 2 <span class="st">"Very conservative"</span>) <span class="co">///</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    zlabel(0(0.1)1) ztitle(<span class="st">"Pr(Same-sex relationships OK)"</span>) <span class="co">///</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">""</span>) <span class="bn">ytitle</span>(<span class="st">""</span>) <span class="bn">xsize</span>(7) <span class="bn">ysize</span>(4) <span class="co">///</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">"Figure 18. Pr(same-sex OK) across political views and year"</span>)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">"fig/nli-sameok-contour.png"</span>, <span class="kw">replace</span> <span class="kw">width</span>(1400)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>file fig/nli-sameok-contour.png saved as PNG format</code></pre>
 </div>
 <p><img src="../fig/nli-sameok-contour.png" class="img-fluid" style="width:90.0%" alt="Contour plot of the predicted probability of viewing same-sex relationships as acceptable at every combination of political views and survey year."></p>

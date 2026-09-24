@@ -18,14 +18,14 @@ predictor in the models.
 (57,404 observations deleted)
 
 . 
-. quietly nbreg mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robu
-> st)
+. quietly nbreg mntlhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robust
+> )
 
 . estimates store mental
 
 . 
-. quietly nbreg physhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robu
-> st)
+. quietly nbreg physhlth i.woman i.married i.parent i.college c.age faminc i.race i.year, vce(robust
+> )
 
 . estimates store physical
 

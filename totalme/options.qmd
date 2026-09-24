@@ -86,7 +86,8 @@ age + 1 (centered)       |
 
 For a continuous variable the default is a one-unit change, centered on the
 observed value. `amount()` takes a number, `sd`, `2sd`, `trimrange` (5th to
-95th percentile), `range` (minimum to maximum), or `rate` (the instantaneous
+95th percentile), `range` (minimum to maximum), `p#-p#` (from one percentile
+to another, e.g. `p10-p90`), or `rate` (the instantaneous
 rate of change); one value applies to all continuous variables, several apply
 in order. `uncentered` makes the change
 run upward from the observed value.
@@ -117,6 +118,19 @@ Total ME Estimates (N = 2237)
 -------------------------+-----------------------------------------------
 age                      |                                               
                p5 to p95 |      0.058       0.026       2.280       0.023 
+
+. totalme age, models(medmod) amount(p10-p90)
+Model (medmod) is:
+     mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
+Continuous/Binary IV(s): 
+     age
+
+Total ME Estimates (N = 2237)
+
+                         |   Estimate   Std. err.           z       P>|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+              p10 to p90 |      0.058       0.026       2.280       0.023 
 
 . totalme age, models(medmod) amount(10) uncentered
 Model (medmod) is:
@@ -222,6 +236,12 @@ race                     |
 
 ## `groups` and `groupnames()` -- models fit on distinct samples
 
+`groups` specifies that the two models used for comparison are fit on
+distinct samples; each model's marginal effects are then averaged over its own
+sample. `group(varname)`, the syntax of earlier versions, is also accepted;
+*varname* must take one value in each model's sample and a different value in
+each model.
+
 ```{.stata-run}
 . quietly mlogit occ3 i.collgrad c.age if south == 0, vce(robust)
 
@@ -314,8 +334,7 @@ Diff. = Not south - South
 ## Display options: `ci`, `level()`, `decimals()`, `labwidth()`, `title()`
 
 ```{.stata-run}
-. totalme collgrad age, models(basemod medmod) ci decimals(4) title("Total MEs on occupation group
-> ")
+. totalme collgrad age, models(basemod medmod) ci decimals(4) title("Total MEs on occupation group")
 
 
 Model 1 (basemod) is:

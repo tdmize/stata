@@ -18,15 +18,15 @@ support for government help with medical costs changed over 30 years.
 (36,143 observations deleted)
 
 . 
-. quietly logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.r
-> ace ///
+. quietly logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac
+> e ///
 >               if year == 1986, vce(robust)
 
 . estimates store mod1986
 
 . 
-. quietly logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.r
-> ace ///
+. quietly logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac
+> e ///
 >               if year == 2016, vce(robust)
 
 . estimates store mod2016
@@ -64,11 +64,35 @@ sample. The **Difference** row tests whether the conservatism gap in 2016
 differs from the gap in 1986. It does, suggesting that polarization on this
 issue has increased over this 30 year period.
 
+The 2019 article wrote this call as `group(year)`, the syntax of earlier
+versions of `mecompare`. It is also accepted and gives the same table:
+
+```{.stata-run}
+. mecompare i.conserv, models(mod1986 mod2016) group(year)
+
+
+
+Model 1 (mod1986) is:
+     logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.race
+Model 2 (mod2016) is:
+     logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.race
+
+
+Predicting: Pr(helpsickB)
+
+Marginal effects and cross-model differences (N_mod1986=1254) (N_mod2016=1670)
+
+                                 |  ME #   Estimate  Robust SE      P>|z|
+---------------------------------+---------------------------------------
+conserv                          |                                       
+         Conserva - Not Cons     |                                       
+                         mod1986 |     1     -0.092      0.030      0.002
+                         mod2016 |     2     -0.258      0.025      0.000
+                      Difference |     3      0.166      0.039      0.000
+
+```
+
 The [Group comparisons](chapter-groups.html) page has a second example of
 `groups` -- separate models for men and women, every predictor compared --
 and shows the alternatives when the groups are in a single model (`by()` and
 `over()`).
-
-<!-- NOTE: the 2019 article and the old web page wrote this as group(year); the
-     current syntax is the bare  groups  option, which reads the grouping from
-     each model's e(sample). -->

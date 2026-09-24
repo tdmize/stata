@@ -171,6 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -379,13 +385,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre class="stata-output"><code>(36,143 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.<span class="fu">r</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ace <span class="co">///</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span> <span class="co">///</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              <span class="kw">if</span> <span class="fu">year</span> == 1986, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mod1986</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.<span class="fu">r</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ace <span class="co">///</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.rac</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span> <span class="co">///</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              <span class="kw">if</span> <span class="fu">year</span> == 2016, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> mod2016</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -410,10 +416,28 @@ conserv                          |
                       Difference |     3      0.166      0.039      0.000</code></pre>
 </div>
 <p><code>groups</code> tells <code>mecompare</code> that each model’s estimation sample is a different group, so the marginal effect for each model is averaged over that model’s own sample. The <strong>Difference</strong> row tests whether the conservatism gap in 2016 differs from the gap in 1986. It does, suggesting that polarization on this issue has increased over this 30 year period.</p>
+<p>The 2019 article wrote this call as <code>group(year)</code>, the syntax of earlier versions of <code>mecompare</code>. It is also accepted and gives the same table:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare i.conserv, models(mod1986 mod2016) <span class="fu">group</span>(<span class="fu">year</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model 1 (mod1986) is:
+     logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.race
+Model 2 (mod2016) is:
+     logit helpsickB i.conserv faminc i.employed i.woman age i.college i.married i.parent i.race
+
+
+Predicting: Pr(helpsickB)
+
+Marginal effects and cross-model differences (N_mod1986=1254) (N_mod2016=1670)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+conserv                          |                                       
+         Conserva - Not Cons     |                                       
+                         mod1986 |     1     -0.092      0.030      0.002
+                         mod2016 |     2     -0.258      0.025      0.000
+                      Difference |     3      0.166      0.039      0.000</code></pre>
+</div>
 <p>The <a href="chapter-groups.html">Group comparisons</a> page has a second example of <code>groups</code> – separate models for men and women, every predictor compared – and shows the alternatives when the groups are in a single model (<code>by()</code> and <code>over()</code>).</p>
-<!-- NOTE: the 2019 article and the old web page wrote this as group(year); the
-     current syntax is the bare  groups  option, which reads the grouping from
-     each model's e(sample). -->
 
 
 

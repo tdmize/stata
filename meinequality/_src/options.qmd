@@ -72,7 +72,9 @@ ME inequality then weights each model by the level proportions of its own
 sample, so the comparison reflects differences in the marginal effects and in
 composition; `unweighted` isolates the marginal effects. `groupnames()` labels
 the two rows (no spaces within a name; names over 10 characters are
-truncated).
+truncated). `group(varname)`, the syntax of earlier versions, is also
+accepted; *varname* must take one value in each model's sample and a different
+value in each model.
 
 ```{.stata-run}
 <<dd_do>>

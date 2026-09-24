@@ -196,8 +196,8 @@ test at the 10th, 50th, and 90th percentiles of survey year:
 ```{.stata-run}
 . quietly summarize year1976, detail
 
-. mecompare conviewSS, models(samemod) covariates(year1976=(`r(p10)' `r(p50)' `r(p90)')) amount(ra
-> te)
+. mecompare conviewSS, models(samemod) covariates(year1976=(`r(p10)' `r(p50)' `r(p90)')) amount(rate
+> )
 
 
 Predicting: Pr(sameokB)
@@ -264,8 +264,7 @@ conviewSS(rate)                  |
 >     ylabel(-0.25(0.05)0.05) xtitle("GSS survey year") ///
 >     ytitle("AME of conservative political views") ///
 >     title("Figure 16. AME of political views by survey year") ///
->     note("Negative effects indicate conservatives are less supportive of same-sex relationships"
-> )
+>     note("Negative effects indicate conservatives are less supportive of same-sex relationships")
 
 . graph export "fig/nli-sameok-views-by-year.png", replace width(1400)
 file fig/nli-sameok-views-by-year.png saved as PNG format
@@ -309,8 +308,8 @@ that the line is smooth. Only the whole-number points are labeled; the half
 points get an empty label:
 
 ```{.stata-run}
-. mecompare year1976, models(samemod) covariates(conviewSS=(-2(0.5)2)) amount(2) uncentered store(
-> tm)
+. mecompare year1976, models(samemod) covariates(conviewSS=(-2(0.5)2)) amount(2) uncentered store(tm
+> )
 
 
 Predicting: Pr(sameokB)
@@ -382,8 +381,7 @@ The saved dataset holds the predictions in `_margin` and the grid values in
 . twoway (contour pr_sameok conviewSS year1976, ccuts(0(0.05)1) ///
 >         scolor(red) ecolor(purple) crule(hue)), ///
 >     xlabel(0 "1976" 8 "1984" 16 "1992" 24 "2000" 32 "2008" 40 "2016") ///
->     ylabel(-2 "Very liberal" -1 "Liberal" 0 "Moderate" 1 "Conservative" 2 "Very conservative") /
-> //
+>     ylabel(-2 "Very liberal" -1 "Liberal" 0 "Moderate" 1 "Conservative" 2 "Very conservative") ///
 >     zlabel(0(0.1)1) ztitle("Pr(Same-sex relationships OK)") ///
 >     xtitle("") ytitle("") xsize(7) ysize(4) ///
 >     title("Figure 18. Pr(same-sex OK) across political views and year")

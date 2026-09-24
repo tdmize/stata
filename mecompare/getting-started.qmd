@@ -154,13 +154,15 @@ that come up most often.
 
 | Option | Purpose |
 |---|---|
-| `models(name1 [name2 ...])` | The stored estimates to compare. One model gives marginal effects for that model alone; with three or more, every model's effects are listed and `metest` tests the comparisons. |
-| `amount()` | Size of the change for a continuous variable: a number, `sd` or `2sd` (one or two standard deviations), `trimrange` (5th to 95th percentile), `range` (minimum to maximum), or `rate` (the instantaneous rate of change). |
+| `models(name1 [name2 ...])` | The stored estimates to compare. One model gives marginal effects for that model alone; with three or more, every model's effects are listed and `metest` can be used to test the comparisons. |
+| `amount()` | Size of the change for a continuous variable: a number, `sd` or `2sd` (one or two standard deviations), `trimrange` (5th to 95th percentile), `range` (minimum to maximum), `p#-p#` (from one percentile to another, e.g. `p10-p90`), or `rate` (the instantaneous rate of change). Several amounts for one variable go in parentheses, e.g. `amount((one sd rate))`. |
 | `start()`, `end()` | Where the change in a continuous variable begins, `start(varname=#)` or `start(atmeans)`, and, with `end(varname=#)`, where it ends. |
+| `cochange(varlist)` | Variables that change along with the focal variable, e.g. mediators; the table adds the effect *with co-change* (see [generalized marginal effects](generalized.html)). |
 | `covariates(varname=# ...)`, `atmeans` | Hold other variables at specified values or at their means (the default averages over the observed values). |
 | `by(varlist)` | Marginal effects within each level of another variable, in one table, so that they can be compared with `metest`. |
 | `over(varlist)` | Marginal effects within subsamples defined by another variable. |
 | `pwcompare` | All pairwise contrasts among the levels of a nominal variable, not just contrasts with the base level. |
+| `mcompare(method)` | Adjust the p-values of a nominal variable's contrasts for multiple comparisons (`bonferroni` or `sidak`). |
 | `groups` | The models were fit to separate groups (see the [groups example](examples/groups.html)). |
 | `totalme`, `meinequality` | Add the Total Marginal Effect and/or the marginal-effect inequality summary for the compared effects. |
 | `store(stub)` | Store the results so that they can be graphed with `coefplot` or tabled with `esttab`. |

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Comparing Total MEs across models – Stata software — Trenton D. Mize</title>
+<title>Generalized marginal effects – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -64,25 +64,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<link href="../../mecompare/examples/chapter-summary-measures.html" rel="next">
-<link href="../../mecompare/examples/meinequality-across-models.html" rel="prev">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-120b4804e0c736fa0e2bf96564216d06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../mecompare/examples/mediation.html" rel="next">
+<link href="../mecompare/plotting.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-120b4804e0c736fa0e2bf96564216d06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Mize &amp; Han (2025)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/totalme-across-models.html">Comparing Total MEs across models</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../mecompare/generalized.html">Generalized marginal effects</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -137,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../../">mecompare</a> 
+      <a href="../">mecompare</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://www.trentonmize.com/software/mecompare" title="trentonmize.com" class="quarto-navigation-tool px-1" aria-label="trentonmize.com"><i class="bi bi-house-door"></i></a>
     <a href="https://github.com/tdmize" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
@@ -149,31 +149,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/getting-started.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/getting-started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting started</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/options.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/options.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Options</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/plotting.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/plotting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/generalized.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Generalized marginal effects</span></a>
   </div>
 </li>
@@ -197,37 +197,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/mediation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Curvilinear effects and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/nested-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Nested logit models and mediation/attenuation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/alternative-predictors.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/alternative-predictors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Alternative predictors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/different-outcomes.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/different-outcomes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Different outcomes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/model-types.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/model-types.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Different model types</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/groups.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/groups.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Separate samples or groups</span></a>
   </div>
 </li>
@@ -244,19 +244,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/within-model.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/within-model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Comparing effects across predictors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/meinequality-across-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/meinequality-across-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Comparing ME inequalities across models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/totalme-across-models.html" class="sidebar-item-text sidebar-link active">
+  <a href="../mecompare/examples/totalme-across-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Comparing Total MEs across models</span></a>
   </div>
 </li>
@@ -273,19 +273,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/chapter-summary-measures.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/chapter-summary-measures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MEMs, AMEs, MERs, and ideal types</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/chapter-interactions.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/chapter-interactions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tests of interaction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/chapter-groups.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/examples/chapter-groups.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Group comparisons</span></a>
   </div>
 </li>
@@ -304,31 +304,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/linear-model.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/interactions/linear-model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Nonlinear effects in a linear model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/nominal-by-nominal.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/interactions/nominal-by-nominal.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Two nominal variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/nominal-by-continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/interactions/nominal-by-continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A nominal and a continuous variable</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/interactions/continuous-by-continuous.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/interactions/continuous-by-continuous.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Two continuous variables</span></a>
   </div>
 </li>
@@ -336,13 +336,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/help-examples.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/help-examples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Examples from the help file</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/help.html" class="sidebar-item-text sidebar-link">
+  <a href="../mecompare/help.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">help mecompare</span></a>
   </div>
 </li>
@@ -352,7 +352,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#reference" id="toc-reference" class="nav-link active" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#co-change-variables-at-chosen-values" id="toc-co-change-variables-at-chosen-values" class="nav-link active" data-scroll-target="#co-change-variables-at-chosen-values">Co-change variables at chosen values</a></li>
+  <li><a href="#co-change-variables-changed-by-an-amount" id="toc-co-change-variables-changed-by-an-amount" class="nav-link" data-scroll-target="#co-change-variables-changed-by-an-amount">Co-change variables changed by an amount</a></li>
   </ul>
 </nav>
 </nav>
@@ -363,10 +364,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/within-model.html">Mize &amp; Han (2025)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/totalme-across-models.html">Comparing Total MEs across models</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Comparing Total MEs across models</h1>
-<p class="subtitle lead">Example 5.2.e of Mize and Han (2025): mediation/attenuation with a multi-category outcome</p>
+<h1 class="title">Generalized marginal effects</h1>
+<p class="subtitle lead">Effects when other variables change along with the focal variable</p>
 </div>
 
 
@@ -383,70 +384,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>With a nominal or ordinal outcome, each predictor has one marginal effect per outcome category, so a cross-model comparison of “the” effect of a predictor means comparing several effects at once. The Total ME of Mize and Han (2025) sums the absolute effects across the outcome categories (and halves the sum) to give one number: the total probability mass the predictor moves. The <code>totalme</code> option of <code>mecompare</code> adds that summary above the per-category effects, and with two models in <code>models()</code> the <strong>Difference</strong> row tests whether the Total ME changed.</p>
-<p>Here the question is whether the total effect of a college degree on self-rated health shrinks once family income is in the model. The outcome has five ordered categories and is fit with a multinomial logit on the 2000–2021 GSS. Store the model without income and the model with it, and name both in <code>models()</code>; the models are combined with <a href="../../suest2/index.html"><code>suest2</code></a> so that the test of the difference accounts for the two models being estimated on the same data.</p>
+<p>A marginal effect usually holds the other variables in the model constant. But some variables change along with the focal variable: college graduates, for example, tend to have higher wages and more prestigious jobs than those without a degree. The <code>cochange()</code> option lets those variables change too. The table then reports two marginal effects of the focal variable: the usual one, and one labeled <em>with co-change</em> in which the co-change variables change too. <a href="../metest/index.html"><code>metest</code></a> can be used to test the difference between the two.</p>
+<p>The example uses the data and the full model of the <a href="examples/nested-models.html">nested models</a> example (Example 6.2 of Mize, Doan, and Long 2019): a logit of being very happy on a college degree, wages, occupational prestige, and controls.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/cda_gss"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(cda_gss.dta |  GSS 1972-2021 CDA - Categorical Data Analysis | date created 2023)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(healthR, college, race4, age, woman, parent, married, faminc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(22,943 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">year</span> &lt; 2000 | <span class="fu">year</span> &gt; 2021</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(26,611 observations deleted)
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">year</span> &lt; 2000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(38,116 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> employed != 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(9,556 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(vhappy, college, wages, occprest, age, married, parent, woman, conserv, reltrad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(5,578 observations deleted)
 
 . </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> healthR i.college i.race4 c.age i.woman i.parent i.married, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> basemod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> healthR i.college i.race4 c.age i.woman i.parent i.married c.faminc, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> medmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman <span class="co">///</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<section id="co-change-variables-at-chosen-values" class="level2">
+<h2 class="anchored" data-anchor-id="co-change-variables-at-chosen-values">Co-change variables at chosen values</h2>
+<p><code>start()</code> and <code>end()</code> set the values the co-change variables change from and to. Here wages and occupational prestige change from their average among those without a college degree to their average among college graduates. The averages are rounded to two decimals before they go into <code>start()</code> and <code>end()</code>.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare i.college, models(basemod medmod) totalme</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (basemod) is:
-     mlogit healthR i.college i.race4 c.age i.woman i.parent i.married
-Model 2 (medmod) is:
-     mlogit healthR i.college i.race4 c.age i.woman i.parent i.married c.faminc
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> wages <span class="kw">if</span> college == 0 &amp; <span class="fu">e</span>(<span class="kw">sample</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> w0 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(<span class="kw">mean</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> wages <span class="kw">if</span> college == 1 &amp; <span class="fu">e</span>(<span class="kw">sample</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> w1 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(<span class="kw">mean</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> occprest <span class="kw">if</span> college == 0 &amp; <span class="fu">e</span>(<span class="kw">sample</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> p0 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(<span class="kw">mean</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">summarize</span> occprest <span class="kw">if</span> college == 1 &amp; <span class="fu">e</span>(<span class="kw">sample</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> p1 : <span class="kw">display</span> %5.2f <span class="fu">r</span>(<span class="kw">mean</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>. </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare i.college, models(m4) cochange(wages occprest) <span class="co">///</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="bn">start</span>(wages=<span class="ot">`w0'</span> occprest=<span class="ot">`p0'</span>) <span class="kw">end</span>(wages=<span class="ot">`w1'</span> occprest=<span class="ot">`p1'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(vhappy)
 
-
-Predicting: Pr(healthR==1)
-
-Marginal effects and cross-model differences (N_basemod=19292) (N_medmod=19292)
+Marginal effects (N_m4=9216)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
 college                          |                                       
          College  - No Col D     |                                       
-                    Total ME     |                                       
-                         basemod |     1      0.159      0.006      0.000
-                          medmod |     2      0.118      0.007      0.000
-                      Difference |     3      0.041      0.003      0.000
-                  Poor - basemod |     4     -0.047      0.003      0.000
-                   Poor - medmod |     5     -0.033      0.003      0.000
-               Poor - Difference |     6     -0.015      0.002      0.000
-                  Fair - basemod |     7     -0.112      0.006      0.000
-                   Fair - medmod |     8     -0.085      0.006      0.000
-               Fair - Difference |     9     -0.027      0.002      0.000
-                  Good - basemod |    10      0.024      0.008      0.003
-                   Good - medmod |    11      0.021      0.009      0.015
-               Good - Difference |    12      0.003      0.003      0.301
-             Excellent - basemod |    13      0.135      0.007      0.000
-              Excellent - medmod |    14      0.097      0.008      0.000
-          Excellent - Difference |    15      0.038      0.003      0.000</code></pre>
+                              m4 |     1      0.019      0.012      0.103
+---------------------------------+---------------------------------------
+college with co-change           |                                       
+                              m4 |     2      0.063      0.011      0.000
+
+
+NOTE: college with co-change: college 0 to 1; wages 13.60 to 24.88; occprest 40.51 to 54.68.</code></pre>
 </div>
-<p>The first block of the table is the Total ME of a college degree in each model and its <strong>Difference</strong>: the part of the total college effect that family income accounts for, with a standard error and p-value. The blocks beneath it are the marginal effects of college on each health category, each with its own cross-model difference, so the table shows both the summary and which categories the attenuation comes from. As on every <code>mecompare</code> table the rows are numbered, so <a href="../../metest/index.html"><code>metest</code></a> can express the attenuation as a proportion of the baseline Total ME:</p>
+<p>Row 1 is the usual marginal effect of a college degree, with wages and occupational prestige held at their observed values; it is the same estimate as model m4 in the <a href="examples/nested-models.html">Example 6.2</a> table. Row 2 is the effect of a college degree when wages and occupational prestige also change; the note under the table lists each change. Use <code>metest</code> to test the difference between the two:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>metest (1 - 2) / 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metest 2 - 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>                                 |  estimate         se     pvalue 
 ---------------------------------+--------------------------------
-college_TotME                    |                                
-    (basemod - medmod) / basemod |     0.260      0.020      0.000 </code></pre>
+              cochange - college |     0.044      0.006      0.000 </code></pre>
 </div>
-<p>The same difference is what <code>totalme college, models(basemod medmod)</code> reports; <code>mecompare</code> adds the per-category effects and the row numbers for <code>metest</code>. <code>totalme</code> works the same way for continuous predictors (with <code>amount()</code> setting the size of the change) and, for nominal predictors, reports a Total ME inequality; the <a href="../options.html#meinequality-and-totalme-summary-measures">Options</a> page has an example of each.</p>
-<section id="reference" class="level2">
-<h2 class="anchored" data-anchor-id="reference">Reference</h2>
-<blockquote class="blockquote">
-<p>Mize, Trenton D. and Bing Han. 2025. “Inequality and Total Effect Summary Measures for Nominal and Ordinal Variables.” <em>Sociological Science</em> 12: 115–157.</p>
-</blockquote>
+<p>Example 6.2 asks how the effect of a college degree changes when wages and occupational prestige are added to the model. <code>cochange()</code> asks a different question within one model: what the effect of a college degree is when wages and occupational prestige change along with it.</p>
+</section>
+<section id="co-change-variables-changed-by-an-amount" class="level2">
+<h2 class="anchored" data-anchor-id="co-change-variables-changed-by-an-amount">Co-change variables changed by an amount</h2>
+<p>Without <code>start()</code> and <code>end()</code>, co-change variables change as focal variables do (see <a href="options.html#amount-centered-uncentered-the-size-of-a-continuous-change"><code>amount()</code></a>). Here wages and occupational prestige each increase by a standard deviation along with the degree:</p>
+<div class="stata-run">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mecompare i.college, models(m4) cochange(wages occprest) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Pr(vhappy)
+
+Marginal effects (N_m4=9216)
+
+                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+---------------------------------+---------------------------------------
+college                          |                                       
+         College  - No Col D     |                                       
+                              m4 |     1      0.019      0.012      0.103
+---------------------------------+---------------------------------------
+college with co-change           |                                       
+                              m4 |     2      0.067      0.010      0.000
+
+
+NOTE: college with co-change: college 0 to 1; wages + SD (centered); occprest + SD (centered).</code></pre>
+</div>
+<p>A nominal focal or co-change variable with three or more categories needs the two levels it changes between in <code>start()</code> and <code>end()</code>, e.g.&nbsp;<code>start(race=1) end(race=2)</code>. The <a href="options.html#cochange-variables-that-change-along-with-the-focal-variable">options page</a> and the <a href="help.html#cochange">help file</a> list what <code>cochange()</code> cannot be combined with.</p>
 
 
 </section>
@@ -859,13 +875,13 @@ college_TotME                    |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/examples/meinequality-across-models.html" class="pagination-link" aria-label="Comparing ME inequalities across models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Comparing ME inequalities across models</span>
+      <a href="../mecompare/plotting.html" class="pagination-link" aria-label="Plotting and tabulating results">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plotting and tabulating results</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/examples/chapter-summary-measures.html" class="pagination-link" aria-label="MEMs, AMEs, MERs, and ideal types">
-        <span class="nav-page-text">MEMs, AMEs, MERs, and ideal types</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../mecompare/examples/mediation.html" class="pagination-link" aria-label="Curvilinear effects and mediation/attenuation">
+        <span class="nav-page-text">Curvilinear effects and mediation/attenuation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

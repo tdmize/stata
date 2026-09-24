@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="groups-options" class="level3">
 <h3 class="anchored" data-anchor-id="groups-options">Groups options</h3>
-<p><strong><code>groups</code></strong> specifies that the two models used for comparison are fit on distinct samples. When the <code>groups</code> option is specified, the models listed in the <code>models(list)</code> option must have been fit separately across distinct samples (e.g., distinct groups in data).</p>
+<p><strong><code>groups</code></strong> specifies that the two models used for comparison are fit on distinct samples. When the <code>groups</code> option is specified, the models listed in the <code>models(list)</code> option must have been fit separately across distinct samples (e.g., distinct groups in data). <code>group(varname)</code>, the syntax of earlier versions, is also accepted; <em>varname</em> must take one value in each model’s sample and a different value in each model.</p>
 <p>With <code>groups</code>, a weighted ME inequality weights each model by the level proportions of <strong>its own</strong> sample. The comparison therefore reflects differences in the marginal effects <em>and</em> differences in composition between the samples. Use <code>unweighted</code> to compare the marginal effects alone.</p>
 <p><span id="by/over"></span></p>
 </section>

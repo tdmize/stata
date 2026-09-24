@@ -171,6 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -393,11 +399,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(ordinal nominal) <span class="bn">start</span>(age=20) amount(10) covariates(atmeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (ordinal) is:
-     ologit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.
-&gt; region4 i.year
+     ologit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.re
+&gt; gion4 i.year
 Model 2 (nominal) is:
-     mlogit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.
-&gt; region4 i.year
+     mlogit partyid5 c.age##c.age i.woman c.edyrs i.parent i.married i.race c.faminc i.employed i.re
+&gt; gion4 i.year
 
 
 Predicting: Pr(partyid5==0)

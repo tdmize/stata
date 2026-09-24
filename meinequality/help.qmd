@@ -137,7 +137,7 @@ The proportions are taken over the model's estimation sample. When two models ar
 
 ### Groups options
 
-**`groups`** specifies that the two models used for comparison are fit on distinct samples. When the `groups` option is specified, the models listed in the `models(list)` option must have been fit separately across distinct samples (e.g., distinct groups in data).
+**`groups`** specifies that the two models used for comparison are fit on distinct samples. When the `groups` option is specified, the models listed in the `models(list)` option must have been fit separately across distinct samples (e.g., distinct groups in data). `group(varname)`, the syntax of earlier versions, is also accepted; *varname* must take one value in each model's sample and a different value in each model.
 
 With `groups`, a weighted ME inequality weights each model by the level proportions of **its own** sample. The comparison therefore reflects differences in the marginal effects *and* differences in composition between the samples. Use `unweighted` to compare the marginal effects alone.
 

@@ -342,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="groups-options" class="level3">
 <h3 class="anchored" data-anchor-id="groups-options">Groups options</h3>
-<p><strong><code>groups</code></strong> specifies that the two models used for comparison are fit on distinct samples. Under <code>groups</code> each model’s marginal effects are averaged over its own sample. When the <code>groups</code> option is specified, the models listed in the <code>models(list)</code> option must have been fit separately across distinct samples (e.g., distinct groups in the data).</p>
+<p><strong><code>groups</code></strong> specifies that the two models used for comparison are fit on distinct samples. Under <code>groups</code> each model’s marginal effects are averaged over its own sample. When the <code>groups</code> option is specified, the models listed in the <code>models(list)</code> option must have been fit separately across distinct samples (e.g., distinct groups in the data). <code>group(varname)</code>, the syntax of earlier versions, is also accepted; <em>varname</em> must take one value in each model’s sample and a different value in each model.</p>
 <p><span id="amount"></span></p>
 </section>
 <section id="amount-of-change-and-related-options-for-continuous-independent-variables" class="level3">
@@ -385,6 +385,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">A change across the full observed range of the variable, from its minimum to its maximum in the estimation sample; <code>start()</code> and centering do not apply</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;"><strong>p</strong><em>#</em><strong>-p</strong><em>#</em></td>
+<td style="text-align: left;">A change from one percentile of the variable to another in the estimation sample, e.g.&nbsp;<strong>p10-p90</strong> for its 10th to its 90th percentile; <strong>trimrange</strong> is <strong>p5-p95</strong>. <code>start()</code> and centering do not apply</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;"><strong>rate</strong></td>
 <td style="text-align: left;">An instantaneous rate of change, i.e.&nbsp;the derivative, approximated with a small centered change; <strong>slope</strong> and <strong>dydx</strong> are synonyms. Centering does not apply</td>
 </tr>

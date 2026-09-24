@@ -309,7 +309,7 @@ age + 1 (centered)       |
 </section>
 <section id="amount-centered-uncentered-the-size-of-a-continuous-change" class="level2">
 <h2 class="anchored" data-anchor-id="amount-centered-uncentered-the-size-of-a-continuous-change"><code>amount()</code>, <code>centered</code>, <code>uncentered</code> – the size of a continuous change</h2>
-<p>For a continuous variable the default is a one-unit change, centered on the observed value. <code>amount()</code> takes a number, <code>sd</code>, <code>2sd</code>, <code>trimrange</code> (5th to 95th percentile), <code>range</code> (minimum to maximum), or <code>rate</code> (the instantaneous rate of change); one value applies to all continuous variables, several apply in order. <code>uncentered</code> makes the change run upward from the observed value.</p>
+<p>For a continuous variable the default is a one-unit change, centered on the observed value. <code>amount()</code> takes a number, <code>sd</code>, <code>2sd</code>, <code>trimrange</code> (5th to 95th percentile), <code>range</code> (minimum to maximum), <code>p#-p#</code> (from one percentile to another, e.g.&nbsp;<code>p10-p90</code>), or <code>rate</code> (the instantaneous rate of change); one value applies to all continuous variables, several apply in order. <code>uncentered</code> makes the change run upward from the observed value.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>totalme age, models(medmod) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
@@ -335,7 +335,19 @@ Total ME Estimates (N = 2237)
 -------------------------+-----------------------------------------------
 age                      |                                               
                p5 to p95 |      0.058       0.026       2.280       0.023 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>totalme age, models(medmod) amount(10) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>totalme age, models(medmod) amount(p10-p90)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Model (medmod) is:
+     mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
+Continuous/Binary IV(s): 
+     age
+
+Total ME Estimates (N = 2237)
+
+                         |   Estimate   Std. err.           z       P&gt;|z| 
+-------------------------+-----------------------------------------------
+age                      |                                               
+              p10 to p90 |      0.058       0.026       2.280       0.023 </code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>totalme age, models(medmod) amount(10) uncentered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Continuous/Binary IV(s): 
@@ -352,7 +364,7 @@ age                      |
 <section id="start-where-the-change-begins" class="level2">
 <h2 class="anchored" data-anchor-id="start-where-the-change-begins"><code>start()</code> – where the change begins</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>totalme age, models(medmod) <span class="bn">start</span>(age=40) amount(5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>totalme age, models(medmod) <span class="bn">start</span>(age=40) amount(5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Continuous/Binary IV(s): 
@@ -369,7 +381,7 @@ start (40) + 5 (center~) |      0.032       0.014       2.297       0.022 </code
 <section id="atmeans-covariates-at-their-means" class="level2">
 <h2 class="anchored" data-anchor-id="atmeans-covariates-at-their-means"><code>atmeans</code> – covariates at their means</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(medmod) atmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(medmod) atmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Continuous/Binary IV(s): 
@@ -387,7 +399,7 @@ College grad vs Not co~d |      0.281       0.025      11.105       0.000 </code
 <h2 class="anchored" data-anchor-id="weighted-unweighted-all-nominal-variables"><code>weighted</code>, <code>unweighted</code>, <code>all</code> – nominal variables</h2>
 <p>For a nominal variable the per-outcome quantity is the ME inequality of <a href="../meinequality/index.html"><code>meinequality</code></a>, so the Total ME is a Total ME inequality, weighted by category shares by default. <code>unweighted</code> gives every pairwise comparison the same weight; <code>all</code> reports both. For a continuous or binary variable these options are ignored and the variable keeps its one row.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>totalme race, models(medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>totalme race, models(medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Nominal IV(s):
@@ -399,7 +411,7 @@ Total ME Estimates (N = 2237)
 -------------------------+-----------------------------------------------
 race                     |                                               
           total ME Ineq. |      0.147       0.043       3.427       0.001 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>totalme race, models(medmod) unweighted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>totalme race, models(medmod) unweighted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Nominal IV(s):
@@ -411,7 +423,7 @@ Total ME Estimates (N = 2237)
 -------------------------+-----------------------------------------------
 race                     |                                               
     Unwgt total ME Ineq. |      0.149       0.051       2.922       0.003 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>totalme race, models(medmod) <span class="ot">all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>totalme race, models(medmod) <span class="ot">all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Nominal IV(s):
@@ -428,13 +440,14 @@ race                     |
 </section>
 <section id="groups-and-groupnames-models-fit-on-distinct-samples" class="level2">
 <h2 class="anchored" data-anchor-id="groups-and-groupnames-models-fit-on-distinct-samples"><code>groups</code> and <code>groupnames()</code> – models fit on distinct samples</h2>
+<p><code>groups</code> specifies that the two models used for comparison are fit on distinct samples; each model’s marginal effects are then averaged over its own sample. <code>group(varname)</code>, the syntax of earlier versions, is also accepted; <em>varname</em> must take one value in each model’s sample and a different value in each model.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> occ3 i.collgrad c.age <span class="kw">if</span> south == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> nonsouth</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> occ3 i.collgrad c.age <span class="kw">if</span> south == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> south</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> occ3 i.collgrad c.age <span class="kw">if</span> south == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> nonsouth</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">mlogit</span> occ3 i.collgrad c.age <span class="kw">if</span> south == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> south</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(nonsouth south) groups groupnames(NonSouth South)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(nonsouth south) groups groupnames(NonSouth South)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (nonsouth) is:
      mlogit occ3 i.collgrad c.age if south == 0
 Model 2 (south) is:
@@ -457,7 +470,7 @@ collgrad                 |
 <p><code>by(varname)</code> computes the Total ME at each level of a binary or nominal covariate as a counterfactual (the whole sample set to that level); <code>over(varname)</code> computes it within each observed subgroup. The variable must be in the model with the <code>i.</code> prefix.</p>
 <p>With either option the table also holds a <strong>Diff.</strong> row for each pair of levels – the Total ME at the first level minus that at the second, with its standard error and test, which is the test of whether the effect differs across the groups (a test of interaction). Neither option may name one of the focal variables; <a href="../mecompare/index.html"><code>mecompare</code></a> handles that case.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(medmod) <span class="kw">by</span>(south)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(medmod) <span class="kw">by</span>(south)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Continuous/Binary IV(s): 
@@ -477,7 +490,7 @@ collgrad Diff.           |
 College grad vs Not co~d |      0.018       0.009       2.002       0.045 
 
 Diff. = Not south - South</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(medmod) <span class="bn">over</span>(south)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(medmod) <span class="bn">over</span>(south)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model (medmod) is:
      mlogit occ3 i.collgrad i.race c.age i.south c.ttl_exp c.wage, vce(robust)
 Continuous/Binary IV(s): 
@@ -502,8 +515,7 @@ Diff. = Not south - South</code></pre>
 <section id="display-options-ci-level-decimals-labwidth-title" class="level2">
 <h2 class="anchored" data-anchor-id="display-options-ci-level-decimals-labwidth-title">Display options: <code>ci</code>, <code>level()</code>, <code>decimals()</code>, <code>labwidth()</code>, <code>title()</code></h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad age, models(basemod medmod) <span class="kw">ci</span> decimals(4) <span class="bn">title</span>(<span class="st">"Total MEs on occupation group</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad age, models(basemod medmod) <span class="kw">ci</span> decimals(4) <span class="bn">title</span>(<span class="st">"Total MEs on occupation group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (basemod) is:
      mlogit occ3 i.collgrad i.race c.age i.south
 Model 2 (medmod) is:
@@ -530,7 +542,7 @@ age + 1 (centered)       |
 <h2 class="anchored" data-anchor-id="commands-and-details"><code>commands</code> and <code>details</code></h2>
 <p><code>commands</code> prints the <code>margins</code> command (and with two models the <code>suest2</code> command) that produced the estimates; <code>details</code> prints their output.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(basemod medmod) commands</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad, models(basemod medmod) commands</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (basemod) is:
      mlogit occ3 i.collgrad i.race c.age i.south
 Model 2 (medmod) is:
@@ -561,7 +573,7 @@ collgrad                 |
 <h2 class="anchored" data-anchor-id="saved-results">Saved results</h2>
 <p><code>totalme</code> is r-class. For a continuous or binary variable, <code>r(tmcm1#)</code>, <code>r(tmcm2#)</code>, and <code>r(tmcd#)</code> hold the Total ME for model 1, model 2, and their difference for the <em>#</em>th such variable in <em>varlist</em>; for a nominal variable <code>r(tmwm1#)</code>, <code>r(tmwm2#)</code>, <code>r(tmwd#)</code> hold the weighted Total ME inequality and <code>r(tmuwm1#)</code>, <code>r(tmuwm2#)</code>, <code>r(tmuwd#)</code> the unweighted. With <code>by()</code> or <code>over()</code>, <code>_level</code> is appended, and the <strong>Diff.</strong> rows append <code>_d</code><em>level1</em><code>_</code><em>level2</em> (e.g.&nbsp;<code>r(tmcm11_d0_1)</code>). <code>r(table)</code> holds the displayed table and <code>r(se_missing)</code> counts quantities whose standard error could not be computed. The <code>margins</code> results are stored as <code>totalme_margins</code> and, with two models, the combined system as <code>totalme_suest2</code>.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad race, models(basemod medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>totalme collgrad race, models(basemod medmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (basemod) is:
      mlogit occ3 i.collgrad i.race c.age i.south
 Model 2 (medmod) is:
@@ -584,7 +596,7 @@ race total ME Ineq.      |
        Model 1 (basemod) |      0.152       0.044       3.492       0.000 
         Model 2 (medmod) |      0.147       0.043       3.427       0.001 
        Cross-Model Diff. |      0.005       0.006       0.902       0.367 </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span> <span class="ot">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span> <span class="ot">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>scalars:
          r(se_missing) =  0
               r(tmwd1) =  .0053498747963924
@@ -602,14 +614,14 @@ matrices:
 </section>
 <section id="bootstrap-standard-errors" class="level2">
 <h2 class="anchored" data-anchor-id="bootstrap-standard-errors">Bootstrap standard errors</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">capture</span> <span class="kw">program</span> <span class="kw">drop</span> boot_tot</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">program</span> <span class="kw">define</span> boot_tot, rclass</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mlogit</span> healthR i.race4 c.age i.woman, base(1)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    totalme race4</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span> <span class="fu">scalar</span> w_tot = <span class="fu">r</span>(tmwm11)</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="kw">bootstrap</span> w_tot=<span class="fu">r</span>(w_tot), reps(1000): boot_tot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">capture</span> <span class="kw">program</span> <span class="kw">drop</span> boot_tot</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">program</span> <span class="kw">define</span> boot_tot, rclass</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mlogit</span> healthR i.race4 c.age i.woman, base(1)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    totalme race4</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span> <span class="fu">scalar</span> w_tot = <span class="fu">r</span>(tmwm11)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="kw">bootstrap</span> w_tot=<span class="fu">r</span>(w_tot), reps(1000): boot_tot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

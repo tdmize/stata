@@ -38,11 +38,16 @@ sample. The **Difference** row tests whether the conservatism gap in 2016
 differs from the gap in 1986. It does, suggesting that polarization on this
 issue has increased over this 30 year period.
 
+The 2019 article wrote this call as `group(year)`, the syntax of earlier
+versions of `mecompare`. It is also accepted and gives the same table:
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.conserv, models(mod1986 mod2016) group(year)
+<</dd_do>>
+```
+
 The [Group comparisons](chapter-groups.html) page has a second example of
 `groups` -- separate models for men and women, every predictor compared --
 and shows the alternatives when the groups are in a single model (`by()` and
 `over()`).
-
-<!-- NOTE: the 2019 article and the old web page wrote this as group(year); the
-     current syntax is the bare  groups  option, which reads the grouping from
-     each model's e(sample). -->

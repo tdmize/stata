@@ -345,7 +345,7 @@ race ME Ineq.            |
 </section>
 <section id="groups-and-groupnames-models-fit-on-distinct-samples" class="level2">
 <h2 class="anchored" data-anchor-id="groups-and-groupnames-models-fit-on-distinct-samples"><code>groups</code> and <code>groupnames()</code> – models fit on distinct samples</h2>
-<p><code>groups</code> says the two models were fit on non-overlapping samples. A weighted ME inequality then weights each model by the level proportions of its own sample, so the comparison reflects differences in the marginal effects and in composition; <code>unweighted</code> isolates the marginal effects. <code>groupnames()</code> labels the two rows (no spaces within a name; names over 10 characters are truncated).</p>
+<p><code>groups</code> says the two models were fit on non-overlapping samples. A weighted ME inequality then weights each model by the level proportions of its own sample, so the comparison reflects differences in the marginal effects and in composition; <code>unweighted</code> isolates the marginal effects. <code>groupnames()</code> labels the two rows (no spaces within a name; names over 10 characters are truncated). <code>group(varname)</code>, the syntax of earlier versions, is also accepted; <em>varname</em> must take one value in each model’s sample and a different value in each model.</p>
 <div class="stata-run">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.race c.age <span class="kw">if</span> married == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> notmar</span>
@@ -457,8 +457,7 @@ race ME Ineq.            |
 <section id="display-options-ci-level-decimals-labwidth-title" class="level2">
 <h2 class="anchored" data-anchor-id="display-options-ci-level-decimals-labwidth-title">Display options: <code>ci</code>, <code>level()</code>, <code>decimals()</code>, <code>labwidth()</code>, <code>title()</code></h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>meinequality race, models(basemod medmod) <span class="kw">ci</span> <span class="dv">level</span>(90) decimals(4) <span class="bn">title</span>(<span class="st">"ME inequality of race"</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>meinequality race, models(basemod medmod) <span class="kw">ci</span> <span class="dv">level</span>(90) decimals(4) <span class="bn">title</span>(<span class="st">"ME inequality of race"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (basemod) is:
      logit union i.race c.age i.married
 Model 2 (medmod) is:

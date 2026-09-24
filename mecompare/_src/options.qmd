@@ -167,7 +167,8 @@ mecompare i.married age, models(m1 m2) statistics(est se ll ul)
 For a continuous variable the default is a one-unit change, centered on the
 observed value (half a unit below to half a unit above). `amount()` takes a
 number, `sd`, `2sd`, `trimrange` (5th to 95th percentile), `range` (minimum
-to maximum), or `rate` (the instantaneous rate of change, `dydx` in `margins`). If a single value is listed 
+to maximum), `p#-p#` (from one percentile to another, e.g. `p10-p90`), or
+`rate` (the instantaneous rate of change, `dydx` in `margins`). If a single value is listed
 in `amount()`, it is applied to all continuous variables. When multiple values 
 are listed in `amount()`, they are applied in the order of the continuous 
 variables in the *varlist*.
@@ -187,6 +188,31 @@ mecompare age hours, models(m1 m2) amount(10 sd)
 ```{.stata-run}
 <<dd_do>>
 mecompare age, models(m1 m2) amount(rate)
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1 m2) amount(p10-p90)
+<</dd_do>>
+```
+
+Multiple amounts for one variable can be specified in parentheses, with each
+effect reported in its own rows. E.g., `amount((one sd rate))` would apply all
+three to every continuous variable. Whereas `amount((one sd) 5)` gives the
+first continuous variable in *varlist* two amounts (one and sd) and the second
+continuous variable one amount (5). A list in parentheses cannot be combined
+with a value list in `start()` or with `end()`.
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m1) amount((one sd rate))
+<</dd_do>>
+```
+
+```{.stata-run}
+<<dd_do>>
+mecompare age hours, models(m1) amount((one sd) 5)
 <</dd_do>>
 ```
 
@@ -231,6 +257,46 @@ mecompare age, models(m1) start(age=35) end(age=40)
 mecompare age, models(m1) start(age=(35 40)) end(age=(40 45))
 <</dd_do>>
 ```
+
+## `cochange()` -- variables that change along with the focal variable
+
+`cochange(varlist)` specifies variables that change along with the focal
+variable instead of being held constant, e.g. mediators. The table then
+reports two marginal effects of the focal variable: the usual one, and one
+labeled *with co-change* in which the co-change variables change too.
+`metest` can be used to test the difference between the two. Only one focal
+variable may be given in the *varlist*.
+
+`start()` and `end()` set the values the co-change variables change from and
+to. Here, the effect of a college degree, and the effect of a college degree
+when the hourly wage also changes from 6 to 9 dollars:
+
+```{.stata-run}
+<<dd_do>>
+quietly logit union age hours wage ttl_exp i.race i.collgrad i.married, vce(robust)
+estimates store m3
+
+mecompare i.collgrad, models(m3) cochange(wage) start(wage=6) end(wage=9)
+metest 2 - 1
+<</dd_do>>
+```
+
+Without `start()` and `end()`, co-change variables change as focal variables
+do (see `amount()`). Here, age and total work experience both increase by
+five years:
+
+```{.stata-run}
+<<dd_do>>
+mecompare age, models(m3) cochange(ttl_exp) amount(5)
+<</dd_do>>
+```
+
+A nominal focal or co-change variable with three or more categories needs the
+two levels it changes between in `start()` and `end()`, e.g. `start(race=1)
+end(race=2)`. `cochange()` cannot be combined with a *numlist* of values in
+`start()` or `end()`, multiple amounts for one variable in `amount()`,
+`amount(rate)`, `groupsd`, `pwcompare`, or `mcompare()`. The
+[generalized marginal effects](generalized.html) page has a longer example.
 
 ## `covariates()` and `atmeans` -- values of the other variables
 
@@ -288,6 +354,20 @@ mecompare i.race, models(m1 m2) pwcompare
 <</dd_do>>
 ```
 
+## `mcompare()` -- adjusting for multiple comparisons
+
+`mcompare(method)` adjusts the p-values (and confidence intervals, when
+shown) of the contrasts of nominal focal variables for multiple comparisons;
+*method* is `bonferroni` or `sidak`. A variable's contrasts within one model
+form a set, and its Difference rows form a set of their own. The estimates,
+`e(b)` and `e(V)` do not change.
+
+```{.stata-run}
+<<dd_do>>
+mecompare i.race, models(m1 m2) pwcompare mcompare(bonferroni)
+<</dd_do>>
+```
+
 ## `meinequality` and `totalme` -- summary measures
 
 `meinequality` adds the marginal-effect inequality summary of
@@ -317,10 +397,13 @@ The `groups` option tells `mecompare` that the models were fit to
 non-overlapping samples, so each
 model's marginal effects are averaged over its own sample and the
 **Difference** row compares the effects across the groups (with three or more
-groups each group's effects are listed and `metest` tests the differences).
+groups each group's effects are listed and `metest` can be used to test the
+differences).
 `groupnames()` labels the rows; `groupme` (two groups only) adds the average difference in the outcome between the groups;
-`groupsd` uses each group's own SD for `amount(sd)`; we generally do not 
-recommend `groupsd`.
+`groupsd` uses each group's own SD for `amount(sd)`; we generally do not
+recommend `groupsd`. `group(varname)`, the syntax of earlier versions, is also
+accepted; *varname* must take one value in each model's sample and a different
+value in each model.
 
 ```{.stata-run}
 <<dd_do>>

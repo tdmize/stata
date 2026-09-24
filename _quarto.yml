@@ -41,6 +41,7 @@ website:
         - mecompare/getting-started.qmd
         - mecompare/options.qmd
         - mecompare/plotting.qmd
+        - mecompare/generalized.qmd
         - section: "Examples"
           contents:
             - section: "Mize, Doan & Long (2019)"

@@ -155,7 +155,7 @@ o Otherwise the single model in e() is used, and it is labelled `m1` in the tabl
 
 ### Amount of change and related options for continuous independent variables
 
-**`amount(list)`** specifies the amount of change to be computed for the continuous independent variables. If only one value is specified in `amount( )`, this amount of change is applied to all of the continuous independent variables. To specify different amounts for each continuous independent variable, amounts in *list* are applied in the order of the continuous independent variables. E.g. In a *varlist* of *c.age i.woman c.income i.race c.polviews* there are three continuous variables, of which changes of (1) age + sd, (2) income + 5, and (3) polviews + one can be specified with `amount(sd 5 one)`
+**`amount(list)`** specifies the amount of change to be computed for the continuous independent variables. If only one value is specified in `amount( )`, this amount of change is applied to all of the continuous independent variables. To specify different amounts for each continuous independent variable, amounts in *list* are applied in the order of the continuous independent variables. E.g. In a *varlist* of *c.age i.woman c.income i.race c.polviews* there are three continuous variables, of which changes of (1) age + sd, (2) income + 5, and (3) polviews + one can be specified with `amount(sd 5 one)`. Multiple amounts for one variable can be specified in parentheses, with each effect reported in its own rows. E.g., `amount((one sd rate))` would apply all three to every continuous variable. Whereas `amount((one sd) 5)` gives the first continuous variable in *varlist* two amounts (one and sd) and the second continuous variable one amount (5). A list in parentheses cannot be combined with a value list in `start()` or with `end()`.
 
 | Name | Description |
 |:--|:--|
@@ -165,6 +165,7 @@ o Otherwise the single model in e() is used, and it is labelled `m1` in the tabl
 | **twosd** | A two standard deviation change (Gelman 2008), useful for comparing continuous effects to categorical effects. **2sd** is a synonym |
 | **trimrange** | A change across the trimmed range of the variable, from its 5th to its 95th percentile. Suggested by Mize and Han (2025) as a more robust alternative to 2sd for comparing effects across variables. |
 | **range** | A change across the full observed range of the variable, from its minimum to its maximum |
+| **p***#***-p***#* | A change from one percentile of the variable to another, e.g. **p10-p90** for its 10th to its 90th percentile; **trimrange** is **p5-p95** |
 | **rate** | An instantaneous rate of change, i.e. the derivative, approximated with a small centered change; **slope** and **dydx** are synonyms |
 
 **`centered`** Changes for continuous independent variables are **centered** by default: computed from half the amount below to half the amount above, e.g., [mean - SD/2] to [mean + SD/2]. The default if no option is specified.
@@ -182,6 +183,12 @@ One continuous focal variable may be given a *numlist* of starting values, e.g. 
 <span id="end"></span>
 
 **`end(list)`** sets where the change of a focal variable ends, e.g. `start(age=35) end(age=40)` for the change from age 35 to age 40. `end()` is used with `start()`: every variable in `end()` must also be in `start()`, and for that variable `amount()`, `centered` and `uncentered` do not apply. With a *numlist* in both, e.g. `start(age=(35 40)) end(age=(40 45))`, the values pair up: one row for the change from 35 to 40 and one for the change from 40 to 45.
+
+<span id="cochange"></span>
+
+**`cochange(varlist)`** specifies variables that change along with the focal variable instead of being held constant, e.g. mediators. The table then reports two marginal effects of the focal variable: the usual one, and one labeled *with co-change* in which the co-change variables change too. `metest` can be used to test the difference between the two. Only one focal variable may be given in the *varlist*. `start()` and `end()` set the values the co-change variables change from and to; without them, co-change variables change as focal variables do (see `amount()`). E.g., `mecompare i.college, cochange(income) start(income=40) end(income=60)` reports the effect of college, and the effect of college when income also changes from 40 to 60.
+
+A nominal focal or co-change variable with three or more categories needs the two levels it changes between in `start()` and `end()`, e.g. `start(race=1) end(race=2)`. `cochange()` cannot be combined with a *numlist* of values in `start()` or `end()`, multiple amounts for one variable in `amount()`, `amount(rate)`, `groupsd`, `pwcompare`, or `mcompare()`.
 
 <span id="covariates"></span>
 
@@ -211,6 +218,8 @@ A variable may be both a focal variable and a `by()` variable, e.g. `mecompare w
 
 **`pwcompare`** for focal variables specified as nominal (i.), the `pwcompare` option reports *all* pairwise contrasts between levels instead of the default of each non-base level versus the base level. Continuous and binary focal variables are unaffected.
 
+**`mcompare(method)`** adjusts the p-values (and confidence intervals, when shown) of the contrasts of nominal focal variables for multiple comparisons; *method* is `bonferroni` or `sidak`. A variable's contrasts within one model form a set, and its Difference rows form a set of their own. The estimates, e(b) and e(V) do not change.
+
 **`meinequality`[`(`*type*`)`]** for focal variables specified as nominal (i.), the `meinequality` option reports a *marginal effect inequality* summary statistic immediately above that variable's contrasts. The ME inequality captures how much the outcome differs across the levels of the focal variable overall, as a weighted average of the absolute pairwise level contrasts (see Mize and Han 2025). *type* selects the weighting:
 
 `weighted` (the default) weights each pairwise contrast by the share of the sample in the two levels being contrasted.
@@ -233,7 +242,7 @@ With `groups`, each model's contrasts are weighted by its own sample's shares; s
 
 ### Group options
 
-**`groups`** specifies that the models in `models( )` were fit on distinct (non-overlapping) samples -- one model per group -- and that `mecompare` should compare marginal effects across the groups. Each model's estimation sample defines its group; the samples must not overlap. With two groups the cross-group differences are reported; with three or more, each group's marginal effects are listed and [metest](../metest/help.html) tests the differences.
+**`groups`** specifies that the models in `models( )` were fit on distinct (non-overlapping) samples -- one model per group -- and that `mecompare` should compare marginal effects across the groups. Each model's estimation sample defines its group; the samples must not overlap. With two groups the cross-group differences are reported; with three or more, each group's marginal effects are listed and [metest](../metest/help.html) can be used to test the differences. `group(varname)`, the syntax of earlier versions, is also accepted; *varname* must take one value in each model's sample and a different value in each model.
 
 **`groupnames(name1 name2 ...)`** labels the groups in the output, in the order of `models( )`; by default the groups are labeled by their model names. Requires the `groups` option. Each name is truncated to 10 characters.
 

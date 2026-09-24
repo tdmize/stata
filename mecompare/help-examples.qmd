@@ -280,8 +280,8 @@ hours(min-max)                   |
 ## Labeling the models
 
 ```{.stata-run}
-. mecompare age collgrad race hours, models(basemod medmod) mod1name(Base Model) mod2name(Mediatio
-> n Model)
+. mecompare age collgrad race hours, models(basemod medmod) mod1name(Base Model) mod2name(Mediation 
+> Model)
 
 
 
@@ -1244,8 +1244,8 @@ College Degree  |      0.331      0.047    7.051   0.000        0.239       0.42
 
 . estimates store m1
 
-. logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(r
-> obust)
+. logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age, vce(rob
+> ust)
 
 Iteration 0:  Log pseudolikelihood =  -5696.026  
 Iteration 1:  Log pseudolikelihood =  -5415.347  
@@ -1304,8 +1304,8 @@ Black Protestant  |     -0.168      0.100   -1.673   0.094       -0.365       0.
 
 . estimates store m2
 
-. logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.ag
-> e, vce(robust)
+. logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age,
+>  vce(robust)
 
 Iteration 0:  Log pseudolikelihood =  -5696.026  
 Iteration 1:  Log pseudolikelihood =   -5397.02  
@@ -1365,8 +1365,8 @@ Black Protestant  |     -0.161      0.101   -1.605   0.108       -0.359       0.
 
 . estimates store m3
 
-. logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year 
-> c.age##c.age, vce(robust)
+. logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year c.
+> age##c.age, vce(robust)
 
 Iteration 0:  Log pseudolikelihood =  -5696.026  
 Iteration 1:  Log pseudolikelihood = -5390.3082  
@@ -1437,11 +1437,11 @@ Model 1 (m1) is:
 Model 2 (m2) is:
      logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
 Model 3 (m3) is:
-     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c
-> .age
+     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.a
+> ge
 Model 4 (m4) is:
-     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.ye
-> ar c.age##c.age
+     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year
+>  c.age##c.age
 
 
 Predicting: Pr(vhappy)

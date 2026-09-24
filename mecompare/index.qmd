@@ -19,7 +19,9 @@ samples.
 automates comparisons among them. Some examples are comparing effect sizes
 across predictors, tests of interaction (second differences), and the summary
 measures of Mize and Han (2025): the ME inequality of a nominal predictor and
-the Total ME across the categories of a multi-category outcome.
+the Total ME across the categories of a multi-category outcome. It also
+calculates [generalized marginal effects](generalized.html), in which other
+variables, e.g. mediators, change along with the focal variable.
 
 More generally, `mecompare` can be used for most any test of marginal effects
 within or across models. Every marginal effect in its table is posted to `e(b)`

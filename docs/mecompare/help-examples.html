@@ -171,6 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -631,8 +637,8 @@ hours(min-max)                   |
 <section id="labeling-the-models" class="level2">
 <h2 class="anchored" data-anchor-id="labeling-the-models">Labeling the models</h2>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mecompare age collgrad race hours, models(basemod medmod) mod1name(Base Model) mod2name(Mediatio</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>n Model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mecompare age collgrad race hours, models(basemod medmod) mod1name(Base Model) mod2name(Mediation </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Model 1 (basemod) is:
      logit union i.married age i.race hours i.collgrad
 Model 2 (medmod) is:
@@ -1490,8 +1496,8 @@ College Degree  |      0.331      0.047    7.051   0.000        0.239       0.42
           _cons |     -0.923      0.028  -32.493   0.000       -0.979      -0.867
 ---------------------------------------------------------------------------------</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb97"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m1</span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(<span class="fu">r</span></span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>obust)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.age, <span class="kw">vce</span>(rob</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>ust)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Iteration 0:  Log pseudolikelihood =  -5696.026  
 Iteration 1:  Log pseudolikelihood =  -5415.347  
 Iteration 2:  Log pseudolikelihood = -5412.2188  
@@ -1547,8 +1553,8 @@ Black Protestant  |     -0.168      0.100   -1.673   0.094       -0.365       0.
             _cons |     -0.439      0.242   -1.814   0.070       -0.913       0.035
 -----------------------------------------------------------------------------------</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb99"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m2</span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.ag</span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="fu">e</span>, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.age##c.age,</span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Iteration 0:  Log pseudolikelihood =  -5696.026  
 Iteration 1:  Log pseudolikelihood =   -5397.02  
 Iteration 2:  Log pseudolikelihood = -5393.5302  
@@ -1605,8 +1611,8 @@ Black Protestant  |     -0.161      0.101   -1.605   0.108       -0.359       0.
             _cons |     -0.332      0.243   -1.364   0.172       -0.808       0.145
 -----------------------------------------------------------------------------------</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb101"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> m3</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> </span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>c.age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="kw">logit</span> vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.<span class="fu">year</span> c.</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>age##c.age, <span class="kw">vce</span>(<span class="kw">robust</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>Iteration 0:  Log pseudolikelihood =  -5696.026  
 Iteration 1:  Log pseudolikelihood = -5390.3082  
 Iteration 2:  Log pseudolikelihood = -5386.6127  
@@ -1671,11 +1677,11 @@ Black Protestant  |     -0.151      0.101   -1.498   0.134       -0.348       0.
 Model 2 (m2) is:
      logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
 Model 3 (m3) is:
-     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c
-&gt; .age
+     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.a
+&gt; ge
 Model 4 (m4) is:
-     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.ye
-&gt; ar c.age##c.age
+     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year
+&gt;  c.age##c.age
 
 
 Predicting: Pr(vhappy)

@@ -54,11 +54,11 @@ Model 1 (m1) is:
 Model 2 (m2) is:
      logit vhappy i.college i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.age
 Model 3 (m3) is:
-     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c
-> .age
+     logit vhappy i.college c.wages i.married i.parent i.woman i.conserv i.reltrad i.year c.age##c.a
+> ge
 Model 4 (m4) is:
-     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.ye
-> ar c.age##c.age
+     logit vhappy i.college c.wages c.occprest i.married i.parent i.woman i.conserv i.reltrad i.year
+>  c.age##c.age
 
 
 Predicting: Pr(vhappy)

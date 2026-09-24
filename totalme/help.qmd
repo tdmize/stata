@@ -95,7 +95,7 @@ Comparing two `xtcloglog` models requires each to be fitted with `intpoints(24)`
 
 ### Groups options
 
-**`groups`** specifies that the two models used for comparison are fit on distinct samples. Under `groups` each model's marginal effects are averaged over its own sample. When the `groups` option is specified, the models listed in the `models(list)` option must have been fit separately across distinct samples (e.g., distinct groups in the data).
+**`groups`** specifies that the two models used for comparison are fit on distinct samples. Under `groups` each model's marginal effects are averaged over its own sample. When the `groups` option is specified, the models listed in the `models(list)` option must have been fit separately across distinct samples (e.g., distinct groups in the data). `group(varname)`, the syntax of earlier versions, is also accepted; *varname* must take one value in each model's sample and a different value in each model.
 
 <span id="amount"></span>
 
@@ -111,6 +111,7 @@ Comparing two `xtcloglog` models requires each to be fitted with `intpoints(24)`
 | **2sd** | A two standard deviation change (Gelman 2008), useful for comparing continuous effects to categorical effects; centered by default, from [x - SD] to [x + SD]. **twosd** is a synonym |
 | **trimrange** | A change across the trimmed range of the variable, from its 5th to its 95th percentile in the estimation sample (Mize and Han 2025); `start()` and centering do not apply |
 | **range** | A change across the full observed range of the variable, from its minimum to its maximum in the estimation sample; `start()` and centering do not apply |
+| **p***#***-p***#* | A change from one percentile of the variable to another in the estimation sample, e.g. **p10-p90** for its 10th to its 90th percentile; **trimrange** is **p5-p95**. `start()` and centering do not apply |
 | **rate** | An instantaneous rate of change, i.e. the derivative, approximated with a small centered change; **slope** and **dydx** are synonyms. Centering does not apply |
 
 **`centered`** Changes for continuous independent variables are **centered** by default: computed from half the amount below to half the amount above, e.g. [mean - SD/2] to [mean + SD/2]. The default.

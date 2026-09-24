@@ -170,6 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -381,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><code>mecompare</code> calculates marginal effects and compares them across models. It implements the framework of Mize, Doan, and Long (2019): the models are combined using seemingly-unrelated estimation with <a href="../suest2/index.html"><code>suest2</code></a> so that the difference in marginal effects across models accounts for cross-model covariances of effects, even though the models were estimated separately.</p>
 <p>Some examples of the cross-model comparisons <code>mecompare</code> can be used for are effects across nested models (e.g., mediation and confounding), across alternative predictors, across different outcomes, across different model types (e.g., ordinal versus nominal), and across models fit to separate groups or samples.</p>
-<p><code>mecompare</code> also calculates marginal effects within a single model and automates comparisons among them. Some examples are comparing effect sizes across predictors, tests of interaction (second differences), and the summary measures of Mize and Han (2025): the ME inequality of a nominal predictor and the Total ME across the categories of a multi-category outcome.</p>
+<p><code>mecompare</code> also calculates marginal effects within a single model and automates comparisons among them. Some examples are comparing effect sizes across predictors, tests of interaction (second differences), and the summary measures of Mize and Han (2025): the ME inequality of a nominal predictor and the Total ME across the categories of a multi-category outcome. It also calculates <a href="generalized.html">generalized marginal effects</a>, in which other variables, e.g.&nbsp;mediators, change along with the focal variable.</p>
 <p>More generally, <code>mecompare</code> can be used for most any test of marginal effects within or across models. Every marginal effect in its table is posted to <code>e(b)</code> and <code>e(V)</code>, so custom tests – any contrast, ratio, or joint test of the marginal effects – are accomplished with <a href="../metest/index.html"><code>metest</code></a>.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>

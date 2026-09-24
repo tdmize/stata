@@ -629,8 +629,7 @@ ordered by the first `by()` variable and then the second.
 . use "https://tdmize.github.io/data/data/nli_gss", clear
 (GSS 1972-2016 | NLI NonLinear Interaction Effects | 2018-12-17)
 
-. drop if missing(sameokB, year1976, conviewSS, age, white, male, income, married, college, conser
-> v)
+. drop if missing(sameokB, year1976, conviewSS, age, white, male, income, married, college, conserv)
 (43,258 observations deleted)
 
 . 

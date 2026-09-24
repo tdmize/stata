@@ -171,6 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Plotting and tabulating results</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/generalized.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized marginal effects</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -494,31 +500,39 @@ south                            |
 <tbody>
 <tr class="odd">
 <td><code>models(name1 [name2 ...])</code></td>
-<td>The stored estimates to compare. One model gives marginal effects for that model alone; with three or more, every model’s effects are listed and <code>metest</code> tests the comparisons.</td>
+<td>The stored estimates to compare. One model gives marginal effects for that model alone; with three or more, every model’s effects are listed and <code>metest</code> can be used to test the comparisons.</td>
 </tr>
 <tr class="even">
 <td><code>amount()</code></td>
-<td>Size of the change for a continuous variable: a number, <code>sd</code> or <code>2sd</code> (one or two standard deviations), <code>trimrange</code> (5th to 95th percentile), <code>range</code> (minimum to maximum), or <code>rate</code> (the instantaneous rate of change).</td>
+<td>Size of the change for a continuous variable: a number, <code>sd</code> or <code>2sd</code> (one or two standard deviations), <code>trimrange</code> (5th to 95th percentile), <code>range</code> (minimum to maximum), <code>p#-p#</code> (from one percentile to another, e.g.&nbsp;<code>p10-p90</code>), or <code>rate</code> (the instantaneous rate of change). Several amounts for one variable go in parentheses, e.g.&nbsp;<code>amount((one sd rate))</code>.</td>
 </tr>
 <tr class="odd">
 <td><code>start()</code>, <code>end()</code></td>
 <td>Where the change in a continuous variable begins, <code>start(varname=#)</code> or <code>start(atmeans)</code>, and, with <code>end(varname=#)</code>, where it ends.</td>
 </tr>
 <tr class="even">
+<td><code>cochange(varlist)</code></td>
+<td>Variables that change along with the focal variable, e.g.&nbsp;mediators; the table adds the effect <em>with co-change</em> (see <a href="generalized.html">generalized marginal effects</a>).</td>
+</tr>
+<tr class="odd">
 <td><code>covariates(varname=# ...)</code>, <code>atmeans</code></td>
 <td>Hold other variables at specified values or at their means (the default averages over the observed values).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>by(varlist)</code></td>
 <td>Marginal effects within each level of another variable, in one table, so that they can be compared with <code>metest</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>over(varlist)</code></td>
 <td>Marginal effects within subsamples defined by another variable.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>pwcompare</code></td>
 <td>All pairwise contrasts among the levels of a nominal variable, not just contrasts with the base level.</td>
+</tr>
+<tr class="odd">
+<td><code>mcompare(method)</code></td>
+<td>Adjust the p-values of a nominal variable’s contrasts for multiple comparisons (<code>bonferroni</code> or <code>sidak</code>).</td>
 </tr>
 <tr class="even">
 <td><code>groups</code></td>
