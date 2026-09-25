@@ -411,11 +411,11 @@ observed values -- in the Health and Retirement Study 2020:
 . use "https://tdmize.github.io/data/data/cda_hrs", clear
 (cda_hrs.dta | Health & Retirement Study 2020)
 
-. drop if missing(cogB, marstatB, college, woman, age)
+. drop if missing(cogB, marstatB, collegeB, woman, age)
 (761 observations deleted)
 
 . 
-. logit cogB i.college i.marstatB i.woman c.age, or
+. logit cogB i.collegeB i.marstatB i.woman c.age, or
 
 Iteration 0:  Log likelihood = -2466.5782  
 Iteration 1:  Log likelihood = -2311.9677  
@@ -446,7 +446,7 @@ bachelor's or higher  |      0.233      0.037   -9.269   0.000        0.171     
 Note: _cons estimates baseline odds.
 
 . 
-. margins college, post
+. margins collegeB, post
 
 Predictive margins                                      Number of obs = 14,962
 Model VCE: OIM

@@ -173,9 +173,9 @@ After margins, post, a number refers to a row of the `margins` table. E.g., a ri
 
 ```stata
 use https://tdmize.github.io/data/data/cda_hrs, clear
-drop if missing(cogB, marstatB, college, woman, age)
-logit cogB i.college i.marstatB i.woman c.age, or
-margins college, post
+drop if missing(cogB, marstatB, collegeB, woman, age)
+logit cogB i.collegeB i.marstatB i.woman c.age, or
+margins collegeB, post
 metest 1 / 2
 ```
 

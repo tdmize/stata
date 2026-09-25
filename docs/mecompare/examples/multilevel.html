@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Group comparisons – Stata software — Trenton D. Mize</title>
+<title>Multilevel models – Stata software — Trenton D. Mize</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,8 +71,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../mecompare/examples/multilevel.html" rel="next">
-<link href="../../mecompare/examples/chapter-interactions.html" rel="prev">
+<link href="../../mecompare/examples/panel.html" rel="next">
+<link href="../../mecompare/examples/chapter-groups.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-summary-measures.html">Mize &amp; Han (forthcoming)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-groups.html">Group comparisons</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/multilevel.html">Multilevel and panel models</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/multilevel.html">Multilevel models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/chapter-groups.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../mecompare/examples/chapter-groups.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Group comparisons</span></a>
   </div>
 </li>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../mecompare/examples/multilevel.html" class="sidebar-item-text sidebar-link">
+  <a href="../../mecompare/examples/multilevel.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Multilevel models</span></a>
   </div>
 </li>
@@ -381,9 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#separate-models-for-each-group-table-6" id="toc-separate-models-for-each-group-table-6" class="nav-link active" data-scroll-target="#separate-models-for-each-group-table-6">Separate models for each group (Table 6)</a></li>
-  <li><a href="#which-observations-a-single-model-with-by-over-or-separate-models" id="toc-which-observations-a-single-model-with-by-over-or-separate-models" class="nav-link" data-scroll-target="#which-observations-a-single-model-with-by-over-or-separate-models">Which observations: a single model with <code>by()</code>, <code>over()</code>, or separate models</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#ordinary-and-multilevel-logit" id="toc-ordinary-and-multilevel-logit" class="nav-link active" data-scroll-target="#ordinary-and-multilevel-logit">Ordinary and multilevel logit</a></li>
   </ul>
 </nav>
 </nav>
@@ -394,10 +392,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-summary-measures.html">Mize &amp; Han (forthcoming)</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/chapter-groups.html">Group comparisons</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Examples</li><li class="breadcrumb-item"><a href="../../mecompare/examples/multilevel.html">Multilevel and panel models</a></li><li class="breadcrumb-item"><a href="../../mecompare/examples/multilevel.html">Multilevel models</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Group comparisons</h1>
-<p class="subtitle lead">Section 4.2 of Mize and Han (forthcoming): separate models for each group, and which observations to use</p>
+<h1 class="title">Multilevel models</h1>
+<p class="subtitle lead">Students nested in schools: mixed-effects logit</p>
 </div>
 
 
@@ -414,164 +412,123 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Group comparisons span interaction effects and cross-model comparisons. A single interaction term lets one variable’s effect differ across groups; at the other end of the spectrum, separate models for each group let <em>every</em> effect differ. Mize and Han (forthcoming) discuss the trade-off and show both. This page reproduces Table 6 of the chapter (separate models for men and women) and its Section 4.2.c example of the choice of observations when a single model is used.</p>
-<section id="separate-models-for-each-group-table-6" class="level2">
-<h2 class="anchored" data-anchor-id="separate-models-for-each-group-table-6">Separate models for each group (Table 6)</h2>
-<p>The same happiness model as the chapter’s Section 4.1 (the <a href="nested-models.html">nested models</a> example) is fit separately for men and for women, on the 2000–2021 GSS respondents who are employed. The <code>groups</code> option tells <code>mecompare</code> that the two models were fit to non-overlapping samples, so each model’s marginal effects are averaged over its own group; <code>groupnames()</code> labels the rows. With no varlist, every predictor is reported; <code>amount(sd)</code> sets a standard-deviation change for age, and <code>pwcompare</code> gives all of the race-ethnicity contrasts.</p>
+<p><code>mecompare</code> works after multilevel models such as <code>melogit</code>. The marginal effects average over the random effects (the default prediction), so they are changes in predicted probabilities, as after an ordinary <code>logit</code>.</p>
+<p>The example uses wave 1 of Add Health: about 5,800 students in 132 schools. The outcome is being a current smoker. The predictors are sex, age, race, and whether the student’s mother has a college degree, plus a school-level variable: the share of students in the school whose mother has a college degree.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/gss_cme"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(gss_cme.dta | GSS 1972 - 2016 Weighted | 2018-07-10)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">year</span> &lt; 2000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(38,116 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> employed != 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(9,556 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(vhappy, college, wages, occprest, age, married, parent, woman, conserv, race)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(5,043 observations deleted)
-
-. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.conserv i.race c.age##c.age <span class="co">///</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              <span class="kw">if</span> woman == 0, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> menmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/ah_si_2026"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(ah-si.dta | Add Health Waves 1-6: Cleaned for MCAP SI)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> wave == 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(22,963 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">rename</span> <span class="kw">cluster</span> school</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> <span class="fu">missing</span>(smoker, male, age, race, momeduc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>(679 observations deleted)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">generate</span> momcollege = momeduc &gt;= 4</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">bysort</span> school: <span class="kw">egen</span> school_momcollege = <span class="kw">mean</span>(momcollege)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> vhappy i.college i.married i.parent i.conserv i.race c.age##c.age <span class="co">///</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              <span class="kw">if</span> woman == 1, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> wommod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> melogit smoker i.male c.age i.race i.momcollege c.school_momcollege || school:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> multilevel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>With no variable listed before the comma, <code>mecompare</code> computes marginal effects for every predictor. Age and the school’s share of college-educated mothers are changed by one standard deviation:</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mecompare, models(menmod wommod) groups groupnames(Men Women) amount(<span class="fu">sd</span>) pwcompare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (menmod) is:
-     logit vhappy i.college i.married i.parent i.conserv i.race c.age##c.age
-Model 2 (wommod) is:
-     logit vhappy i.college i.married i.parent i.conserv i.race c.age##c.age
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mecompare, models(multilevel) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>Predicting: Marginal predicted mean
 
+Marginal effects (N_multilevel=5825)
 
-Predicting: Pr(vhappy)
-
-Marginal effects and cross-model differences (N_Men=4932) (N_Women=4819)
-
-                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+                                 |  ME #   Estimate         SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-college                          |                                       
-         College  - No Col D     |                                       
-                             Men |     1      0.041      0.014      0.004
-                           Women |     2      0.064      0.014      0.000
-                      Difference |     3     -0.023      0.020      0.245
----------------------------------+---------------------------------------
-married                          |                                       
-          Married - Not Marr     |                                       
-                             Men |     4      0.197      0.014      0.000
-                           Women |     5      0.204      0.014      0.000
-                      Difference |     6     -0.008      0.020      0.703
----------------------------------+---------------------------------------
-parent                           |                                       
-           Parent - No Child     |                                       
-                             Men |     7      0.023      0.016      0.153
-                           Women |     8     -0.045      0.017      0.006
-                      Difference |     9      0.068      0.023      0.003
----------------------------------+---------------------------------------
-conserv                          |                                       
-         Conserva - Not Cons     |                                       
-                             Men |    10      0.046      0.014      0.001
-                           Women |    11      0.046      0.014      0.001
-                      Difference |    12     -0.000      0.020      0.988
----------------------------------+---------------------------------------
-race                             |                                       
-               black - white     |                                       
-                             Men |    13     -0.002      0.021      0.911
-                           Women |    14     -0.020      0.019      0.291
-                      Difference |    15      0.017      0.028      0.541
-               other - white     |                                       
-                             Men |    16     -0.035      0.021      0.096
-                           Women |    17     -0.015      0.023      0.529
-                      Difference |    18     -0.020      0.031      0.523
-               other - black     |                                       
-                             Men |    19     -0.032      0.028      0.244
-                           Women |    20      0.005      0.028      0.858
-                      Difference |    21     -0.037      0.039      0.341
+male                             |                                       
+               Male - Female     |                                       
+                      multilevel |     1      0.010      0.011      0.338
 ---------------------------------+---------------------------------------
 age + SD (centered)              |                                       
-                             Men |    22     -0.010      0.008      0.176
-                           Women |    23     -0.005      0.008      0.465
-                      Difference |    24     -0.005      0.011      0.654
-
-
-NOTE: SD's are based on all 9751 observations pooled across both groups.</code></pre>
-</div>
-<p>Each block is one marginal effect: the effect for men, the effect for women, and the <strong>Difference</strong> (men minus women, the order of <code>models()</code>). Both married men and married women report being happier than their unmarried counterparts, and college degrees and conservatism have similar positive effects for both genders. The one significant gender difference is the effect of being a parent: it does not affect the probability of being very happy for men, but women who are parents are less likely to be very happy than women who are not.</p>
-</section>
-<section id="which-observations-a-single-model-with-by-over-or-separate-models" class="level2">
-<h2 class="anchored" data-anchor-id="which-observations-a-single-model-with-by-over-or-separate-models">Which observations: a single model with <code>by()</code>, <code>over()</code>, or separate models</h2>
-<p>When the groups are in one model, there is a choice of which observations to use when calculating each group’s marginal effect. The chapter’s example compares Germany and Nigeria in the World Values Survey, two countries with very different age distributions, in a linear regression of acceptance of same-sex relationships on age (with a squared term) and country.</p>
-<div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"https://tdmize.github.io/data/data/lvm_wvs6"</span>, <span class="kw">clear</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(World Values Survey 6 2010 - 2014 | LVM | 2019-01-28)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> age &lt; 18</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(93 observations deleted)</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> country == 276 | country == 566</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>(85,669 observations deleted)
-
-. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> Jgaylesbian c.age##c.age i.country, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> glmod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The default – and what <code>by()</code> does – is to use <em>all</em> observations for every group’s marginal effect: everyone is set to Germany, then everyone to Nigeria, and the effect of a ten-year increase in age is averaged over the whole sample each time. This controls for the two countries’ different age distributions. Because this model has no age-by-country interaction, the counterfactual effects are identical:</p>
-<div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(glmod) amount(10) <span class="kw">by</span>(country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Predicting: Linear prediction
-
-Marginal effects (N_glmod=3735)
-
-                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+                      multilevel |     2      0.061      0.006      0.000
 ---------------------------------+---------------------------------------
-age + 10 (centered)              |                                       
-                         Germany |     1     -0.174      0.033      0.000
-                         Nigeria |     2     -0.174      0.033      0.000</code></pre>
-</div>
-<p><code>over()</code> instead uses only each country’s own respondents. The effect of age is nonlinear, so where a country’s respondents sit on the age curve changes the average effect, and the two countries now differ even though they share every coefficient:</p>
-<div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(glmod) amount(10) <span class="bn">over</span>(country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Predicting: Linear prediction
-
-Marginal effects (N_glmod=3735)
-
-                                 |  ME #   Estimate  Robust SE      P&gt;|z|
+race                             |                                       
+               Black - White     |                                       
+                      multilevel |     3     -0.167      0.013      0.000
+              Latinx - White     |                                       
+                      multilevel |     4     -0.085      0.020      0.000
+               Asian - White     |                                       
+                      multilevel |     5     -0.129      0.028      0.000
+               Other - White     |                                       
+                      multilevel |     6      0.000      0.047      1.000
 ---------------------------------+---------------------------------------
-age + 10 (centered)              |                                       
-                         Germany |     1     -0.311      0.032      0.000
-                         Nigeria |     2     -0.020      0.051      0.701</code></pre>
+momcollege                       |                                       
+                       1 - 0     |                                       
+                      multilevel |     7     -0.060      0.012      0.000
+---------------------------------+---------------------------------------
+school momcollege + SD (centered |                                       
+                      multilevel |     8     -0.008      0.008      0.335</code></pre>
 </div>
-<p>Separate models with <code>groups</code>, as in Table 6 above, go one step further: each country has its own coefficients <em>and</em> its own observations, so the cross-model difference reflects both.</p>
+<p>Black students are 16.7 percentage points less likely to smoke than White students. A student whose mother has a college degree is 6.0 points less likely to smoke, but the share of college-educated mothers in the school adds little beyond that: a one standard deviation increase is associated with a 0.8 point reduction (p = .34).</p>
+<section id="ordinary-and-multilevel-logit" class="level2">
+<h2 class="anchored" data-anchor-id="ordinary-and-multilevel-logit">Ordinary and multilevel logit</h2>
+<p>The coefficients of a multilevel logit are on a different scale than those of an ordinary logit, so they cannot be compared directly; the marginal effects can. Here the same model is fit as an ordinary logit, which ignores the schools, and compared with the multilevel logit. Fit both models without <code>vce(robust)</code>: <code>mecompare</code> clusters the standard errors on school.</p>
 <div class="stata-run">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> Jgaylesbian c.age##c.age <span class="kw">if</span> country == 276, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> germany</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">regress</span> Jgaylesbian c.age##c.age <span class="kw">if</span> country == 566, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> nigeria</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> smoker i.male c.age i.race i.momcollege c.school_momcollege</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> ordinary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre class="stata-output"><code>. </code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mecompare age, models(germany nigeria) groups groupnames(Germany Nigeria) amount(10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre class="stata-output"><code>Model 1 (germany) is:
-     regress Jgaylesbian c.age##c.age
-Model 2 (nigeria) is:
-     regress Jgaylesbian c.age##c.age
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mecompare, models(ordinary multilevel) amount(<span class="fu">sd</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="stata-output"><code>NOTE: mecompare clusters the standard errors on the highest-level group of the multilevel or panel m
+&gt; odel(s), so they will differ from the models' own. Fit every model without vce(robust); mecompare 
+&gt; supplies the clustering.
 
 
-Predicting: Linear prediction
 
-Marginal effects and cross-model differences (N_Germany=1976) (N_Nigeria=1759)
+Model 1 (ordinary) is:
+     logit smoker i.male c.age i.race i.momcollege c.school_momcollege
+Model 2 (multilevel) is:
+     melogit smoker i.male c.age i.race i.momcollege c.school_momcollege
+
+
+Predicting: Default prediction for each model
+
+Marginal effects and cross-model differences (N_ordinary=5825) (N_multilevel=5825)
 
                                  |  ME #   Estimate  Robust SE      P&gt;|z|
 ---------------------------------+---------------------------------------
-age + 10 (centered)              |                                       
-                         Germany |     1     -0.338      0.040      0.000
-                         Nigeria |     2     -0.104      0.049      0.035
-                      Difference |     3     -0.234      0.064      0.000</code></pre>
+male                             |                                       
+               Male - Female     |                                       
+                        ordinary |     1      0.010      0.012      0.381
+                      multilevel |     2      0.010      0.011      0.370
+                      Difference |     3     -0.000      0.001      0.977
+---------------------------------+---------------------------------------
+age + SD (centered)              |                                       
+                        ordinary |     4      0.067      0.007      0.000
+                      multilevel |     5      0.061      0.007      0.000
+                      Difference |     6      0.006      0.003      0.013
+---------------------------------+---------------------------------------
+race                             |                                       
+               Black - White     |                                       
+                        ordinary |     7     -0.176      0.014      0.000
+                      multilevel |     8     -0.167      0.014      0.000
+                      Difference |     9     -0.010      0.005      0.042
+              Latinx - White     |                                       
+                        ordinary |    10     -0.112      0.022      0.000
+                      multilevel |    11     -0.085      0.023      0.000
+                      Difference |    12     -0.027      0.009      0.004
+               Asian - White     |                                       
+                        ordinary |    13     -0.134      0.034      0.000
+                      multilevel |    14     -0.129      0.034      0.000
+                      Difference |    15     -0.005      0.007      0.509
+               Other - White     |                                       
+                        ordinary |    16     -0.005      0.041      0.907
+                      multilevel |    17      0.000      0.045      1.000
+                      Difference |    18     -0.005      0.008      0.564
+---------------------------------+---------------------------------------
+momcollege                       |                                       
+                       1 - 0     |                                       
+                        ordinary |    19     -0.061      0.010      0.000
+                      multilevel |    20     -0.060      0.010      0.000
+                      Difference |    21     -0.001      0.001      0.329
+---------------------------------+---------------------------------------
+school momcollege + SD (centered |                                       
+                        ordinary |    22     -0.011      0.010      0.262
+                      multilevel |    23     -0.008      0.010      0.405
+                      Difference |    24     -0.003      0.002      0.153</code></pre>
 </div>
-<p>Which to report depends on the question. If the goal is to control for all differences across the groups, including the distributions of the focal and control variables, use a single model and all observations (<code>by()</code>). If the groups’ different compositions are part of the question – for example, which group an intervention would matter more for – use group-specific observations (<code>over()</code>) or separate models (<code>groups</code>). The chapter’s Section 4.2.b–c discusses the two causal questions behind this choice; the <a href="../options.html#by-and-over-effects-within-levels-of-another-variable">Options</a> page has more on <code>by()</code> versus <code>over()</code>.</p>
-</section>
-<section id="reference" class="level2">
-<h2 class="anchored" data-anchor-id="reference">Reference</h2>
-<blockquote class="blockquote">
-<p>Mize, Trenton D. and Bing Han. Forthcoming. “Marginal effects: flexible methods for interpretation across linear and nonlinear models.” In <em>Understanding Data Modeling and Data Analysis</em>, edited by David Weakliem. Edward Elgar Publishing.</p>
-</blockquote>
+<p>Most effects are nearly the same in the two models. The ordinary logit gives somewhat larger effects of age and race: for example, its Latinx–White difference is 11.2 percentage points, compared with 8.5 in the multilevel logit (the difference of 2.7 points has p = .004).</p>
 
 
 </section>
@@ -984,13 +941,13 @@ age + 10 (centered)              |
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../mecompare/examples/chapter-interactions.html" class="pagination-link" aria-label="Tests of interaction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tests of interaction</span>
+      <a href="../../mecompare/examples/chapter-groups.html" class="pagination-link" aria-label="Group comparisons">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Group comparisons</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../mecompare/examples/multilevel.html" class="pagination-link" aria-label="Multilevel models">
-        <span class="nav-page-text">Multilevel models</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../mecompare/examples/panel.html" class="pagination-link" aria-label="Panel models">
+        <span class="nav-page-text">Panel models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

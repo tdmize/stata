@@ -35,7 +35,9 @@ Most regression commands in Stata are supported; the full list is under
 two or more models, we recommend fitting the models with `vce(robust)` as
 `suest2` is used to combine the models' estimates and it uses robust variance
 estimation. This ensures results from `mecompare` match results from the
-individual models exactly.
+individual models exactly. Multilevel and panel models are the exception: fit
+them, and any model compared with them, without `vce(robust)`; `mecompare`
+clusters the standard errors on the highest-level group.
 
 ## 2. Compare the marginal effects
 

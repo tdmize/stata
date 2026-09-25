@@ -290,17 +290,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Interactions: Mize (2019)</span></a>
+ <span class="menu-text">Multilevel and panel models</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/multilevel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multilevel models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/panel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Panel models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/within-person.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Within-person effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactions: Mize (2019)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
@@ -684,7 +713,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="models-that-can-be-compared" class="level3">
 <h3 class="anchored" data-anchor-id="models-that-can-be-compared">Models that can be compared</h3>
-<p>Models are comparable when they all return the <strong>same number of predictions</strong>. Same-family sets (e.g., two logits, three glms, two mestregs) always qualify. Cross-family sets qualify on the same rule: <code>logit</code> vs <code>regress</code>, <code>xtlogit</code> vs <code>mixed</code>, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (<code>ologit</code> vs <code>oprobit</code>, <code>mlogit</code> vs <code>ologit</code>, and so on). Each model contributes its own default prediction, or the one given in <code>predict()</code>, so a cross-family comparison contrasts, e.g., logit’s predicted probabilities with regress’s linear predictions. Models that return different numbers of predictions (e.g.&nbsp;a 3-category <code>ologit</code> vs a <code>logit</code>) cannot be compared.</p>
+<p>Models are comparable when they all return the <strong>same number of predictions</strong>. Same-family sets (e.g., two logits, three glms, two mestregs) always qualify. Cross-family sets qualify on the same rule: <code>logit</code> vs <code>regress</code>, <code>logit</code> vs <code>melogit</code>, <code>xtlogit</code> vs <code>mixed</code>, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (<code>ologit</code> vs <code>oprobit</code>, <code>mlogit</code> vs <code>ologit</code>, and so on). Each model contributes its own default prediction, or the one given in <code>predict()</code>, so a cross-family comparison contrasts, e.g., logit’s predicted probabilities with regress’s linear predictions. Models that return different numbers of predictions (e.g.&nbsp;a 3-category <code>ologit</code> vs a <code>logit</code>) cannot be compared.</p>
 <p>When the models have a multi-category outcome, the outcome categories are matched <em>in order</em>, so the dependent variables must have the same number of categories <em>and the same values</em>. <code>mecompare</code> errors if they differ (e.g.&nbsp;one outcome coded 0/1/2 and another 1/2/3). If the values agree but the value labels differ, the comparison proceeds and the table is labeled with the first model’s labels.</p>
 <p><span id="survival"></span></p>
 </section>
@@ -844,7 +873,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>xtreg, cre</code> is not supported, but an identical hybrid correlated-random-effects (Mundlak) specification can be estimated and used with <code>mecompare</code> by including each time-varying predictor’s panel mean alongside the predictor when fit with the <code>re</code> estimator.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bysort</span> id: <span class="kw">egen</span> mean_x = <span class="kw">mean</span>(x)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> <span class="fu">y</span> x mean_x i.<span class="kw">d</span>, re</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Where the <em>x</em> coefficient represents the within-person (“fixed effect”) estimate and the <em>mean_x</em> coefficient represents the between-person estimate. The same recipe extends to any supported panel or multilevel family, e.g.&nbsp;<code>xtlogit</code> or <code>xtpoisson</code>, etc.</p>
+<p>Where the <em>x</em> coefficient represents the within-person (“fixed effect”) estimate and the <em>mean_x</em> coefficient represents the difference between the between-person and within-person estimates. The same recipe extends to any supported panel or multilevel family, e.g.&nbsp;<code>xtlogit</code> or <code>xtpoisson</code>, etc.</p>
 <p><span id="examples"></span></p>
 </section>
 <section id="examples" class="level2">

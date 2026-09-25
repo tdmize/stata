@@ -104,7 +104,7 @@ Correlated random effects models should be specified as detailed in the [CRE spe
 
 Supported `meglm` families and links are Gaussian-identity, Bernoulli-logit, Bernoulli-probit, Bernoulli-cloglog, Poisson-log, negative-binomial-log, Gamma-log, ordinal-logit, and ordinal-probit.
 
-Mixed heterogeneous systems may also include ordinary `ologit` or `oprobit` constituents beside `xtologit`, `xtoprobit`, `meologit`, or `meoprobit` ones. An ordinary constituent must be stored unprefixed, unweighted, and with conventional (non-robust) standard errors; it inherits the system's cluster variable from its mixed partner.
+Multilevel and panel models may also be combined with ordinary single-level models: `regress`, `logit`, `probit`, `cloglog`, `poisson`, `nbreg`, `ologit`, and `oprobit`, e.g., a `logit` with a `melogit` or `xtlogit`. Fit the ordinary model unweighted, without a prefix, and with conventional standard errors; its standard errors are clustered on the highest-level group of the multilevel or panel model.
 
 Supported `mestreg` distributions are exponential, Weibull, lognormal, loglogistic, and gamma, including the applicable proportional-hazards and accelerated-failure-time forms.
 
@@ -226,7 +226,7 @@ bysort id: egen mean_x = mean(x)
 xtreg y x mean_x i.d, re
 ```
 
-Where the *x* coefficient represents the within-person ("fixed effect") estimate and the *x_mean* coefficient represents the between-person estimate. The same recipe extends to any supported panel or multilevel family, e.g. `xtlogit` or `xtpoisson`, etc.
+Where the *x* coefficient represents the within-person ("fixed effect") estimate and the *mean_x* coefficient represents the difference between the between-person and within-person estimates. The same recipe extends to any supported panel or multilevel family, e.g. `xtlogit` or `xtpoisson`, etc.
 
 <span id="examples"></span>
 

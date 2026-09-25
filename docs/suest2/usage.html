@@ -470,7 +470,7 @@ collgrad#c.age |
 <p><code>mixed, mle</code>; <code>melogit</code>; <code>meprobit</code>; <code>mecloglog</code>; <code>mepoisson</code>; <code>menbreg</code>; <code>meologit</code>; <code>meoprobit</code>; and <code>mestreg</code>.</p>
 <p><code>meglm</code> with the family-link pairs Gaussian-identity, Bernoulli-logit, Bernoulli-probit, Bernoulli-cloglog, Poisson-log, negative-binomial-log, Gamma-log, ordinal-logit, and ordinal-probit.</p>
 <p><code>mestreg</code> with the exponential, Weibull, lognormal, loglogistic, and gamma distributions, including the applicable proportional-hazards and accelerated-failure-time forms.</p>
-<p>Multilevel models may be combined, and every model must use the same highest-level grouping variable. An ordinary <code>ologit</code> or <code>oprobit</code> can be combined with an <code>xtologit</code>, <code>xtoprobit</code>, <code>meologit</code>, or <code>meoprobit</code>; fit it unweighted, without a prefix, and with conventional standard errors.</p>
+<p>Multilevel models may be combined, and every model must use the same highest-level grouping variable. Multilevel and panel models may also be combined with ordinary single-level models – <code>regress</code>, <code>logit</code>, <code>probit</code>, <code>cloglog</code>, <code>poisson</code>, <code>nbreg</code>, <code>ologit</code>, and <code>oprobit</code> – e.g., a <code>logit</code> with a <code>melogit</code> or <code>xtlogit</code>. Fit the ordinary model unweighted, without a prefix, and with conventional standard errors; its standard errors are clustered on the highest-level group of the multilevel or panel model.</p>
 </section>
 </section>
 <section id="fixed-effects-and-correlated-random-effects" class="level2">
@@ -478,7 +478,7 @@ collgrad#c.age |
 <p>Fixed-effects (<code>fe</code>) models have known problems for marginal effects, especially with categorical outcomes. <code>xtreg, cre</code> is not supported, but the identical correlated-random-effects (Mundlak) specification is: include each time-varying predictor’s panel mean alongside the predictor and fit with the <code>re</code> estimator.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bysort</span> id: <span class="kw">egen</span> mean_x = <span class="kw">mean</span>(x)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> <span class="fu">y</span> x mean_x i.<span class="kw">d</span>, re</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The coefficient on <code>x</code> is the within-person (“fixed effect”) estimate and the coefficient on <code>mean_x</code> the between-person estimate. The same recipe applies to any supported panel or multilevel family.</p>
+<p>The coefficient on <code>x</code> is the within-person (“fixed effect”) estimate and the coefficient on <code>mean_x</code> the difference between the between-person and within-person estimates. The same recipe applies to any supported panel or multilevel family; the <a href="../mecompare/examples/within-person.html">within-person effects</a> example uses it with <code>xtlogit</code>.</p>
 </section>
 <section id="more-than-two-models" class="level2">
 <h2 class="anchored" data-anchor-id="more-than-two-models">More than two models</h2>

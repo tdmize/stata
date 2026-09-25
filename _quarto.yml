@@ -62,6 +62,11 @@ website:
                 - mecompare/examples/chapter-summary-measures.qmd
                 - mecompare/examples/chapter-interactions.qmd
                 - mecompare/examples/chapter-groups.qmd
+            - section: "Multilevel and panel models"
+              contents:
+                - mecompare/examples/multilevel.qmd
+                - mecompare/examples/panel.qmd
+                - mecompare/examples/within-person.qmd
         - section: "Interactions: Mize (2019)"
           contents:
             - text: "Overview"

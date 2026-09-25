@@ -107,7 +107,8 @@ pa. `xtnbreg` with estimators re and pa; `xtnbreg, fe` is not supported.
 
 Marginal effects after the fixed-effects (`fe`) estimators have known
 problems, especially for categorical outcomes; the help file's section on
-[correlated random effects](help.html#cre) gives the alternative.
+[correlated random effects](help.html#cre) gives the alternative, and the
+[within-person effects](examples/within-person.html) example shows it.
 
 ### Multilevel models
 
@@ -124,10 +125,10 @@ in the help file.
 ### Which models can be compared
 
 Models can be compared when they all return the same number of predictions:
-e.g., two logits, a `logit` and a `regress`, or an `ologit` and an `mlogit`
-with the same outcome categories. Each model uses its own default prediction,
-or the one given in `predict()`, so a `logit` vs `regress` comparison
-contrasts predicted probabilities with linear predictions.
+e.g., two logits, a `logit` and a `regress`, a `logit` and a `melogit`, or an
+`ologit` and an `mlogit` with the same outcome categories. Each model uses its
+own default prediction, or the one given in `predict()`, so a `logit` vs
+`regress` comparison contrasts predicted probabilities with linear predictions.
 
 ### Survey, multiply imputed, and weighted models
 

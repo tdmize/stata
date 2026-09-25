@@ -291,17 +291,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Interactions: Mize (2019)</span></a>
+ <span class="menu-text">Multilevel and panel models</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/multilevel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multilevel models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/panel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Panel models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/within-person.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Within-person effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactions: Mize (2019)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
@@ -405,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode stata stata-cmd code-with-copy"><code class="sourceCode stata"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">logit</span> <span class="kw">union</span> i.collgrad c.age i.south i.smsa c.wage c.ttl_exp, <span class="kw">vce</span>(<span class="kw">robust</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Most regression commands in Stata are supported; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. With two or more models, we recommend fitting the models with <code>vce(robust)</code> as <code>suest2</code> is used to combine the models’ estimates and it uses robust variance estimation. This ensures results from <code>mecompare</code> match results from the individual models exactly.</p>
+<p>Most regression commands in Stata are supported; the full list is under <a href="options.html#supported-models">Supported models</a> on the Options page. With two or more models, we recommend fitting the models with <code>vce(robust)</code> as <code>suest2</code> is used to combine the models’ estimates and it uses robust variance estimation. This ensures results from <code>mecompare</code> match results from the individual models exactly. Multilevel and panel models are the exception: fit them, and any model compared with them, without <code>vce(robust)</code>; <code>mecompare</code> clusters the standard errors on the highest-level group.</p>
 </section>
 <section id="compare-the-marginal-effects" class="level2">
 <h2 class="anchored" data-anchor-id="compare-the-marginal-effects">2. Compare the marginal effects</h2>

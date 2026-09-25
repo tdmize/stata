@@ -288,7 +288,7 @@ With **two or more** models, a non-default prediction can be requested if it ret
 
 ### Models that can be compared
 
-Models are comparable when they all return the **same number of predictions**. Same-family sets (e.g., two logits, three glms, two mestregs) always qualify. Cross-family sets qualify on the same rule: `logit` vs `regress`, `xtlogit` vs `mixed`, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`, and so on). Each model contributes its own default prediction, or the one given in `predict()`, so a cross-family comparison contrasts, e.g., logit's predicted probabilities with regress's linear predictions. Models that return different numbers of predictions (e.g. a 3-category `ologit` vs a `logit`) cannot be compared.
+Models are comparable when they all return the **same number of predictions**. Same-family sets (e.g., two logits, three glms, two mestregs) always qualify. Cross-family sets qualify on the same rule: `logit` vs `regress`, `logit` vs `melogit`, `xtlogit` vs `mixed`, or any pair of binary-, count-, or continuous-outcome models; and any pair of ordinal or nominal models with the same number of outcome categories (`ologit` vs `oprobit`, `mlogit` vs `ologit`, and so on). Each model contributes its own default prediction, or the one given in `predict()`, so a cross-family comparison contrasts, e.g., logit's predicted probabilities with regress's linear predictions. Models that return different numbers of predictions (e.g. a 3-category `ologit` vs a `logit`) cannot be compared.
 
 When the models have a multi-category outcome, the outcome categories are matched *in order*, so the dependent variables must have the same number of categories *and the same values*. `mecompare` errors if they differ (e.g. one outcome coded 0/1/2 and another 1/2/3). If the values agree but the value labels differ, the comparison proceeds and the table is labeled with the first model's labels.
 
@@ -449,7 +449,7 @@ bysort id: egen mean_x = mean(x)
 xtreg y x mean_x i.d, re
 ```
 
-Where the *x* coefficient represents the within-person ("fixed effect") estimate and the *mean_x* coefficient represents the between-person estimate. The same recipe extends to any supported panel or multilevel family, e.g. `xtlogit` or `xtpoisson`, etc.
+Where the *x* coefficient represents the within-person ("fixed effect") estimate and the *mean_x* coefficient represents the difference between the between-person and within-person estimates. The same recipe extends to any supported panel or multilevel family, e.g. `xtlogit` or `xtpoisson`, etc.
 
 <span id="examples"></span>
 

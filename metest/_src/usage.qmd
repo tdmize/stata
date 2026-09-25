@@ -163,11 +163,11 @@ observed values -- in the Health and Retirement Study 2020:
 ```{.stata-run}
 <<dd_do>>
 use "https://tdmize.github.io/data/data/cda_hrs", clear
-drop if missing(cogB, marstatB, college, woman, age)
+drop if missing(cogB, marstatB, collegeB, woman, age)
 
-logit cogB i.college i.marstatB i.woman c.age, or
+logit cogB i.collegeB i.marstatB i.woman c.age, or
 
-margins college, post
+margins collegeB, post
 metest 1 / 2
 <</dd_do>>
 ```

@@ -168,7 +168,8 @@ difference for the *#*th such variable in *varlist*; for a nominal variable
 `r(tmwm1#)`, `r(tmwm2#)`, `r(tmwd#)` hold the weighted Total ME inequality and
 `r(tmuwm1#)`, `r(tmuwm2#)`, `r(tmuwd#)` the unweighted. With `by()` or
 `over()`, `_level` is appended, and the **Diff.** rows append `_d`*level1*`_`*level2*
-(e.g. `r(tmcm11_d0_1)`). `r(table)` holds the displayed table and
+(e.g. `r(tmcm11_d0_1)`). `r(n_mods)` and `r(n_vars)` hold the number of models
+and the number of variables. `r(table)` holds the displayed table and
 `r(se_missing)` counts quantities whose standard error could not be computed.
 The `margins` results are stored as `totalme_margins` and, with two models,
 the combined system as `totalme_suest2`.

@@ -180,9 +180,12 @@ distributions, including the applicable proportional-hazards and
 accelerated-failure-time forms.
 
 Multilevel models may be combined, and every model must use the same
-highest-level grouping variable. An ordinary `ologit` or `oprobit` can be
-combined with an `xtologit`, `xtoprobit`, `meologit`, or `meoprobit`; fit it
-unweighted, without a prefix, and with conventional standard errors.
+highest-level grouping variable. Multilevel and panel models may also be
+combined with ordinary single-level models -- `regress`, `logit`, `probit`,
+`cloglog`, `poisson`, `nbreg`, `ologit`, and `oprobit` -- e.g., a `logit` with
+a `melogit` or `xtlogit`. Fit the ordinary model unweighted, without a prefix,
+and with conventional standard errors; its standard errors are clustered on
+the highest-level group of the multilevel or panel model.
 
 ## Fixed effects and correlated random effects
 
@@ -198,8 +201,11 @@ xtreg y x mean_x i.d, re
 ```
 
 The coefficient on `x` is the within-person ("fixed effect") estimate and the
-coefficient on `mean_x` the between-person estimate. The same recipe applies
-to any supported panel or multilevel family.
+coefficient on `mean_x` the difference between the between-person and
+within-person estimates. The same recipe applies to any supported panel or
+multilevel family; the
+[within-person effects](../mecompare/examples/within-person.html) example
+uses it with `xtlogit`.
 
 ## More than two models
 

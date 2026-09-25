@@ -291,17 +291,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Interactions: Mize (2019)</span></a>
+ <span class="menu-text">Multilevel and panel models</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/multilevel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multilevel models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/panel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Panel models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mecompare/examples/within-person.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Within-person effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactions: Mize (2019)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../mecompare/interactions/index.html" class="sidebar-item-text sidebar-link">
@@ -548,7 +577,7 @@ grade + 1 (centered)             |
 <p><code>xtologit</code> and <code>xtoprobit</code>.</p>
 <p><code>xtmlogit</code> with estimators re and fe.</p>
 <p><code>xtpoisson</code> with estimators re (normal or gamma random effects), fe, and pa. <code>xtnbreg</code> with estimators re and pa; <code>xtnbreg, fe</code> is not supported.</p>
-<p>Marginal effects after the fixed-effects (<code>fe</code>) estimators have known problems, especially for categorical outcomes; the help file’s section on <a href="help.html#cre">correlated random effects</a> gives the alternative.</p>
+<p>Marginal effects after the fixed-effects (<code>fe</code>) estimators have known problems, especially for categorical outcomes; the help file’s section on <a href="help.html#cre">correlated random effects</a> gives the alternative, and the <a href="examples/within-person.html">within-person effects</a> example shows it.</p>
 </section>
 <section id="multilevel-models" class="level3">
 <h3 class="anchored" data-anchor-id="multilevel-models">Multilevel models</h3>
@@ -558,7 +587,7 @@ grade + 1 (centered)             |
 </section>
 <section id="which-models-can-be-compared" class="level3">
 <h3 class="anchored" data-anchor-id="which-models-can-be-compared">Which models can be compared</h3>
-<p>Models can be compared when they all return the same number of predictions: e.g., two logits, a <code>logit</code> and a <code>regress</code>, or an <code>ologit</code> and an <code>mlogit</code> with the same outcome categories. Each model uses its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions.</p>
+<p>Models can be compared when they all return the same number of predictions: e.g., two logits, a <code>logit</code> and a <code>regress</code>, a <code>logit</code> and a <code>melogit</code>, or an <code>ologit</code> and an <code>mlogit</code> with the same outcome categories. Each model uses its own default prediction, or the one given in <code>predict()</code>, so a <code>logit</code> vs <code>regress</code> comparison contrasts predicted probabilities with linear predictions.</p>
 </section>
 <section id="survey-multiply-imputed-and-weighted-models" class="level3">
 <h3 class="anchored" data-anchor-id="survey-multiply-imputed-and-weighted-models">Survey, multiply imputed, and weighted models</h3>
